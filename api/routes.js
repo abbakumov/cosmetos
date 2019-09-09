@@ -4,7 +4,7 @@ const getBlog = require('./controllers/getBlog');
 
 const routes = [
     {
-        route: '/blog/:id',
+        route: '/blog/:name',
         method: 'get',
         controller: getBlog,
     },

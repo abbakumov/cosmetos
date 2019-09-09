@@ -3,7 +3,7 @@ import {Provider} from 'react-redux';
 import App from 'next/app';
 import withRedux from 'next-redux-wrapper';
 
-import {makeStore} from '../store'
+import {makeStore} from '../store';
 
 class CosmetosApp extends App {
     static async getInitialProps({Component, ctx}) {
