@@ -1,6 +1,13 @@
 import fetch from 'isomorphic-fetch';
 
-export function getBlogByName(name: string[]): {} {
+import {Blog} from './types';
+
+export function getBlogByName(name: string[]): Promise<Blog> {
     return fetch(`http://localhost:3000/api/blog/${name[0]}`)
-        .then((response: Response) => response.json());
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText)
+            }
+            return response.json() as Promise<Blog>
+        });
 }
