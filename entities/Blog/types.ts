@@ -2,10 +2,10 @@ import {PostId} from '../Post/types';
 
 import {BLOG_DATA_FETCHED} from './actions';
 
-export type BlogId = number;
+export type BlogLogin = string;
 
 export interface Blog {
-    id: BlogId;
+    login: BlogLogin;
     name: string;
     instagramLogin: string,
     imageUrl: string,

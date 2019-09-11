@@ -15,7 +15,7 @@ export function blogReducer(state = initialState, action: BlogActionType): BlogS
             return {
                 items: {
                     ...state.items,
-                    [payload.data.id]: payload.data,
+                    [payload.data.login]: payload.data,
                 }
             };
     }
