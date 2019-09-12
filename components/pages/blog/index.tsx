@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {BlogLogin, Blog} from '../../../entities/Blog/types';
+import {BlogLogin} from '../../../entities/Blog/types';
 
 import BlogHead from './components/BlogHead';
 import BlogList from './components/BlogList';

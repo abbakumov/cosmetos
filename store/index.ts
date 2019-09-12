@@ -3,9 +3,11 @@ import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 import {blogReducer} from '../entities/Blog/reducer';
+import {postBaseReducer} from '../entities/PostBase/reducer';
 
 const rootReducer = combineReducers({
     blog: blogReducer,
+    postBase: postBaseReducer,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
