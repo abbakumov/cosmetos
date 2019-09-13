@@ -17,7 +17,7 @@ class BlogPage extends Component<BlogPagePublicProps> {
         return (
             <MobileLayout>
                 <BlogHead login={login} />
-                <BlogList />
+                <BlogList login={login} />
             </MobileLayout>
         )
     }

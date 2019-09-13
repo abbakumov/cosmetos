@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Link from 'next/link';
 import {BlogLogin, Blog} from '../../../../../entities/Blog/types';
 import {StoreState} from '../../../../../store/types';
 
@@ -8,7 +7,7 @@ import BlogListPost from './Post';
 
 const styles = require('./styles.styl');
 
-interface BlogListPublicProps {
+export interface BlogListPublicProps {
     login: BlogLogin;
 }
 
@@ -22,7 +21,7 @@ class BlogList extends Component<BlogListProps> {
 
         return (
             <div className={styles.root}>
-                <div className={styles.title}>Последние фотографии</div>
+                <div className={styles.title}>Последние фотографии:</div>
                 <div className={styles.container}>
                     {postIds.map(id => (<BlogListPost key={id} id={id} />))}
                 </div>

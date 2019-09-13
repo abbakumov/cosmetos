@@ -6,7 +6,7 @@ import {StoreState} from '../../../../../store/types';
 
 const styles = require('./styles.styl');
 
-interface BlogHeadPublicProps {
+export interface BlogHeadPublicProps {
     login: BlogLogin
 }
 
@@ -60,6 +60,6 @@ function mapStateToProps(state: StoreState, ownProps: BlogHeadPublicProps): Blog
     };
 }
 
-const ConnectedBlogHead = connect(mapStateToProps)(BlogHead);
+const ConnectedBlogHead = connect<BlogHeadProps, {}, BlogHeadProps>(mapStateToProps)(BlogHead);
 
 export default ConnectedBlogHead;

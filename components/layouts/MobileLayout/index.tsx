@@ -9,7 +9,7 @@ export default class MobileLayout extends Component<MobileLayoutPublicProps> {
         return (
             <div>
                 <div className={styles.header}>
-                    Cosmetos
+                    <img className={styles.logo} src="/static/icons/header-logo.png"/>
                 </div>
                 <div className={styles.content}>
                     {this.props.children}

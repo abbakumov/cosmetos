@@ -14,11 +14,15 @@ interface BlogListPostProps extends PostBase {}
 
 class BlogListPost extends Component<BlogListPostProps> {
     render() {
-        const {} = this.props;
+        const {id, title, imageUrl} = this.props;
 
         return (
-            <div>
-            </div>
+            <Link href="/post/[id]" as={`/post/${id}`}>
+                <a className={styles.root}>
+                    <img className={styles.image} src={imageUrl}/>
+                    <h2 className={styles.title}>{title}</h2>
+                </a>
+            </Link>
         )
     }
 }
