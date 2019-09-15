@@ -1,3 +1,5 @@
+import {PRODUCTS_BASE_DATA_FETCHED} from './actions';
+
 export type ProductId = number;
 
 export interface ProductBase {
@@ -6,3 +8,23 @@ export interface ProductBase {
     title: string;
     smallPicUrl: string;
 }
+
+// ACTIONS ->
+export interface ProductsBaseDataFetchedAction {
+    type: typeof PRODUCTS_BASE_DATA_FETCHED;
+    payload: {
+        data: {
+            [id: number]: ProductBase;
+        }
+    }
+};
+// <- ACTIONS
+
+export type ProductBaseActionType =
+    | ProductsBaseDataFetchedAction;
+
+export interface PostPartState {
+    items: {
+        [s: number]: ProductBase;
+    }
+};

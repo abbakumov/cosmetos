@@ -1,34 +1,24 @@
 import {connect} from 'react-redux';
 import {NextPage} from 'next';
-import {useRouter} from 'next/router';
-import Link from 'next/link';
 
-const Post: NextPage<{}> = () => {
-    const router = useRouter();
+import PostPage, {PostPagePublicProps} from '../../components/pages/post';
+import {ICosPageContext} from '../../types/context';
 
-    return (
-        <div>
-            <Link href="/post/[id]" as="/post/1">
-                <a>the first</a>
-            </Link>
-            <Link href="/post/[id]" as="/post/2">
-                <a>the second</a>
-            </Link>
+const PostPageWrapper: NextPage<PostPagePublicProps> = (props) => (<PostPage {...props} />);
 
-            <h1>{router.query.id}</h1>
-            <p>This is the blog post content.</p>
-        </div>
-    );
-}
+PostPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<PostPagePublicProps> {
+    const {query, store} = context;
 
-Post.getInitialProps = async function(context) {
-    const {id} = context.query;
+    // dispatch:
 
-    return {};
+    // post base
+    // post extra
+    // product base
+    // blog product
+
+    return {
+        id: 0,
+    };
 };
 
-function mapStateToProps(state) {
-    return {};
-}
-
-export default connect(mapStateToProps)(Post);
+export default PostPageWrapper;

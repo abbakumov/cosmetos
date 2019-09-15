@@ -10,10 +10,3 @@ export const postsBaseDataFetchedAction = (data: PostBaseMap): PostsBaseDataFetc
     type: POSTS_BASE_DATA_FETCHED,
     payload: {data},
 });
-
-// export const postDataFetchedAction = (data: PostBase): BlogDataFetchedAction => ({
-//     type: BLOG_DATA_FETCHED,
-//     payload: {
-//         data,
-//     },
-// });
