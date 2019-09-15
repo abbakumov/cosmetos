@@ -1,12 +1,18 @@
 const Router = require('koa-router');
 
 const getBlog = require('./controllers/getBlog');
+const getPost = require('./controllers/getPost');
 
 const routes = [
     {
         route: '/blog/:name',
         method: 'get',
         controller: getBlog,
+    },
+    {
+        route: '/post/:id',
+        method: 'get',
+        controller: getPost,
     },
 ];
 

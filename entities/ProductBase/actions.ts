@@ -6,7 +6,7 @@ export interface ProductBaseMap {
     [id: number]: ProductBase;
 }
 
-export const postPartsDataFetchedAction = (data: ProductBaseMap): ProductsBaseDataFetchedAction => ({
+export const productsBaseDataFetchedAction = (data: ProductBaseMap): ProductsBaseDataFetchedAction => ({
     type: PRODUCTS_BASE_DATA_FETCHED,
     payload: {data},
 });

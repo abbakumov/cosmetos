@@ -6,7 +6,7 @@ export interface BlogProductMap {
     [id: number]: BlogProduct;
 }
 
-export const postsBaseDataFetchedAction = (data: BlogProductMap): BlogProductsDataFetchedAction => ({
+export const blogProductsDataFetchedAction = (data: BlogProductMap): BlogProductsDataFetchedAction => ({
     type: BLOG_PRODUCTS_DATA_FETCHED,
     payload: {data},
 });

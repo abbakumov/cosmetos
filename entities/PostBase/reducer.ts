@@ -1,5 +1,6 @@
 import {PostBaseState, PostBaseActionType} from './types';
 import {
+    POST_BASE_DATA_FETCHED,
     POSTS_BASE_DATA_FETCHED,
 } from './actions';
 
@@ -8,14 +9,20 @@ const initialState: PostBaseState = {
 };
 
 export function postBaseReducer(state = initialState, action: PostBaseActionType): PostBaseState {
-    const {type, payload} = action;
+    switch (action.type) {
+        case POST_BASE_DATA_FETCHED:
+            return {
+                items: {
+                    ...state.items,
+                    [action.payload.data.id]: action.payload.data,
+                }
+            };
 
-    switch (type) {
         case POSTS_BASE_DATA_FETCHED:
             return {
                 items: {
                     ...state.items,
-                    ...payload.data,
+                    ...action.payload.data,
                 }
             };
     }
