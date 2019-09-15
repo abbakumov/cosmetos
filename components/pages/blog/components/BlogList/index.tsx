@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {BlogLogin, Blog} from '../../../../../entities/Blog/types';
-import {StoreState} from '../../../../../store/types';
+import {AppState} from '../../../../../store';
 
 import BlogListPost from './Post';
 
@@ -30,7 +30,7 @@ class BlogList extends Component<BlogListProps> {
     }
 }
 
-function mapStateToProps(state: StoreState, ownProps: BlogListPublicProps): BlogListProps {
+function mapStateToProps(state: AppState, ownProps: BlogListPublicProps): BlogListProps {
     const blogData: Blog = state.blog.items[ownProps.login];
 
     return {

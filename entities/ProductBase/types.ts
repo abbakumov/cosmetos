@@ -23,7 +23,7 @@ export interface ProductsBaseDataFetchedAction {
 export type ProductBaseActionType =
     | ProductsBaseDataFetchedAction;
 
-export interface PostPartState {
+export interface ProductBaseState {
     items: {
         [s: number]: ProductBase;
     }

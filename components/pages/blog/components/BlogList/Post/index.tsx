@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Link from 'next/link';
 import {PostId, PostBase} from '../../../../../../entities/PostBase/types';
-import {StoreState} from '../../../../../../store/types';
+import {AppState} from '../../../../../../store';
 
 const styles = require('./styles.styl');
 
@@ -27,7 +27,7 @@ class BlogListPost extends Component<BlogListPostProps> {
     }
 }
 
-function mapStateToProps(state: StoreState, ownProps: BlogListPostPublicProps): BlogListPostProps {
+function mapStateToProps(state: AppState, ownProps: BlogListPostPublicProps): BlogListPostProps {
     const postData: PostBase = state.postBase.items[ownProps.id];
 
     return postData;

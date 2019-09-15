@@ -1,7 +1,7 @@
 import {ProductId} from '../ProductBase/types';
 import {Position} from '../Position';
 
-import {POSTS_PARTS_DATA_FETCHED} from './actions';
+import {POST_PARTS_DATA_FETCHED} from './actions';
 
 export type PostPartId = number;
 
@@ -15,7 +15,7 @@ export interface PostPart {
 
 // ACTIONS ->
 export interface PostPartsDataFetchedAction {
-    type: typeof POSTS_PARTS_DATA_FETCHED;
+    type: typeof POST_PARTS_DATA_FETCHED;
     payload: {
         data: {
             [id: number]: PostPart;

@@ -23,10 +23,10 @@ export interface BlogProductsDataFetchedAction {
 };
 // <- ACTIONS
 
-export type BlogProductsActionType =
+export type BlogProductActionType =
     | BlogProductsDataFetchedAction;
 
-export interface PostPartState {
+export interface BlogProductState {
     items: {
         [s: number]: BlogProduct;
     }

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Link from 'next/link';
 import {BlogLogin, Blog} from '../../../../../entities/Blog/types';
-import {StoreState} from '../../../../../store/types';
+import {AppState} from '../../../../../store';
 
 const styles = require('./styles.styl');
 
@@ -50,7 +50,7 @@ class BlogHead extends Component<BlogHeadProps> {
     }
 }
 
-function mapStateToProps(state: StoreState, ownProps: BlogHeadPublicProps): BlogHeadProps {
+function mapStateToProps(state: AppState, ownProps: BlogHeadPublicProps): BlogHeadProps {
     const blogData: Blog = state.blog.items[ownProps.login];
 
     return {
