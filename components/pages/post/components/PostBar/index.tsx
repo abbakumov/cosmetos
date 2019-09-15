@@ -23,7 +23,7 @@ class PostBar extends Component<PostBarProps> {
         return (
             <div className={styles.root}>
                 <PostBarSwitcher />
-                <a className={styles.instaLink} href={instaUrl}>
+                <a className={styles.instaLink} target="_blank" href={instaUrl}>
                     Instagram
                 </a>
             </div>

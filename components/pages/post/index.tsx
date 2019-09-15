@@ -5,6 +5,7 @@ import MobileLayout from '../../layouts/MobileLayout';
 
 import PostPicture from './components/PostPicture';
 import PostBar from './components/PostBar';
+import PostInfo from './components/PostInfo';
 
 export interface PostPagePublicProps {
     id: PostId,
@@ -18,8 +19,8 @@ class BlogPage extends Component<PostPagePublicProps> {
             <MobileLayout>
                 <PostPicture id={id} />
                 <PostBar id={id} />
-                {/* <PostInfo />
-                <PostProducts /> */}
+                <PostInfo id={id} />
+                {/* <PostProducts /> */}
             </MobileLayout>
         )
     }
