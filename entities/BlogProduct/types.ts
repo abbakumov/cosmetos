@@ -1,14 +1,14 @@
 import {BlogLogin} from '../Blog/types';
-import {PostId} from '../PostBase/types';
 
 import {BLOG_PRODUCTS_DATA_FETCHED} from './actions';
+import {ProductId} from '../ProductBase/types';
 
 type BlogProductId = number;
 
 export interface BlogProduct {
     id: BlogProductId;
     blogLogin: BlogLogin;
-    postId: PostId;
+    productId: ProductId;
     comment: string;
 };
 
