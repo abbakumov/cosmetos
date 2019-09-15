@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 
 import {PostId} from '../../../entities/PostBase/types';
-
 import MobileLayout from '../../layouts/MobileLayout';
+
+import PostPicture from './components/PostPicture';
 
 export interface PostPagePublicProps {
     id: PostId,
@@ -14,8 +15,8 @@ class BlogPage extends Component<PostPagePublicProps> {
 
         return (
             <MobileLayout>
-                { /*<PostPicture />
-                <PostBar />
+                <PostPicture id={id}/>
+                {/*<PostBar />
                 <PostInfo />
                 <PostProducts /> */}
             </MobileLayout>

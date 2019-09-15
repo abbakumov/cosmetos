@@ -18,9 +18,10 @@ const PostPageWrapper: NextPage<PostPagePublicProps> = (props) => (<PostPage {..
 
 PostPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<PostPagePublicProps> {
     const {query, store} = context;
-    const {id} = query;
+    const queryId = query.id;
+    const id = parseInt(_.castArray(queryId)[0]);
 
-    const data = await getPostById(parseInt(_.castArray(id)[0]));
+    const data = await getPostById(id);
 
     store.dispatch(blogDataFetchedAction(data.blog));
     store.dispatch(postBaseDataFetchedAction(data.postBase));
@@ -29,9 +30,7 @@ PostPageWrapper.getInitialProps = async function(context: ICosPageContext): Prom
     store.dispatch(productsBaseDataFetchedAction(data.productBase));
     store.dispatch(blogProductsDataFetchedAction(data.blogProduct));
 
-    return {
-        id: 0,
-    };
+    return {id};
 };
 
 export default PostPageWrapper;

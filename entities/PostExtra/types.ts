@@ -8,7 +8,7 @@ export interface PostExtra {
     imageUrlBig: string;
     instaUrl: string;
     description: string;
-    parts: PostPartId[],
+    partIds: PostPartId[],
 }
 
 // ACTIONS ->
