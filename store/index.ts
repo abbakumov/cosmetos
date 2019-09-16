@@ -2,6 +2,8 @@ import {createStore, combineReducers, applyMiddleware} from "redux";
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
+import {pagePostReducer} from '../components/pages/post/state/reducer';
+
 import {blogReducer} from '../entities/Blog/reducer';
 import {postBaseReducer} from '../entities/PostBase/reducer';
 import {postExtraReducer} from '../entities/PostExtra/reducer';
@@ -10,6 +12,10 @@ import {postPartReducer} from '../entities/PostPart/reducer';
 import {productBaseReducer} from '../entities/ProductBase/reducer';
 
 const rootReducer = combineReducers({
+    // pages
+    pagePost: pagePostReducer,
+
+    // entities
     blog: blogReducer,
     postBase: postBaseReducer,
     postExtra: postExtraReducer,
