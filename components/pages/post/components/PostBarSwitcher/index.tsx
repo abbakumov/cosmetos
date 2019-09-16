@@ -1,24 +1,37 @@
 import {Component} from 'react';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {AppState} from '../../../../../store';
 import {PostId} from '../../../../../entities/PostBase/types';
+import {postPageToggleIsPicPartsOpenAction} from '../../state/actions';
 
 const styles = require('./styles.styl');
 
-export interface PostBarSwitcherPublicProps {
-}
+export interface PostBarSwitcherPublicProps {}
 
-interface PostBarSwitcherProps {
+interface PostBarSwitcherMappedProps {
     isActive: boolean;
 }
 
+interface PostBarSwitcherConnectedActions {
+    toggleAction(): void;
+}
+
+interface PostBarSwitcherProps extends PostBarSwitcherMappedProps, PostBarSwitcherConnectedActions {}
+
 class PostBarSwitcher extends Component<PostBarSwitcherProps> {
     render() {
+        const {isActive, toggleAction} = this.props;
+
+        const tumblerClassName = isActive
+            ? `${styles.tumbler} ${styles.tumblerActive}`
+            : styles.tumbler;
+
         return (
-            <div className={styles.root}>
+            <div className={styles.root} onClick={toggleAction}>
                 <div className={styles.container}>
-                    <div className={styles.tumbler} />
+                    <div className={tumblerClassName} />
                 </div>
                 <div className={styles.leftIcon} />
                 <div className={styles.rightIcon} />
@@ -27,14 +40,16 @@ class PostBarSwitcher extends Component<PostBarSwitcherProps> {
     }
 }
 
-function mapStateToProps(state: AppState): PostBarSwitcherProps {
-
-
+function mapStateToProps(state: AppState): PostBarSwitcherMappedProps {
     return {
-        isActive: false,
+        isActive: state.pagePost.isPicPartsOpen,
     };
 }
 
-const ConnectedPostBarSwitcher = connect(mapStateToProps)(PostBarSwitcher);
+const mapDispatchToProps: PostBarSwitcherConnectedActions = {
+    toggleAction: postPageToggleIsPicPartsOpenAction,
+};
+
+const ConnectedPostBarSwitcher = connect(mapStateToProps, mapDispatchToProps)(PostBarSwitcher);
 
 export default ConnectedPostBarSwitcher;
