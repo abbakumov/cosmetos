@@ -37,9 +37,16 @@ class PostPicturePart extends Component<PostPicturePartProps> {
 
         return (
             <div className={className} style={style}>
-                <div className={styles.content} style={contentStyle}>
-                    {title}
-                </div>
+                {isOpen &&
+                    <div className={styles.content} style={contentStyle}>
+                        {title}
+                    </div>
+                }
+                {!isOpen &&
+                    <div className={styles.circleOuter}>
+                        <div className={styles.circleInner} style={contentStyle} />
+                    </div>
+                }
             </div>
         );
     }
@@ -49,10 +56,9 @@ function mapStateToProps(state: AppState, ownProps: PostPicturePartPublicProps):
     const {id} = ownProps;
 
     const postPart = state.postPart.items[id];
-
     const {position, title, color} = postPart;
 
-    const isOpen = true;
+    const isOpen = state.pagePost.isPicPartsOpen;
 
     return {id, position, title, color, isOpen};
 }
