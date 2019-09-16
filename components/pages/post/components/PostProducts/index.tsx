@@ -8,8 +8,6 @@ import {PostPartId} from '../../../../../entities/PostPart/types';
 
 import PostProductsPart from '../PostProductsPart';
 
-const styles = require('./styles.styl');
-
 export interface PostProductsPublicProps {
     id: PostId;
 }
@@ -23,7 +21,7 @@ class PostProducts extends Component<PostProductsProps> {
         const {partIds} = this.props;
 
         return (
-            <div className={styles.root}>
+            <div>
                 {partIds.map(id => (
                     <PostProductsPart key={id} id={id} />
                 ))}

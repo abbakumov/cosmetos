@@ -35,8 +35,8 @@ class PostProductsPart extends Component<PostProductsPartProps> {
                     />
                 </div>
                 <div className={styles.productsContainer}>
-                    {productIds.map(id => (
-                        <PostProduct key={id} id={id}/>
+                    {productIds.map(_id => (
+                        <PostProduct key={id} id={_id} partId={id}/>
                     ))}
                 </div>
             </div>

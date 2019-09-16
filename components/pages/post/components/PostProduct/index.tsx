@@ -10,38 +10,42 @@ const styles = require('./styles.styl');
 
 export interface PostProductsPartPublicProps {
     id: ProductId;
+    partId: PostPartId;
 }
 
 interface PostProductsPartProps {
-    id: number;
+    id: ProductId;
     brand: string;
     title: string;
     smallPicUrl: string;
     comment: string;
+    color: string;
 }
 
 class PostProductsPart extends Component<PostProductsPartProps> {
     render() {
-        const {brand, title, smallPicUrl, comment} = this.props;
+        const {id, brand, title, smallPicUrl, comment, color} = this.props;
 
         return (
-            <div className={styles.root}>
-                <div className={styles.left}>
-                    <img className={styles.img} src={smallPicUrl} />
-                </div>
-                <div className={styles.content}>
-                    <h3 className={styles.title}>{title}</h3>
-                    <div className={styles.brand}>{brand}</div>
-                    <div className={styles.comment}>{comment}</div>
-                </div>
-                <img className={styles.arr} src="/static/icons/post-page/product-arr.svg" />
-            </div>
+            <Link href="/product/[id]" as={`/product/${id}`}>
+                <a className={styles.root} style={{borderColor: color}}>
+                    <div className={styles.left}>
+                        <img className={styles.img} src={smallPicUrl} />
+                    </div>
+                    <div className={styles.content}>
+                        <h3 className={styles.title}>{title}</h3>
+                        <div className={styles.brand}>{brand}</div>
+                        <div className={styles.comment}>"{comment}"</div>
+                    </div>
+                    <img className={styles.arr} src="/static/icons/post-page/product-arr.svg" />
+                </a>
+            </Link>
         );
     }
 }
 
 function mapStateToProps(state: AppState, ownProps: PostProductsPartPublicProps): PostProductsPartProps {
-    const {id} = ownProps;
+    const {id, partId} = ownProps;
 
     const product = state.productBase.items[id];
     const {brand, title, smallPicUrl} = product;
@@ -50,12 +54,16 @@ function mapStateToProps(state: AppState, ownProps: PostProductsPartPublicProps)
     const blockProductKey = Object.keys(blogProductItems).find(_id => blogProductItems[_id].productId === id);
     const comment = state.blogProduct.items[blockProductKey].comment;
 
+    const postPart = state.postPart.items[partId]
+    const {color} = postPart;
+
     return {
         id,
         brand,
         title,
         smallPicUrl,
         comment,
+        color,
     };
 }
 
