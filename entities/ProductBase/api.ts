@@ -1,7 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
 import {ProductBase, ProductId} from './types';
-import {PostExtra} from '../PostExtra/types';
 import {Blog} from '../Blog/types';
 import {BlogProduct} from '../BlogProduct/types';
 import {PostBase} from '../PostBase/types';
@@ -25,8 +24,8 @@ export interface GetProductByIdResponse {
     };
 }
 
-export function getPostById(id: ProductId): Promise<GetProductByIdResponse> {
-    return fetch(`http://localhost:3000/api/post/${id}`)
+export function getProductById(id: ProductId): Promise<GetProductByIdResponse> {
+    return fetch(`http://localhost:3000/api/product/${id}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText)

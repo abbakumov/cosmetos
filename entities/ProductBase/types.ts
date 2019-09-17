@@ -25,6 +25,6 @@ export type ProductBaseActionType =
 
 export interface ProductBaseState {
     items: {
-        [s: number]: ProductBase;
+        [id: number]: ProductBase;
     }
 };
