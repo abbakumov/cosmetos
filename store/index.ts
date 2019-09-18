@@ -10,6 +10,8 @@ import {postExtraReducer} from '../entities/PostExtra/reducer';
 import {blogProductReducer} from '../entities/BlogProduct/reducer';
 import {postPartReducer} from '../entities/PostPart/reducer';
 import {productBaseReducer} from '../entities/ProductBase/reducer';
+import {productExtraReducer} from '../entities/ProductExtra/reducer';
+import {productColorReducer} from '../entities/ProductColor/reducer';
 
 const rootReducer = combineReducers({
     // pages
@@ -22,6 +24,8 @@ const rootReducer = combineReducers({
     blogProduct: blogProductReducer,
     postPart: postPartReducer,
     productBase: productBaseReducer,
+    productExtra: productExtraReducer,
+    productColor: productColorReducer,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

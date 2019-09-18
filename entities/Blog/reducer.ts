@@ -1,6 +1,7 @@
 import {BlogState, BlogActionType} from './types';
 import {
     BLOG_DATA_FETCHED,
+    BLOGS_DATA_FETCHED,
 } from './actions';
 
 const initialState: BlogState = {
@@ -8,16 +9,23 @@ const initialState: BlogState = {
 };
 
 export function blogReducer(state = initialState, action: BlogActionType): BlogState {
-    const {type, payload} = action;
 
-    switch (type) {
+    switch (action.type) {
         case BLOG_DATA_FETCHED:
             return {
                 items: {
                     ...state.items,
-                    [payload.data.login]: payload.data,
+                    [action.payload.data.login]: action.payload.data,
                 }
             };
+
+        case BLOGS_DATA_FETCHED:
+            return {
+                items: {
+                    ...state.items,
+                    ...action.payload.data,
+                }
+            }
     }
 
     return state;

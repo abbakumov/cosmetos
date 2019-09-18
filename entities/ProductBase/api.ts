@@ -10,7 +10,7 @@ import {ProductColor} from '../ProductColor/types';
 export interface GetProductByIdResponse {
     productBase: ProductBase;
     productExtra: ProductExtra;
-    color: {
+    productColor: {
         [id: number]: ProductColor;
     };
     postBase: {

@@ -7,7 +7,7 @@ const initialState: ProductExtraState = {
     items: {},
 };
 
-export function productBaseReducer(state = initialState, action: ProductExtraActionType): ProductExtraState {
+export function productExtraReducer(state = initialState, action: ProductExtraActionType): ProductExtraState {
 
     switch (action.type) {
         case PRODUCT_EXTRA_DATA_FETCHED:

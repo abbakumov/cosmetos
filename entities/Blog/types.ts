@@ -1,6 +1,9 @@
 import {PostId} from '../PostBase/types';
 
-import {BLOG_DATA_FETCHED} from './actions';
+import {
+    BLOG_DATA_FETCHED,
+    BLOGS_DATA_FETCHED,
+} from './actions';
 
 export type BlogLogin = string;
 
@@ -19,10 +22,19 @@ export interface BlogDataFetchedAction {
         data: Blog;
     }
 };
+export interface BlogsDataFetchedAction {
+    type: typeof BLOGS_DATA_FETCHED;
+    payload: {
+        data: {
+            [id: number]: Blog;
+        }
+    }
+}
 // <- ACTIONS
 
 export type BlogActionType =
-    | BlogDataFetchedAction;
+    | BlogDataFetchedAction
+    | BlogsDataFetchedAction;
 
 export interface BlogState {
     items: {

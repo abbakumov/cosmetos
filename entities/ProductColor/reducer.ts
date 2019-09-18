@@ -7,7 +7,7 @@ const initialState: ProductColorState = {
     items: {},
 };
 
-export function productBaseReducer(state = initialState, action: ProductColorActionType): ProductColorState {
+export function productColorReducer(state = initialState, action: ProductColorActionType): ProductColorState {
 
     switch (action.type) {
         case PRODUCT_COLORS_DATA_FETCHED:

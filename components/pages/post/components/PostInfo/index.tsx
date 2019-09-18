@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 
 import {AppState} from '../../../../../store';
 import {PostId} from '../../../../../entities/PostBase/types';
-import { string } from 'prop-types';
 
 const styles = require('./styles.styl');
 
