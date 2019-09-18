@@ -6,6 +6,7 @@ export interface ProductExtra {
     id: ProductId;
     description: string;
     postIds: PostId[];
+    bigPicUrl: string;
 }
 
 // ACTIONS ->

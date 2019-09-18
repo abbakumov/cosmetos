@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import MobileLayout from '../../layouts/MobileLayout';
 
 import ProductInfo from './components/ProductInfo';
+import ProductPics from './components/ProductPics';
 
 import {ProductId} from '../../../entities/ProductBase/types';
 
@@ -17,8 +18,8 @@ class ProductPage extends Component<ProductPagePublicProps> {
         return (
             <MobileLayout>
                 <ProductInfo id={id} />
-                {/*<ProductPics />
-                <ProductColors />
+                <ProductPics id={id} />
+                {/*<ProductColors />
                 <ProductPosts />
                 <ProductOpinions />*/}
             </MobileLayout>
