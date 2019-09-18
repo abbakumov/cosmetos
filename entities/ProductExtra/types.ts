@@ -1,12 +1,14 @@
 import {PRODUCT_EXTRA_DATA_FETCHED} from './actions';
 import {ProductId} from '../ProductBase/types';
 import {PostId} from '../PostBase/types';
+import {ProductColorId} from '../ProductColor/types';
 
 export interface ProductExtra {
     id: ProductId;
     description: string;
     postIds: PostId[];
     bigPicUrl: string;
+    colorIds: ProductColorId[];
 }
 
 // ACTIONS ->
