@@ -5,6 +5,7 @@ import MobileLayout from '../../layouts/MobileLayout';
 import ProductInfo from './components/ProductInfo';
 import ProductPics from './components/ProductPics';
 import ProductColors from './components/ProductColors';
+import ProductPosts from './components/ProductPosts';
 
 import {ProductId} from '../../../entities/ProductBase/types';
 
@@ -21,8 +22,8 @@ class ProductPage extends Component<ProductPagePublicProps> {
                 <ProductInfo id={id} />
                 <ProductPics id={id} />
                 <ProductColors id={id} />
-                {/*<ProductPosts />
-                <ProductOpinions />*/}
+                <ProductPosts id={id} />
+                {/*<ProductOpinions />*/}
             </MobileLayout>
         )
     }

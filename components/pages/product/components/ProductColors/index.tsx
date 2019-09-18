@@ -22,7 +22,7 @@ class ProductColors extends Component<ProductColorsProps> {
         return (
             <div className={styles.root}>
                 {colors.map(color => (
-                    <div className={styles.item}>
+                    <div key={color.id} className={styles.item}>
                         <img className={styles.image} src={color.picUrl} />
                     </div>
                 ))}

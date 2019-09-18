@@ -1,26 +1,50 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
-import {BlogLogin} from '../../../entities/Blog/types';
+import {Blog, BlogLogin} from '../../../entities/Blog/types';
 
 import BlogHead from './components/BlogHead';
-import BlogList from './components/BlogList';
+import PostsList from '../../widgets/PostsList';
 import MobileLayout from '../../layouts/MobileLayout';
+import {AppState} from '../../../store';
+import {PostId} from '../../../entities/PostBase/types';
 
 export interface BlogPagePublicProps {
     login: BlogLogin,
 };
 
-class BlogPage extends Component<BlogPagePublicProps> {
+interface BlogPageProps {
+    login: BlogLogin;
+    postIds: PostId[];
+}
+
+class BlogPage extends Component<BlogPageProps> {
     render() {
-        const {login} = this.props;
+        const {login, postIds} = this.props;
 
         return (
             <MobileLayout>
                 <BlogHead login={login} />
-                <BlogList login={login} />
+                <PostsList
+                    title="Последние фотографии"
+                    postIds={postIds}
+                    namesVisible={false}
+                />
             </MobileLayout>
         )
     }
 }
 
-export default BlogPage;
+function mapStateToProps(state: AppState, ownProps: BlogPagePublicProps) {
+    const blogData: Blog = state.blog.items[ownProps.login];
+
+    const {postIds} = blogData;
+
+    return {
+        postIds,
+    };
+}
+
+const ConnectedBlogPage = connect(mapStateToProps)(BlogPage);
+
+export default ConnectedBlogPage;

@@ -1,4 +1,5 @@
 import {POST_BASE_DATA_FETCHED, POSTS_BASE_DATA_FETCHED} from './actions';
+import {BlogLogin} from '../Blog/types';
 
 export type PostId = number;
 
@@ -6,6 +7,7 @@ export interface PostBase {
     id: PostId;
     title: string;
     imageUrl: string;
+    authorLogin: BlogLogin;
 }
 
 // ACTIONS ->
