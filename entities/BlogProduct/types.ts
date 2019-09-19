@@ -3,7 +3,7 @@ import {BlogLogin} from '../Blog/types';
 import {BLOG_PRODUCTS_DATA_FETCHED} from './actions';
 import {ProductId} from '../ProductBase/types';
 
-type BlogProductId = number;
+export type BlogProductId = number;
 
 export interface BlogProduct {
     id: BlogProductId;
