@@ -19,7 +19,7 @@ class PostsList extends Component<PostsListPublicProps> {
 
         return (
             <div className={styles.root}>
-                <div className={styles.title}>{title}:</div>
+                <div className={styles.title}>{title}</div>
                 <div className={styles.container}>
                     {postIds.map(id => (
                         <PostsListPost

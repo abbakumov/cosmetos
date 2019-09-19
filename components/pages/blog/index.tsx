@@ -26,7 +26,7 @@ class BlogPage extends Component<BlogPageProps> {
             <MobileLayout>
                 <BlogHead login={login} />
                 <PostsList
-                    title="Последние фотографии"
+                    title="Последние посты"
                     postIds={postIds}
                     namesVisible={false}
                 />

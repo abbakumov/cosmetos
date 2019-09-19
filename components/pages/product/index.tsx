@@ -1,32 +1,57 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 import MobileLayout from '../../layouts/MobileLayout';
 
 import ProductInfo from './components/ProductInfo';
 import ProductPics from './components/ProductPics';
 import ProductColors from './components/ProductColors';
-import ProductPosts from './components/ProductPosts';
 
 import {ProductId} from '../../../entities/ProductBase/types';
+import PostsList from '../../widgets/PostsList';
+import {AppState} from '../../../store';
+import {PostId} from '../../../entities/PostBase/types';
 
 export interface ProductPagePublicProps {
-    id: ProductId,
+    id: ProductId;
 };
 
-class ProductPage extends Component<ProductPagePublicProps> {
+interface ProductPageProps {
+    id: ProductId;
+    postIds: PostId[],
+}
+
+class ProductPage extends Component<ProductPageProps> {
     render() {
-        const {id} = this.props;
+        const {id, postIds} = this.props;
 
         return (
             <MobileLayout>
                 <ProductInfo id={id} />
                 <ProductPics id={id} />
                 <ProductColors id={id} />
-                <ProductPosts id={id} />
+                <PostsList
+                    title="Последние посты"
+                    postIds={postIds}
+                    namesVisible={true}
+                />
                 {/*<ProductOpinions />*/}
             </MobileLayout>
         )
     }
 }
 
-export default ProductPage;
+function mapStateToProps(state: AppState, ownProps: ProductPagePublicProps) {
+    const {id} = ownProps;
+
+    const {postIds} = state.productExtra.items[id];
+
+    return {
+        id,
+        postIds,
+    };
+}
+
+const ConnectedProductPage = connect(mapStateToProps)(ProductPage);
+
+export default ConnectedProductPage;
