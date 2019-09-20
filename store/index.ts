@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 import {pagePostReducer} from '../components/pages/post/state/reducer';
+import {pageLoginReducer} from '../components/pages/login/state/reducer';
 
 import {blogReducer} from '../entities/Blog/reducer';
 import {postBaseReducer} from '../entities/PostBase/reducer';
@@ -16,6 +17,7 @@ import {productColorReducer} from '../entities/ProductColor/reducer';
 const rootReducer = combineReducers({
     // pages
     pagePost: pagePostReducer,
+    pageLogin: pageLoginReducer,
 
     // entities
     blog: blogReducer,
