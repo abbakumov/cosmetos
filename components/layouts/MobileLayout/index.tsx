@@ -7,7 +7,7 @@ export interface MobileLayoutPublicProps {}
 export default class MobileLayout extends Component<MobileLayoutPublicProps> {
     render() {
         return (
-            <div>
+            <div className={styles.root}>
                 <div className={styles.header}>
                     <img className={styles.logo} src="/static/icons/header-logo.png"/>
                 </div>
