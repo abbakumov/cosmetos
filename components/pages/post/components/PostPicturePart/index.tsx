@@ -1,10 +1,10 @@
 import {Component} from 'react';
 import {connect} from 'react-redux';
-import Link from 'next/link';
 
 import {AppState} from '../../../../../store';
 import {PostPartId} from '../../../../../entities/PostPart/types';
 import {Position} from '../../../../../entities/Position';
+import {postPageOpenScrollPartAction} from '../../state/actions';
 
 const styles = require('./styles.styl');
 
@@ -12,7 +12,7 @@ export interface PostPicturePartPublicProps {
     id: PostPartId;
 }
 
-interface PostPicturePartProps {
+interface DataProps {
     id: PostPartId;
     position: Position;
     title: string;
@@ -20,9 +20,22 @@ interface PostPicturePartProps {
     isOpen: boolean;
 }
 
-class PostPicturePart extends Component<PostPicturePartProps> {
+interface ActionProps {
+    postPageOpenScrollPartAction(id: PostPartId): void;
+}
+
+interface Props extends DataProps, ActionProps {}
+
+class PostPicturePart extends Component<Props> {
     render() {
-        const {id, position, title, color, isOpen} = this.props;
+        const {
+            id,
+            position,
+            title,
+            color,
+            isOpen,
+            postPageOpenScrollPartAction,
+        } = this.props;
 
         const style = {
             left: `${position.x}%`,
@@ -36,7 +49,11 @@ class PostPicturePart extends Component<PostPicturePartProps> {
         const className = `${styles.root} ${styles.isOpen}`;
 
         return (
-            <div className={className} style={style}>
+            <div
+                className={className}
+                style={style}
+                onClick={() => postPageOpenScrollPartAction(id)}
+            >
                 {isOpen &&
                     <div className={styles.content} style={contentStyle}>
                         {title}
@@ -52,7 +69,7 @@ class PostPicturePart extends Component<PostPicturePartProps> {
     }
 }
 
-function mapStateToProps(state: AppState, ownProps: PostPicturePartPublicProps): PostPicturePartProps {
+function mapStateToProps(state: AppState, ownProps: PostPicturePartPublicProps): DataProps {
     const {id} = ownProps;
 
     const postPart = state.postPart.items[id];
@@ -63,6 +80,10 @@ function mapStateToProps(state: AppState, ownProps: PostPicturePartPublicProps):
     return {id, position, title, color, isOpen};
 }
 
-const ConnectedPostPicturePart = connect(mapStateToProps)(PostPicturePart);
+const actions = {
+    postPageOpenScrollPartAction,
+};
+
+const ConnectedPostPicturePart = connect(mapStateToProps, actions)(PostPicturePart);
 
 export default ConnectedPostPicturePart;

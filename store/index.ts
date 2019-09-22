@@ -1,5 +1,6 @@
 import {createStore, combineReducers, applyMiddleware} from "redux";
 import thunk from 'redux-thunk';
+import {createScrollMiddleware} from 'react-redux-scroll';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 import {pagePostReducer} from '../components/pages/post/state/reducer';
@@ -32,12 +33,17 @@ const rootReducer = combineReducers({
 
 export type AppState = ReturnType<typeof rootReducer>;
 
+const getMiddlewares = () => applyMiddleware(
+    thunk,
+    createScrollMiddleware()
+);
+
 export const makeStore = (initialState) => {
     console.log('store initialState: ', initialState);
 
     return createStore(
         rootReducer,
-        initialState, 
-        composeWithDevTools(applyMiddleware(thunk))
+        initialState,
+        composeWithDevTools(getMiddlewares())
     );
 };

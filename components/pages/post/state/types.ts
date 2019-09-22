@@ -1,6 +1,7 @@
 import {
     POST_PAGE_TOGGLE_IS_PIC_PARTS_OPEN,
     POST_PAGE_OPEN_PART,
+    POST_PAGE_SCROLL_TO_PART,
     POST_PAGE_TOGGLE_PART,
 } from './actions';
 import {PostPartId} from '../../../../entities/PostPart/types';
@@ -22,6 +23,13 @@ export interface PostPageOpenPartAction {
         id: PostPartId;
     }
 };
+
+export interface PostPageScrollToPartAction {
+    type: typeof POST_PAGE_SCROLL_TO_PART;
+    payload: {
+        id: PostPartId;
+    }
+}
 
 export interface PostPageTogglePartAction {
     type: typeof POST_PAGE_TOGGLE_PART;

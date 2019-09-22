@@ -60,6 +60,6 @@ function mapStateToProps(state: AppState, ownProps: BlogHeadPublicProps): BlogHe
     };
 }
 
-const ConnectedBlogHead = connect<BlogHeadProps, {}, BlogHeadProps>(mapStateToProps)(BlogHead);
+const ConnectedBlogHead = connect(mapStateToProps)(BlogHead);
 
 export default ConnectedBlogHead;
