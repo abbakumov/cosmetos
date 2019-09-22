@@ -16,7 +16,11 @@ import {productExtraDataFetchedAction} from '../../entities/ProductExtra/actions
 
 const ProductPageWrapper: NextPage<ProductPagePublicProps> = (props) => (<ProductPage {...props} />);
 
-ProductPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<ProductPagePublicProps> {
+interface InitialProps extends ProductPagePublicProps {
+    title: string;
+}
+
+ProductPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<InitialProps> {
     const {query, store} = context;
     const queryId = query.id;
     const id = parseInt(_.castArray(queryId)[0]);
@@ -30,7 +34,14 @@ ProductPageWrapper.getInitialProps = async function(context: ICosPageContext): P
     store.dispatch(productColorsDataFetchedAction(data.productColor));
     store.dispatch(productExtraDataFetchedAction(data.productExtra));
 
-    return {id};
+    let title = 'Cosmetos';
+
+    const productTitle = data.productBase && data.productBase.title;
+    if (typeof productTitle !== 'undefined') {
+        title = `${productTitle} – Cosmetos`;
+    }
+
+    return {id, title};
 };
 
 export default ProductPageWrapper;

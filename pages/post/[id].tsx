@@ -16,7 +16,11 @@ import {getPostById} from '../../entities/PostBase/api';
 
 const PostPageWrapper: NextPage<PostPagePublicProps> = (props) => (<PostPage {...props} />);
 
-PostPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<PostPagePublicProps> {
+interface InitialProps extends PostPagePublicProps {
+    title: string;
+}
+
+PostPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<InitialProps> {
     const {query, store} = context;
     const queryId = query.id;
     const id = parseInt(_.castArray(queryId)[0]);
@@ -30,7 +34,14 @@ PostPageWrapper.getInitialProps = async function(context: ICosPageContext): Prom
     store.dispatch(productsBaseDataFetchedAction(data.productBase));
     store.dispatch(blogProductsDataFetchedAction(data.blogProduct));
 
-    return {id};
+    let title = 'Cosmetos';
+
+    const postTitle = data.postBase && data.postBase.title;
+    if (typeof postTitle !== 'undefined') {
+        title = `${postTitle} – Cosmetos`;
+    }
+
+    return {id, title};
 };
 
 export default PostPageWrapper;

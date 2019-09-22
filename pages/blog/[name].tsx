@@ -7,8 +7,12 @@ import BlogPage, {BlogPagePublicProps} from '../../components/pages/blog';
 import {ICosPageContext} from '../../types/context';
 import {postsBaseDataFetchedAction} from '../../entities/PostBase/actions';
 
-class BlogPageWrapper extends Component<BlogPagePublicProps> {
-    static async getInitialProps(ctx: ICosPageContext): Promise<BlogPagePublicProps> {
+interface InitialProps extends BlogPagePublicProps {
+    title: string;
+}
+
+class BlogPageWrapper extends Component<InitialProps> {
+    static async getInitialProps(ctx: ICosPageContext): Promise<InitialProps> {
         const {query, store} = ctx;
 
         // TODO: validate server data
@@ -19,8 +23,16 @@ class BlogPageWrapper extends Component<BlogPagePublicProps> {
 
         const login = blogData.blog.login;
 
+        let title = 'Cosmetos';
+
+        const bloggerName = blogData.blog && blogData.blog.name;
+        if (typeof bloggerName !== 'undefined') {
+            title = `${bloggerName} – Cosmetos`;
+        }
+
         return {
             login,
+            title,
         };
     }
 
