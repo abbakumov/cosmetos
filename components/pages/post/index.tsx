@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {PostId} from '../../../entities/PostBase/types';
 import MobileLayout from '../../layouts/MobileLayout';
 
+import PostHead from './components/PostHead';
 import PostPicture from './components/PostPicture';
 import PostBar from './components/PostBar';
 import PostInfo from './components/PostInfo';
@@ -18,6 +19,7 @@ class BlogPage extends Component<PostPagePublicProps> {
 
         return (
             <MobileLayout>
+                <PostHead id={id} />
                 <PostPicture id={id} />
                 <PostBar id={id} />
                 <PostInfo id={id} />
