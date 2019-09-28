@@ -33,3 +33,18 @@ export function getProductById(id: ProductId): Promise<GetProductByIdResponse> {
             return response.json() as Promise<GetProductByIdResponse>
         });
 }
+
+
+interface GetAdminProductsResponse {
+    productIds: ProductId[],
+    productBase: {
+        [id: number]: ProductBase;
+    };
+}
+
+export function getAdminProducts(): Promise<GetAdminProductsResponse> {
+    return Promise.resolve({
+        productIds: [0],
+        productBase: {},
+    })
+}
