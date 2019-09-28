@@ -11,6 +11,10 @@ export default class MobileLayout extends Component<MobileLayoutPublicProps> {
             <div className={styles.root}>
                 <Head>
                     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+                    <meta
+                        name="viewport"
+                        content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+                    />
                 </Head>
                 <div className={styles.header}>
                     <img className={styles.logo} src="/static/icons/header-logo.png"/>
