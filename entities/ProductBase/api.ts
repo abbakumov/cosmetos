@@ -48,3 +48,19 @@ export function getAdminProducts(): Promise<GetAdminProductsResponse> {
         productBase: {},
     })
 }
+
+
+export interface GetAdminProductByIdResponse {
+    productBase: ProductBase;
+}
+
+export function getAdminProductById(id: ProductId): Promise<GetAdminProductByIdResponse> {
+    return Promise.resolve({
+        productBase: {
+            id: 1,
+            brand: '',
+            title: '',
+            smallPicUrl: '',
+        }
+    });
+}

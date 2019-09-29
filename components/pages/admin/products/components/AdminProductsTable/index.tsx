@@ -35,11 +35,11 @@ const AdminProductsTable: FunctionComponent = () => (
                     >
                         <Icon
                             fontSize="small"
-                            className={styles.editIcon}
+                            className={styles.openIcon}
                         >
-                            edit
+                            open_in_new
                         </Icon>
-                        Edit
+                        Open
                     </Button>
                 </TableCell>
             </TableRow>
