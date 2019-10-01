@@ -1,7 +1,5 @@
 import {FunctionComponent} from 'react';
-
-import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
+import {connect} from 'react-redux';
 
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -9,9 +7,16 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-const styles = require('../../styles.styl');
+import {AppState} from '../../../../../../store';
+import {UnProductId} from '../../../../../../entities/UnProduct/types';
 
-const UnProductsTable: FunctionComponent = () => (
+import UnProductsTableRow from '../UnProductsTableRow';
+
+interface Props {
+    unProductIds: UnProductId[];
+};
+
+const UnProductsTable: FunctionComponent<Props> = (props: Props) => (
     <Table>
         <TableHead>
             <TableRow>
@@ -23,42 +28,17 @@ const UnProductsTable: FunctionComponent = () => (
             </TableRow>
         </TableHead>
         <TableBody>
-            <TableRow>
-                <TableCell>1</TableCell>
-                <TableCell>Nyx Cosmetos</TableCell>
-                <TableCell>Помада шмада</TableCell>
-                <TableCell>
-                    Elizabeth Ioda / Что-то там например
-                    <Button
-                        className={styles.openPostButton}
-                        variant="contained"
-                        size="small"
-                    >
-                        <Icon
-                            fontSize="small"
-                            className={styles.openIcon}
-                        >
-                            open_in_new
-                        </Icon>
-                    </Button>
-                </TableCell>
-                <TableCell>
-                    <Button
-                        variant="contained"
-                        size="small"
-                    >
-                        <Icon
-                            fontSize="small"
-                            className={styles.openIcon}
-                        >
-                            add
-                        </Icon>
-                        Привязать
-                    </Button>
-                </TableCell>
-            </TableRow>
+            {props.unProductIds.map(id => (
+                <UnProductsTableRow key={id} id={id} />
+            ))}
         </TableBody>
     </Table>
 );
 
-export default UnProductsTable;
+const mapStateToProps = (state: AppState): Props => ({
+    unProductIds: state.pageAdminProductsUnassigned.unProductIds,
+});
+
+const ConnectedUnProductsTable = connect(mapStateToProps)(UnProductsTable);
+
+export default ConnectedUnProductsTable;
