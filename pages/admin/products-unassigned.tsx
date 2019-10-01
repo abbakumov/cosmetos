@@ -6,9 +6,11 @@ import AdminProductsUnassignedPage, {
 } from '../../components/pages/admin/products-unassigned';
 import {ICosPageContext} from '../../types/context';
 
-// import {productBaseDataFetchedAction} from '../../entities/ProductBase/actions';
+import {getAdminUnProducts} from '../../entities/UnProduct/api';
 
-import {getAdminProductById} from '../../entities/ProductBase/api';
+import {unProductsDataFetchedAction} from '../../entities/UnProduct/actions';
+import {brandsDataFetchedAction} from '../../entities/Brand/actions';
+import {productsBaseDataFetchedAction} from '../../entities/ProductBase/actions';
 
 const AdminProductsUnassignedPageWrapper: NextPage<AdminProductsUnassignedPageProps>
     = (props) => (<AdminProductsUnassignedPage {...props} />);
@@ -20,8 +22,10 @@ interface InitialProps extends AdminProductsUnassignedPageProps {
 AdminProductsUnassignedPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<InitialProps> {
     const {store} = context;
 
-    // const data = await getAdminProductsUnassigned();
-    // store.dispatch(blogDataFetchedAction(data.blog));
+    const data = await getAdminUnProducts();
+    store.dispatch(unProductsDataFetchedAction(data.unProduct));
+    store.dispatch(brandsDataFetchedAction(data.brand));
+    store.dispatch(productsBaseDataFetchedAction(data.productBase));
 
     let title = 'Вольные продукты – Cosmetos Admin';
 

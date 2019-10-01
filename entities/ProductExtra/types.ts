@@ -8,6 +8,7 @@ export interface ProductExtra {
     description: string;
     postIds: PostId[];
     bigPicUrl: string;
+    isMultyColor: boolean;
     colorIds: ProductColorId[];
 }
 
