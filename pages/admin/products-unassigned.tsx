@@ -1,21 +1,22 @@
 import _ from 'lodash';
 import {NextPage} from 'next';
 
-import AdminProductsUnassignedPage, {
-    AdminProductsUnassignedPageProps
-} from '../../components/pages/admin/products-unassigned';
+import AdminProductsUnassignedPage from '../../components/pages/admin/products-unassigned';
 import {ICosPageContext} from '../../types/context';
+
+import {UnProductId} from '../../entities/UnProduct/types';
 
 import {getAdminUnProducts} from '../../entities/UnProduct/api';
 
+import {pageAdminUnProductsDataFetchedAction} from '../../components/pages/admin/products-unassigned/state/actions';
 import {unProductsDataFetchedAction} from '../../entities/UnProduct/actions';
 import {brandsDataFetchedAction} from '../../entities/Brand/actions';
 import {productsBaseDataFetchedAction} from '../../entities/ProductBase/actions';
 
-const AdminProductsUnassignedPageWrapper: NextPage<AdminProductsUnassignedPageProps>
+const AdminProductsUnassignedPageWrapper: NextPage<{}>
     = (props) => (<AdminProductsUnassignedPage {...props} />);
 
-interface InitialProps extends AdminProductsUnassignedPageProps {
+interface InitialProps {
     title: string;
 }
 
@@ -23,16 +24,18 @@ AdminProductsUnassignedPageWrapper.getInitialProps = async function(context: ICo
     const {store} = context;
 
     const data = await getAdminUnProducts();
+
+    const unProductIds: UnProductId[] = Object.keys(data.unProduct).map(id => parseInt(id));
+
+    store.dispatch(pageAdminUnProductsDataFetchedAction(unProductIds));
+
     store.dispatch(unProductsDataFetchedAction(data.unProduct));
     store.dispatch(brandsDataFetchedAction(data.brand));
     store.dispatch(productsBaseDataFetchedAction(data.productBase));
 
-    let title = 'Вольные продукты – Cosmetos Admin';
+    const title = 'Вольные продукты – Cosmetos Admin';
 
-    return {
-        productIds: [],
-        title
-    };
+    return {title};
 };
 
 export default AdminProductsUnassignedPageWrapper;

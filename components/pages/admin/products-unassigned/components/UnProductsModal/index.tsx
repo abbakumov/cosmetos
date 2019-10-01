@@ -12,7 +12,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const styles = require('./styles.styl');
+const styles = require('../../styles.styl');
 
 const UnProductsModal: FunctionComponent = () => (
     <Dialog open={false} onClose={() => console.log('on close')}>

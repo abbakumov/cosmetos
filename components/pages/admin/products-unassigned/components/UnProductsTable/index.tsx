@@ -9,7 +9,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-const styles = require('./styles.styl');
+const styles = require('../../styles.styl');
 
 const UnProductsTable: FunctionComponent = () => (
     <Table>
