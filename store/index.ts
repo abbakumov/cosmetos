@@ -5,6 +5,8 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 
 import {pagePostReducer} from '../components/pages/post/state/reducer';
 import {pageLoginReducer} from '../components/pages/login/state/reducer';
+import {pageAdminProductsUnassignedReducer}
+    from '../components/pages/admin/products-unassigned/state/reducer';
 
 import {blogReducer} from '../entities/Blog/reducer';
 import {postBaseReducer} from '../entities/PostBase/reducer';
@@ -14,11 +16,14 @@ import {postPartReducer} from '../entities/PostPart/reducer';
 import {productBaseReducer} from '../entities/ProductBase/reducer';
 import {productExtraReducer} from '../entities/ProductExtra/reducer';
 import {productColorReducer} from '../entities/ProductColor/reducer';
+import {unProductReducer} from '../entities/UnProduct/reducer';
+import {brandReducer} from '../entities/Brand/reducer';
 
 const rootReducer = combineReducers({
     // pages
     pagePost: pagePostReducer,
     pageLogin: pageLoginReducer,
+    pageAdminProductsUnassigned: pageAdminProductsUnassignedReducer,
 
     // entities
     blog: blogReducer,
@@ -29,6 +34,8 @@ const rootReducer = combineReducers({
     productBase: productBaseReducer,
     productExtra: productExtraReducer,
     productColor: productColorReducer,
+    unProduct: unProductReducer,
+    brand: brandReducer,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
