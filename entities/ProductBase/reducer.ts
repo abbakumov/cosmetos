@@ -8,7 +8,7 @@ const initialState: ProductBaseState = {
     items: {},
 };
 
-export function productBaseReducer(state = initialState, action: ProductBaseActionType): ProductBaseState {
+export function productBaseReducer(state: ProductBaseState = initialState, action: ProductBaseActionType): ProductBaseState {
 
     switch (action.type) {
         case PRODUCT_BASE_DATA_FETCHED:

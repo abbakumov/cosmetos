@@ -4,6 +4,8 @@ const getBlog = require('./controllers/getBlog');
 const getPost = require('./controllers/getPost');
 const getProduct = require('./controllers/getProduct');
 
+const getUnProducts = require('./controllers/admin/getUnProducts');
+
 const routes = [
     {
         route: '/blog/:name',
@@ -19,6 +21,13 @@ const routes = [
         route: '/product/:id',
         method: 'get',
         controller: getProduct,
+    },
+
+    //admin
+    {
+        route: '/admin/un-products',
+        method: 'get',
+        controller: getUnProducts,
     },
 ];
 
