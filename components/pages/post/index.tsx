@@ -13,7 +13,7 @@ export interface PostPagePublicProps {
     id: PostId,
 };
 
-class BlogPage extends Component<PostPagePublicProps> {
+class PostPage extends Component<PostPagePublicProps> {
     render() {
         const {id} = this.props;
 
@@ -29,4 +29,4 @@ class BlogPage extends Component<PostPagePublicProps> {
     }
 }
 
-export default BlogPage;
+export default PostPage;
