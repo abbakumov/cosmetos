@@ -8,6 +8,7 @@ import AppBar from '@material-ui/core/AppBar';
 import DesktopLayout from '../../layouts/DesktopLayout';
 
 import PostEditPhoto from './components/PostEditPhoto';
+import PostEditInfo from './components/PostEditInfo';
 
 const styles = require('./styles.styl');
 
@@ -30,6 +31,7 @@ const PostEditPage: FunctionComponent = () => (
         <div className={styles.content}>
             <div className={styles.left}>
                 <PostEditPhoto />
+                <PostEditInfo />
             </div>
             <div className={styles.right}>
                 right
