@@ -4,6 +4,7 @@ import {createScrollMiddleware} from 'react-redux-scroll';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 import {pagePostReducer} from '../components/pages/post/state/reducer';
+import {pagePostEditReducer} from '../components/pages/post-edit/store/reducer';
 import {pageLoginReducer} from '../components/pages/login/state/reducer';
 import {pageAdminProductsUnassignedReducer}
     from '../components/pages/admin/products-unassigned/state/reducer';
@@ -22,6 +23,7 @@ import {brandReducer} from '../entities/Brand/reducer';
 const rootReducer = combineReducers({
     // pages
     pagePost: pagePostReducer,
+    pagePostEdit: pagePostEditReducer,
     pageLogin: pageLoginReducer,
     pageAdminProductsUnassigned: pageAdminProductsUnassignedReducer,
 
