@@ -15,7 +15,7 @@ const initialState: PagePostEditState = {
         description: '',
     },
     postPartIds: [],
-    postPartItems: {},
+    editPostPart: null,
 }
 
 export function pagePostEditReducer(state: PagePostEditState = initialState, action: PagePostEditActionType): PagePostEditState {

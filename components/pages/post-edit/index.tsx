@@ -9,6 +9,7 @@ import DesktopLayout from '../../layouts/DesktopLayout';
 
 import PostEditPhoto from './components/PostEditPhoto';
 import PostEditInfo from './components/PostEditInfo';
+import PostEditParts from './components/PostEditParts';
 
 const styles = require('./styles.styl');
 
@@ -34,7 +35,7 @@ const PostEditPage: FunctionComponent = () => (
                 <PostEditInfo />
             </div>
             <div className={styles.right}>
-                right
+                <PostEditParts />
             </div>
         </div>
     </DesktopLayout>
