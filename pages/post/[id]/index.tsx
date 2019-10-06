@@ -2,17 +2,17 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 import {NextPage} from 'next';
 
-import PostPage, {PostPagePublicProps} from '../../components/pages/post';
-import {ICosPageContext} from '../../types/context';
+import PostPage, {PostPagePublicProps} from '../../../components/pages/post';
+import {ICosPageContext} from '../../../types/context';
 
-import {blogDataFetchedAction} from '../../entities/Blog/actions';
-import {postBaseDataFetchedAction} from '../../entities/PostBase/actions';
-import {postExtraDataFetchedAction} from '../../entities/PostExtra/actions';
-import {postPartsDataFetchedAction} from '../../entities/PostPart/actions';
-import {productsBaseDataFetchedAction} from '../../entities/ProductBase/actions';
-import {blogProductsDataFetchedAction} from '../../entities/BlogProduct/actions';
+import {blogDataFetchedAction} from '../../../entities/Blog/actions';
+import {postBaseDataFetchedAction} from '../../../entities/PostBase/actions';
+import {postExtraDataFetchedAction} from '../../../entities/PostExtra/actions';
+import {postPartsDataFetchedAction} from '../../../entities/PostPart/actions';
+import {productsBaseDataFetchedAction} from '../../../entities/ProductBase/actions';
+import {blogProductsDataFetchedAction} from '../../../entities/BlogProduct/actions';
 
-import {getPostById} from '../../entities/PostBase/api';
+import {getPostById} from '../../../entities/PostBase/api';
 
 const PostPageWrapper: NextPage<PostPagePublicProps> = (props) => (<PostPage {...props} />);
 

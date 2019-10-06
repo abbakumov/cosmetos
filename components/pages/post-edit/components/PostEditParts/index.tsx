@@ -15,11 +15,11 @@ interface Props {
     partIds: PostPartId[];
 }
 
-const PostIditParts: FunctionComponent<Props> = (props: Props) => (
+const PostЕditParts: FunctionComponent<Props> = (props: Props) => (
     <div className={styles.root}>
         <div className={styles.container}>
             {props.partIds.map(id => (
-                <PostEditPart id={id} />
+                <PostEditPart key={id} id={id} />
             ))}
         </div>
         <Paper className={styles.controls}>
@@ -36,6 +36,6 @@ function mapStateToProps(state: AppState) {
     };
 }
 
-const ConnectedPostIditParts = connect(mapStateToProps)(PostIditParts);
+const ConnectedPostЕditParts = connect(mapStateToProps)(PostЕditParts);
 
-export default ConnectedPostIditParts;
+export default ConnectedPostЕditParts;

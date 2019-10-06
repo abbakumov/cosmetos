@@ -2,6 +2,7 @@ const Router = require('koa-router');
 
 const getBlog = require('./controllers/getBlog');
 const getPost = require('./controllers/getPost');
+const getPostEdit = require('./controllers/getPostEdit');
 const getProduct = require('./controllers/getProduct');
 
 const getUnProducts = require('./controllers/admin/getUnProducts');
@@ -16,6 +17,11 @@ const routes = [
         route: '/post/:id',
         method: 'get',
         controller: getPost,
+    },
+    {
+        route: '/post/:id/edit',
+        method: 'get',
+        controller: getPostEdit,
     },
     {
         route: '/product/:id',
