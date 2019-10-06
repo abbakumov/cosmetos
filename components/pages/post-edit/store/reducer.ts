@@ -4,7 +4,8 @@ import {
 } from './types';
 
 import {
-    POST_EDIT_PAGE_DATA_FETCHED
+    POST_EDIT_PAGE_DATA_FETCHED,
+    POST_EDIT_START_ADD_PRODUCT,
 } from './actions';
 
 const initialState: PagePostEditState = {
@@ -30,6 +31,15 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
             return {
                 ...state,
                 ...action.payload,
+            };
+
+        case POST_EDIT_START_ADD_PRODUCT:
+            return {
+                ...state,
+                editPostPartProduct: {
+                    ...state.editPostPartProduct,
+                    postPartId: action.payload.partId,
+                }
             };
     }
 

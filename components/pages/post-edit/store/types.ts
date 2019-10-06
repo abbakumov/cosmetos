@@ -6,7 +6,8 @@ import {ProductId} from '../../../../entities/ProductBase/types';
 import {ProductColorId} from '../../../../entities/ProductColor/types';
 
 import {
-    POST_EDIT_PAGE_DATA_FETCHED
+    POST_EDIT_PAGE_DATA_FETCHED,
+    POST_EDIT_START_ADD_PRODUCT,
 } from './actions';
 
 export interface PagePostEditState {
@@ -33,5 +34,13 @@ export interface PostEditPageDataFetchedAction {
     payload: PostEditPageData;
 }
 
+export interface PostEditStartAddProductAction {
+    type: typeof POST_EDIT_START_ADD_PRODUCT;
+    payload: {
+        partId: PostPartId;
+    };
+}
+
 export type PagePostEditActionType =
-    | PostEditPageDataFetchedAction;
+    | PostEditPageDataFetchedAction
+    | PostEditStartAddProductAction;
