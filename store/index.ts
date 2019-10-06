@@ -13,6 +13,7 @@ import {blogReducer} from '../entities/Blog/reducer';
 import {postBaseReducer} from '../entities/PostBase/reducer';
 import {postExtraReducer} from '../entities/PostExtra/reducer';
 import {blogProductReducer} from '../entities/BlogProduct/reducer';
+import {postProductReducer} from '../entities/PostProduct/reducer';
 import {postPartReducer} from '../entities/PostPart/reducer';
 import {productBaseReducer} from '../entities/ProductBase/reducer';
 import {productExtraReducer} from '../entities/ProductExtra/reducer';
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
     postBase: postBaseReducer,
     postExtra: postExtraReducer,
     blogProduct: blogProductReducer,
+    postProduct: postProductReducer,
     postPart: postPartReducer,
     productBase: productBaseReducer,
     productExtra: productExtraReducer,
