@@ -9,6 +9,7 @@ const DesktopLayout: FunctionComponent<DesktopLayoutPublicProps> = (props) => (
     <div className={styles.root}>
         <Head>
             <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
         </Head>
         <div className={styles.content}>
             {props.children}

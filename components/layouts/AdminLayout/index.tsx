@@ -16,6 +16,7 @@ const AdminLayout: FunctionComponent<AdminLayoutPublicProps> = (props) => {
     return (
         <div>
             <Head>
+                <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             </Head>
             <div>

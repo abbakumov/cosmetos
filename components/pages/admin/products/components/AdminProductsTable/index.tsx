@@ -2,7 +2,6 @@ import {FunctionComponent} from 'react';
 
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
-
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';

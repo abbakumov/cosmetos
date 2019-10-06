@@ -16,6 +16,12 @@ const initialState: PagePostEditState = {
     },
     postPartIds: [],
     editPostPart: null,
+    editPostPartProduct: {
+        postPartId: null,
+        brandId: null,
+        productId: null,
+        productColorId: null,
+    },
 }
 
 export function pagePostEditReducer(state: PagePostEditState = initialState, action: PagePostEditActionType): PagePostEditState {
