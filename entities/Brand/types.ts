@@ -8,18 +8,18 @@ export interface Brand {
     fullName: string;
 }
 
+export interface BrandMap {
+    [id: number]: Brand;
+}
+
 export interface BrandState {
-    items: {
-        [id: number]: Brand;
-    };
+    items: BrandMap;
 }
 
 export interface BrandsDataFetchedAction {
     type: typeof BRANDS_DATA_FETCHED;
     payload: {
-        data: {
-            [id: number]: Brand;
-        };
+        data: BrandMap;
     };
 }
 

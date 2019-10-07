@@ -6,6 +6,7 @@ import {ProductBase} from '../ProductBase/types';
 import {PostProduct} from '../PostProduct/types';
 import {ProductExtra} from '../ProductExtra/types';
 import {ProductColor} from '../ProductColor/types';
+import {BrandMap} from '../Brand/types';
 
 import {PostEdit} from './types';
 
@@ -23,6 +24,7 @@ export interface GetPostEditByIdResponse {
     productColor: {
         [id: number]: ProductColor;
     };
+    brand: BrandMap;
 }
 
 export function getPostEditById(id: PostId): Promise<GetPostEditByIdResponse> {

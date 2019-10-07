@@ -19,8 +19,11 @@ const initialState: PagePostEditState = {
     editPostPart: null,
     editPostPartProduct: {
         postPartId: null,
+        brandText: '',
         brandId: null,
+        productText: '',
         productId: null,
+        productColorText: '',
         productColorId: null,
     },
 }

@@ -4,6 +4,7 @@ import {PostId} from '../../../../entities/PostBase/types';
 import {BrandId} from '../../../../entities/Brand/types';
 import {ProductId} from '../../../../entities/ProductBase/types';
 import {ProductColorId} from '../../../../entities/ProductColor/types';
+import {FetchStatus} from '../../../../entities/FetchStatus';
 
 import {
     POST_EDIT_PAGE_DATA_FETCHED,
@@ -18,8 +19,22 @@ export interface PagePostEditState {
     // used for additing
     editPostPartProduct: {
         postPartId?: PostPartId;
+        // in each next section there can be only text(not selected item) or id of selected item:
+
+        // BRAND
+        brandText: string;
         brandId?: BrandId;
+        // brandFetchStatus: {
+        //     [id: number]: FetchStatus;
+        // }
+
+        // PRODUCT
+        productText: string;
         productId?: ProductId;
+
+
+        // PRODUCT COLOR
+        productColorText: string;
         productColorId?: ProductColorId;
     };
 }

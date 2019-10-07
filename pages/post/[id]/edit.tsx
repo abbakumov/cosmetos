@@ -8,11 +8,12 @@ import {postEditDataFetchedAction} from '../../../components/pages/post-edit/sto
 // import {blogDataFetchedAction} from '../../entities/Blog/actions';
 
 import {getPostEditById} from '../../../entities/PostEdit/api';
-import { postPartsDataFetchedAction } from '../../../entities/PostPart/actions';
-import { productBaseDataFetchedAction } from '../../../entities/ProductBase/actions';
-import { productExtraDataFetchedAction } from '../../../entities/ProductExtra/actions';
-import { productColorsDataFetchedAction } from '../../../entities/ProductColor/actions';
-import { postProductsDataFetchedAction } from '../../../entities/PostProduct/actions';
+import {postPartsDataFetchedAction} from '../../../entities/PostPart/actions';
+import {productBaseDataFetchedAction} from '../../../entities/ProductBase/actions';
+import {productExtraDataFetchedAction} from '../../../entities/ProductExtra/actions';
+import {productColorsDataFetchedAction} from '../../../entities/ProductColor/actions';
+import {postProductsDataFetchedAction} from '../../../entities/PostProduct/actions';
+import {brandsDataFetchedAction} from '../../../entities/Brand/actions';
 
 const PostEditPageWrapper: NextPage<{}> = (props) => (<PostEditPage {...props} />);
 
@@ -36,8 +37,7 @@ PostEditPageWrapper.getInitialProps = async function(context: ICosPageContext): 
     store.dispatch(productExtraDataFetchedAction(data.productExtra));
     store.dispatch(productColorsDataFetchedAction(data.productColor));
     store.dispatch(postProductsDataFetchedAction(data.postProduct));
-
-    // postProduct
+    store.dispatch(brandsDataFetchedAction(data.brand));
 
     let title = 'Редактирование поста – Cosmetos';
 

@@ -19,13 +19,13 @@ const PostEditPartAddProduct: FunctionComponent<Props> = (props: Props) => (
         <div className={styles.content}>
             <Grid container spacing={3}>
                 <Grid item xs={4}>
-                    <PostEditPartProductDropDown />
+                    <PostEditPartProductDropDown id="brand" />
                 </Grid>
                 <Grid item xs={4}>
-                    {/* <PostEditPartProductDropDown /> */}
+                    <PostEditPartProductDropDown id="product" />
                 </Grid>
                 <Grid item xs={4}>
-                    {/* <PostEditPartProductDropDown /> */}
+                    <PostEditPartProductDropDown id="color" />
                 </Grid>
             </Grid>
         </div>
