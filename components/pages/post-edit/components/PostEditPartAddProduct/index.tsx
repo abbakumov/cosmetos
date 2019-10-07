@@ -22,8 +22,10 @@ const PostEditPartAddProduct: FunctionComponent<Props> = (props: Props) => (
                     <PostEditPartProductDropDown />
                 </Grid>
                 <Grid item xs={4}>
+                    {/* <PostEditPartProductDropDown /> */}
                 </Grid>
                 <Grid item xs={4}>
+                    {/* <PostEditPartProductDropDown /> */}
                 </Grid>
             </Grid>
         </div>
