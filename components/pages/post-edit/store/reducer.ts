@@ -6,6 +6,8 @@ import {
 import {
     POST_EDIT_PAGE_DATA_FETCHED,
     POST_EDIT_START_ADD_PRODUCT,
+    POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE,
+    POST_EDIT_PRODUCT_BRAND_CHANGE,
 } from './actions';
 
 const initialState: PagePostEditState = {
@@ -42,6 +44,24 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 editPostPartProduct: {
                     ...state.editPostPartProduct,
                     postPartId: action.payload.partId,
+                }
+            };
+
+        case POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE:
+            return {
+                ...state,
+                editPostPartProduct: {
+                    ...state.editPostPartProduct,
+                    [action.payload.fieldName]: action.payload.value,
+                }
+            };
+
+        case POST_EDIT_PRODUCT_BRAND_CHANGE:
+            return {
+                ...state,
+                editPostPartProduct: {
+                    ...state.editPostPartProduct,
+                    brandId: action.payload.id,
                 }
             };
     }

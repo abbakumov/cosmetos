@@ -1,6 +1,5 @@
 import {PostPartId, PostPart} from '../../../../entities/PostPart/types';
 import {PostEdit} from '../../../../entities/PostEdit/types';
-import {PostId} from '../../../../entities/PostBase/types';
 import {BrandId} from '../../../../entities/Brand/types';
 import {ProductId} from '../../../../entities/ProductBase/types';
 import {ProductColorId} from '../../../../entities/ProductColor/types';
@@ -9,6 +8,8 @@ import {FetchStatus} from '../../../../entities/FetchStatus';
 import {
     POST_EDIT_PAGE_DATA_FETCHED,
     POST_EDIT_START_ADD_PRODUCT,
+    POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE,
+    POST_EDIT_PRODUCT_BRAND_CHANGE,
 } from './actions';
 
 export interface PagePostEditState {
@@ -56,6 +57,23 @@ export interface PostEditStartAddProductAction {
     };
 }
 
+export interface PostEditProductFieldTextChangeAction {
+    type: typeof POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE;
+    payload: {
+        fieldName: string;
+        value: string;
+    };
+}
+
+export interface PostEditProductBrandChangeAction {
+    type: typeof POST_EDIT_PRODUCT_BRAND_CHANGE
+    payload: {
+        id: BrandId;
+    };
+}
+
 export type PagePostEditActionType =
     | PostEditPageDataFetchedAction
-    | PostEditStartAddProductAction;
+    | PostEditStartAddProductAction
+    | PostEditProductFieldTextChangeAction
+    | PostEditProductBrandChangeAction;

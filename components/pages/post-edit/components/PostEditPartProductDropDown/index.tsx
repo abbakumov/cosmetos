@@ -9,6 +9,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {BrandMap} from '../../../../../entities/Brand/types';
 import {AppState} from '../../../../../store';
 
+import {
+    postEditProductFieldTextChangeAction,
+    postEditProductBrandChangeAction,
+} from '../../store/actions';
+
 const styles = require('./styles.styl');
 
 interface SuggestItem {
@@ -16,8 +21,7 @@ interface SuggestItem {
 }
 
 export interface PostEditPartProductDropDownProps {
-    // TODO: enum
-    id: string;
+    id: 'brand' | 'product' | 'color';
 }
 
 interface MappedProps {
@@ -26,20 +30,18 @@ interface MappedProps {
 }
 
 interface ActionProps {
-
+    fieldChange(value: string): void;
+    fieldTextChange(value: string): void;
 }
 
 interface Props extends MappedProps, ActionProps {}
 
-
 const PostEditPartProductDropDown: FunctionComponent<Props> = (props: Props) => (
     <div className={styles.root}>
         <Downshift
-            onChange={value => {
-                console.log('downshift change, value: ', value);
-            }}
+            onChange={value => props.fieldChange(value)}
             inputValue={props.value}
-            // onInputValueChange={value => { }}
+            onInputValueChange={value => props.fieldTextChange(value)}
             itemToString={item => (item ? item.value : '')}
         >
             {({
@@ -82,14 +84,11 @@ const PostEditPartProductDropDown: FunctionComponent<Props> = (props: Props) => 
 );
 
 function getFilteredBrandItems(items: BrandMap, value: string): SuggestItem[] {
-    console.log('value: ', value);
-    // console.log('items: ', Object.keys(items)
-    // .filter(id => items[id].fullName.includes(value)))
-
     return Object.keys(items)
-        .filter(id => items[id].fullName.includes(value))
+        .filter(id => items[id].fullName.toLowerCase().includes(value.toLowerCase()))
         .map(id => ({
             value: items[id].fullName,
+            id,
         }))
 }
 
@@ -121,8 +120,37 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
     return {value, items};
 }
 
-const mapDispatchToProps: ActionProps = {
 
+function mapDispatchToProps(dispatch, ownProps: PostEditPartProductDropDownProps): ActionProps {
+
+    let textChangeFieldName = '';
+
+    switch (ownProps.id) {
+        case 'brand':
+            textChangeFieldName = 'brandText';
+            break;
+
+        case 'product':
+            textChangeFieldName = 'productText';
+            break;
+
+        case 'color':
+            textChangeFieldName = 'productColorText';
+            break;
+    }
+
+    return {
+        fieldChange(value?: string) {
+            switch (ownProps.id) {
+                case 'brand':
+                    dispatch(postEditProductBrandChangeAction(value));
+                    break;
+            }
+        },
+        fieldTextChange(value?: string) {
+            dispatch(postEditProductFieldTextChangeAction(textChangeFieldName, value || ''));
+        }
+    };
 };
 
 const ConnectedPostEditPartProductDropDown =
