@@ -10,6 +10,7 @@ import {
     POST_EDIT_START_ADD_PRODUCT,
     POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE,
     POST_EDIT_PRODUCT_BRAND_CHANGE,
+    POST_EDIT_PRODUCT_PRODUCT_CHANGE,
 } from './actions';
 
 export interface PagePostEditState {
@@ -25,13 +26,18 @@ export interface PagePostEditState {
         // BRAND
         brandText: string;
         brandId?: BrandId;
-        // brandFetchStatus: {
+        // TODO: use statuses!
+        // brandProductsFetchStatus: {
         //     [id: number]: FetchStatus;
         // }
 
         // PRODUCT
         productText: string;
         productId?: ProductId;
+        // productExtra contains all colors
+        // productExtraFetchStatus: {
+        //     [id: number]: FetchStatus;
+        // }
 
 
         // PRODUCT COLOR
@@ -66,14 +72,22 @@ export interface PostEditProductFieldTextChangeAction {
 }
 
 export interface PostEditProductBrandChangeAction {
-    type: typeof POST_EDIT_PRODUCT_BRAND_CHANGE
+    type: typeof POST_EDIT_PRODUCT_BRAND_CHANGE;
     payload: {
         id: BrandId;
     };
+}
+
+export interface PostEditProductProductChangeAction {
+    type: typeof POST_EDIT_PRODUCT_PRODUCT_CHANGE;
+    payload: {
+        id: ProductId;
+    }
 }
 
 export type PagePostEditActionType =
     | PostEditPageDataFetchedAction
     | PostEditStartAddProductAction
     | PostEditProductFieldTextChangeAction
-    | PostEditProductBrandChangeAction;
+    | PostEditProductBrandChangeAction
+    | PostEditProductProductChangeAction;

@@ -12,6 +12,10 @@ export interface ProductBase {
     smallPicUrl: string;
 }
 
+export interface ProductBaseMap {
+    [id: number]: ProductBase;
+}
+
 // ACTIONS ->
 export interface ProductBaseDataFetchedAction {
     type: typeof PRODUCT_BASE_DATA_FETCHED;
@@ -23,9 +27,7 @@ export interface ProductBaseDataFetchedAction {
 export interface ProductsBaseDataFetchedAction {
     type: typeof PRODUCTS_BASE_DATA_FETCHED;
     payload: {
-        data: {
-            [id: number]: ProductBase;
-        }
+        data: ProductBaseMap;
     }
 };
 // <- ACTIONS
@@ -35,7 +37,5 @@ export type ProductBaseActionType =
     | ProductsBaseDataFetchedAction;
 
 export interface ProductBaseState {
-    items: {
-        [id: number]: ProductBase;
-    }
+    items: ProductBaseMap
 };

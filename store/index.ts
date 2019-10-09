@@ -20,6 +20,7 @@ import {productExtraReducer} from '../entities/ProductExtra/reducer';
 import {productColorReducer} from '../entities/ProductColor/reducer';
 import {unProductReducer} from '../entities/UnProduct/reducer';
 import {brandReducer} from '../entities/Brand/reducer';
+import {brandProductsReducer} from '../entities/BrandProducts/reducer';
 
 const rootReducer = combineReducers({
     // pages
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
     productColor: productColorReducer,
     unProduct: unProductReducer,
     brand: brandReducer,
+    brandProducts: brandProductsReducer,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
