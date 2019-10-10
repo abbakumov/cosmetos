@@ -4,6 +4,7 @@ const getBlog = require('./controllers/getBlog');
 const getPost = require('./controllers/getPost');
 const getPostEdit = require('./controllers/getPostEdit');
 const getProduct = require('./controllers/getProduct');
+const getProductColors = require('./controllers/getProductColors');
 const getBrandProducts = require('./controllers/getBrandProducts');
 
 const getUnProducts = require('./controllers/admin/getUnProducts');
@@ -28,6 +29,11 @@ const routes = [
         route: '/product/:id',
         method: 'get',
         controller: getProduct,
+    },
+    {
+        route: '/product/:id/colors',
+        method: 'get',
+        controller: getProductColors,
     },
     {
         route: '/brand/:id/products',

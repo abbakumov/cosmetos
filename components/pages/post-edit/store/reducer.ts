@@ -9,6 +9,7 @@ import {
     POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE,
     POST_EDIT_PRODUCT_BRAND_CHANGE,
     POST_EDIT_PRODUCT_PRODUCT_CHANGE,
+    POST_EDIT_PRODUCT_COLOR_CHANGE,
 } from './actions';
 
 const initialState: PagePostEditState = {
@@ -74,6 +75,15 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                     productId: action.payload.id,
                 }
             };
+
+        case POST_EDIT_PRODUCT_COLOR_CHANGE:
+            return {
+                ...state,
+                editPostPartProduct: {
+                    ...state.editPostPartProduct,
+                    productColorId: action.payload.colorId,
+                }
+            }
     }
 
     return state;

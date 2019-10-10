@@ -35,6 +35,22 @@ export function getProductById(id: ProductId): Promise<GetProductByIdResponse> {
 }
 
 
+export interface GetProductColorsResponse {
+    productExtra: ProductExtra;
+    productColor: ProductColor[];
+}
+
+export function getProductColors(id: ProductId): Promise<GetProductColorsResponse> {
+    return fetch(`http://localhost:3000/api/product/${id}/colors`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText)
+            }
+            return response.json() as Promise<GetProductColorsResponse>
+        });
+}
+
+
 interface GetAdminProductsResponse {
     productIds: ProductId[],
     productBase: {

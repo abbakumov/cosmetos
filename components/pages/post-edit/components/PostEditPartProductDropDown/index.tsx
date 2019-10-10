@@ -1,4 +1,4 @@
-import {FunctionComponent} from 'react';
+import {Component} from 'react';
 import {connect} from 'react-redux';
 import Downshift from 'downshift';
 
@@ -13,11 +13,13 @@ import {
     postEditProductFieldTextChangeAction,
     postEditProductBrandChangeAction,
     postEditProductProductChangeAction,
+    postEditProductColorChangeAction,
 } from '../../store/actions';
 
 const styles = require('./styles.styl');
 
 interface SuggestItem {
+    id?: number;
     value: string;
 }
 
@@ -33,63 +35,78 @@ interface MappedProps {
 }
 
 interface ActionProps {
-    fieldChange(value: string): void;
+    fieldChange(value: string | number): void;
     fieldTextChange(value: string): void;
 }
 
 interface Props extends MappedProps, ActionProps {}
 
-const PostEditPartProductDropDown: FunctionComponent<Props> = (props: Props) => {
-    if (!props.isActive) {
-        return null;
+function getItemId<T>(items: {id: T, value: string}[], value: string): T {
+    return items.find(item => item.value === value).id;
+}
+
+class PostEditPartProductDropDown extends Component<Props> {
+    onChange = (value) => {
+        if (this.props.items.length && this.props.items[0].id) {
+            const {id} = this.props.items.find(item => item.value === value);
+            this.props.fieldChange(id);
+        } else {
+            this.props.fieldChange(value);
+        }
     }
 
-    return (
-        <div className={styles.root}>
-            <Downshift
-                onChange={value => props.fieldChange(value)}
-                inputValue={props.value}
-                onInputValueChange={value => props.fieldTextChange(value)}
-                itemToString={item => (item ? item.value : '')}
-            >
-                {({
-                    getInputProps,
-                    getItemProps,
-                    getLabelProps,
-                    getMenuProps,
-                    isOpen,
-                    inputValue,
-                    highlightedIndex,
-                    selectedItem,
-                }) => {
-                    return (
-                        <div className={styles.container}>
-                            <TextField
-                                label={props.label}
-                                {...getInputProps()}
-                                fullWidth
-                            />
-                            {isOpen &&
-                                <Paper className={styles.suggest}>
-                                    {props.items
-                                        .map((item, index) => (
-                                            <MenuItem
-                                                {...getItemProps({item: item.value})}
-                                                key={item.value}
-                                                selected={highlightedIndex === index}
-                                            >
-                                                {item.value}
-                                            </MenuItem>
-                                        ))
-                                    }
-                                </Paper>
-                            }
-                        </div>
-                    )
-                }}
-            </Downshift>
-        </div>
-    );
+    render() {
+        if (!this.props.isActive) {
+            return null;
+        }
+
+        return (
+            <div className={styles.root}>
+                <Downshift
+                    onChange={this.onChange}
+                    inputValue={this.props.value}
+                    onInputValueChange={value => this.props.fieldTextChange(value)}
+                    itemToString={item => (item ? item.value : '')}
+                >
+                    {({
+                        getInputProps,
+                        getItemProps,
+                        getLabelProps,
+                        getMenuProps,
+                        isOpen,
+                        inputValue,
+                        highlightedIndex,
+                        selectedItem,
+                    }) => {
+                        return (
+                            <div className={styles.container}>
+                                <TextField
+                                    label={this.props.label}
+                                    {...getInputProps()}
+                                    fullWidth
+                                />
+                                {isOpen &&
+                                    <Paper className={styles.suggest}>
+                                        {this.props.items
+                                            .map((item, index) => (
+                                                <MenuItem
+                                                    {...getItemProps({item: item.value})}
+                                                    key={item.value}
+                                                    selected={highlightedIndex === index}
+                                                >
+                                                    {item.value}
+                                                </MenuItem>
+                                            ))
+                                        }
+                                    </Paper>
+                                }
+                            </div>
+                        )
+                    }}
+                </Downshift>
+            </div>
+        );
+    }
 }
 
 function getFilteredBrandItems(items: BrandMap, value: string): SuggestItem[] {
@@ -97,7 +114,6 @@ function getFilteredBrandItems(items: BrandMap, value: string): SuggestItem[] {
         .filter(id => items[id].fullName.toLowerCase().includes(value.toLowerCase()))
         .map(id => ({
             value: items[id].fullName,
-            id,
         }))
 }
 
@@ -143,8 +159,22 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
             break;
 
         case 'color':
-            isActive = false;
+            if (editPostPartProduct.productColorId) {
+                value = state.productColor.items[editPostPartProduct.productColorId].title;
+            } else {
+                value = editPostPartProduct.productColorText;
+            }
             label = 'Цвет';
+            const {productId} = state.pagePostEdit.editPostPartProduct;
+            if (productId && state.productExtra.items[productId]) {
+                const {colorIds} = state.productExtra.items[productId];
+                items = colorIds
+                    .map(id => state.productColor.items[id])
+                    .map(({id, title}) => ({id, value: title}));
+            } else {
+                isActive = false;
+            }
+
             break;
     }
 
@@ -171,14 +201,18 @@ function mapDispatchToProps(dispatch, ownProps: PostEditPartProductDropDownProps
     }
 
     return {
-        fieldChange(value?: string) {
+        fieldChange(value?: string | number) {
             switch (ownProps.id) {
                 case 'brand':
-                    dispatch(postEditProductBrandChangeAction(value));
+                    dispatch(postEditProductBrandChangeAction(value as string));
                     break;
                 
                 case 'product':
-                    dispatch(postEditProductProductChangeAction(value));
+                    dispatch(postEditProductProductChangeAction(value as string));
+                    break;
+
+                case 'color':
+                    dispatch(postEditProductColorChangeAction(value as number));
                     break;
             }
         },

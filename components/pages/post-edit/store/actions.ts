@@ -1,13 +1,18 @@
 import {PostPartId} from '../../../../entities/PostPart/types';
 import {GetBrandProductsResponse} from '../../../../entities/BrandProducts/api';
+import {GetProductColorsResponse} from '../../../../entities/ProductBase/api';
 import {
     PostEditPageDataFetchedAction,
     PostEditStartAddProductAction,
     PostEditProductFieldTextChangeAction,
+    PostEditProductColorChangeAction,
     PostEditPageData,
 } from './types';
-import { brandProductsDataFetchedAction } from '../../../../entities/BrandProducts/actions';
-import { productsBaseDataFetchedAction } from '../../../../entities/ProductBase/actions';
+import {brandProductsDataFetchedAction} from '../../../../entities/BrandProducts/actions';
+import {productsBaseDataFetchedAction} from '../../../../entities/ProductBase/actions';
+import {productColorsDataFetchedAction} from '../../../../entities/ProductColor/actions';
+import {productExtraDataFetchedAction} from '../../../../entities/ProductExtra/actions';
+import {ProductColorId} from '../../../../entities/ProductColor/types';
 
 export const POST_EDIT_PAGE_DATA_FETCHED = 'POST_EDIT_PAGE_DATA_FETCHED';
 export const POST_EDIT_START_ADD_PRODUCT = 'POST_EDIT_START_ADD_PRODUCT';
@@ -15,6 +20,7 @@ export const POST_EDIT_START_ADD_PRODUCT = 'POST_EDIT_START_ADD_PRODUCT';
 export const POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE = 'POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE';
 export const POST_EDIT_PRODUCT_BRAND_CHANGE = 'POST_EDIT_PRODUCT_BRAND_CHANGE';
 export const POST_EDIT_PRODUCT_PRODUCT_CHANGE = 'POST_EDIT_PRODUCT_PRODUCT_CHANGE';
+export const POST_EDIT_PRODUCT_COLOR_CHANGE = 'POST_EDIT_PRODUCT_COLOR_CHANGE';
 
 export function postEditDataFetchedAction(data: PostEditPageData): PostEditPageDataFetchedAction {
     return {
@@ -54,7 +60,7 @@ export function postEditProductBrandChangeAction(fullName: string): any {
         }
 
         fetch(`/api/brand/${brandId}/products`)
-            .then(response => response.json() as Promise<GetBrandProductsResponse> )
+            .then(response => response.json() as Promise<GetBrandProductsResponse>)
             .then(data => {
                 dispatch(productsBaseDataFetchedAction(data.productBase));
                 dispatch(brandProductsDataFetchedAction(data.brandProducts));
@@ -62,6 +68,7 @@ export function postEditProductBrandChangeAction(fullName: string): any {
     }
 }
 
+// TODO: TypeScript
 export function postEditProductProductChangeAction(title: string): any {
     return (dispatch, getState) => {
         const {items} = getState().productBase;
@@ -76,5 +83,19 @@ export function postEditProductProductChangeAction(title: string): any {
         } else {
             console.warn('Invalid title in postEditProductProductChangeAction action creator');
         }
+
+        fetch(`/api/product/${productId}/colors`)
+            .then(response => response.json() as Promise<GetProductColorsResponse>)
+            .then(data => {
+                dispatch(productColorsDataFetchedAction(data.productColor));
+                dispatch(productExtraDataFetchedAction(data.productExtra));
+            });
     }
+}
+
+export function postEditProductColorChangeAction(colorId: ProductColorId): PostEditProductColorChangeAction {
+    return {
+        type: POST_EDIT_PRODUCT_COLOR_CHANGE,
+        payload: {colorId},
+    };
 }

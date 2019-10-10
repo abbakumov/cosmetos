@@ -11,6 +11,7 @@ import {
     POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE,
     POST_EDIT_PRODUCT_BRAND_CHANGE,
     POST_EDIT_PRODUCT_PRODUCT_CHANGE,
+    POST_EDIT_PRODUCT_COLOR_CHANGE,
 } from './actions';
 
 export interface PagePostEditState {
@@ -85,9 +86,17 @@ export interface PostEditProductProductChangeAction {
     }
 }
 
+export interface PostEditProductColorChangeAction {
+    type: typeof POST_EDIT_PRODUCT_COLOR_CHANGE;
+    payload: {
+        colorId: ProductColorId;
+    }
+}
+
 export type PagePostEditActionType =
     | PostEditPageDataFetchedAction
     | PostEditStartAddProductAction
     | PostEditProductFieldTextChangeAction
     | PostEditProductBrandChangeAction
-    | PostEditProductProductChangeAction;
+    | PostEditProductProductChangeAction
+    | PostEditProductColorChangeAction;
