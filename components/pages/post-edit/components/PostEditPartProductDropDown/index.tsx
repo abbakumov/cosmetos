@@ -15,6 +15,8 @@ import {
     postEditProductProductChangeAction,
     postEditProductColorChangeAction,
 } from '../../store/actions';
+import { ProductBase } from '../../../../../entities/ProductBase/types';
+import { ProductColor } from '../../../../../entities/ProductColor/types';
 
 const styles = require('./styles.styl');
 
@@ -117,6 +119,18 @@ function getFilteredBrandItems(items: BrandMap, value: string): SuggestItem[] {
         }))
 }
 
+function getFilteredProductItems(items: ProductBase[], value: string): SuggestItem[] {
+    return items
+        .filter(product => product.title.toLowerCase().includes(value.toLowerCase()))
+        .map(({title}) => ({value: title}));
+}
+
+function getFilteredColorItems(items: ProductColor[], value: string): SuggestItem[] {
+    return items
+        .filter(color => color.title.toLowerCase().includes(value.toLowerCase()))
+        .map(({id, title}) => ({id, value: title}));
+}
+
 function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownProps): MappedProps {
     const {id} = ownProps;
     const {editPostPartProduct} = state.pagePostEdit;
@@ -149,9 +163,7 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
             // brand choosed and fetched
             if (brandId && state.brandProducts.items[brandId]) {
                 const {productIds} = state.brandProducts.items[brandId];
-                items = productIds
-                    .map(id => state.productBase.items[id])
-                    .map(({title}) => ({value: title}));
+                items = getFilteredProductItems(productIds.map(id => state.productBase.items[id]), value);
             } else {
                 isActive = false;
             }
@@ -168,9 +180,7 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
             const {productId} = state.pagePostEdit.editPostPartProduct;
             if (productId && state.productExtra.items[productId]) {
                 const {colorIds} = state.productExtra.items[productId];
-                items = colorIds
-                    .map(id => state.productColor.items[id])
-                    .map(({id, title}) => ({id, value: title}));
+                items = getFilteredColorItems(colorIds.map(id => state.productColor.items[id]), value)
             } else {
                 isActive = false;
             }
