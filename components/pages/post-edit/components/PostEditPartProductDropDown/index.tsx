@@ -30,7 +30,8 @@ export interface PostEditPartProductDropDownProps {
 }
 
 interface MappedProps {
-    value: string;
+    inputValue: string;
+    selectedItem: SuggestItem;
     items: SuggestItem[];
     label: string;
     isActive: boolean;
@@ -43,17 +44,30 @@ interface ActionProps {
 
 interface Props extends MappedProps, ActionProps {}
 
-function getItemId<T>(items: {id: T, value: string}[], value: string): T {
+function getItemId<T>(items: {id?: T, value: string}[], value: string): T {
     return items.find(item => item.value === value).id;
 }
 
 class PostEditPartProductDropDown extends Component<Props> {
     onChange = (value) => {
+        // console.log('onChange value: ', value);
+
         if (this.props.items.length && this.props.items[0].id) {
-            const {id} = this.props.items.find(item => item.value === value);
+            const id = getItemId(this.props.items, value);
+            console.log('id: ', id);
             this.props.fieldChange(id);
         } else {
             this.props.fieldChange(value);
+        }
+    }
+
+    onInputValueChange = (value) => {
+        // console.log('current selected item: ', this.props.selectedItem);
+        // console.log('current inputValue: ', this.props.inputValue);
+        // console.log('value: ', value);
+
+        if (this.props.inputValue !== value) {
+            this.props.fieldTextChange(value);
         }
     }
 
@@ -66,8 +80,9 @@ class PostEditPartProductDropDown extends Component<Props> {
             <div className={styles.root}>
                 <Downshift
                     onChange={this.onChange}
-                    inputValue={this.props.value}
-                    onInputValueChange={value => this.props.fieldTextChange(value)}
+                    inputValue={this.props.inputValue}
+                    selectedItem={this.props.selectedItem}
+                    onInputValueChange={this.onInputValueChange}
                     itemToString={item => (item ? item.value : '')}
                 >
                     {({
@@ -115,6 +130,7 @@ function getFilteredBrandItems(items: BrandMap, value: string): SuggestItem[] {
     return Object.keys(items)
         .filter(id => items[id].fullName.toLowerCase().includes(value.toLowerCase()))
         .map(id => ({
+            id: items[id].id,
             value: items[id].fullName,
         }))
 }
@@ -122,7 +138,10 @@ function getFilteredBrandItems(items: BrandMap, value: string): SuggestItem[] {
 function getFilteredProductItems(items: ProductBase[], value: string): SuggestItem[] {
     return items
         .filter(product => product.title.toLowerCase().includes(value.toLowerCase()))
-        .map(({title}) => ({value: title}));
+        .map(({id, title}) => ({
+            id,
+            value: title,
+        }));
 }
 
 function getFilteredColorItems(items: ProductColor[], value: string): SuggestItem[] {
@@ -135,65 +154,72 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
     const {id} = ownProps;
     const {editPostPartProduct} = state.pagePostEdit;
 
+    const {
+        brandId,
+        brandText,
+        productId,
+        productText,
+        productColorId,
+        productColorText,
+    } = editPostPartProduct;
+
+    let inputValue = '';
+    let selectedItem = null;
     let value = '';
     let items = [];
     let label = '';
-    let isActive = true;
+
+    let isActive = false;
 
     switch (id) {
         case 'brand':
-            if (editPostPartProduct.brandId) {
-                value = state.brand.items[editPostPartProduct.brandId].fullName;
-            } else {
-                value = editPostPartProduct.brandText;
-            }
-            items = getFilteredBrandItems(state.brand.items, value);
             label = 'Бренд';
-            // always isActive = true
+            isActive = true;
+    
+            inputValue = brandText;
+            items = getFilteredBrandItems(state.brand.items, inputValue);
+            selectedItem = items.find(item => item.id === brandId) || null;
+            if (selectedItem) { inputValue = selectedItem.value; }
             break;
 
         case 'product':
-            if (editPostPartProduct.productId) {
-                value = state.productBase.items[editPostPartProduct.productId].title;
-            } else {
-                value = editPostPartProduct.productText;
-            }
-            label = 'Продукт';
-            const {brandId} = state.pagePostEdit.editPostPartProduct;
-            // brand choosed and fetched
-            if (brandId && state.brandProducts.items[brandId]) {
-                const {productIds} = state.brandProducts.items[brandId];
-                items = getFilteredProductItems(productIds.map(id => state.productBase.items[id]), value);
-            } else {
-                isActive = false;
-            }
+            const brandProductsItem = state.brandProducts.items[brandId];
+            if (brandId && brandProductsItem) {
+                label = 'Продукт';
+                isActive = true;
 
+                inputValue = productText;
+                items = getFilteredProductItems(
+                    brandProductsItem.productIds.map(id => state.productBase.items[id]),
+                    productText
+                );
+                selectedItem = items.find(item => item.id === productId) || null;
+                if (selectedItem) { inputValue = selectedItem.value; }
+            }
             break;
 
         case 'color':
-            if (editPostPartProduct.productColorId) {
-                value = state.productColor.items[editPostPartProduct.productColorId].title;
-            } else {
-                value = editPostPartProduct.productColorText;
-            }
-            label = 'Цвет';
-            const {productId} = state.pagePostEdit.editPostPartProduct;
-            if (productId && state.productExtra.items[productId]) {
-                const {colorIds} = state.productExtra.items[productId];
-                items = getFilteredColorItems(colorIds.map(id => state.productColor.items[id]), value)
-            } else {
-                isActive = false;
-            }
+            const broductExtraItem = state.productExtra.items[productId]
+            if (productId && broductExtraItem) {
+                label = 'Цвет';
+                isActive = true;
 
+                inputValue = productColorText;
+                items = getFilteredColorItems(
+                    broductExtraItem.colorIds.map(id => state.productColor.items[id]),
+                    productColorText
+                );
+                selectedItem = items.find(item => item.id === productColorId) || null;
+                if (selectedItem) { inputValue = selectedItem.value; }
+            }
             break;
     }
 
-    return {value, items, label, isActive};
+    return {inputValue, selectedItem, items, label, isActive};
 }
 
 
 function mapDispatchToProps(dispatch, ownProps: PostEditPartProductDropDownProps): ActionProps {
-
     let textChangeFieldName = '';
 
     switch (ownProps.id) {
@@ -211,22 +237,23 @@ function mapDispatchToProps(dispatch, ownProps: PostEditPartProductDropDownProps
     }
 
     return {
-        fieldChange(value?: string | number) {
+        fieldChange(value: number) {
             switch (ownProps.id) {
                 case 'brand':
-                    dispatch(postEditProductBrandChangeAction(value as string));
+                    dispatch(postEditProductBrandChangeAction(value));
                     break;
-                
+
                 case 'product':
-                    dispatch(postEditProductProductChangeAction(value as string));
+                    dispatch(postEditProductProductChangeAction(value));
                     break;
 
                 case 'color':
-                    dispatch(postEditProductColorChangeAction(value as number));
+                    dispatch(postEditProductColorChangeAction(value));
                     break;
             }
         },
         fieldTextChange(value?: string) {
+            console.log('fieldTextChange value: ', value);
             dispatch(postEditProductFieldTextChangeAction(textChangeFieldName, value || ''));
         }
     };

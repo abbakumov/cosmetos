@@ -50,11 +50,29 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
             };
 
         case POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE:
+            const {fieldName} = action.payload;
+
             return {
                 ...state,
                 editPostPartProduct: {
                     ...state.editPostPartProduct,
-                    [action.payload.fieldName]: action.payload.value,
+                    [fieldName]: action.payload.value,
+                    // TODO: clean up right!
+                    brandId: (
+                        fieldName === 'brandText'
+                            ? null
+                            : state.editPostPartProduct.brandId
+                    ),
+                    productId: (
+                        ['brandText', 'productText'].includes(fieldName)
+                            ? null
+                            : state.editPostPartProduct.productId
+                    ),
+                    productColorId: (
+                        ['brandText', 'productText', 'colorText'].includes(fieldName)
+                            ? null
+                            : state.editPostPartProduct.productColorId
+                    ),
                 }
             };
 

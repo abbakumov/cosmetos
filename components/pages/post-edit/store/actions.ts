@@ -13,6 +13,8 @@ import {productsBaseDataFetchedAction} from '../../../../entities/ProductBase/ac
 import {productColorsDataFetchedAction} from '../../../../entities/ProductColor/actions';
 import {productExtraDataFetchedAction} from '../../../../entities/ProductExtra/actions';
 import {ProductColorId} from '../../../../entities/ProductColor/types';
+import {BrandId} from '../../../../entities/Brand/types';
+import {ProductId} from '../../../../entities/ProductBase/types';
 
 export const POST_EDIT_PAGE_DATA_FETCHED = 'POST_EDIT_PAGE_DATA_FETCHED';
 export const POST_EDIT_START_ADD_PRODUCT = 'POST_EDIT_START_ADD_PRODUCT';
@@ -44,22 +46,14 @@ export function postEditProductFieldTextChangeAction(fieldName: string, value: s
 }
 
 // TODO: TypeScript
-export function postEditProductBrandChangeAction(fullName: string): any {
-    return (dispatch, getState) => {
-        const {items} = getState().brand;
+export function postEditProductBrandChangeAction(id: BrandId): any {
+    return (dispatch) => {
+        dispatch({
+            type: POST_EDIT_PRODUCT_BRAND_CHANGE,
+            payload: {id},
+        })
 
-        const brandId = parseInt(Object.keys(items).find(id => items[id].fullName === fullName));
-
-        if (brandId) {
-            dispatch({
-                type: POST_EDIT_PRODUCT_BRAND_CHANGE,
-                payload: {id: brandId},
-            })
-        } else {
-            console.warn('Invalid fullName in postEditProductBrandChangeAction action creator');
-        }
-
-        fetch(`/api/brand/${brandId}/products`)
+        fetch(`/api/brand/${id}/products`)
             .then(response => response.json() as Promise<GetBrandProductsResponse>)
             .then(data => {
                 dispatch(productsBaseDataFetchedAction(data.productBase));
@@ -69,22 +63,14 @@ export function postEditProductBrandChangeAction(fullName: string): any {
 }
 
 // TODO: TypeScript
-export function postEditProductProductChangeAction(title: string): any {
-    return (dispatch, getState) => {
-        const {items} = getState().productBase;
+export function postEditProductProductChangeAction(id: ProductId): any {
+    return (dispatch) => {
+        dispatch({
+            type: POST_EDIT_PRODUCT_PRODUCT_CHANGE,
+            payload: {id},
+        });
 
-        const productId = parseInt(Object.keys(items).find(id => items[id].title === title));
-
-        if (productId) {
-            dispatch({
-                type: POST_EDIT_PRODUCT_PRODUCT_CHANGE,
-                payload: {id: productId},
-            })
-        } else {
-            console.warn('Invalid title in postEditProductProductChangeAction action creator');
-        }
-
-        fetch(`/api/product/${productId}/colors`)
+        fetch(`/api/product/${id}/colors`)
             .then(response => response.json() as Promise<GetProductColorsResponse>)
             .then(data => {
                 dispatch(productColorsDataFetchedAction(data.productColor));
