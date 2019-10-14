@@ -57,7 +57,6 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 editPostPartProduct: {
                     ...state.editPostPartProduct,
                     [fieldName]: action.payload.value,
-                    // TODO: clean up right!
                     brandId: (
                         fieldName === 'brandText'
                             ? null
