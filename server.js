@@ -4,7 +4,7 @@ const Router = require('koa-router')
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev })
+const app = next({dev})
 const handle = app.getRequestHandler()
 
 const makeRouter = require('./api/routes');
@@ -36,11 +36,3 @@ app.prepare().then(() => {
         console.log(`> Ready on http://localhost:${port}`)
     });
 })
-
-
-
-
-//   router.get('/a', async ctx => {
-//     await app.render(ctx.req, ctx.res, '/a', ctx.query)
-//     ctx.respond = false
-//   })
