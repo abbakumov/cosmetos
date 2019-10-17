@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
 
     User.associate = models => {
         User.hasOne(models.UserSocial);
+        User.hasMany(models.Post);
+        User.hasMany(models.UserProduct);
     };
 
     return User;
