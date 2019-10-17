@@ -66,4 +66,6 @@ typings/
 # Data base info
 api/database/sequelize-config.json
 
+# files
 static/fake
+static/public
