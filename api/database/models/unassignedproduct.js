@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
 	UnassignedProduct.associate = function(models) {
         UnassignedProduct.belongsTo(models.Product);
         UnassignedProduct.belongsTo(models.Brand);
+        UnassignedProduct.hasOne(models.PostPartProduct);
     };
 
 	return UnassignedProduct;

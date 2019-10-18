@@ -13,15 +13,6 @@ module.exports = {
                     updatedAt: new Date(),
                 },
                 {
-                    title: 'Щеки',
-                    positionX: 0.15,
-                    positionY: 0.25,
-                    colorHex: 'cdcdcd',
-                    postId: 1,
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                },
-                {
                     title: 'Глаза',
                     positionX: 0.7,
                     positionY: 0.6,

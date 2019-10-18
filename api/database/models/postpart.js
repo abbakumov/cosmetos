@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 
     PostPart.associate = function(models) {
         PostPart.belongsTo(models.Post);
+        PostPart.hasMany(models.PostPartProduct);
     };
 
     return PostPart;

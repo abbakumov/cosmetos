@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
 
     ProductColor.associate = function(models) {
         ProductColor.belongsTo(models.Product);
+        ProductColor.hasMany(models.PostPartProduct);
     };
 
     return ProductColor;
