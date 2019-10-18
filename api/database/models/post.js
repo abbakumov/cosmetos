@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Post.associate = function(models) {
         Post.belongsTo(models.User);
+        Post.hasMany(models.PostPart);
     };
 
     return Post;
