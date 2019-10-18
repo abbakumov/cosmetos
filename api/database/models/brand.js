@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Brand.associate = function(models) {
         Brand.hasMany(models.Product);
+        Brand.hasMany(models.UnassignedProduct);
     };
 
     return Brand;
