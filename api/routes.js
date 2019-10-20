@@ -11,7 +11,7 @@ const getUnProducts = require('./controllers/admin/getUnProducts');
 
 const routes = [
     {
-        route: '/blog/:name',
+        route: '/blog/:login',
         method: 'get',
         controller: getBlog,
     },

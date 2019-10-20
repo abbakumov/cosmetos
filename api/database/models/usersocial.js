@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
 
     UserSocial.associate = function(models) {
-        UserSocial.belongsTo(models.User);
+        UserSocial.belongsTo(models.User, { foreignKey: 'userId' });
     };
 
     return UserSocial;

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "node  --inspect server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
   },
@@ -35,6 +35,7 @@
     "lodash": "4.17.15",
     "next": "9.0.5",
     "next-redux-wrapper": "3.0.0",
+    "normalizr": "^3.4.1",
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
     "react": "16.9.0",
