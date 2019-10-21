@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
 
     ProductColor.associate = function(models) {
-        ProductColor.belongsTo(models.Product);
-        ProductColor.hasMany(models.PostPartProduct);
+        ProductColor.belongsTo(models.Product, { foreignKey: 'productId' });
+        ProductColor.hasMany(models.PostPartProduct, { foreignKey: 'productColorId' });
     };
 
     return ProductColor;

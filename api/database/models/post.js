@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Post.associate = function(models) {
         Post.belongsTo(models.User, { foreignKey: 'userId' });
-        Post.hasMany(models.PostPart);
+        Post.hasMany(models.PostPart, { foreignKey: 'postId' });
     };
 
     return Post;

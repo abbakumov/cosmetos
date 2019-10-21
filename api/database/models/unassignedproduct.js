@@ -23,9 +23,9 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
 
 	UnassignedProduct.associate = function(models) {
-        UnassignedProduct.belongsTo(models.Product);
-        UnassignedProduct.belongsTo(models.Brand);
-        UnassignedProduct.hasOne(models.PostPartProduct);
+        UnassignedProduct.belongsTo(models.Product, { foreignKey: 'productId' });
+        UnassignedProduct.belongsTo(models.Brand, { foreignKey: 'brandId' });
+        UnassignedProduct.hasOne(models.PostPartProduct, { foreignKey: 'unassignedProductId' });
     };
 
 	return UnassignedProduct;
