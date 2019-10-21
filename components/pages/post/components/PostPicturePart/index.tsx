@@ -43,7 +43,7 @@ class PostPicturePart extends Component<Props> {
         }
 
         const contentStyle = {
-            backgroundColor: color,
+            backgroundColor: `#${color}`,
         }
 
         const className = `${styles.root} ${styles.isOpen}`;

@@ -28,14 +28,14 @@ class PostProductsPart extends Component<PostProductsPartProps> {
 
         return (
             <Link href="/product/[id]" as={`/product/${id}`}>
-                <a className={styles.root} style={{borderColor: color}}>
+                <a className={styles.root} style={{borderColor: `#${color}`}}>
                     <div className={styles.left}>
                         <img className={styles.img} src={smallPicUrl} />
                     </div>
                     <div className={styles.content}>
                         <h3 className={styles.title}>{title}</h3>
                         <div className={styles.brand}>{brand}</div>
-                        <div className={styles.comment}>"{comment}"</div>
+                        {!!comment && <div className={styles.comment}>"{comment}"</div>}
                     </div>
                     <img className={styles.arr} src="/static/icons/post-page/product-arr.svg" />
                 </a>
@@ -52,7 +52,8 @@ function mapStateToProps(state: AppState, ownProps: PostProductsPartPublicProps)
 
     const blogProductItems = state.blogProduct.items;
     const blockProductKey = Object.keys(blogProductItems).find(_id => blogProductItems[_id].productId === id);
-    const comment = state.blogProduct.items[blockProductKey].comment;
+    const blogProductItem = blockProductKey && blogProductItems[blockProductKey];
+    const comment = blogProductItem && blogProductItem.comment;
 
     const postPart = state.postPart.items[partId]
     const {color} = postPart;

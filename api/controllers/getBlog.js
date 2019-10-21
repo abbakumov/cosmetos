@@ -14,10 +14,12 @@ module.exports = async function getBlog(ctx) {
         where: {
             login,
         },
-        limit: 10,
         include: [
             { model: UserSocial },
-            { model: Post },
+            {
+                model: Post,
+                limit: 10,
+            },
         ],
     });
 
@@ -33,7 +35,7 @@ module.exports = async function getBlog(ctx) {
     const {users, posts} = nomalizedUser.entities;
     const userEntity = users[nomalizedUser.result];
 
-    const user = {
+    const blog = {
         ..._.pick(userEntity, ['login', 'name']),
         imageUrl: makeUserAvatarUrl(userEntity.avatarPicture),
         postIds: userEntity.Posts,
@@ -45,7 +47,7 @@ module.exports = async function getBlog(ctx) {
     const postsBase = postEntities.map(post => ({
         ..._.pick(post, ['id', 'title']),
         imageUrl: makePostPicUrl(post.picture),
-        authorLogin: user.login,
+        authorLogin: blog.login,
     })).reduce(
         (acc, post) => ({
             ...acc,
@@ -55,7 +57,7 @@ module.exports = async function getBlog(ctx) {
     );
 
     const result = {
-        blog: user,
+        blog,
         postsBase,
     };
 

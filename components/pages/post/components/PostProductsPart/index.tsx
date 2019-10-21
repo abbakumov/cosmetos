@@ -41,7 +41,7 @@ class PostProductsPart extends Component<Props> {
             <div className={styles.root}>
                 <div
                     className={styles.head}
-                    style={{backgroundColor: color}}
+                    style={{backgroundColor: `#${color}`}}
                     onClick={this.togglePart}
                 >
                     {title}

@@ -6,7 +6,7 @@ import MobileLayout from '../../layouts/MobileLayout';
 import ProductInfo from './components/ProductInfo';
 import ProductPics from './components/ProductPics';
 import ProductColors from './components/ProductColors';
-import ProductOpinions from './components/ProductOpinions';
+// import ProductOpinions from './components/ProductOpinions';
 
 import {ProductId} from '../../../entities/ProductBase/types';
 import PostsList from '../../widgets/PostsList';
@@ -36,7 +36,7 @@ class ProductPage extends Component<ProductPageProps> {
                     postIds={postIds}
                     namesVisible={true}
                 />
-                <ProductOpinions id={id} />
+                {/* <ProductOpinions id={id} /> */}
             </MobileLayout>
         )
     }
