@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         Product.hasMany(models.UnassignedProduct, { foreignKey: 'productId' });
         Product.hasMany(models.PostPartProduct, { foreignKey: 'productId' });
         Product.hasMany(models.ProductPicture, { foreignKey: 'productId' });
+        Product.hasMany(models.ProductColor, { foreignKey: 'productId' });
     };
 
     return Product;

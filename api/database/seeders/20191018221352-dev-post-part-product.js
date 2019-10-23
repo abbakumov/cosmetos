@@ -27,6 +27,14 @@ module.exports = {
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
+                {
+                    postPartId: 3,
+                    productId: 3,
+                    productColorId: 8,
+                    unassignedProductId: null,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                },
             ],
             {}
         );
