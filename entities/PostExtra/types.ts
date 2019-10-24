@@ -1,4 +1,4 @@
-import {PostId} from '../PostBase/types';
+import {PostId} from '../Post/types';
 import {PostPartId} from '../PostPart/types';
 
 import {POST_EXTRA_DATA_FETCHED} from './actions';

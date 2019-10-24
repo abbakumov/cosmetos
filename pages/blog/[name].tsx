@@ -5,7 +5,7 @@ import {getBlogByName} from '../../entities/Blog/api';
 import {blogDataFetchedAction} from '../../entities/Blog/actions';
 import BlogPage, {BlogPagePublicProps} from '../../components/pages/blog';
 import {ICosPageContext} from '../../types/context';
-import {postsBaseDataFetchedAction} from '../../entities/PostBase/actions';
+import {postsBaseDataFetchedAction} from '../../entities/Post/actions';
 
 interface InitialProps extends BlogPagePublicProps {
     title: string;

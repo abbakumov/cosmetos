@@ -2,7 +2,7 @@ import {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {AppState} from '../../../../../store';
-import {PostId} from '../../../../../entities/PostBase/types';
+import {PostId} from '../../../../../entities/Post/types';
 
 import PostBarSwitcher from '../PostBarSwitcher';
 

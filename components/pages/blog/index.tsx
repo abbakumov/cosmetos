@@ -7,7 +7,7 @@ import BlogHead from './components/BlogHead';
 import PostsList from '../../widgets/PostsList';
 import MobileLayout from '../../layouts/MobileLayout';
 import {AppState} from '../../../store';
-import {PostId} from '../../../entities/PostBase/types';
+import {PostId} from '../../../entities/Post/types';
 
 export interface BlogPagePublicProps {
     login: BlogLogin,

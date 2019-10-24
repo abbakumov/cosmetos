@@ -3,7 +3,7 @@ import Link from 'next/link';
 import {connect} from 'react-redux';
 
 import {AppState} from '../../../../../store';
-import {PostId} from '../../../../../entities/PostBase/types';
+import {PostId} from '../../../../../entities/Post/types';
 
 const styles = require('./styles.styl');
 

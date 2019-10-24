@@ -5,7 +5,7 @@ import {getOrigin} from '../../configs/location';
 import {ProductBase, ProductId} from './types';
 import {Blog} from '../Blog/types';
 import {BlogProduct} from '../BlogProduct/types';
-import {PostBase} from '../PostBase/types';
+import {PostBase} from '../Post/types';
 import {ProductExtra} from '../ProductExtra/types';
 import {ProductColor} from '../ProductColor/types';
 

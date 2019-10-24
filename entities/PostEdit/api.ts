@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
-import {PostId} from '../PostBase/types';
+import {PostId} from '../Post/types';
 import {PostPart, PostPartId} from '../PostPart/types';
 import {ProductBase} from '../ProductBase/types';
 import {PostProduct} from '../PostProduct/types';

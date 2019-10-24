@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Link from 'next/link';
-import {PostId, PostBase} from '../../../../entities/PostBase/types';
+import {PostId, PostBase} from '../../../../entities/Post/types';
 import {AppState} from '../../../../store';
 
 const styles = require('./styles.styl');

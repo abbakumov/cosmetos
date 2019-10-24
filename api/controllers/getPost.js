@@ -1,8 +1,8 @@
 const {normalize} = require('normalizr');
 const _ = require('lodash');
 
-const {fullPostSchema} = require('../../entities/PostBase/schema');
-const {makePostPicUrl} = require('../../entities/PostBase/helpers');
+const {fullPostSchema} = require('../../entities/Post/schema');
+const {makePostPicUrl} = require('../../entities/Post/helpers');
 const {makeUserAvatarUrl} = require('../../entities/Blog/helpers');
 const {makeProductPicUrl} = require('../../entities/ProductBase/helpers');
 

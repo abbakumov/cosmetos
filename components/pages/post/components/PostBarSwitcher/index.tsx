@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {AppState} from '../../../../../store';
-import {PostId} from '../../../../../entities/PostBase/types';
+import {PostId} from '../../../../../entities/Post/types';
 import {postPageToggleIsPicPartsOpenAction} from '../../state/actions';
 
 const styles = require('./styles.styl');

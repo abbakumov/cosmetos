@@ -10,7 +10,7 @@ import {pageAdminProductsUnassignedReducer}
     from '../components/pages/admin/products-unassigned/state/reducer';
 
 import {blogReducer} from '../entities/Blog/reducer';
-import {postBaseReducer} from '../entities/PostBase/reducer';
+import {postBaseReducer} from '../entities/Post/reducer';
 import {postExtraReducer} from '../entities/PostExtra/reducer';
 import {blogProductReducer} from '../entities/BlogProduct/reducer';
 import {postProductReducer} from '../entities/PostProduct/reducer';

@@ -1,4 +1,4 @@
-import {PostId} from '../PostBase/types';
+import {PostId} from '../Post/types';
 
 import {
     BLOG_DATA_FETCHED,

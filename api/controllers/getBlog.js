@@ -3,7 +3,7 @@ const _ = require('lodash');
 
 const {userSchema} = require('../../entities/Blog/schema');
 const {makeUserAvatarUrl} = require('../../entities/Blog/helpers');
-const {makePostPicUrl} = require('../../entities/PostBase/helpers');
+const {makePostPicUrl} = require('../../entities/Post/helpers');
 const {User, UserSocial, Post} = require('../database/models');
 
 module.exports = async function getBlog(ctx) {

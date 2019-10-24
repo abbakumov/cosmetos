@@ -2,7 +2,7 @@ const {normalize} = require('normalizr');
 const _ = require('lodash');
 
 const {makeUserAvatarUrl} = require('../../entities/Blog/helpers');
-const {makePostPicUrl} = require('../../entities/PostBase/helpers');
+const {makePostPicUrl} = require('../../entities/Post/helpers');
 const {makeProductPicUrl} = require('../../entities/ProductBase/helpers');
 const {makeProductColorPicUrl} = require('../../entities/ProductColor/helpers');
 const {productSchema} = require('../../entities/ProductBase/schema');

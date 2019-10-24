@@ -8,7 +8,6 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import {AppState} from '../../../../../../store';
 import {UnProductId, UnProduct} from '../../../../../../entities/UnProduct/types';
-import {PostBase} from '../../../../../../entities/PostBase/types';
 
 const styles = require('../../styles.styl');
 

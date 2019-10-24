@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {PostId} from '../../../entities/PostBase/types';
+import {PostId} from '../../../entities/Post/types';
 import MobileLayout from '../../layouts/MobileLayout';
 
 import PostHead from './components/PostHead';

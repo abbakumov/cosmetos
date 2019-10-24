@@ -6,13 +6,13 @@ import PostPage, {PostPagePublicProps} from '../../../components/pages/post';
 import {ICosPageContext} from '../../../types/context';
 
 import {blogDataFetchedAction} from '../../../entities/Blog/actions';
-import {postBaseDataFetchedAction} from '../../../entities/PostBase/actions';
+import {postBaseDataFetchedAction} from '../../../entities/Post/actions';
 import {postExtraDataFetchedAction} from '../../../entities/PostExtra/actions';
 import {postPartsDataFetchedAction} from '../../../entities/PostPart/actions';
 import {productsBaseDataFetchedAction} from '../../../entities/ProductBase/actions';
 import {blogProductsDataFetchedAction} from '../../../entities/BlogProduct/actions';
 
-import {getPostById} from '../../../entities/PostBase/api';
+import {getPostById} from '../../../entities/Post/api';
 
 const PostPageWrapper: NextPage<PostPagePublicProps> = (props) => (<PostPage {...props} />);
 

@@ -1,4 +1,4 @@
-import {PostId} from '../PostBase/types';
+import {PostId} from '../Post/types';
 import {ProductId} from '../ProductBase/types';
 import {ProductColorId} from '../ProductColor/types';
 

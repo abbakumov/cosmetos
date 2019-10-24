@@ -1,6 +1,6 @@
 import {PRODUCT_EXTRA_DATA_FETCHED} from './actions';
 import {ProductId} from '../ProductBase/types';
-import {PostId} from '../PostBase/types';
+import {PostId} from '../Post/types';
 import {ProductColorId} from '../ProductColor/types';
 
 export interface ProductExtra {

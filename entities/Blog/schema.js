@@ -1,5 +1,5 @@
 const {schema} = require('normalizr');
-const {postSchema} = require('../PostBase/schema');
+const {postSchema} = require('../Post/schema');
 
 const userSchema = new schema.Entity('users', {
     Posts: [postSchema],

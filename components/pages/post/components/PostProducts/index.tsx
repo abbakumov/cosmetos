@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import Link from 'next/link';
 
 import {AppState} from '../../../../../store';
-import {PostId} from '../../../../../entities/PostBase/types';
+import {PostId} from '../../../../../entities/Post/types';
 import {PostPartId} from '../../../../../entities/PostPart/types';
 
 import PostProductsPart from '../PostProductsPart';

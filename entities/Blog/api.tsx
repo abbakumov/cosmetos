@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
 import {Blog} from './types';
-import {PostBase} from '../PostBase/types';
+import {PostBase} from '../Post/types';
 import {getOrigin} from '../../configs/location';
 
 interface GetBlogByNameResponse {

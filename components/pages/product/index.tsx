@@ -11,7 +11,7 @@ import ProductColors from './components/ProductColors';
 import {ProductId} from '../../../entities/ProductBase/types';
 import PostsList from '../../widgets/PostsList';
 import {AppState} from '../../../store';
-import {PostId} from '../../../entities/PostBase/types';
+import {PostId} from '../../../entities/Post/types';
 
 export interface ProductPagePublicProps {
     id: ProductId;

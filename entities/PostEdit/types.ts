@@ -1,4 +1,4 @@
-import {PostId} from '../PostBase/types';
+import {PostId} from '../Post/types';
 
 export interface PostEdit {
     // post is not saved yet if id is null
