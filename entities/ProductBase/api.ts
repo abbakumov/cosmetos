@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
+import {getOrigin} from '../../configs/location';
+
 import {ProductBase, ProductId} from './types';
 import {Blog} from '../Blog/types';
 import {BlogProduct} from '../BlogProduct/types';
@@ -25,7 +27,7 @@ export interface GetProductByIdResponse {
 }
 
 export function getProductById(id: ProductId): Promise<GetProductByIdResponse> {
-    return fetch(`http://localhost:3000/api/product/${id}`)
+    return fetch(`${getOrigin()}/api/product/${id}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText)
@@ -41,7 +43,7 @@ export interface GetProductColorsResponse {
 }
 
 export function getProductColors(id: ProductId): Promise<GetProductColorsResponse> {
-    return fetch(`http://localhost:3000/api/product/${id}/colors`)
+    return fetch(`${getOrigin()}/api/product/${id}/colors`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText)

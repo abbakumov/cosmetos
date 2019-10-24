@@ -9,6 +9,7 @@ import {ProductColor} from '../ProductColor/types';
 import {BrandMap} from '../Brand/types';
 
 import {PostEdit} from './types';
+import {getOrigin} from '../../configs/location';
 
 export interface GetPostEditByIdResponse {
     postEdit: PostEdit;
@@ -28,7 +29,7 @@ export interface GetPostEditByIdResponse {
 }
 
 export function getPostEditById(id: PostId): Promise<GetPostEditByIdResponse> {
-    return fetch(`http://localhost:3000/api/post/${id}/edit`)
+    return fetch(`${getOrigin()}/api/post/${id}/edit`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText)

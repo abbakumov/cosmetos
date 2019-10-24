@@ -2,8 +2,9 @@ import fetch from 'isomorphic-fetch';
 
 import {Blog} from './types';
 import {PostBase} from '../PostBase/types';
+import {getOrigin} from '../../configs/location';
 
-export interface GetBlogByNameResponse {
+interface GetBlogByNameResponse {
     blog: Blog;
     postsBase: {
         [id: number]: PostBase;
@@ -11,7 +12,7 @@ export interface GetBlogByNameResponse {
 }
 
 export function getBlogByName(name: string[]): Promise<GetBlogByNameResponse> {
-    return fetch(`http://localhost:3000/api/blog/${name[0]}`)
+    return fetch(`${getOrigin()}/api/blog/${name[0]}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText)

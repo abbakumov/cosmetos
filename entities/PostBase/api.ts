@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
+import {getOrigin} from '../../configs/location';
+
 import {PostBase, PostId} from './types';
 import {PostExtra} from '../PostExtra/types';
 import {Blog} from '../Blog/types';
@@ -23,7 +25,7 @@ export interface GetPostByIdResponse {
 }
 
 export function getPostById(id: PostId): Promise<GetPostByIdResponse> {
-    return fetch(`http://localhost:3000/api/post/${id}`)
+    return fetch(`${getOrigin()}/api/post/${id}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText)

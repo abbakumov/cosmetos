@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
+import {getOrigin} from '../../configs/location';
+
 import {Brand} from '../Brand/types';
 import {ProductBase} from '../ProductBase/types';
 
@@ -18,7 +20,7 @@ export interface GetAdminUnProductsResponse {
 }
 
 export function getAdminUnProducts(): Promise<GetAdminUnProductsResponse> {
-    return fetch('http://localhost:3000/api/admin/un-products')
+    return fetch(`${getOrigin}/api/admin/un-products`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText)
