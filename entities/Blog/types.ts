@@ -1,5 +1,3 @@
-import {PostId} from '../Post/types';
-
 import {
     BLOG_DATA_FETCHED,
     BLOGS_DATA_FETCHED,
@@ -10,9 +8,7 @@ export type BlogLogin = string;
 export interface Blog {
     login: BlogLogin;
     name: string;
-    instagramLogin: string,
     imageUrl: string,
-    postIds: PostId[],
 };
 
 // ACTIONS ->

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Link from 'next/link';
 import {BlogLogin, Blog} from '../../../../../entities/Blog/types';
+import {BlogExtra} from '../../../../../entities/BlogExtra/types';
 import {AppState} from '../../../../../store';
 
 const styles = require('./styles.styl');
@@ -52,10 +53,11 @@ class BlogHead extends Component<BlogHeadProps> {
 
 function mapStateToProps(state: AppState, ownProps: BlogHeadPublicProps): BlogHeadProps {
     const blogData: Blog = state.blog.items[ownProps.login];
+    const blogExtraData: BlogExtra = state.blogExtra.items[ownProps.login];
 
     return {
         name: blogData.name,
-        instagramLogin: blogData.instagramLogin,
+        instagramLogin: blogExtraData.instagramLogin,
         imageUrl: blogData.imageUrl,
     };
 }

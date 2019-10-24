@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import {getBlogByName} from '../../entities/Blog/api';
 import {blogDataFetchedAction} from '../../entities/Blog/actions';
+import {blogExtraDataFetchedAction} from '../../entities/BlogExtra/actions';
 import BlogPage, {BlogPagePublicProps} from '../../components/pages/blog';
 import {ICosPageContext} from '../../types/context';
 import {postsBaseDataFetchedAction} from '../../entities/Post/actions';
@@ -19,6 +20,7 @@ class BlogPageWrapper extends Component<InitialProps> {
         const blogData = await getBlogByName(_.castArray(query.name));
 
         store.dispatch(blogDataFetchedAction(blogData.blog));
+        store.dispatch(blogExtraDataFetchedAction(blogData.blogExtra));
         store.dispatch(postsBaseDataFetchedAction(blogData.postsBase));
 
         const login = blogData.blog.login;

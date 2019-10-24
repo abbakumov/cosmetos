@@ -26,7 +26,6 @@ export function pagePostReducer(state: PagePostState = initialState, action: Pos
             return {
                 ...state,
                 openParts: {
-                    ...state.openParts,
                     [action.payload.id]: true,
                 },
             };

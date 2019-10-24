@@ -38,6 +38,10 @@ module.exports = async function getBlog(ctx) {
     const blog = {
         ..._.pick(userEntity, ['login', 'name']),
         imageUrl: makeUserAvatarUrl(userEntity.avatarPicture),
+    };
+
+    const blogExtra = {
+        ..._.pick(userEntity, ['login']),
         postIds: userEntity.Posts,
         instagramLogin: userEntity.UserSocial.instaLogin,
     };
@@ -58,6 +62,7 @@ module.exports = async function getBlog(ctx) {
 
     const result = {
         blog,
+        blogExtra,
         postsBase,
     };
 

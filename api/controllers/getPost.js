@@ -26,12 +26,7 @@ module.exports = async function getPost(ctx) {
     const data = await Post.findOne({
         where: { id },
         include: [
-            {
-                model: User,
-                include: [
-                    { model: UserSocial },
-                ],
-            },
+            { model: User },
             {
                 model: PostPart,
                 include: [
@@ -82,7 +77,6 @@ module.exports = async function getPost(ctx) {
         ..._.pick(userEntity, ['login', 'name']),
         imageUrl: makeUserAvatarUrl(userEntity.avatarPicture),
         postIds: userEntity.Posts,
-        instagramLogin: userEntity.UserSocial.instaLogin,
     };
 
     const postPart = Object.keys(postParts)

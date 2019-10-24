@@ -10,6 +10,7 @@ import {pageAdminProductsUnassignedReducer}
     from '../components/pages/admin/products-unassigned/state/reducer';
 
 import {blogReducer} from '../entities/Blog/reducer';
+import {blogExtraReducer} from '../entities/BlogExtra/reducer';
 import {postBaseReducer} from '../entities/Post/reducer';
 import {postExtraReducer} from '../entities/PostExtra/reducer';
 import {blogProductReducer} from '../entities/BlogProduct/reducer';
@@ -31,16 +32,26 @@ const rootReducer = combineReducers({
 
     // entities
     blog: blogReducer,
+    blogExtra: blogExtraReducer,
+
     postBase: postBaseReducer,
     postExtra: postExtraReducer,
-    blogProduct: blogProductReducer,
-    postProduct: postProductReducer,
-    postPart: postPartReducer,
+
     productBase: productBaseReducer,
     productExtra: productExtraReducer,
+
+    blogProduct: blogProductReducer,
+
+    postProduct: postProductReducer,
+
+    postPart: postPartReducer,
+
     productColor: productColorReducer,
+
     unProduct: unProductReducer,
+
     brand: brandReducer,
+
     brandProducts: brandProductsReducer,
 });
 

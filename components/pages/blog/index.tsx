@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {Blog, BlogLogin} from '../../../entities/Blog/types';
+import {BlogLogin} from '../../../entities/Blog/types';
+import {BlogExtra} from '../../../entities/BlogExtra/types';
 
 import BlogHead from './components/BlogHead';
 import PostsList from '../../widgets/PostsList';
@@ -36,9 +37,9 @@ class BlogPage extends Component<BlogPageProps> {
 }
 
 function mapStateToProps(state: AppState, ownProps: BlogPagePublicProps) {
-    const blogData: Blog = state.blog.items[ownProps.login];
+    const blogExtraData: BlogExtra = state.blogExtra.items[ownProps.login];
 
-    const {postIds} = blogData;
+    const {postIds} = blogExtraData;
 
     return {
         postIds,
