@@ -1,17 +1,30 @@
 import {FunctionComponent} from 'react';
 import {connect} from 'react-redux';
 
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
 import {AppState} from '../../../../../store';
 
 import PostEditPartProductDropDown from '../PostEditPartProductDropDown';
 
+import {
+    postEditProductCancelAction,
+    postEditProductSaveAction,
+} from '../../store/actions';
+
 const styles = require('./styles.styl');
 
-interface Props {
+interface MappedProps {
 
 }
+
+interface ActionProps {
+    postEditProductCancelAction() : void;
+    postEditProductSaveAction(): void;
+}
+
+interface Props extends MappedProps, ActionProps {}
 
 const PostEditPartAddProduct: FunctionComponent<Props> = (props: Props) => (
     <div className={styles.root}>
@@ -28,6 +41,19 @@ const PostEditPartAddProduct: FunctionComponent<Props> = (props: Props) => (
                     <PostEditPartProductDropDown id="color" />
                 </Grid>
             </Grid>
+            <div className={styles.bottomControls}>
+                <Button className={styles.control} onClick={() => props.postEditProductCancelAction()}>
+                    Отмена
+                </Button>
+                <Button
+                    className={styles.control}
+                    color="secondary"
+                    variant="contained"
+                    onClick={() => props.postEditProductSaveAction()}
+                >
+                    Добавить
+                </Button>
+            </div>
         </div>
     </div>
 );
@@ -38,6 +64,11 @@ function mapStateToProps(state: AppState) {
     };
 }
 
-const ConnectedPostEditPartAddProduct = connect(mapStateToProps)(PostEditPartAddProduct);
+const mapDispatchToProps = {
+    postEditProductCancelAction,
+    postEditProductSaveAction,
+};
+
+const ConnectedPostEditPartAddProduct = connect(mapStateToProps, mapDispatchToProps)(PostEditPartAddProduct);
 
 export default ConnectedPostEditPartAddProduct;

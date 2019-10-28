@@ -1,10 +1,12 @@
+import {PostEditProductSaveSuccessAction} from '../../components/pages/post-edit/store/types';
+
 import {PostId} from '../Post/types';
 import {ProductId} from '../ProductBase/types';
 import {ProductColorId} from '../ProductColor/types';
 
 import {POST_PRODUCTS_DATA_FETCHED} from './actions';
 
-type PostProductId = number;
+export type PostProductId = number;
 
 export interface PostProduct {
     id: PostProductId;
@@ -25,7 +27,9 @@ export interface PostProductsDataFetchedAction {
 // <- ACTIONS
 
 export type PostProductActionType =
-    | PostProductsDataFetchedAction;
+    | PostProductsDataFetchedAction
+    | PostEditProductSaveSuccessAction
+    ;
 
 export interface PostProductState {
     items: {

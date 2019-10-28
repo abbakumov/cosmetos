@@ -61,11 +61,10 @@ const PostEditPart: FunctionComponent<Props> = (props: Props) => (
         </div>
         {props.isActiveAddProduct && <PostEditPartAddProduct />}
         {!props.isActiveAddProduct &&
-            <div
-                className={styles.bottomControls}
-                onClick={() => props.postEditStartAddProductAction(props.id)}
-            >
-                <Button>Добавить продукт</Button>
+            <div className={styles.bottomControls}>
+                <Button onClick={() => props.postEditStartAddProductAction(props.id)}>
+                    Добавить продукт
+                </Button>
             </div>
         }
     </Paper>

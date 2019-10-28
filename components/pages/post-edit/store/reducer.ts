@@ -10,7 +10,19 @@ import {
     POST_EDIT_PRODUCT_BRAND_CHANGE,
     POST_EDIT_PRODUCT_PRODUCT_CHANGE,
     POST_EDIT_PRODUCT_COLOR_CHANGE,
+    POST_EDIT_PRODUCT_CANCEL,
+    POST_EDIT_PRODUCT_SAVE_SUCCESS,
 } from './actions';
+
+const emptyEditPostPartProduct = {
+    postPartId: null,
+    brandText: '',
+    brandId: null,
+    productText: '',
+    productId: null,
+    productColorText: '',
+    productColorId: null,
+};
 
 const initialState: PagePostEditState = {
     postEdit: {
@@ -21,16 +33,8 @@ const initialState: PagePostEditState = {
     },
     postPartIds: [],
     editPostPart: null,
-    editPostPartProduct: {
-        postPartId: null,
-        brandText: '',
-        brandId: null,
-        productText: '',
-        productId: null,
-        productColorText: '',
-        productColorId: null,
-    },
-}
+    editPostPartProduct: emptyEditPostPartProduct,
+};
 
 export function pagePostEditReducer(state: PagePostEditState = initialState, action: PagePostEditActionType): PagePostEditState {
     switch (action.type) {
@@ -46,7 +50,7 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 editPostPartProduct: {
                     ...state.editPostPartProduct,
                     postPartId: action.payload.partId,
-                }
+                },
             };
 
         case POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE:
@@ -72,7 +76,7 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                             ? null
                             : state.editPostPartProduct.productColorId
                     ),
-                }
+                },
             };
 
         case POST_EDIT_PRODUCT_BRAND_CHANGE:
@@ -81,7 +85,7 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 editPostPartProduct: {
                     ...state.editPostPartProduct,
                     brandId: action.payload.id,
-                }
+                },
             };
 
         case POST_EDIT_PRODUCT_PRODUCT_CHANGE:
@@ -90,7 +94,7 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 editPostPartProduct: {
                     ...state.editPostPartProduct,
                     productId: action.payload.id,
-                }
+                },
             };
 
         case POST_EDIT_PRODUCT_COLOR_CHANGE:
@@ -99,8 +103,20 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 editPostPartProduct: {
                     ...state.editPostPartProduct,
                     productColorId: action.payload.colorId,
-                }
-            }
+                },
+            };
+
+        case POST_EDIT_PRODUCT_CANCEL:
+            return {
+                ...state,
+                editPostPartProduct: emptyEditPostPartProduct,
+            };
+        
+        case POST_EDIT_PRODUCT_SAVE_SUCCESS:
+            return {
+                ...state,
+                editPostPartProduct: emptyEditPostPartProduct,
+            };
     }
 
     return state;

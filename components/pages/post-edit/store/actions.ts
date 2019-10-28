@@ -6,6 +6,7 @@ import {
     PostEditStartAddProductAction,
     PostEditProductFieldTextChangeAction,
     PostEditProductColorChangeAction,
+    PostEditProductCancelAction,
     PostEditPageData,
 } from './types';
 import {brandProductsDataFetchedAction} from '../../../../entities/BrandProducts/actions';
@@ -16,6 +17,8 @@ import {ProductColorId} from '../../../../entities/ProductColor/types';
 import {BrandId} from '../../../../entities/Brand/types';
 import {ProductId} from '../../../../entities/ProductBase/types';
 
+import {AppState} from '../../../../store';
+
 export const POST_EDIT_PAGE_DATA_FETCHED = 'POST_EDIT_PAGE_DATA_FETCHED';
 export const POST_EDIT_START_ADD_PRODUCT = 'POST_EDIT_START_ADD_PRODUCT';
 // changing of suggest text value, not chosing the item
@@ -23,6 +26,10 @@ export const POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE = 'POST_EDIT_PRODUCT_FIELD_TEXT
 export const POST_EDIT_PRODUCT_BRAND_CHANGE = 'POST_EDIT_PRODUCT_BRAND_CHANGE';
 export const POST_EDIT_PRODUCT_PRODUCT_CHANGE = 'POST_EDIT_PRODUCT_PRODUCT_CHANGE';
 export const POST_EDIT_PRODUCT_COLOR_CHANGE = 'POST_EDIT_PRODUCT_COLOR_CHANGE';
+export const POST_EDIT_PRODUCT_CANCEL = 'POST_EDIT_PRODUCT_CANCEL';
+export const POST_EDIT_PRODUCT_SAVE = 'POST_EDIT_PRODUCT_SAVE';
+export const POST_EDIT_PRODUCT_SAVE_SUCCESS = 'POST_EDIT_PRODUCT_SAVE_SUCCESS';
+export const POST_EDIT_PRODUCT_SAVE_FAIL = 'POST_EDIT_PRODUCT_SAVE_FAIL';
 
 export function postEditDataFetchedAction(data: PostEditPageData): PostEditPageDataFetchedAction {
     return {
@@ -83,5 +90,48 @@ export function postEditProductColorChangeAction(colorId: ProductColorId): PostE
     return {
         type: POST_EDIT_PRODUCT_COLOR_CHANGE,
         payload: {colorId},
+    };
+}
+
+export function postEditProductCancelAction(): PostEditProductCancelAction {
+    return {
+        type: POST_EDIT_PRODUCT_CANCEL,
+    };
+}
+
+export function postEditProductSaveAction(): any {
+    return (dispatch, getState) => {
+        dispatch({
+            type: POST_EDIT_PRODUCT_SAVE,
+        });
+
+        const state: AppState = getState();
+        const id = state.pagePostEdit.postEdit.id;
+
+        const {editPostPartProduct} = state.pagePostEdit;
+
+        fetch(`/api/post/${id}/add-product`, {
+            method: 'POST',
+            body: JSON.stringify(editPostPartProduct),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    dispatch({
+                        type: POST_EDIT_PRODUCT_SAVE_SUCCESS,
+                        payload: {
+                            postId: id,
+                            postPartId: editPostPartProduct.postPartId,
+                            productId: editPostPartProduct.productId,
+                            productColorId: editPostPartProduct.productColorId,
+                            postPartProductId: data.postPartProductId,
+                        },
+                    });
+                } else {
+                    dispatch({
+                        type: POST_EDIT_PRODUCT_SAVE_FAIL,
+                    });
+                }
+            });
     };
 }

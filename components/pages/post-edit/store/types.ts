@@ -3,6 +3,8 @@ import {PostEdit} from '../../../../entities/PostEdit/types';
 import {BrandId} from '../../../../entities/Brand/types';
 import {ProductId} from '../../../../entities/ProductBase/types';
 import {ProductColorId} from '../../../../entities/ProductColor/types';
+import {PostId} from '../../../../entities/Post/types';
+import {PostProductId} from '../../../../entities/PostProduct/types';
 import {FetchStatus} from '../../../../entities/FetchStatus';
 
 import {
@@ -12,6 +14,9 @@ import {
     POST_EDIT_PRODUCT_BRAND_CHANGE,
     POST_EDIT_PRODUCT_PRODUCT_CHANGE,
     POST_EDIT_PRODUCT_COLOR_CHANGE,
+    POST_EDIT_PRODUCT_CANCEL,
+    POST_EDIT_PRODUCT_SAVE,
+    POST_EDIT_PRODUCT_SAVE_SUCCESS,
 } from './actions';
 
 export interface PagePostEditState {
@@ -39,7 +44,6 @@ export interface PagePostEditState {
         // productExtraFetchStatus: {
         //     [id: number]: FetchStatus;
         // }
-
 
         // PRODUCT COLOR
         productColorText: string;
@@ -93,10 +97,33 @@ export interface PostEditProductColorChangeAction {
     }
 }
 
+export interface PostEditProductCancelAction {
+    type: typeof POST_EDIT_PRODUCT_CANCEL;
+}
+
+export interface PostEditProductSaveAction {
+    type: typeof POST_EDIT_PRODUCT_SAVE;
+}
+
+export interface PostEditProductSaveSuccessAction {
+    type: typeof POST_EDIT_PRODUCT_SAVE_SUCCESS;
+    payload: {
+        postId: PostId;
+        postPartId: PostPartId;
+        productId: ProductId;
+        productColorId: ProductColorId;
+        postPartProductId: PostProductId,
+    };
+}
+
 export type PagePostEditActionType =
     | PostEditPageDataFetchedAction
     | PostEditStartAddProductAction
     | PostEditProductFieldTextChangeAction
     | PostEditProductBrandChangeAction
     | PostEditProductProductChangeAction
-    | PostEditProductColorChangeAction;
+    | PostEditProductColorChangeAction
+    | PostEditProductCancelAction
+    | PostEditProductSaveAction
+    | PostEditProductSaveSuccessAction
+    ;
