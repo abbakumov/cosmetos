@@ -1,0 +1,39 @@
+.root
+    margin-bottom 12px
+    padding 12px
+
+.controls
+    float right
+
+.controls Button
+    margin-left 10px
+    padding 4px 0
+    min-width 40px
+
+.content
+    margin 20px 0 8px
+
+.colors
+    margin-top 12px
+
+.colorsItems
+    display flex
+    margin-top 12px
+
+.colorItem
+    height 24px
+    flex 1 0 30px
+    border-radius 4px
+    box-sizing border-box
+    cursor pointer
+    transition box-shadow .3s
+    border 2px solid #fff
+
+    & + &
+        margin-left 8px
+
+.colorItem:hover
+    box-shadow 0 0 10px #00000055
+
+.colorItemActive
+    border 2px solid #888

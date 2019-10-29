@@ -17,6 +17,16 @@ import {
     POST_EDIT_PRODUCT_CANCEL,
     POST_EDIT_PRODUCT_SAVE,
     POST_EDIT_PRODUCT_SAVE_SUCCESS,
+    POST_EDIT_PART_NEW,
+    POST_EDIT_PART_CHANGE_FIELD,
+    POST_EDIT_PART_CHANGE_POSITION,
+    POST_EDIT_PART_SAVE,
+    POST_EDIT_PART_SAVE_SUCCESS,
+    POST_EDIT_PART_SAVE_FAIL,
+    POST_EDIT_PART_CANCEL,
+    POST_EDIT_PART_REMOVE,
+    POST_EDIT_PART_REMOVE_SUCCESS,
+    POST_EDIT_PART_REMOVE_FAIL,
 } from './actions';
 
 export interface PagePostEditState {
@@ -116,6 +126,51 @@ export interface PostEditProductSaveSuccessAction {
     };
 }
 
+export interface PostEditPartNewAction {
+    type: typeof POST_EDIT_PART_NEW;
+}
+
+export interface PostEditPartChangeFieldAction {
+    type: typeof POST_EDIT_PART_CHANGE_FIELD;
+    payload: {
+        name: 'color' | 'title',
+        value: string,
+    },
+}
+
+export interface PostEditPartChangePositionAction {
+    type: typeof POST_EDIT_PART_CHANGE_POSITION;
+}
+
+export interface PostEditPartSaveAction {
+    type: typeof POST_EDIT_PART_SAVE;
+}
+
+export interface PostEditPartSaveSuccessAction {
+    type: typeof POST_EDIT_PART_SAVE_SUCCESS;
+}
+
+export interface PostEditPartSaveFailAction {
+    type: typeof POST_EDIT_PART_SAVE_FAIL;
+}
+
+export interface PostEditPartCancelAction {
+    type: typeof POST_EDIT_PART_CANCEL;
+}
+
+export interface PostEditPartRemoveAction {
+    type: typeof POST_EDIT_PART_REMOVE;
+}
+
+export interface PostEditPartRemoveSuccessAction {
+    type: typeof POST_EDIT_PART_REMOVE_SUCCESS;
+}
+
+export interface PostEditPartRemoveFailAction {
+    type: typeof POST_EDIT_PART_REMOVE_FAIL;
+}
+
+
 export type PagePostEditActionType =
     | PostEditPageDataFetchedAction
     | PostEditStartAddProductAction
@@ -126,4 +181,14 @@ export type PagePostEditActionType =
     | PostEditProductCancelAction
     | PostEditProductSaveAction
     | PostEditProductSaveSuccessAction
+    | PostEditPartNewAction
+    | PostEditPartChangeFieldAction
+    | PostEditPartChangePositionAction
+    | PostEditPartSaveAction
+    | PostEditPartSaveSuccessAction
+    | PostEditPartSaveFailAction
+    | PostEditPartCancelAction
+    | PostEditPartRemoveAction
+    | PostEditPartRemoveSuccessAction
+    | PostEditPartRemoveFailAction
     ;

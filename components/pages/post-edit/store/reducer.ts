@@ -12,6 +12,16 @@ import {
     POST_EDIT_PRODUCT_COLOR_CHANGE,
     POST_EDIT_PRODUCT_CANCEL,
     POST_EDIT_PRODUCT_SAVE_SUCCESS,
+    POST_EDIT_PART_NEW,
+    POST_EDIT_PART_CHANGE_FIELD,
+    POST_EDIT_PART_CHANGE_POSITION,
+    POST_EDIT_PART_SAVE,
+    POST_EDIT_PART_SAVE_SUCCESS,
+    POST_EDIT_PART_SAVE_FAIL,
+    POST_EDIT_PART_CANCEL,
+    POST_EDIT_PART_REMOVE,
+    POST_EDIT_PART_REMOVE_SUCCESS,
+    POST_EDIT_PART_REMOVE_FAIL,
 } from './actions';
 
 const emptyEditPostPartProduct = {
@@ -117,6 +127,54 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 ...state,
                 editPostPartProduct: emptyEditPostPartProduct,
             };
+
+        case POST_EDIT_PART_NEW:
+            return {
+                ...state,
+                editPostPart: {
+                    id: 0,
+                    title: '',
+                    position: {
+                        x: 50,
+                        y: 50,
+                    },
+                    color: '000000',
+                    productIds: [],
+                },
+            };
+
+        case POST_EDIT_PART_CHANGE_FIELD:
+            return {
+                ...state,
+                editPostPart: {
+                    ...state.editPostPart,
+                    [action.payload.name]: action.payload.value,
+                },
+            };
+
+        case POST_EDIT_PART_CHANGE_POSITION:
+            return state;
+
+        case POST_EDIT_PART_SAVE_SUCCESS:
+            return state;
+
+        case POST_EDIT_PART_SAVE_FAIL:
+            return state;
+
+        case POST_EDIT_PART_CANCEL:
+            return {
+                ...state,
+                editPostPart: null,
+            };
+
+        case POST_EDIT_PART_REMOVE:
+            return state;
+
+        case POST_EDIT_PART_REMOVE_SUCCESS:
+            return state;
+
+        case POST_EDIT_PART_REMOVE_FAIL:
+            return state;
     }
 
     return state;

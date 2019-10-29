@@ -7,7 +7,14 @@ import {
     PostEditProductFieldTextChangeAction,
     PostEditProductColorChangeAction,
     PostEditProductCancelAction,
+
+    PostEditPartNewAction,
+    PostEditPartChangeFieldAction,
+    PostEditPartChangePositionAction,
+    PostEditPartCancelAction,
+
     PostEditPageData,
+
 } from './types';
 import {brandProductsDataFetchedAction} from '../../../../entities/BrandProducts/actions';
 import {productsBaseDataFetchedAction} from '../../../../entities/ProductBase/actions';
@@ -30,6 +37,17 @@ export const POST_EDIT_PRODUCT_CANCEL = 'POST_EDIT_PRODUCT_CANCEL';
 export const POST_EDIT_PRODUCT_SAVE = 'POST_EDIT_PRODUCT_SAVE';
 export const POST_EDIT_PRODUCT_SAVE_SUCCESS = 'POST_EDIT_PRODUCT_SAVE_SUCCESS';
 export const POST_EDIT_PRODUCT_SAVE_FAIL = 'POST_EDIT_PRODUCT_SAVE_FAIL';
+
+export const POST_EDIT_PART_NEW = 'POST_EDIT_PART_NEW';
+export const POST_EDIT_PART_CHANGE_FIELD = 'POST_EDIT_PART_CHANGE_FIELD';
+export const POST_EDIT_PART_CHANGE_POSITION = 'POST_EDIT_PART_CHANGE_POSITION';
+export const POST_EDIT_PART_SAVE = 'POST_EDIT_PART_SAVE';
+export const POST_EDIT_PART_SAVE_SUCCESS = 'POST_EDIT_PART_SAVE_SUCCESS';
+export const POST_EDIT_PART_SAVE_FAIL = 'POST_EDIT_PART_SAVE_FAIL';
+export const POST_EDIT_PART_CANCEL = 'POST_EDIT_PART_CANCEL';
+export const POST_EDIT_PART_REMOVE = 'POST_EDIT_PART_REMOVE';
+export const POST_EDIT_PART_REMOVE_SUCCESS = 'POST_EDIT_PART_REMOVE_SUCCESS';
+export const POST_EDIT_PART_REMOVE_FAIL = 'POST_EDIT_PART_REMOVE_FAIL';
 
 export function postEditDataFetchedAction(data: PostEditPageData): PostEditPageDataFetchedAction {
     return {
@@ -135,3 +153,37 @@ export function postEditProductSaveAction(): any {
             });
     };
 }
+
+export function postEditPartNewAction(): PostEditPartNewAction {
+    return {
+        type: POST_EDIT_PART_NEW,
+    };
+}
+
+export function postEditPartChangeFieldAction(name: 'color' | 'title', value: string): PostEditPartChangeFieldAction {
+    return {
+        type: POST_EDIT_PART_CHANGE_FIELD,
+        payload: {name, value},
+    };
+}
+
+export function postEditPartChangePositionAction(): PostEditPartChangePositionAction {
+    return {
+        type: POST_EDIT_PART_CHANGE_POSITION,
+    };
+}
+
+export function postEditPartSaveAction(): any {
+    return dispatch => {
+        dispatch({
+            type: POST_EDIT_PART_SAVE,
+        })
+    }
+}
+
+export function postEditPartCancelAction(): PostEditPartCancelAction {
+    return {
+        type: POST_EDIT_PART_CANCEL,
+    };
+}
+

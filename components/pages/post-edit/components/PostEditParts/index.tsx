@@ -7,13 +7,23 @@ import Button from '@material-ui/core/Button';
 import {PostPartId} from '../../../../../entities/PostPart/types';
 import {AppState} from '../../../../../store';
 
+import {postEditPartNewAction} from '../../store/actions';
+
 import PostEditPart from '../PostEditPart';
+import PostEditPartEdit from '../PostEditPartEdit';
 
 const styles = require('./styles.styl');
 
-interface Props {
+interface MappedProps {
     partIds: PostPartId[];
+    activeEditPartId: PostPartId;
 }
+
+interface ActionProps {
+    postEditPartNewAction(): void;
+}
+
+interface Props extends MappedProps, ActionProps {}
 
 const PostЕditParts: FunctionComponent<Props> = (props: Props) => (
     <div className={styles.root}>
@@ -22,20 +32,39 @@ const PostЕditParts: FunctionComponent<Props> = (props: Props) => (
                 <PostEditPart key={id} id={id} />
             ))}
         </div>
-        <Paper className={styles.controls}>
-            <Button variant="contained" color="primary">Добавить область</Button>
-        </Paper>
+        {props.activeEditPartId === 0 &&
+            <PostEditPartEdit />
+        }
+        {props.activeEditPartId === null &&
+            <Paper className={styles.controls}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => props.postEditPartNewAction()}
+                >
+                    Добавить область
+                </Button>
+            </Paper>
+        }
     </div>
 );
 
 function mapStateToProps(state: AppState) {
-    const partIds = state.pagePostEdit.postPartIds;
+    const {pagePostEdit} = state;
+
+    const partIds = pagePostEdit.postPartIds;
+    const activeEditPartId: PostPartId = pagePostEdit.editPostPart && pagePostEdit.editPostPart.id;
 
     return {
         partIds,
+        activeEditPartId,
     };
 }
 
-const ConnectedPostЕditParts = connect(mapStateToProps)(PostЕditParts);
+const mapDispatchToProps = {
+    postEditPartNewAction,
+};
+
+const ConnectedPostЕditParts = connect(mapStateToProps, mapDispatchToProps)(PostЕditParts);
 
 export default ConnectedPostЕditParts;
