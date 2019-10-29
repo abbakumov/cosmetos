@@ -62,6 +62,7 @@ const PostEditPartEdit: FunctionComponent<Props> = (props: Props) => (
             <TextField
                 label="Название области"
                 variant="outlined"
+                value={props.title}
                 onChange={e => props.postEditPartChangeFieldAction('title', e.target.value)}
             />
             <div className={styles.colors}>

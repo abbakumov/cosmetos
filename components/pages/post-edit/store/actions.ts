@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import {PostPartId} from '../../../../entities/PostPart/types';
 import {GetBrandProductsResponse} from '../../../../entities/BrandProducts/api';
 import {GetProductColorsResponse} from '../../../../entities/ProductBase/api';
@@ -9,6 +11,7 @@ import {
     PostEditProductCancelAction,
 
     PostEditPartNewAction,
+    PostEditPartEditAction,
     PostEditPartChangeFieldAction,
     PostEditPartChangePositionAction,
     PostEditPartCancelAction,
@@ -39,6 +42,7 @@ export const POST_EDIT_PRODUCT_SAVE_SUCCESS = 'POST_EDIT_PRODUCT_SAVE_SUCCESS';
 export const POST_EDIT_PRODUCT_SAVE_FAIL = 'POST_EDIT_PRODUCT_SAVE_FAIL';
 
 export const POST_EDIT_PART_NEW = 'POST_EDIT_PART_NEW';
+export const POST_EDIT_PART_EDIT = 'POST_EDIT_PART_EDIT';
 export const POST_EDIT_PART_CHANGE_FIELD = 'POST_EDIT_PART_CHANGE_FIELD';
 export const POST_EDIT_PART_CHANGE_POSITION = 'POST_EDIT_PART_CHANGE_POSITION';
 export const POST_EDIT_PART_SAVE = 'POST_EDIT_PART_SAVE';
@@ -157,6 +161,19 @@ export function postEditProductSaveAction(): any {
 export function postEditPartNewAction(): PostEditPartNewAction {
     return {
         type: POST_EDIT_PART_NEW,
+    };
+}
+
+export function postEditPartEditAction(id: PostPartId): any {
+    return (dispatch, getState) => {
+        const state: AppState = getState();
+
+        const postPart = state.postPart.items[id];
+
+        dispatch({
+            type: POST_EDIT_PART_EDIT,
+            payload: postPart,
+        });
     };
 }
 

@@ -10,7 +10,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 
-import {postEditStartAddProductAction} from '../../store/actions';
+import {
+    postEditStartAddProductAction,
+    postEditPartEditAction,
+} from '../../store/actions';
 import {PostPart, PostPartId} from '../../../../../entities/PostPart/types';
 import {AppState} from '../../../../../store';
 
@@ -29,6 +32,7 @@ interface MappedProps extends PostPart {
 
 interface ActionProps {
     postEditStartAddProductAction(id: PostPartId): void;
+    postEditPartEditAction(id: PostPartId): void;
 }
 
 interface Props extends MappedProps, ActionProps {}
@@ -36,10 +40,21 @@ interface Props extends MappedProps, ActionProps {}
 const PostEditPart: FunctionComponent<Props> = (props: Props) => (
     <Paper className={styles.root}>
         <div className={styles.controls}>
-            <Button variant="contained" className={styles.control} size="small" color="secondary">
+            <Button
+                variant="contained"
+                className={styles.control}
+                size="small"
+                color="secondary"
+                onClick={() => props.postEditPartEditAction(props.id)}
+            >
                 <Icon fontSize="small">edit</Icon>
             </Button>
-            <Button variant="contained" className={styles.control} size="small" color="secondary">
+            <Button
+                variant="contained"
+                className={styles.control}
+                size="small"
+                color="secondary"
+            >
                 <Icon fontSize="small">delete</Icon>
             </Button>
         </div>
@@ -83,6 +98,7 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProps): MappedPr
 
 const mapDispatchToProps: ActionProps = {
     postEditStartAddProductAction,
+    postEditPartEditAction,
 };
 
 const ConnectedPostEditPart = connect(mapStateToProps, mapDispatchToProps)(PostEditPart);

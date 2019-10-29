@@ -13,6 +13,7 @@ import {
     POST_EDIT_PRODUCT_CANCEL,
     POST_EDIT_PRODUCT_SAVE_SUCCESS,
     POST_EDIT_PART_NEW,
+    POST_EDIT_PART_EDIT,
     POST_EDIT_PART_CHANGE_FIELD,
     POST_EDIT_PART_CHANGE_POSITION,
     POST_EDIT_PART_SAVE,
@@ -141,6 +142,12 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                     color: '000000',
                     productIds: [],
                 },
+            };
+
+        case POST_EDIT_PART_EDIT:
+            return {
+                ...state,
+                editPostPart: action.payload,
             };
 
         case POST_EDIT_PART_CHANGE_FIELD:

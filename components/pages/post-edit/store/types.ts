@@ -27,6 +27,7 @@ import {
     POST_EDIT_PART_REMOVE,
     POST_EDIT_PART_REMOVE_SUCCESS,
     POST_EDIT_PART_REMOVE_FAIL,
+    POST_EDIT_PART_EDIT,
 } from './actions';
 
 export interface PagePostEditState {
@@ -130,6 +131,11 @@ export interface PostEditPartNewAction {
     type: typeof POST_EDIT_PART_NEW;
 }
 
+export interface PostEditPartEditAction {
+    type: typeof POST_EDIT_PART_EDIT;
+    payload: PostPart;
+}
+
 export interface PostEditPartChangeFieldAction {
     type: typeof POST_EDIT_PART_CHANGE_FIELD;
     payload: {
@@ -182,6 +188,7 @@ export type PagePostEditActionType =
     | PostEditProductSaveAction
     | PostEditProductSaveSuccessAction
     | PostEditPartNewAction
+    | PostEditPartEditAction
     | PostEditPartChangeFieldAction
     | PostEditPartChangePositionAction
     | PostEditPartSaveAction

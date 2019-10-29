@@ -29,7 +29,10 @@ const PostЕditParts: FunctionComponent<Props> = (props: Props) => (
     <div className={styles.root}>
         <div className={styles.container}>
             {props.partIds.map(id => (
-                <PostEditPart key={id} id={id} />
+                <div key={id}>
+                    {props.activeEditPartId !== id && <PostEditPart id={id} />}
+                    {props.activeEditPartId === id && <PostEditPartEdit />}
+                </div>
             ))}
         </div>
         {props.activeEditPartId === 0 &&
