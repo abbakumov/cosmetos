@@ -169,7 +169,14 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
             };
 
         case POST_EDIT_PART_SAVE_SUCCESS:
-            return state;
+            return {
+                ...state,
+                editPostPart: null,
+                postPartIds: [
+                    ...state.postPartIds,
+                    action.payload.data.id,
+                ],
+            };
 
         case POST_EDIT_PART_SAVE_FAIL:
             return state;

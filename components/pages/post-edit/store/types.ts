@@ -148,8 +148,8 @@ export interface PostEditPartChangeFieldAction {
 export interface PostEditPartChangePositionAction {
     type: typeof POST_EDIT_PART_CHANGE_POSITION;
     payload: {
-        position: Position,
-    }
+        position: Position;
+    };
 }
 
 export interface PostEditPartSaveAction {
@@ -158,6 +158,9 @@ export interface PostEditPartSaveAction {
 
 export interface PostEditPartSaveSuccessAction {
     type: typeof POST_EDIT_PART_SAVE_SUCCESS;
+    payload: {
+        data: PostPart;
+    };
 }
 
 export interface PostEditPartSaveFailAction {

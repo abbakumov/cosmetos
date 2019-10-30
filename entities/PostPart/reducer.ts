@@ -3,7 +3,8 @@ import {
     POST_PARTS_DATA_FETCHED,
 } from './actions';
 import {
-    POST_EDIT_PRODUCT_SAVE_SUCCESS
+    POST_EDIT_PRODUCT_SAVE_SUCCESS,
+    POST_EDIT_PART_SAVE_SUCCESS,
 } from '../../components/pages/post-edit/store/actions';
 
 const initialState: PostPartState = {
@@ -14,6 +15,7 @@ export function postPartReducer(state = initialState, action: PostPartActionType
     switch (action.type) {
         case POST_PARTS_DATA_FETCHED:
             return {
+                ...state,
                 items: {
                     ...state.items,
                     ...action.payload.data,
@@ -22,6 +24,7 @@ export function postPartReducer(state = initialState, action: PostPartActionType
 
         case POST_EDIT_PRODUCT_SAVE_SUCCESS:
             return {
+                ...state,
                 items: {
                     ...state.items,
                     [action.payload.postPartId]: {
@@ -31,6 +34,15 @@ export function postPartReducer(state = initialState, action: PostPartActionType
                             action.payload.productId,
                         ],
                     },
+                },
+            };
+
+        case POST_EDIT_PART_SAVE_SUCCESS:
+            return {
+                ...state,
+                items: {
+                    ...state.items,
+                    [action.payload.data.id]: action.payload.data,
                 },
             };
     }

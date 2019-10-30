@@ -27,6 +27,7 @@ import {ProductColorId} from '../../../../entities/ProductColor/types';
 import {BrandId} from '../../../../entities/Brand/types';
 import {ProductId} from '../../../../entities/ProductBase/types';
 import {Position} from '../../../../entities/Position';
+import {savePostPart} from '../../../../entities/PostPart/api';
 
 import {AppState} from '../../../../store';
 
@@ -193,10 +194,32 @@ export function postEditPartChangePositionAction(position: Position): PostEditPa
 }
 
 export function postEditPartSaveAction(): any {
-    return dispatch => {
-        dispatch({
-            type: POST_EDIT_PART_SAVE,
-        })
+    return (dispatch, getState) => {
+        const state: AppState = getState();
+
+        const postId = state.pagePostEdit.postEdit.id;
+        const partData = state.pagePostEdit.editPostPart;
+
+        if (partData === null) return;
+
+        savePostPart(postId, partData)
+            .then(data => {
+                if (data.status === 'success') {
+                    dispatch({
+                        type: POST_EDIT_PART_SAVE_SUCCESS,
+                        payload: {
+                            data: {
+                                ...partData,
+                                id: data.partId,
+                            },
+                        },
+                    });
+                } else {
+                    dispatch({
+                        type: POST_EDIT_PART_SAVE_FAIL,
+                    });
+                }
+            });
     }
 }
 
