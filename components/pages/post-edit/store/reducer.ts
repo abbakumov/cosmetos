@@ -160,7 +160,13 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
             };
 
         case POST_EDIT_PART_CHANGE_POSITION:
-            return state;
+            return {
+                ...state,
+                editPostPart: {
+                    ...state.editPostPart,
+                    position: action.payload.position,
+                },
+            };
 
         case POST_EDIT_PART_SAVE_SUCCESS:
             return state;

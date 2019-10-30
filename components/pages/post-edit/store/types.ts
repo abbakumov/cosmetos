@@ -6,6 +6,7 @@ import {ProductColorId} from '../../../../entities/ProductColor/types';
 import {PostId} from '../../../../entities/Post/types';
 import {PostProductId} from '../../../../entities/PostProduct/types';
 import {FetchStatus} from '../../../../entities/FetchStatus';
+import {Position} from '../../../../entities/Position';
 
 import {
     POST_EDIT_PAGE_DATA_FETCHED,
@@ -146,6 +147,9 @@ export interface PostEditPartChangeFieldAction {
 
 export interface PostEditPartChangePositionAction {
     type: typeof POST_EDIT_PART_CHANGE_POSITION;
+    payload: {
+        position: Position,
+    }
 }
 
 export interface PostEditPartSaveAction {

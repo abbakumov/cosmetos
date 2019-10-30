@@ -46,6 +46,7 @@ class PostPicturePart extends Component<Props> {
             backgroundColor: `#${color}`,
         }
 
+        // TODO: it's always open styled
         const className = `${styles.root} ${styles.isOpen}`;
 
         return (

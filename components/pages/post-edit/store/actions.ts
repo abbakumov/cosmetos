@@ -26,6 +26,7 @@ import {productExtraDataFetchedAction} from '../../../../entities/ProductExtra/a
 import {ProductColorId} from '../../../../entities/ProductColor/types';
 import {BrandId} from '../../../../entities/Brand/types';
 import {ProductId} from '../../../../entities/ProductBase/types';
+import {Position} from '../../../../entities/Position';
 
 import {AppState} from '../../../../store';
 
@@ -184,9 +185,10 @@ export function postEditPartChangeFieldAction(name: 'color' | 'title', value: st
     };
 }
 
-export function postEditPartChangePositionAction(): PostEditPartChangePositionAction {
+export function postEditPartChangePositionAction(position: Position): PostEditPartChangePositionAction {
     return {
         type: POST_EDIT_PART_CHANGE_POSITION,
+        payload: {position},
     };
 }
 
