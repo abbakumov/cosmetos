@@ -7,6 +7,7 @@ import {
     POST_EDIT_PAGE_DATA_FETCHED,
     POST_EDIT_FILE_CHANGE,
     POST_EDIT_FIELD_CHANGE,
+    POST_EDIT_IS_PUBLIC_CHANGE,
     POST_EDIT_START_ADD_PRODUCT,
     POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE,
     POST_EDIT_PRODUCT_BRAND_CHANGE,
@@ -44,6 +45,7 @@ const initialState: PagePostEditState = {
         imageFile: null,
         instaPostId: '',
         description: '',
+        isPublic: false,
     },
     postPartIds: [],
     editPostPart: null,
@@ -74,6 +76,15 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 postEdit: {
                     ...state.postEdit,
                     [action.payload.name]: action.payload.value,
+                },
+            };
+
+        case POST_EDIT_IS_PUBLIC_CHANGE:
+            return {
+                ...state,
+                postEdit: {
+                    ...state.postEdit,
+                    isPublic: action.payload.value,
                 },
             };
 

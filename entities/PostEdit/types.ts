@@ -8,4 +8,5 @@ export interface PostEdit {
     imageFile?: File;
     instaPostId: string;
     description: string;
+    isPublic: boolean;
 }

@@ -12,6 +12,7 @@ import {
     POST_EDIT_PAGE_DATA_FETCHED,
     POST_EDIT_FILE_CHANGE,
     POST_EDIT_FIELD_CHANGE,
+    POST_EDIT_IS_PUBLIC_CHANGE,
     POST_EDIT_START_ADD_PRODUCT,
     POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE,
     POST_EDIT_PRODUCT_BRAND_CHANGE,
@@ -84,6 +85,13 @@ export interface PostEditFieldChange {
     payload: {
         name: PostEditFieldChangeName;
         value: string;
+    };
+}
+
+export interface PostEditIsPublicChange {
+    type: typeof POST_EDIT_IS_PUBLIC_CHANGE;
+    payload: {
+        value: boolean;
     };
 }
 
@@ -207,6 +215,7 @@ export type PagePostEditActionType =
     | PostEditPageDataFetchedAction
     | PostEditFileChange
     | PostEditFieldChange
+    | PostEditIsPublicChange
     | PostEditStartAddProductAction
     | PostEditProductFieldTextChangeAction
     | PostEditProductBrandChangeAction
