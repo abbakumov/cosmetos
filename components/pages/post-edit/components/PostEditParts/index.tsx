@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
 import {PostPartId} from '../../../../../entities/PostPart/types';
+import {PostId} from '../../../../../entities/Post/types';
 import {AppState} from '../../../../../store';
 
 import {postEditPartNewAction} from '../../store/actions';
@@ -15,6 +16,7 @@ import PostEditPartEdit from '../PostEditPartEdit';
 const styles = require('./styles.styl');
 
 interface MappedProps {
+    postId: PostId;
     partIds: PostPartId[];
     activeEditPartId: PostPartId;
 }
@@ -27,14 +29,30 @@ interface Props extends MappedProps, ActionProps {}
 
 const PostЕditParts: FunctionComponent<Props> = (props: Props) => (
     <div className={styles.root}>
-        <div className={styles.container}>
-            {props.partIds.map(id => (
-                <div key={id}>
-                    {props.activeEditPartId !== id && <PostEditPart id={id} />}
-                    {props.activeEditPartId === id && <PostEditPartEdit />}
-                </div>
-            ))}
-        </div>
+        {Boolean(props.partIds.length) && (
+            <div className={styles.container}>
+                {props.partIds.map(id => (
+                    <div key={id}>
+                        {props.activeEditPartId !== id && <PostEditPart id={id} />}
+                        {props.activeEditPartId === id && <PostEditPartEdit />}
+                    </div>
+                ))}
+            </div>
+        )}
+        {!props.partIds.length && props.activeEditPartId === null && Boolean(props.postId) && (
+            <Paper className={styles.placeholder}>
+                <p>Добавьте первую область нажав "Добавить область"</p>
+            </Paper>
+        )}
+        {!props.postId && (
+            <Paper className={styles.placeholder}>
+                <p>
+                    Чтобы начать добавлять области,
+                    <br/>
+                    выберите фото и заполните информацию о посте
+                </p>
+            </Paper>
+        )}
         {props.activeEditPartId === 0 &&
             <PostEditPartEdit />
         }
@@ -55,10 +73,12 @@ const PostЕditParts: FunctionComponent<Props> = (props: Props) => (
 function mapStateToProps(state: AppState) {
     const {pagePostEdit} = state;
 
+    const postId = pagePostEdit.postEdit.id;
     const partIds = pagePostEdit.postPartIds;
     const activeEditPartId: PostPartId = pagePostEdit.editPostPart && pagePostEdit.editPostPart.id;
 
     return {
+        postId,
         partIds,
         activeEditPartId,
     };
