@@ -5,6 +5,8 @@ import {
 
 import {
     POST_EDIT_PAGE_DATA_FETCHED,
+    POST_EDIT_FILE_CHANGE,
+    POST_EDIT_FIELD_CHANGE,
     POST_EDIT_START_ADD_PRODUCT,
     POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE,
     POST_EDIT_PRODUCT_BRAND_CHANGE,
@@ -39,7 +41,8 @@ const initialState: PagePostEditState = {
     postEdit: {
         title: '',
         imageUrl: '',
-        instaUrl: '',
+        imageFile: null,
+        instaPostId: '',
         description: '',
     },
     postPartIds: [],
@@ -53,6 +56,25 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
             return {
                 ...state,
                 ...action.payload,
+            };
+
+        case POST_EDIT_FILE_CHANGE:
+            return {
+                ...state,
+                postEdit: {
+                    ...state.postEdit,
+                    imageUrl: action.payload.url,
+                    imageFile: action.payload.file,
+                },
+            };
+
+        case POST_EDIT_FIELD_CHANGE:
+            return {
+                ...state,
+                postEdit: {
+                    ...state.postEdit,
+                    [action.payload.name]: action.payload.value,
+                },
             };
 
         case POST_EDIT_START_ADD_PRODUCT:

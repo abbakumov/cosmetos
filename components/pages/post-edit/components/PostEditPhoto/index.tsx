@@ -9,17 +9,22 @@ import {Position} from '../../../../../entities/Position';
 
 import PostEditPhotoPart from '../PostEditPhotoPart';
 
-import {postEditPartChangePositionAction} from '../../store/actions';
+import {
+    postEditFileChange,
+    postEditPartChangePositionAction,
+} from '../../store/actions';
 
 const styles = require('./styles.styl');
 
 interface MappedProps {
     isActivePartEdit: boolean;
     partIds: PostPartId[];
+    imageUrl: string;
 }
 
 interface ActionProps {
     postEditPartChangePositionAction(position: Position): void;
+    postEditFileChange(file: File, url: string): void;
 }
 
 interface Props extends MappedProps, ActionProps {}
@@ -44,18 +49,49 @@ class PostEditPhoto extends Component<Props> {
         }
     }
 
+    onImageChange = (e) => {
+        const target: HTMLInputElement = e.target;
+        const file: File = target.files[0];
+
+        if (!file) return;
+
+        const fileReader = new FileReader();
+
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+            this.props.postEditFileChange(file, fileReader.result as string);
+        };
+    }
+
     render() {
+        const imageText = this.props.imageUrl ? 'Новое изображение' : 'Изображение';
+
         return (
             <Paper className={styles.root}>
-                <div
-                    className={styles.imageContainer}
-                    onClick={this.clickHandler}
-                    ref={this.containerRef}
-                >
-                    <img src="/static/fake/pics/liza_3.png" />
-                    {this.props.partIds.map(id => (
-                        <PostEditPhotoPart key={id} id={id}/>
-                    ))}
+                {this.props.imageUrl &&
+                    <div
+                        className={styles.imageContainer}
+                        onClick={this.clickHandler}
+                        ref={this.containerRef}
+                    >
+                        <img src={this.props.imageUrl} />
+                        {this.props.partIds.map(id => (
+                            <PostEditPhotoPart key={id} id={id}/>
+                        ))}
+                    </div>
+                }
+                {!this.props.imageUrl &&
+                    <div className={styles.imagePlaceholder}>
+                        <p>Выберите изображение</p>
+                    </div>
+                }
+                <div className={styles.imagePickerContainer}>
+                    <p className={styles.imagePickerLabel}>{imageText} (.png или .jpeg):</p>
+                    <input
+                        type="file"
+                        accept="image/x-png,image/jpeg"
+                        onChange={this.onImageChange}
+                    />
                 </div>
             </Paper>
         );
@@ -63,7 +99,7 @@ class PostEditPhoto extends Component<Props> {
 };
 
 function mapStateToProps(state: AppState): MappedProps {
-    const {postPartIds} = state.pagePostEdit;
+    const {postPartIds, postEdit} = state.pagePostEdit;
 
     const activePart = state.pagePostEdit.editPostPart;
     const isActivePartEdit = Boolean(activePart);
@@ -73,11 +109,13 @@ function mapStateToProps(state: AppState): MappedProps {
     return {
         isActivePartEdit,
         partIds,
+        imageUrl: postEdit.imageUrl,
     };
 }
 
 const mapDispatchToProps = {
     postEditPartChangePositionAction,
+    postEditFileChange,
 };
 
 const ConnectedPostEditPhoto = connect(mapStateToProps, mapDispatchToProps)(PostEditPhoto);

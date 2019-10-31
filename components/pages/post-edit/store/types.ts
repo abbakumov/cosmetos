@@ -10,6 +10,8 @@ import {Position} from '../../../../entities/Position';
 
 import {
     POST_EDIT_PAGE_DATA_FETCHED,
+    POST_EDIT_FILE_CHANGE,
+    POST_EDIT_FIELD_CHANGE,
     POST_EDIT_START_ADD_PRODUCT,
     POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE,
     POST_EDIT_PRODUCT_BRAND_CHANGE,
@@ -66,6 +68,23 @@ export interface PagePostEditState {
 export interface PostEditPageData {
     postEdit: PostEdit;
     postPartIds: PostPartId[];
+}
+
+export interface PostEditFileChange {
+    type: typeof POST_EDIT_FILE_CHANGE;
+    payload: {
+        file: File;
+        url: string;
+    };
+}
+
+export type PostEditFieldChangeName = 'title' | 'instaPostId' | 'description';
+export interface PostEditFieldChange {
+    type: typeof POST_EDIT_FIELD_CHANGE;
+    payload: {
+        name: PostEditFieldChangeName;
+        value: string;
+    };
 }
 
 export interface PostEditPageDataFetchedAction {
@@ -186,6 +205,8 @@ export interface PostEditPartRemoveFailAction {
 
 export type PagePostEditActionType =
     | PostEditPageDataFetchedAction
+    | PostEditFileChange
+    | PostEditFieldChange
     | PostEditStartAddProductAction
     | PostEditProductFieldTextChangeAction
     | PostEditProductBrandChangeAction

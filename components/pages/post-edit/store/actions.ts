@@ -5,6 +5,10 @@ import {GetBrandProductsResponse} from '../../../../entities/BrandProducts/api';
 import {GetProductColorsResponse} from '../../../../entities/ProductBase/api';
 import {
     PostEditPageDataFetchedAction,
+
+    PostEditFileChange,
+    PostEditFieldChange,
+
     PostEditStartAddProductAction,
     PostEditProductFieldTextChangeAction,
     PostEditProductColorChangeAction,
@@ -17,7 +21,7 @@ import {
     PostEditPartCancelAction,
 
     PostEditPageData,
-
+    PostEditFieldChangeName,
 } from './types';
 import {brandProductsDataFetchedAction} from '../../../../entities/BrandProducts/actions';
 import {productsBaseDataFetchedAction} from '../../../../entities/ProductBase/actions';
@@ -32,6 +36,8 @@ import {savePostPart} from '../../../../entities/PostPart/api';
 import {AppState} from '../../../../store';
 
 export const POST_EDIT_PAGE_DATA_FETCHED = 'POST_EDIT_PAGE_DATA_FETCHED';
+export const POST_EDIT_FILE_CHANGE = 'POST_EDIT_FILE_CHANGE';
+export const POST_EDIT_FIELD_CHANGE = 'POST_EDIT_FIELD_CHANGE';
 export const POST_EDIT_START_ADD_PRODUCT = 'POST_EDIT_START_ADD_PRODUCT';
 // changing of suggest text value, not chosing the item
 export const POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE = 'POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE';
@@ -61,6 +67,16 @@ export function postEditDataFetchedAction(data: PostEditPageData): PostEditPageD
         payload: data,
     };
 }
+
+export const postEditFileChange = (file: File, url: string): PostEditFileChange => ({
+    type: POST_EDIT_FILE_CHANGE,
+    payload: {file, url},
+});
+
+export const postEditFieldChange = (name: PostEditFieldChangeName, value: string): PostEditFieldChange => ({
+    type: POST_EDIT_FIELD_CHANGE,
+    payload: {name, value},
+});
 
 export function postEditStartAddProductAction(partId: PostPartId): PostEditStartAddProductAction {
     return {

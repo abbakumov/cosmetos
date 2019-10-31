@@ -6,7 +6,7 @@ export type PostId = number;
 export interface PostBase {
     id: PostId;
     title: string;
-    imageUrl: string;
+    imageUrl?: string;
     authorLogin: BlogLogin;
 }
 
