@@ -1,6 +1,7 @@
 const Koa = require('koa');
 const next = require('next');
 const Router = require('koa-router');
+const bodyParser = require('koa-bodyparser');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -8,7 +9,7 @@ const serverOnly = process.env.COS_SERVER_ONLY === '1';
 
 const makeRouter = require('./api/routes');
 
-const defaultStatucCodeMiddleware = async (ctx, next) => {
+const defaultStatusCodeMiddleware = async (ctx, next) => {
     ctx.res.statusCode = 200;
     await next();
 }
@@ -19,7 +20,7 @@ const defaultStatucCodeMiddleware = async (ctx, next) => {
     const server = new Koa();
 
     // default status code
-    server.use(defaultStatucCodeMiddleware);
+    server.use(defaultStatusCodeMiddleware);
 
     // Router with API routes
     const router = makeRouter();
@@ -35,6 +36,8 @@ const defaultStatucCodeMiddleware = async (ctx, next) => {
             ctx.respond = false;
         });
     }
+
+    server.use(bodyParser()); // parse json data
 
     server.use(router.routes());
 
