@@ -65,7 +65,7 @@ function mapStateToProps(state: AppState, ownProps: UnProductsTableRowProps): Pr
 
     let brand = '';
     if (brandId) {
-        brand = state.brand.items[brandId].shortName;
+        brand = state.brand.items[brandId].titleShort;
     } else {
         brand = brandText;
     }

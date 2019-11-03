@@ -8,6 +8,7 @@ import {pagePostEditReducer} from '../components/pages/post-edit/store/reducer';
 import {pageLoginReducer} from '../components/pages/login/state/reducer';
 import {pageAdminProductsUnassignedReducer}
     from '../components/pages/admin/products-unassigned/state/reducer';
+import {pageAdminBrandsReducer} from '../components/pages/admin/brands/store/reducer';
 
 import {blogReducer} from '../entities/Blog/reducer';
 import {blogExtraReducer} from '../entities/BlogExtra/reducer';
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
     pagePostEdit: pagePostEditReducer,
     pageLogin: pageLoginReducer,
     pageAdminProductsUnassigned: pageAdminProductsUnassignedReducer,
+    pageAdminBrands: pageAdminBrandsReducer,
 
     // entities
     blog: blogReducer,

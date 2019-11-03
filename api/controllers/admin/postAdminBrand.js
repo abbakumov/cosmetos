@@ -20,7 +20,7 @@ module.exports = async function postAdminBrand(ctx) {
 
         ctx.body = {
             status: 'success',
-            brandId: result.id,
+            brandId: result.id || result[0],
         };
     } catch (err) {
         console.error(err);

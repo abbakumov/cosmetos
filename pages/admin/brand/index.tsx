@@ -2,11 +2,13 @@ import _ from 'lodash';
 import {NextPage} from 'next';
 
 import AdminBrandsPage, {AdminBrandsPagePublicProps} from '../../../components/pages/admin/brands';
+import {pageAdminBrandsFetchSuccessAction} from '../../../components/pages/admin/brands/store/actions';
+
 import {ICosPageContext} from '../../../types/context';
 
-// import {brandsDataFetchedAction} from '../../entities/Brand/actions';
+import {brandsDataFetchedAction} from '../../../entities/Brand/actions';
 
-// import {getAdminBrands} from '../../../entities/ProductBase/api';
+import {getAdminBrands} from '../../../entities/Brand/api';
 
 const AdminBrandsPageWrapper: NextPage<AdminBrandsPagePublicProps> = (props) => (<AdminBrandsPage {...props} />);
 
@@ -17,15 +19,14 @@ interface InitialProps extends AdminBrandsPagePublicProps {
 AdminBrandsPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<InitialProps> {
     const {store} = context;
 
-    // const data = await getAdminProducts();
+    const data = await getAdminBrands();
 
-    // store.dispatch(blogDataFetchedAction(data.blog));
+    store.dispatch(brandsDataFetchedAction(data.brand));
+    store.dispatch(pageAdminBrandsFetchSuccessAction(data.ids));
 
     let title = 'Brands – Cosmetos Admin';
 
-    return {
-        title
-    };
+    return {title};
 };
 
 export default AdminBrandsPageWrapper;
