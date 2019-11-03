@@ -11,6 +11,7 @@ const getBrandProducts = require('./controllers/getBrandProducts');
 
 const getUnProducts = require('./controllers/admin/getUnProducts');
 const getAdminBrands = require('./controllers/admin/getAdminBrands');
+const postAdminBrand = require('./controllers/admin/postAdminBrand');
 
 const routes = [
     {
@@ -64,7 +65,12 @@ const routes = [
         route: '/admin/brands',
         method: 'get',
         controller: getAdminBrands,
-    }
+    },
+    {
+        route: '/admin/brands',
+        method: 'post',
+        controller: postAdminBrand,
+    },
 ];
 
 function makeRouter() {

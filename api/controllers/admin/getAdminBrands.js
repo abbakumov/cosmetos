@@ -3,7 +3,7 @@ const {normalize} = require('normalizr');
 const {brandSchema} = require('../../../entities/Brand/schema');
 const {Brand} = require('../../database/models');
 
-module.exports = async function getAdminBrands(ctx, ) {
+module.exports = async function getAdminBrands(ctx) {
     // data fetching
     const data = await Brand.findAll({
         limit: 50,

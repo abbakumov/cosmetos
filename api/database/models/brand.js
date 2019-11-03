@@ -2,10 +2,12 @@ module.exports = (sequelize, DataTypes) => {
     const Brand = sequelize.define('Brand', {
         titleShort: {
             allowNull: false,
+            unique: true,
             type: DataTypes.STRING(255),
         },
         titleFull: {
             allowNull: false,
+            unique: true,
             type: DataTypes.STRING(255),
         },
     }, {});
