@@ -10,6 +10,7 @@ const getProductColors = require('./controllers/getProductColors');
 const getBrandProducts = require('./controllers/getBrandProducts');
 
 const getUnProducts = require('./controllers/admin/getUnProducts');
+const getAdminBrands = require('./controllers/admin/getAdminBrands');
 
 const routes = [
     {
@@ -59,6 +60,11 @@ const routes = [
         method: 'get',
         controller: getUnProducts,
     },
+    {
+        route: '/admin/brands',
+        method: 'get',
+        controller: getAdminBrands,
+    }
 ];
 
 function makeRouter() {
