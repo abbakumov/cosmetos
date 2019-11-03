@@ -7,7 +7,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import BusinessCenter from '@material-ui/icons/BusinessCenter';
-import NewReleases from '@material-ui/icons/NewReleases';
+import Motorcycle from '@material-ui/icons/Motorcycle';
+import Link from 'next/link';
 
 const styles = require('../styles.styl');
 
@@ -21,18 +22,28 @@ const SideMenu: FunctionComponent = () => (
     >
         <List>
             <div>
-                <ListItem button>
-                    <ListItemIcon>
-                        <BusinessCenter />
-                    </ListItemIcon>
-                    <ListItemText primary="Продукты" />
-                </ListItem>
-                <ListItem button>
+                <Link href="/admin/brand">
+                    <ListItem button>
+                        <ListItemIcon>
+                            <Motorcycle />
+                        </ListItemIcon>
+                        <ListItemText primary="Бренды" />
+                    </ListItem>
+                </Link>
+                <Link href="/admin/product">
+                    <ListItem button>
+                        <ListItemIcon>
+                            <BusinessCenter />
+                        </ListItemIcon>
+                        <ListItemText primary="Продукты" />
+                    </ListItem>
+                </Link>
+                {/* <ListItem button>
                     <ListItemIcon>
                         <NewReleases />
                     </ListItemIcon>
                     <ListItemText primary="Вольные продукты" />
-                </ListItem>
+                </ListItem> */}
             </div>
         </List>
     </Drawer>

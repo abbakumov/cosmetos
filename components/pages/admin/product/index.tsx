@@ -59,7 +59,6 @@ const AdminProductPage: FunctionComponent<AdminProductPageProps> = () => (
                             label="Описание"
                             multiline
                             rows={4}
-                            variant="outlined"
                         />
                     </Grid>
                 </Grid>
