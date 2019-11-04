@@ -54,18 +54,26 @@ export function getProductColors(id: ProductId): Promise<GetProductColorsRespons
 
 
 interface GetAdminProductsResponse {
-    productIds: ProductId[],
-    productBase: {
+    total: number;
+    ids: ProductId[];
+    product: {
         [id: number]: ProductBase;
     };
 }
 
-export function getAdminProducts(): Promise<GetAdminProductsResponse> {
-    return Promise.resolve({
-        productIds: [0],
-        productBase: {},
-    })
+export interface GetAdminProductsParams {
+    filterTitle?: string;
+    offset?: number;
+    limit?: number;
 }
+export const getAdminProducts = (params: GetAdminProductsParams = {}): Promise<GetAdminProductsResponse> =>
+    fetch(`${getOrigin()}/api/admin/product/`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText)
+            }
+            return response.json() as Promise<GetAdminProductsResponse>
+        });
 
 
 export interface GetAdminProductByIdResponse {

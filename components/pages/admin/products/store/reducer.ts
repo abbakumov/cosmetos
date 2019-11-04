@@ -54,4 +54,6 @@ export function pageAdminProductsReducer(state: PageAdminProductsState = initial
                 offset: _newOffset >= state.total ? state.offset : _newOffset,
             };
     }
+
+    return state;
 }

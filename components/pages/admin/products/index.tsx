@@ -11,18 +11,37 @@ import AdminLayout from '../../../layouts/AdminLayout';
 import {ProductId} from '../../../../entities/ProductBase/types';
 import {AppState} from '../../../../store';
 
+import {
+    pageAdminProductsFilterTitleChangeAction,
+    pageAdminProductsRowsChangeAction,
+    pageAdminProductsPreviousPageAction,
+    pageAdminProductsNextPageAction,
+} from './store/actions';
+
 import AdminProductsTable from './components/AdminProductsTable';
 
 const styles = require('./styles.styl');
 
 export interface AdminProductsPagePublicProps {
-    productIds: ProductId[];
 };
 
-interface AdminProductsPageProps {
+interface MappedProps {
+    total: number;
+    pageRows: number;
+    page: number;
+    filterTitle: string;
 }
 
-const AdminProductsPage: FunctionComponent<{}> = () =>{
+interface ActionProps {
+    filterTitleChangeAction(value: string): void;
+    rowsChangeAction(value: number): void;
+    previousPageAction(): void;
+    nextPageAction(): void;
+}
+
+interface Props extends MappedProps, ActionProps {}
+
+const AdminProductsPage: FunctionComponent<Props> = (props: Props) =>{
     return (
         <AdminLayout>
             <Paper>
@@ -30,15 +49,16 @@ const AdminProductsPage: FunctionComponent<{}> = () =>{
                     <TextField
                         label="Поиск"
                         margin="dense"
-                        onChange={() => {}}
+                        value={props.filterTitle}
+                        onChange={(e) => {props.filterTitleChangeAction(e.target.value)}}
                     />
                 </Toolbar>
                 <AdminProductsTable />
                 <TablePagination
                     component="div"
-                    page={0}
-                    rowsPerPage={25}
-                    count={112}
+                    page={props.page}
+                    rowsPerPage={props.pageRows}
+                    count={props.total}
                     onChangePage={() => {console.log('change!')}}
                 />
             </Paper>
@@ -47,12 +67,30 @@ const AdminProductsPage: FunctionComponent<{}> = () =>{
 }
 
 function mapStateToProps(state: AppState, ownProps: AdminProductsPagePublicProps) {
-    const {productIds} = ownProps;
+    const {
+        total,
+        pageRows,
+        offset,
+        filterTitle,
+    } = state.pageAdminProducts;
+
+    const page = Math.round(offset / pageRows);
 
     return {
+        total,
+        pageRows,
+        page,
+        filterTitle,
     };
 }
 
-const ConnectedAdminProductsPage = connect(mapStateToProps)(AdminProductsPage);
+const actionProps = {
+    filterTitleChangeAction: pageAdminProductsFilterTitleChangeAction,
+    rowsChangeAction: pageAdminProductsRowsChangeAction,
+    previousPageAction: pageAdminProductsPreviousPageAction,
+    nextPageAction: pageAdminProductsNextPageAction,
+};
+
+const ConnectedAdminProductsPage = connect(mapStateToProps, actionProps)(AdminProductsPage);
 
 export default ConnectedAdminProductsPage;
