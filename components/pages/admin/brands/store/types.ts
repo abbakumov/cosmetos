@@ -36,7 +36,7 @@ export interface PageAdminBrandsSaveAction {
 export interface PageAdminBrandsSaveSuccessAction { 
     type: typeof PAGE_ADMIN_BRANDS_SAVE_SUCCESS,
     payload: {
-        brandId: BrandId;
+        brand: Brand;
     };
 };
 
@@ -60,7 +60,7 @@ export interface PageAdminBrandsChangeFieldAction {
 export interface PageAdminBrandsEditAction { 
     type: typeof PAGE_ADMIN_BRANDS_EDIT,
     payload: {
-        id: BrandId;
+        brand: Brand;
     };
 };
 

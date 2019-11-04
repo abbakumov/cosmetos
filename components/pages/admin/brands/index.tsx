@@ -10,6 +10,8 @@ import AdminLayout from '../../../layouts/AdminLayout';
 
 import {AppState} from '../../../../store';
 
+import {pageAdminBrandsNewAction} from './store/actions';
+
 import AdminBrandsTable from './components/AdminBrandsTable';
 import AdminBrandDialog from './components/AdminBrandDialog';
 
@@ -18,10 +20,17 @@ const styles = require('./styles.styl');
 export interface AdminBrandsPagePublicProps {
 };
 
-interface AdminBrandsPageProps {
-};
+interface AdminBrandsPageProps {};
 
-const AdminBrandsPage: FunctionComponent<{}> = () =>{
+interface MappedProps {}
+
+interface ActionProps {
+    newAction(): void;
+}
+
+interface Props extends MappedProps, ActionProps {}
+
+const AdminBrandsPage: FunctionComponent<Props> = (props: Props) =>{
     return (
         <AdminLayout>
             <Paper>
@@ -29,6 +38,7 @@ const AdminBrandsPage: FunctionComponent<{}> = () =>{
                     <Button
                         variant="contained"
                         size="small"
+                        onClick={() => props.newAction()}
                     >
                         <Icon
                             fontSize="small"
@@ -46,12 +56,14 @@ const AdminBrandsPage: FunctionComponent<{}> = () =>{
     );
 }
 
-function mapStateToProps(state: AppState, ownProps: AdminBrandsPagePublicProps) {
-
-    return {
-    };
+function mapStateToProps(state: AppState, ownProps: AdminBrandsPagePublicProps): MappedProps {
+    return {};
 }
 
-const ConnectedAdminBrandsPage = connect(mapStateToProps)(AdminBrandsPage);
+const actionProps = {
+    newAction: pageAdminBrandsNewAction,
+};
+
+const ConnectedAdminBrandsPage = connect(mapStateToProps, actionProps)(AdminBrandsPage);
 
 export default ConnectedAdminBrandsPage;

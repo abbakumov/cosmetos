@@ -9,7 +9,7 @@ module.exports = async function postAdminBrand(ctx) {
 
         let result;
 
-        if (data.id) {
+        if (id) {
             result = await Brand.update(
                 data,
                 {where: {id}}
@@ -20,7 +20,7 @@ module.exports = async function postAdminBrand(ctx) {
 
         ctx.body = {
             status: 'success',
-            brandId: result.id || result[0],
+            brandId: result.id || id,
         };
     } catch (err) {
         console.error(err);

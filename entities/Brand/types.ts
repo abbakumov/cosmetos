@@ -1,3 +1,5 @@
+import {PageAdminBrandsSaveSuccessAction} from '../../components/pages/admin/brands/store/types';
+
 import {BRANDS_DATA_FETCHED} from './actions';
 
 export type BrandId = number;
@@ -24,4 +26,6 @@ export interface BrandsDataFetchedAction {
 }
 
 export type BrandAction =
-    | BrandsDataFetchedAction;
+    | BrandsDataFetchedAction
+    | PageAdminBrandsSaveSuccessAction
+    ;

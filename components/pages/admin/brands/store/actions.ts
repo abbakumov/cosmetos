@@ -1,4 +1,7 @@
-import {BrandId} from '../../../../../entities/Brand/types';
+import {BrandId, Brand} from '../../../../../entities/Brand/types';
+
+import {AppState} from '../../../../../store';
+import {saveBrand} from '../../../../../entities/Brand/api';
 
 import {
     PageAdminBrandsFetchSuccessAction,
@@ -26,33 +29,46 @@ export const pageAdminBrandsFetchSuccessAction = (ids: BrandId[]):PageAdminBrand
     payload: {ids},
 });
 
-export const pageAdminBrandsNewAction = ():PageAdminBrandsNewAction => ({ 
+export const pageAdminBrandsNewAction = ():PageAdminBrandsNewAction => ({
     type: PAGE_ADMIN_BRANDS_NEW,
 });
 
-export const pageAdminBrandsSaveAction = ():PageAdminBrandsSaveAction => ({ 
-    type: PAGE_ADMIN_BRANDS_SAVE,
-});
+export const pageAdminBrandsSaveAction = () => (dispatch, getState) => {
+    const state: AppState = getState();
+    const {editBrand} = state.pageAdminBrands;
 
-export const pageAdminBrandsSaveSuccessAction = (brandId: BrandId):PageAdminBrandsSaveSuccessAction => ({ 
+    saveBrand(editBrand).then(result => {
+        if (result.status === 'success') {
+            const brand = {
+                ...editBrand,
+                id: result.brandId
+            };
+            dispatch(pageAdminBrandsSaveSuccessAction(brand));
+        } else {
+            dispatch(pageAdminBrandsSaveFailAction());
+        }
+    });
+};
+
+export const pageAdminBrandsSaveSuccessAction = (brand: Brand):PageAdminBrandsSaveSuccessAction => ({
     type: PAGE_ADMIN_BRANDS_SAVE_SUCCESS,
-    payload: {brandId}
+    payload: {brand}
 });
 
-export const pageAdminBrandsSaveFailAction = ():PageAdminBrandsSaveFailAction => ({ 
+export const pageAdminBrandsSaveFailAction = ():PageAdminBrandsSaveFailAction => ({
     type: PAGE_ADMIN_BRANDS_SAVE_FAIL,
 });
 
-export const pageAdminBrandsCancelAction = ():PageAdminBrandsCancelAction => ({ 
+export const pageAdminBrandsCancelAction = ():PageAdminBrandsCancelAction => ({
     type: PAGE_ADMIN_BRANDS_CANCEL,
 });
 
-export const pageAdminBrandsChangeFieldAction = (name: PageAdminBrandsChangeFieldName, value: string):PageAdminBrandsChangeFieldAction => ({ 
+export const pageAdminBrandsChangeFieldAction = (name: PageAdminBrandsChangeFieldName, value: string):PageAdminBrandsChangeFieldAction => ({
     type: PAGE_ADMIN_BRANDS_CHANGE_FIELD,
     payload: {name, value},
 });
 
-export const pageAdminBrandsEditAction = (id: BrandId):PageAdminBrandsEditAction => ({ 
+export const pageAdminBrandsEditAction = (brand: Brand):PageAdminBrandsEditAction => ({
     type: PAGE_ADMIN_BRANDS_EDIT,
-    payload: {id},
+    payload: {brand},
 });

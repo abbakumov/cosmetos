@@ -1,3 +1,5 @@
+import {PAGE_ADMIN_BRANDS_SAVE_SUCCESS} from '../../components/pages/admin/brands/store/actions';
+
 import {
     BrandState,
     BrandAction,
@@ -20,6 +22,14 @@ export function brandReducer(state: BrandState = initialState, action: BrandActi
                     ...action.payload.data,
                 },
             };
+
+        case PAGE_ADMIN_BRANDS_SAVE_SUCCESS:
+            return {
+                items: {
+                    ...state.items,
+                    [action.payload.brand.id]: action.payload.brand,
+                },
+            }
     }
 
     return state;

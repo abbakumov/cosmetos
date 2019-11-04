@@ -1,4 +1,5 @@
 import {FunctionComponent} from 'react';
+import {connect} from 'react-redux';
 
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
@@ -8,9 +9,24 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
+import {AppState} from '../../../../../../store';
+import {Brand} from '../../../../../../entities/Brand/types';
+
+import {pageAdminBrandsEditAction} from '../../store/actions';
+
 const styles = require('./styles.styl');
 
-const AdminProductsTable: FunctionComponent = () => (
+interface MappedProps {
+    items: Brand[];
+}
+
+interface ActionProps {
+    pageAdminBrandsEditAction(brand: Brand): void;
+}
+
+interface Props extends MappedProps, ActionProps {}
+
+const AdminProductsTable: FunctionComponent<Props> = (props: Props) => (
     <Table>
         <TableHead>
             <TableRow>
@@ -21,27 +37,46 @@ const AdminProductsTable: FunctionComponent = () => (
             </TableRow>
         </TableHead>
         <TableBody>
-            <TableRow>
-                <TableCell>1</TableCell>
-                <TableCell>Nyx</TableCell>
-                <TableCell>Nyx Косметикс</TableCell>
-                <TableCell>
-                    <Button
-                        variant="contained"
-                        size="small"
-                    >
-                        <Icon
-                            fontSize="small"
-                            className={styles.openIcon}
+            {props.items.map(item => (
+                <TableRow key={item.id}>
+                    <TableCell>{item.id}</TableCell>
+                    <TableCell>{item.titleFull}</TableCell>
+                    <TableCell>{item.titleShort}</TableCell>
+                    <TableCell>
+                        <Button
+                            variant="contained"
+                            size="small"
+                            onClick={() => {props.pageAdminBrandsEditAction(item)}}
                         >
-                            edit
-                        </Icon>
-                        View & Edit
-                    </Button>
-                </TableCell>
-            </TableRow>
+                            <Icon
+                                fontSize="small"
+                                className={styles.openIcon}
+                            >
+                                edit
+                            </Icon>
+                            Редактировать
+                        </Button>
+                    </TableCell>
+                </TableRow>
+            ))}
         </TableBody>
     </Table>
 );
 
-export default AdminProductsTable;
+function mapStateToProps(state: AppState) {
+    const {ids} = state.pageAdminBrands;
+
+    const items = ids.map(id => state.brand.items[id]);
+
+    return {
+        items,
+    };
+}
+
+const actionProps = {
+    pageAdminBrandsEditAction,
+};
+
+const ConnectedAdminProductsTable = connect(mapStateToProps, actionProps)(AdminProductsTable);
+
+export default ConnectedAdminProductsTable;
