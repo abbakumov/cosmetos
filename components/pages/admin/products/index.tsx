@@ -36,7 +36,7 @@ const AdminProductsPage: FunctionComponent<{}> = () =>{
                 <AdminProductsTable />
                 <TablePagination
                     component="div"
-                    page={1}
+                    page={0}
                     rowsPerPage={25}
                     count={112}
                     onChangePage={() => {console.log('change!')}}
