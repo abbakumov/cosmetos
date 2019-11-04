@@ -50,7 +50,7 @@ const AdminProductsPage: FunctionComponent<Props> = (props: Props) =>{
                         label="Поиск"
                         margin="dense"
                         value={props.filterTitle}
-                        onChange={(e) => {props.filterTitleChangeAction(e.target.value)}}
+                        onChange={e => {props.filterTitleChangeAction(e.target.value)}}
                     />
                 </Toolbar>
                 <AdminProductsTable />
@@ -58,8 +58,15 @@ const AdminProductsPage: FunctionComponent<Props> = (props: Props) =>{
                     component="div"
                     page={props.page}
                     rowsPerPage={props.pageRows}
+                    onChangeRowsPerPage={e => {props.rowsChangeAction(parseInt(e.target.value))}}
                     count={props.total}
-                    onChangePage={() => {console.log('change!')}}
+                    onChangePage={(e, page) => {
+                        if (props.page < page) {
+                            props.nextPageAction();
+                        } else {
+                            props.previousPageAction();
+                        }
+                    }}
                 />
             </Paper>
         </AdminLayout>

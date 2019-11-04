@@ -1,4 +1,6 @@
 import fetch from 'isomorphic-fetch';
+import querystring from 'query-string';
+import _ from 'lodash';
 
 import {getOrigin} from '../../configs/location';
 
@@ -66,14 +68,30 @@ export interface GetAdminProductsParams {
     offset?: number;
     limit?: number;
 }
-export const getAdminProducts = (params: GetAdminProductsParams = {}): Promise<GetAdminProductsResponse> =>
-    fetch(`${getOrigin()}/api/admin/product/`)
+const defaultParams = {
+    limit: 25,
+};
+export function getAdminProducts (_params: GetAdminProductsParams = {}): Promise<GetAdminProductsResponse> {
+    const params = _.defaults(_params, defaultParams);
+    const notEmptyParams = Object.keys(params)
+        .filter(param => params[param])
+        .reduce(
+            (acc, param) => ({
+                ...acc,
+                [param]: params[param],
+            }),
+            {}
+        );
+
+    const qs = querystring.stringify(notEmptyParams);
+    return fetch(`${getOrigin()}/api/admin/product/${qs.length ? '?' + qs : ''}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText)
             }
             return response.json() as Promise<GetAdminProductsResponse>
         });
+}
 
 
 export interface GetAdminProductByIdResponse {

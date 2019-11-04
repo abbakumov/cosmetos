@@ -23,9 +23,13 @@ export const pageAdminProductsFetchSuccessAction = (total: number, ids: ProductI
 async function updateProducts(dispatch, getState) {
     const state: AppState = getState();
 
-    const params = _.pick(state.pageAdminProducts, ['total', 'offset', 'filterTitle']);
+    const params = {
+        ..._.pick(state.pageAdminProducts, ['offset', 'filterTitle']),
+        limit: state.pageAdminProducts.pageRows,
+    };
 
     const data = await getAdminProducts(params);
+    // TODO: check if params not changed, or replace to RxJS
     dispatch(pageAdminProductsFetchSuccessAction(data.total, data.ids));
     dispatch(productsBaseDataFetchedAction(data.product));
 }
@@ -50,9 +54,11 @@ export const pageAdminProductsRowsChangeAction = (value: number) => (dispatch, g
 
 export const pageAdminProductsPreviousPageAction = () => (dispatch, getState) => {
     dispatch({type: PAGE_ADMIN_PRODUCTS_PREVIOUS_PAGE});
+    updateProducts(dispatch, getState);
 };
 
 export const pageAdminProductsNextPageAction = () => (dispatch, getState) => {
     dispatch({type: PAGE_ADMIN_PRODUCTS_NEXT_PAGE});
+    updateProducts(dispatch, getState);
 };
 

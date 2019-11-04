@@ -20,7 +20,7 @@ module.exports = async function getAdminProducts(ctx) {
     }
 
     // data fetching
-    const data = await Product.findAll({
+    const {count, rows} = await Product.findAndCountAll({
         where,
         limit,
         offset,
@@ -37,7 +37,8 @@ module.exports = async function getAdminProducts(ctx) {
             }
         ],
     });
-    const plainData = JSON.parse(JSON.stringify(data));
+
+    const plainData = JSON.parse(JSON.stringify(rows));
 
     // normalization
     const normalizedData = normalize(
@@ -62,6 +63,7 @@ module.exports = async function getAdminProducts(ctx) {
     );
 
     ctx.body = {
+        total: count,
         ids: normalizedData.result,
         product,
     };
