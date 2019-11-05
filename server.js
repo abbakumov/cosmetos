@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const logger = require('koa-logger');
 const next = require('next');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
@@ -18,6 +19,8 @@ const defaultStatusCodeMiddleware = async (ctx, next) => {
     let app, handle;
 
     const server = new Koa();
+
+    server.use(logger());
 
     // default status code
     server.use(defaultStatusCodeMiddleware);

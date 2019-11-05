@@ -69,3 +69,4 @@ api/database/sequelize-config.json
 # files
 static/fake
 static/public
+static/uploads

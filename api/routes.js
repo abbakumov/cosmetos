@@ -1,4 +1,5 @@
 const Router = require('koa-router');
+const {upload} = require('./helpers/multerSetup');
 
 const getBlog = require('./controllers/getBlog');
 const getPost = require('./controllers/getPost');
@@ -13,76 +14,82 @@ const getUnProducts = require('./controllers/admin/getUnProducts');
 const getAdminBrands = require('./controllers/admin/getAdminBrands');
 const postAdminBrand = require('./controllers/admin/postAdminBrand');
 const getAdminProducts = require('./controllers/admin/getAdminProducts');
+const postAdminProduct = require('./controllers/admin/postAdminProduct');
 
 const routes = [
     {
         route: '/blog/:login',
         method: 'get',
-        controller: getBlog,
+        controllers: [getBlog],
     },
     {
         route: '/post/:id',
         method: 'get',
-        controller: getPost,
+        controllers: [getPost],
     },
     {
         route: '/post/:id/edit',
         method: 'get',
-        controller: getPostEdit,
+        controllers: [getPostEdit],
     },
     {
         route: '/post/:id/add-product',
         method: 'post',
-        controller: postPostAddProduct,
+        controllers: [postPostAddProduct],
     },
     {
         route: '/post/:postId/save-part',
         method: 'post',
-        controller: postPostSavePart,
+        controllers: [postPostSavePart],
     },
     {
         route: '/product/:id',
         method: 'get',
-        controller: getProduct,
+        controllers: [getProduct],
     },
     {
         route: '/product/:id/colors',
         method: 'get',
-        controller: getProductColors,
+        controllers: [getProductColors],
     },
     {
         route: '/brand/:id/products',
         method: 'get',
-        controller: getBrandProducts,
+        controllers: [getBrandProducts],
     },
 
     //admin
     {
         route: '/admin/un-products',
         method: 'get',
-        controller: getUnProducts,
+        controllers: [getUnProducts],
     },
     {
         route: '/admin/brands',
         method: 'get',
-        controller: getAdminBrands,
+        controllers: [getAdminBrands],
     },
     {
         route: '/admin/brands',
         method: 'post',
-        controller: postAdminBrand,
+        controllers: [postAdminBrand],
     },
     {
         route: '/admin/product',
         method: 'get',
-        controller: getAdminProducts,
+        controllers: [getAdminProducts],
+    },
+    {
+        route: '/admin/product',
+        method: 'post',
+        controllers: [upload.single('picture'), postAdminProduct],
     },
 ];
 
 function makeRouter() {
     const router = new Router();
-    routes.forEach(({route, method, controller}) =>
-        router[method](`/api${route}`, controller));
+    routes.forEach(({route, method, controllers}) =>
+        router[method](`/api${route}`, ...controllers));
 
     return router;
 }

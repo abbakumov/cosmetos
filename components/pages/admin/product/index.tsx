@@ -64,7 +64,7 @@ const AdminProductPage: FunctionComponent<AdminProductPageProps> = () => (
                 </Grid>
             </Toolbar>
             <Toolbar>
-                <div className={styles.pictureLabel}>Изображение: </div>
+                <div className={styles.pictureLabel}>Изображение (не более 10mb): </div>
                 <input type="file" className={styles.pictureInput} />
             </Toolbar>
             <Toolbar>
