@@ -1,4 +1,4 @@
-const makeProductColorPicUrl = pic => pic ? `/static/public/product-color/pics/${pic}` : null;
+const makeProductColorPicUrl = pic => pic ? `/static/uploads/${pic}` : null;
 
 module.exports = {
     makeProductColorPicUrl,
