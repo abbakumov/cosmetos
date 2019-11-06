@@ -82,7 +82,7 @@ const routes = [
     {
         route: '/admin/product',
         method: 'post',
-        controllers: [upload.single('picture'), postAdminProduct],
+        controllers: [upload.single('pictureFile'), postAdminProduct],
     },
 ];
 
