@@ -16,6 +16,7 @@ const postAdminBrand = require('./controllers/admin/postAdminBrand');
 const getAdminProducts = require('./controllers/admin/getAdminProducts');
 const getAdminProduct = require('./controllers/admin/getAdminProduct');
 const postAdminProduct = require('./controllers/admin/postAdminProduct');
+const postAdminProductColor = require('./controllers/admin/postAdminProductColor');
 
 const routes = [
     {
@@ -89,6 +90,11 @@ const routes = [
         route: '/admin/product',
         method: 'post',
         controllers: [upload.single('pictureFile'), postAdminProduct],
+    },
+    {
+        route: '/admin/product-color',
+        method: 'post',
+        controllers: [upload.single('pictureFile'), postAdminProductColor],
     },
 ];
 
