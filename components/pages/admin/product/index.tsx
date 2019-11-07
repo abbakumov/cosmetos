@@ -77,9 +77,9 @@ const AdminProductPage: FunctionComponent<AdminProductPageProps> = () => (
                     <Grid item xs={6}>
                         <AdminProductColorsTable />
                     </Grid>
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                         <AdminProductOffersTable />
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </Toolbar>
             <Toolbar>
