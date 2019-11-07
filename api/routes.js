@@ -17,6 +17,7 @@ const getAdminProducts = require('./controllers/admin/getAdminProducts');
 const getAdminProduct = require('./controllers/admin/getAdminProduct');
 const postAdminProduct = require('./controllers/admin/postAdminProduct');
 const postAdminProductColor = require('./controllers/admin/postAdminProductColor');
+const deleteAdminProductColor = require('./controllers/admin/deleteAdminProductColor');
 
 const routes = [
     {
@@ -95,6 +96,11 @@ const routes = [
         route: '/admin/product-color',
         method: 'post',
         controllers: [upload.single('pictureFile'), postAdminProductColor],
+    },
+    {
+        route: '/admin/product-color/:id',
+        method: 'delete',
+        controllers: [deleteAdminProductColor],
     },
 ];
 

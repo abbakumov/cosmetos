@@ -14,4 +14,4 @@ module.exports = async function postAdminProductColor(ctx) {
     ctx.body = {
         status: 'success',
     };
-}
+};
