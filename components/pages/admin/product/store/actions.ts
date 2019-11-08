@@ -98,6 +98,10 @@ export const pageAdminProductColorDeleteFailAction = (id: ProductColorId): PageA
     payload: {id},
 });
 
+export const pageAdminProductSaveAction = () => (dispatch) => {
+
+};
+
 export const pageAdminProductSaveSuccessAction = (id: ProductId): PageAdminProductSaveSuccessAction => ({
     type: PAGE_ADMIN_PRODUCT_SAVE_SUCCESS,
     payload: {id},

@@ -1,4 +1,6 @@
-import {FunctionComponent} from 'react';
+import {Component} from 'react';
+import {connect} from 'react-redux';
+import _ from 'lodash';
 
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -10,83 +12,181 @@ import Toolbar from '@material-ui/core/Toolbar';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 
+import {AppState} from '../../../../store';
+
 import AdminLayout from '../../../layouts/AdminLayout';
 import {ProductId} from '../../../../entities/ProductBase/types';
+import {Brand, BrandId} from '../../../../entities/Brand/types';
 
 import AdminProductColorsTable from './components/ColorsTable';
-import AdminProductOffersTable from './components/OffersTable';
+import {
+    pageAdminProductChangeBrandIdAction,
+    pageAdminProductChangeFieldAction,
+    pageAdminProductChangePictureAction,
+    pageAdminProductSaveAction,
+} from './store/actions';
+import {ProductFieldName} from './store/types';
+// import AdminProductOffersTable from './components/OffersTable';
 
 const styles = require('./styles.styl');
 
-export interface AdminProductPageProps {
-    id: ProductId;
+interface MappedProps {
+    brands: Brand[];
+    brandId: BrandId;
+    kind: string;
+    title: string;
+    description: string;
+    pictureUrl: string;
 }
 
-const AdminProductPage: FunctionComponent<AdminProductPageProps> = () => (
-    <AdminLayout>
-        <Paper>
-            <Toolbar>
-                <Grid container spacing={2}>
-                    <Grid item>
-                        <FormControl>
-                            <InputLabel>
-                                Бренд
-                            </InputLabel>
-                            <Select
-                                value="huix"
-                                inputProps={{
-                                    name: 'brand',
-                                }}
-                            >
-                                <MenuItem value="nyx">Nyx</MenuItem>
-                                <MenuItem value="huix">Huix</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item>
-                        <TextField label="Тип" />
-                    </Grid>
-                    <Grid item>
-                        <TextField label="Название" />
-                    </Grid>
-                </Grid>
-            </Toolbar>
-            <Toolbar>
-                <Grid container>
-                    <Grid item xs={6}>
-                        <TextField
-                            className={styles.descriptionField}
-                            label="Описание"
-                            multiline
-                            rows={4}
-                        />
-                    </Grid>
-                </Grid>
-            </Toolbar>
-            <Toolbar>
-                <div className={styles.pictureLabel}>Изображение (не более 10mb): </div>
-                <input type="file" className={styles.pictureInput} />
-            </Toolbar>
-            <Toolbar>
-                <div className={styles.pictureContainer}>
-                    <div className={styles.emptyPictureLabel}>нет изображения</div>
-                </div>
-            </Toolbar>
-            <Toolbar>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <AdminProductColorsTable />
-                    </Grid>
-                    {/* <Grid item xs={6}>
-                        <AdminProductOffersTable />
-                    </Grid> */}
-                </Grid>
-            </Toolbar>
-            <Toolbar>
-                <Button variant="contained" color="primary">Сохранить продукт</Button>
-            </Toolbar>
-        </Paper>
-    </AdminLayout>
-);
+interface ActionProps {
+    changeBrandIdAction(id: BrandId): void;
+    changeFieldAction(name: ProductFieldName, value: string): void;
+    changePictureAction(file: File, url: string): void;
+    saveAction(): void;
+}
 
-export default AdminProductPage;
+interface Props extends MappedProps, ActionProps {}
+
+class AdminProductPage extends Component<Props> {
+    onImageChange = (e) => {
+        const target: HTMLInputElement = e.target;
+        const file: File = target.files[0];
+
+        if (!file) return;
+
+        const fileReader = new FileReader();
+
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+            this.props.changePictureAction(file, fileReader.result as string);
+        };
+    }
+
+    render() {
+        return  (
+            <AdminLayout>
+                <Paper>
+                    <Toolbar>
+                        <Grid container spacing={2}>
+                            <Grid item>
+                                <FormControl>
+                                    <InputLabel>
+                                        Бренд
+                                    </InputLabel>
+                                    <Select
+                                        value={this.props.brandId}
+                                        inputProps={{
+                                            name: 'brand',
+                                        }}
+                                        onChange={e => this.props.changeBrandIdAction(e.target.value as number)}
+                                    >
+                                        {this.props.brands.map(brand => (
+                                            <MenuItem key={brand.id} value={brand.id}>{brand.titleFull}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    label="Тип"
+                                    value={this.props.kind}
+                                    onChange={e => this.props.changeFieldAction('kind', e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    label="Название"
+                                    value={this.props.title}
+                                    onChange={e => this.props.changeFieldAction('title', e.target.value)}
+                                />
+                            </Grid>
+                        </Grid>
+                    </Toolbar>
+                    <Toolbar>
+                        <Grid container>
+                            <Grid item xs={6}>
+                                <TextField
+                                    className={styles.descriptionField}
+                                    label="Описание"
+                                    multiline
+                                    value={this.props.description}
+                                    rows={4}
+                                    onChange={e => this.props.changeFieldAction('description', e.target.value)}
+                                />
+                            </Grid>
+                        </Grid>
+                    </Toolbar>
+                    <Toolbar>
+                        <div className={styles.pictureLabel}>Изображение (не более 10mb): </div>
+                        <input
+                            type="file"
+                            accept="image/x-png,image/jpeg"
+                            onChange={this.onImageChange}
+                            className={styles.pictureInput}
+                        />
+                    </Toolbar>
+                    {!this.props.pictureUrl &&
+                        <Toolbar>
+                            <div className={styles.pictureEmpty}>
+                                <div className={styles.emptyPictureLabel}>нет изображения</div>
+                            </div>
+                        </Toolbar>
+                    }
+                    {this.props.pictureUrl &&
+                        <Toolbar>
+                            <img
+                                className={styles.picture}
+                                src={this.props.pictureUrl}
+                            />
+                        </Toolbar>
+                    }
+                    <Toolbar>
+                        <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                                <AdminProductColorsTable />
+                            </Grid>
+                            {/* <Grid item xs={6}>
+                                <AdminProductOffersTable />
+                            </Grid> */}
+                        </Grid>
+                    </Toolbar>
+                    <Toolbar>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => this.props.saveAction()}
+                        >
+                            Сохранить продукт
+                        </Button>
+                    </Toolbar>
+                </Paper>
+            </AdminLayout>
+        );
+    }
+}
+
+function mapStateToProps(state: AppState): MappedProps {
+    const {brandIds} = state.pageAdminProduct;
+
+    const brands = brandIds.map(id => state.brand.items[id]);
+
+    return {
+        ..._.pick(
+            state.pageAdminProduct.productEdit,
+            ['brandId', 'kind', 'title', 'description', 'pictureUrl']
+        ),
+        brands,
+    };
+}
+
+const actionProps = {
+    changeBrandIdAction: pageAdminProductChangeBrandIdAction,
+    changeFieldAction: pageAdminProductChangeFieldAction,
+    changePictureAction: pageAdminProductChangePictureAction,
+    saveAction: pageAdminProductSaveAction,
+};
+
+const ConnectedAdminProductPage = connect(mapStateToProps, actionProps)(AdminProductPage);
+
+export default ConnectedAdminProductPage;

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {NextPage} from 'next';
 
-import AdminProductPage, {AdminProductPageProps} from '../../../components/pages/admin/product';
+import AdminProductPage from '../../../components/pages/admin/product';
 import {ICosPageContext} from '../../../types/context';
 
 // import {productBaseDataFetchedAction} from '../../entities/ProductBase/actions';
@@ -11,9 +11,9 @@ import {pageAdminProductDataFetchedAction} from '../../../components/pages/admin
 import {brandsDataFetchedAction} from '../../../entities/Brand/actions';
 import {productColorsDataFetchedAction} from '../../../entities/ProductColor/actions';
 
-const AdminProductPageWrapper: NextPage<AdminProductPageProps> = (props) => (<AdminProductPage {...props} />);
+const AdminProductPageWrapper: NextPage<{}> = (props) => (<AdminProductPage {...props} />);
 
-interface InitialProps extends AdminProductPageProps {
+interface InitialProps {
     title: string;
 }
 
@@ -27,12 +27,9 @@ AdminProductPageWrapper.getInitialProps = async function(context: ICosPageContex
     store.dispatch(brandsDataFetchedAction(data.brand));
     store.dispatch(productColorsDataFetchedAction(data.productColor));
 
-    let title = 'Product – Cosmetos Admin';
+    const title = 'Product – Cosmetos Admin';
 
-    return {
-        id: productId,
-        title
-    };
+    return {title};
 };
 
 export default AdminProductPageWrapper;
