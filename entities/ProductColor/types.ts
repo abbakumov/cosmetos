@@ -8,6 +8,10 @@ export interface ProductColor {
     picUrl: string;
 }
 
+export interface ProductColorMap {
+    [id: number]: ProductColor;
+}
+
 // ACTIONS ->
 export interface ProductColorsDataFetchedAction {
     type: typeof PRODUCT_COLORS_DATA_FETCHED;

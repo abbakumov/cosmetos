@@ -10,6 +10,7 @@ import {pageAdminProductsUnassignedReducer}
     from '../components/pages/admin/products-unassigned/state/reducer';
 import {pageAdminBrandsReducer} from '../components/pages/admin/brands/store/reducer';
 import {pageAdminProductsReducer} from '../components/pages/admin/products/store/reducer';
+import {pageAdminProductReducer} from '../components/pages/admin/product/store/reducer';
 
 import {blogReducer} from '../entities/Blog/reducer';
 import {blogExtraReducer} from '../entities/BlogExtra/reducer';
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
     pageAdminProductsUnassigned: pageAdminProductsUnassignedReducer,
     pageAdminBrands: pageAdminBrandsReducer,
     pageAdminProducts: pageAdminProductsReducer,
+    pageAdminProduct: pageAdminProductReducer,
 
     // entities
     blog: blogReducer,

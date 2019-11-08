@@ -7,6 +7,9 @@ import {ICosPageContext} from '../../../types/context';
 // import {productBaseDataFetchedAction} from '../../entities/ProductBase/actions';
 
 import {getAdminProductById} from '../../../entities/ProductBase/api';
+import {pageAdminProductDataFetchedAction} from '../../../components/pages/admin/product/store/actions';
+import {brandsDataFetchedAction} from '../../../entities/Brand/actions';
+import {productColorsDataFetchedAction} from '../../../entities/ProductColor/actions';
 
 const AdminProductPageWrapper: NextPage<AdminProductPageProps> = (props) => (<AdminProductPage {...props} />);
 
@@ -20,7 +23,9 @@ AdminProductPageWrapper.getInitialProps = async function(context: ICosPageContex
     const productId = parseInt(_.castArray(query.id)[0]);
     const data = await getAdminProductById(productId);
 
-    // store.dispatch(blogDataFetchedAction(data.blog));
+    store.dispatch(pageAdminProductDataFetchedAction(data.product, data.brandIds));
+    store.dispatch(brandsDataFetchedAction(data.brand));
+    store.dispatch(productColorsDataFetchedAction(data.productColor));
 
     let title = 'Product – Cosmetos Admin';
 

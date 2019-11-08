@@ -38,6 +38,7 @@ export interface ProductColorEdit {
 }
 
 export interface PageAdminProductState {
+    brandIds: BrandId[];
     productEdit: ProductEdit;
     productColorEdit?: ProductColorEdit;
 }
@@ -45,7 +46,8 @@ export interface PageAdminProductState {
 export interface PageAdminProductDataFetchedAction {
     type: typeof PAGE_ADMIN_PRODUCT_DATA_FETCHED;
     payload: {
-        data: ProductEdit;
+        product: ProductEdit;
+        brandIds: BrandId[];
     };
 }
 

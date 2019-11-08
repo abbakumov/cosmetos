@@ -39,16 +39,18 @@ const emptyProductColorEdit = {
 };
 
 const initialState = {
+    brandIds: [],
     productEdit: emptyProductEdit,
     productColorEdit: null,
 };
 
-export default function pageAdminProductReducer(state: PageAdminProductState = initialState, action: PageAdminProductAction) {
+export function pageAdminProductReducer(state: PageAdminProductState = initialState, action: PageAdminProductAction) {
     switch (action.type) {
         case PAGE_ADMIN_PRODUCT_DATA_FETCHED:
             return {
                 ...state,
-                productEdit: action.payload.data,
+                brandIds: action.payload.brandIds,
+                productEdit: action.payload.product,
             };
 
         case PAGE_ADMIN_PRODUCT_CHANGE_BRAND_ID:

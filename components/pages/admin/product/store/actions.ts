@@ -39,10 +39,11 @@ export const PAGE_ADMIN_PRODUCT_SAVE = 'PAGE_ADMIN_PRODUCT_SAVE';
 export const PAGE_ADMIN_PRODUCT_SAVE_SUCCESS = 'PAGE_ADMIN_PRODUCT_SAVE_SUCCESS';
 export const PAGE_ADMIN_PRODUCT_SAVE_FAIL = 'PAGE_ADMIN_PRODUCT_SAVE_FAIL';
 
-export const pageAdminProductDataFetchedAction = (data: ProductEdit): PageAdminProductDataFetchedAction => ({
-    type: PAGE_ADMIN_PRODUCT_DATA_FETCHED,
-    payload: {data},
-});
+export const pageAdminProductDataFetchedAction =
+    (product: ProductEdit, brandIds: BrandId[]): PageAdminProductDataFetchedAction => ({
+        type: PAGE_ADMIN_PRODUCT_DATA_FETCHED,
+        payload: {product, brandIds},
+    });
 
 export const pageAdminProductChangeBrandIdAction = (id: BrandId): PageAdminProductChangeBrandIdAction => ({
     type: PAGE_ADMIN_PRODUCT_CHANGE_BRAND_ID,

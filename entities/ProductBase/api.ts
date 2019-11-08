@@ -10,6 +10,9 @@ import {BlogProduct} from '../BlogProduct/types';
 import {PostBase} from '../Post/types';
 import {ProductExtra} from '../ProductExtra/types';
 import {ProductColor} from '../ProductColor/types';
+import {BrandId, BrandMap} from '../Brand/types';
+import {ProductColorMap} from '../ProductColor/types';
+import {ProductEdit} from '../../components/pages/admin/product/store/types';
 
 export interface GetProductByIdResponse {
     productBase: ProductBase;
@@ -95,16 +98,16 @@ export function getAdminProducts (_params: GetAdminProductsParams = {}): Promise
 
 
 export interface GetAdminProductByIdResponse {
-    productBase: ProductBase;
+    product: ProductEdit;
+    brandIds: BrandId[];
+    brand: BrandMap;
+    productColor: ProductColorMap;
 }
-
-export function getAdminProductById(id: ProductId): Promise<GetAdminProductByIdResponse> {
-    return Promise.resolve({
-        productBase: {
-            id: 1,
-            brand: '',
-            title: '',
-            smallPicUrl: '',
-        }
-    });
-}
+export const getAdminProductById = (id: ProductId): Promise<GetAdminProductByIdResponse> =>
+    fetch(`${getOrigin()}/api/admin/product/${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText)
+            }
+            return response.json() as Promise<GetAdminProductByIdResponse>
+        });
