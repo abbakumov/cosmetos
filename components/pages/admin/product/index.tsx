@@ -19,6 +19,7 @@ import {ProductId} from '../../../../entities/ProductBase/types';
 import {Brand, BrandId} from '../../../../entities/Brand/types';
 
 import AdminProductColorsTable from './components/ColorsTable';
+import AdminProductColorDialog from './components/ColorDialog';
 import {
     pageAdminProductChangeBrandIdAction,
     pageAdminProductChangeFieldAction,
@@ -142,6 +143,15 @@ class AdminProductPage extends Component<Props> {
                         </Toolbar>
                     }
                     <Toolbar>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => this.props.saveAction()}
+                        >
+                            Сохранить продукт
+                        </Button>
+                    </Toolbar>
+                    <Toolbar>
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
                                 <AdminProductColorsTable />
@@ -151,16 +161,8 @@ class AdminProductPage extends Component<Props> {
                             </Grid> */}
                         </Grid>
                     </Toolbar>
-                    <Toolbar>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={() => this.props.saveAction()}
-                        >
-                            Сохранить продукт
-                        </Button>
-                    </Toolbar>
                 </Paper>
+                <AdminProductColorDialog />
             </AdminLayout>
         );
     }

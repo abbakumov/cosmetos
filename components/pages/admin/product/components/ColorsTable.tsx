@@ -1,4 +1,5 @@
 import {FunctionComponent} from 'react';
+import {connect} from 'react-redux';
 
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -9,30 +10,75 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-const AdminProductColorsTable: FunctionComponent = () => (
+import {AppState} from '../../../../../store';
+import {ProductColor} from '../../../../../entities/ProductColor/types';
+
+import {
+    pageAdminProductColorAddAction,
+} from '../store/actions';
+
+interface MappedProps {
+    colors: ProductColor[];
+}
+
+interface ActionProps {
+    colorAddAction(): void;
+}
+
+interface Props extends MappedProps, ActionProps {}
+
+const AdminProductColorsTable: FunctionComponent<Props> = (props: Props) => (
     <div>
         <Table>
             <TableHead>
                 <TableRow>
                     <TableCell>ID</TableCell>
                     <TableCell>Название</TableCell>
-                    <TableCell>hex</TableCell>
                     <TableCell>Фото</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-                <TableRow>
-                    <TableCell>1</TableCell>
-                    <TableCell>Персиковый сложный глубокий</TableCell>
-                    <TableCell>#cc33af</TableCell>
-                    <TableCell></TableCell>
-                </TableRow>
+                {props.colors.map(color => (
+                    <TableRow>
+                        <TableCell>{color.id}</TableCell>
+                        <TableCell>{color.title}</TableCell>
+                        <TableCell>
+                            <img
+                                style={{
+                                    maxWidth: '100px',
+                                    maxHeight: '100px',
+                                }}
+                                src={color.picUrl}
+                            />
+                        </TableCell>
+                    </TableRow>
+                ))}
             </TableBody>
         </Table>
         <Toolbar>
-            <Button variant="contained" color="primary">Добавить</Button>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {props.colorAddAction()}}
+            >
+                Добавить
+            </Button>
         </Toolbar>
     </div>
 );
 
-export default AdminProductColorsTable;
+function mapStateToProps(state: AppState) {
+    const {colorIds} = state.pageAdminProduct.productEdit;
+
+    const colors = colorIds.map(id => state.productColor.items[id]);
+
+    return {colors};
+}
+
+const actionProps = {
+    colorAddAction: pageAdminProductColorAddAction,
+};
+
+const ConnectedAdminProductColorsTable = connect(mapStateToProps, actionProps)(AdminProductColorsTable);
+
+export default ConnectedAdminProductColorsTable;

@@ -75,6 +75,10 @@ export const pageAdminProductColorChangePictureAction = (file: File, url: string
     payload: {file, url},
 });
 
+export const pageAdminProductColorSaveAction = () => (dispatch) => {
+
+}
+
 export const pageAdminProductColorSaveSuccessAction = (id: ProductColorId): PageAdminProductColorSaveSuccessAction => ({
     type: PAGE_ADMIN_PRODUCT_COLOR_SAVE_SUCCESS,
     payload: {id},
