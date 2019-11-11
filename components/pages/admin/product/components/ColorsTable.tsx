@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import Icon from '@material-ui/core/Icon';
 
 import {AppState} from '../../../../../store';
 import {ProductColor} from '../../../../../entities/ProductColor/types';
@@ -35,6 +36,7 @@ const AdminProductColorsTable: FunctionComponent<Props> = (props: Props) => (
                     <TableCell>ID</TableCell>
                     <TableCell>Название</TableCell>
                     <TableCell>Фото</TableCell>
+                    <TableCell>Удалить</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -50,6 +52,15 @@ const AdminProductColorsTable: FunctionComponent<Props> = (props: Props) => (
                                 }}
                                 src={color.picUrl}
                             />
+                        </TableCell>
+                        <TableCell>
+                            <Button>
+                                <Icon
+                                    fontSize="small"
+                                >
+                                    delete
+                                </Icon>
+                            </Button>
                         </TableCell>
                     </TableRow>
                 ))}

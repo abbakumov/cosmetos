@@ -32,6 +32,7 @@ import {ProductFieldName} from './store/types';
 const styles = require('./styles.styl');
 
 interface MappedProps {
+    isSaved: boolean;
     brands: Brand[];
     brandId: BrandId;
     kind: string;
@@ -153,9 +154,11 @@ class AdminProductPage extends Component<Props> {
                     </Toolbar>
                     <Toolbar>
                         <Grid container spacing={2}>
-                            <Grid item xs={6}>
-                                <AdminProductColorsTable />
-                            </Grid>
+                            {this.props.isSaved &&
+                                <Grid item xs={6}>
+                                    <AdminProductColorsTable />
+                                </Grid>
+                            }
                             {/* <Grid item xs={6}>
                                 <AdminProductOffersTable />
                             </Grid> */}
@@ -169,15 +172,18 @@ class AdminProductPage extends Component<Props> {
 }
 
 function mapStateToProps(state: AppState): MappedProps {
-    const {brandIds} = state.pageAdminProduct;
+    const {brandIds, productEdit} = state.pageAdminProduct;
 
     const brands = brandIds.map(id => state.brand.items[id]);
 
+    const isSaved = Boolean(productEdit.id)
+
     return {
         ..._.pick(
-            state.pageAdminProduct.productEdit,
+            productEdit,
             ['brandId', 'kind', 'title', 'description', 'pictureUrl']
         ),
+        isSaved,
         brands,
     };
 }

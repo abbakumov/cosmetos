@@ -4,7 +4,7 @@ module.exports = async function postAdminProductColor(ctx) {
     const {productId, title, colorHex} = ctx.request.body;
     const {file} = ctx.request;
 
-    await ProductColor.create({
+    const data = await ProductColor.create({
         productId,
         title,
         colorHex,
@@ -12,6 +12,7 @@ module.exports = async function postAdminProductColor(ctx) {
     });
 
     ctx.body = {
+        productColorId: data.id,
         status: 'success',
     };
 };

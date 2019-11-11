@@ -22,6 +22,8 @@ import {ProductColorId} from '../../../../../entities/ProductColor/types';
 import {ProductId} from '../../../../../entities/ProductBase/types';
 import {postAdminProduct} from '../../../../../entities/ProductBase/api';
 import {AppState} from '../../../../../store';
+import {postProductColor} from '../../../../../entities/ProductColor/api';
+import {productColorsDataFetchedAction} from '../../../../../entities/ProductColor/actions';
 
 export const PAGE_ADMIN_PRODUCT_DATA_FETCHED = 'PAGE_ADMIN_PRODUCT_DATA_FETCHED';
 export const PAGE_ADMIN_PRODUCT_CHANGE_BRAND_ID = 'PAGE_ADMIN_PRODUCT_CHANGE_BRAND_ID';
@@ -77,8 +79,24 @@ export const pageAdminProductColorChangePictureAction = (file: File, url: string
     payload: {file, url},
 });
 
-export const pageAdminProductColorSaveAction = () => (dispatch) => {
+export const pageAdminProductColorSaveAction = () => (dispatch, getState) => {
+    const state: AppState = getState();
+    const {
+        productColorEdit,
+        productEdit: {id: productId}
+    } = state.pageAdminProduct;
 
+    postProductColor(productColorEdit, productId)
+        .then(data => {
+            dispatch(productColorsDataFetchedAction({
+                [data.productColorId]: {
+                    id: data.productColorId,
+                    title: productColorEdit.title,
+                    picUrl: productColorEdit.pictureUrl,
+                }
+            }));
+            dispatch(pageAdminProductColorSaveSuccessAction(data.productColorId));
+        });
 }
 
 export const pageAdminProductColorSaveSuccessAction = (id: ProductColorId): PageAdminProductColorSaveSuccessAction => ({

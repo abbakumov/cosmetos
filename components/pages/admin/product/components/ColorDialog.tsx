@@ -70,12 +70,19 @@ class AdminProductColorDialog extends Component<Props> {
                         value={this.props.title}
                         onChange={e => this.props.changeFieldAction('title', e.target.value)}
                     />
-                    <TextField
+                    {/* <TextField
                         label="hex code (6 знаков)"
                         value={this.props.colorHex}
                         onChange={e => this.props.changeFieldAction('colorHex', e.target.value)}
-                    />
-                    <p>Изображение: </p>
+                    /> */}
+                    <p
+                        style={{
+                            marginTop: '20px',
+                            marginBottom: '10px',
+                        }}
+                    >
+                        Изображение:
+                    </p>
                     <input
                         type="file"
                         accept="image/x-png,image/jpeg"

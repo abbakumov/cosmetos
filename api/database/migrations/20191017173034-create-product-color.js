@@ -20,7 +20,7 @@ module.exports = {
                 type: Sequelize.STRING(255),
             },
             colorHex: {
-                allowNull: false,
+                allowNull: true,
                 type: Sequelize.STRING(6),
             },
             picture: {

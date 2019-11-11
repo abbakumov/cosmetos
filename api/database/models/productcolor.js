@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(255),
         },
         colorHex: {
-            allowNull: false,
+            allowNull: true,
             type: DataTypes.STRING(6),
         },
         picture: {
