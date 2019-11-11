@@ -111,3 +111,37 @@ export const getAdminProductById = (id: ProductId): Promise<GetAdminProductByIdR
             }
             return response.json() as Promise<GetAdminProductByIdResponse>
         });
+
+export interface PostAdminProductResponse {
+    status: 'saccess' | 'fail',
+    productId: ProductId;
+}
+export const postAdminProduct = (data: ProductEdit): Promise<PostAdminProductResponse> => {
+    const formData = new FormData();
+
+    if (data.id) {
+        formData.append('id', String(data.id));
+    }
+    formData.append('title', data.title);
+    formData.append('kind', data.kind);
+    formData.append('description', data.description);
+    formData.append('brandId', String(data.brandId));
+    if (data.pictureFile) {
+        formData.append('pictureFile', data.pictureFile);
+    }
+
+    return fetch(
+        `${getOrigin()}/api/admin/product`,
+        {
+            body: formData,
+            method: 'POST',
+        }
+    )
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText)
+            }
+            return response.json() as Promise<PostAdminProductResponse>
+        });
+}
+

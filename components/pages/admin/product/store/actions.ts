@@ -20,6 +20,8 @@ import {
 import {BrandId} from '../../../../../entities/Brand/types';
 import {ProductColorId} from '../../../../../entities/ProductColor/types';
 import {ProductId} from '../../../../../entities/ProductBase/types';
+import {postAdminProduct} from '../../../../../entities/ProductBase/api';
+import {AppState} from '../../../../../store';
 
 export const PAGE_ADMIN_PRODUCT_DATA_FETCHED = 'PAGE_ADMIN_PRODUCT_DATA_FETCHED';
 export const PAGE_ADMIN_PRODUCT_CHANGE_BRAND_ID = 'PAGE_ADMIN_PRODUCT_CHANGE_BRAND_ID';
@@ -102,8 +104,18 @@ export const pageAdminProductColorDeleteFailAction = (id: ProductColorId): PageA
     payload: {id},
 });
 
-export const pageAdminProductSaveAction = () => (dispatch) => {
+export const pageAdminProductSaveAction = () => (dispatch, getState) => {
+    const state: AppState = getState();
+    const {productEdit} = state.pageAdminProduct;
 
+    postAdminProduct(productEdit)
+        .then(data => {
+            if (productEdit.id) {
+                dispatch(pageAdminProductSaveSuccessAction(data.productId));
+            } else {
+                window.location.href = `/admin/product/${data.productId}`;
+            }
+        });
 };
 
 export const pageAdminProductSaveSuccessAction = (id: ProductId): PageAdminProductSaveSuccessAction => ({

@@ -39,7 +39,7 @@ const AdminProductColorsTable: FunctionComponent<Props> = (props: Props) => (
             </TableHead>
             <TableBody>
                 {props.colors.map(color => (
-                    <TableRow>
+                    <TableRow key={color.id}>
                         <TableCell>{color.id}</TableCell>
                         <TableCell>{color.title}</TableCell>
                         <TableCell>
