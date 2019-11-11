@@ -12,10 +12,11 @@ import TableCell from '@material-ui/core/TableCell';
 import Icon from '@material-ui/core/Icon';
 
 import {AppState} from '../../../../../store';
-import {ProductColor} from '../../../../../entities/ProductColor/types';
+import {ProductColor, ProductColorId} from '../../../../../entities/ProductColor/types';
 
 import {
     pageAdminProductColorAddAction,
+    pageAdminProductColorDeleteAction,
 } from '../store/actions';
 
 interface MappedProps {
@@ -24,6 +25,7 @@ interface MappedProps {
 
 interface ActionProps {
     colorAddAction(): void;
+    colorDeleteAction(id: ProductColorId): void;
 }
 
 interface Props extends MappedProps, ActionProps {}
@@ -54,7 +56,9 @@ const AdminProductColorsTable: FunctionComponent<Props> = (props: Props) => (
                             />
                         </TableCell>
                         <TableCell>
-                            <Button>
+                            <Button
+                                onClick={() => {props.colorDeleteAction(color.id)}}
+                            >
                                 <Icon
                                     fontSize="small"
                                 >
@@ -88,6 +92,7 @@ function mapStateToProps(state: AppState) {
 
 const actionProps = {
     colorAddAction: pageAdminProductColorAddAction,
+    colorDeleteAction: pageAdminProductColorDeleteAction,
 };
 
 const ConnectedAdminProductColorsTable = connect(mapStateToProps, actionProps)(AdminProductColorsTable);

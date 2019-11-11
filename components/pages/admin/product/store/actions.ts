@@ -22,7 +22,10 @@ import {ProductColorId} from '../../../../../entities/ProductColor/types';
 import {ProductId} from '../../../../../entities/ProductBase/types';
 import {postAdminProduct} from '../../../../../entities/ProductBase/api';
 import {AppState} from '../../../../../store';
-import {postProductColor} from '../../../../../entities/ProductColor/api';
+import {
+    postProductColor,
+    deleteProductColor,
+} from '../../../../../entities/ProductColor/api';
 import {productColorsDataFetchedAction} from '../../../../../entities/ProductColor/actions';
 
 export const PAGE_ADMIN_PRODUCT_DATA_FETCHED = 'PAGE_ADMIN_PRODUCT_DATA_FETCHED';
@@ -111,6 +114,13 @@ export const pageAdminProductColorSaveFailAction = (): PageAdminProductColorSave
 export const pageAdminProductColorCancelAction = (): PageAdminProductColorCancelAction => ({
     type: PAGE_ADMIN_PRODUCT_COLOR_CANCEL,
 });
+
+export const pageAdminProductColorDeleteAction = (id: ProductColorId) => (dispatch) => {
+    deleteProductColor(id)
+        .then(() => {
+            dispatch(pageAdminProductColorDeleteSuccessAction(id));
+        });
+}
 
 export const pageAdminProductColorDeleteSuccessAction = (id: ProductColorId): PageAdminProductColorDeleteSuccessAction => ({
     type: PAGE_ADMIN_PRODUCT_COLOR_DELETE_SUCCESS,
