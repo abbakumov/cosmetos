@@ -1,5 +1,6 @@
 import {
     PAGE_ADMIN_PRODUCT_DATA_FETCHED,
+    PAGE_ADMIN_PRODUCT_BRANDS_FETCHED,
     PAGE_ADMIN_PRODUCT_CHANGE_BRAND_ID,
     PAGE_ADMIN_PRODUCT_CHANGE_FIELD,
     PAGE_ADMIN_PRODUCT_CHANGE_PICTURE,
@@ -51,6 +52,12 @@ export function pageAdminProductReducer(state: PageAdminProductState = initialSt
                 ...state,
                 brandIds: action.payload.brandIds,
                 productEdit: action.payload.product,
+            };
+
+        case PAGE_ADMIN_PRODUCT_BRANDS_FETCHED:
+            return {
+                ...state,
+                brandIds: action.payload.brandIds,
             };
 
         case PAGE_ADMIN_PRODUCT_CHANGE_BRAND_ID:

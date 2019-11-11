@@ -17,6 +17,10 @@ class PostsList extends Component<PostsListPublicProps> {
     render() {
         const {title, postIds, namesVisible} = this.props;
 
+        if (!postIds || !postIds.length) {
+            return null;
+        }
+
         return (
             <div className={styles.root}>
                 <div className={styles.title}>{title}</div>

@@ -1,5 +1,6 @@
 import {
     PageAdminProductDataFetchedAction,
+    PageAdminProductBrandsFetchedAction,
     PageAdminProductChangeBrandIdAction,
     PageAdminProductChangeFieldAction,
     PageAdminProductChangePictureAction,
@@ -29,6 +30,7 @@ import {
 import {productColorsDataFetchedAction} from '../../../../../entities/ProductColor/actions';
 
 export const PAGE_ADMIN_PRODUCT_DATA_FETCHED = 'PAGE_ADMIN_PRODUCT_DATA_FETCHED';
+export const PAGE_ADMIN_PRODUCT_BRANDS_FETCHED = 'PAGE_ADMIN_PRODUCT_BRANDS_FETCHED';
 export const PAGE_ADMIN_PRODUCT_CHANGE_BRAND_ID = 'PAGE_ADMIN_PRODUCT_CHANGE_BRAND_ID';
 export const PAGE_ADMIN_PRODUCT_CHANGE_FIELD = 'PAGE_ADMIN_PRODUCT_CHANGE_FIELD';
 export const PAGE_ADMIN_PRODUCT_CHANGE_PICTURE = 'PAGE_ADMIN_PRODUCT_CHANGE_PICTURE';
@@ -50,6 +52,12 @@ export const pageAdminProductDataFetchedAction =
     (product: ProductEdit, brandIds: BrandId[]): PageAdminProductDataFetchedAction => ({
         type: PAGE_ADMIN_PRODUCT_DATA_FETCHED,
         payload: {product, brandIds},
+    });
+
+export const pageAdminProductBrandsFetchedAction =
+    (brandIds: BrandId[]): PageAdminProductBrandsFetchedAction => ({
+        type: PAGE_ADMIN_PRODUCT_BRANDS_FETCHED,
+        payload: {brandIds},
     });
 
 export const pageAdminProductChangeBrandIdAction = (id: BrandId): PageAdminProductChangeBrandIdAction => ({

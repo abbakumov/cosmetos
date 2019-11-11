@@ -1,14 +1,15 @@
 import React, {FunctionComponent} from 'react';
 import {connect} from 'react-redux';
+import Link from 'next/link';
 
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import TablePagination from '@material-ui/core/TablePagination';
 import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
 
 import AdminLayout from '../../../layouts/AdminLayout';
 
-import {ProductId} from '../../../../entities/ProductBase/types';
 import {AppState} from '../../../../store';
 
 import {
@@ -45,13 +46,21 @@ const AdminProductsPage: FunctionComponent<Props> = (props: Props) =>{
     return (
         <AdminLayout>
             <Paper>
-                <Toolbar>
+                <Toolbar className={styles.topToolbar}>
                     <TextField
                         label="Поиск"
                         margin="dense"
                         value={props.filterTitle}
                         onChange={e => {props.filterTitleChangeAction(e.target.value)}}
                     />
+                    <Link href="/admin/product/new">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                        >
+                            Добавить продукт
+                        </Button>
+                    </Link>
                 </Toolbar>
                 <AdminProductsTable />
                 <TablePagination

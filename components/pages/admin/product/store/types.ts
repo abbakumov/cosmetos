@@ -4,6 +4,7 @@ import {ProductId} from '../../../../../entities/ProductBase/types';
 
 import {
     PAGE_ADMIN_PRODUCT_DATA_FETCHED,
+    PAGE_ADMIN_PRODUCT_BRANDS_FETCHED,
     PAGE_ADMIN_PRODUCT_CHANGE_BRAND_ID,
     PAGE_ADMIN_PRODUCT_CHANGE_FIELD,
     PAGE_ADMIN_PRODUCT_CHANGE_PICTURE,
@@ -47,6 +48,13 @@ export interface PageAdminProductDataFetchedAction {
     type: typeof PAGE_ADMIN_PRODUCT_DATA_FETCHED;
     payload: {
         product: ProductEdit;
+        brandIds: BrandId[];
+    };
+}
+
+export interface PageAdminProductBrandsFetchedAction {
+    type: typeof PAGE_ADMIN_PRODUCT_BRANDS_FETCHED;
+    payload: {
         brandIds: BrandId[];
     };
 }
@@ -137,6 +145,7 @@ export interface PageAdminProductSaveFailAction {
 
 export type PageAdminProductAction =
     | PageAdminProductDataFetchedAction
+    | PageAdminProductBrandsFetchedAction
     | PageAdminProductChangeBrandIdAction
     | PageAdminProductChangeFieldAction
     | PageAdminProductChangePictureAction
