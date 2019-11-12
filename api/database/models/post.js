@@ -3,8 +3,9 @@ module.exports = (sequelize, DataTypes) => {
         title: DataTypes.STRING(255),
         picture: DataTypes.STRING(255),
         userId: DataTypes.INTEGER,
-        instaUrl: DataTypes.STRING(255),
+        instaPostId: DataTypes.STRING(255),
         description: DataTypes.STRING(1023),
+        isPublic: DataTypes.BOOLEAN,
     }, {});
 
     Post.associate = function(models) {

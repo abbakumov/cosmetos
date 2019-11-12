@@ -24,13 +24,17 @@ module.exports = {
 					key: 'id',
 				},
 			},
-			instaUrl: {
+			instaPostId: {
 				allowNull: false,
 				type: Sequelize.STRING(255),
 			},
 			description: {
 				allowNull: true,
 				type: Sequelize.STRING(1023),
+			},
+			isPublic: {
+				allowNull: false,
+				type: Sequelize.BOOLEAN,
 			},
 			createdAt: {
 				allowNull: false,

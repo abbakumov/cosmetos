@@ -9,7 +9,6 @@ const {makeProductPicUrl} = require('../../entities/ProductBase/helpers');
 const {
     Post,
     User,
-    UserSocial,
     PostPart,
     Product,
     PostPartProduct,
@@ -68,7 +67,7 @@ module.exports = async function getPost(ctx) {
     };
 
     const postExtra = {
-        ..._.pick(postEntity, ['id', 'instaUrl', 'description']),
+        ..._.pick(postEntity, ['id', 'instaPostId', 'description']),
         imageUrlBig: makePostPicUrl(postEntity.picture),
         partIds: postEntity.PostParts,
     };

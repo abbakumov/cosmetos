@@ -13,12 +13,13 @@ export interface PostBarPublicProps {
 }
 
 interface PostBarProps {
-    instaUrl: string
+    instaPostId: string
 }
 
 class PostBar extends Component<PostBarProps> {
     render() {
-        const {instaUrl} = this.props;
+        const {instaPostId} = this.props;
+        const instaUrl = instaPostId ? 'https://www.instagram.com/p/' + instaPostId : '';
 
         return (
             <div className={styles.root}>
@@ -36,10 +37,10 @@ function mapStateToProps(state: AppState, ownProps: PostBarPublicProps): PostBar
 
     const postExtra = state.postExtra.items[id];
 
-    const {instaUrl} = postExtra;
+    const {instaPostId} = postExtra;
 
     return {
-        instaUrl,
+        instaPostId,
     };
 }
 

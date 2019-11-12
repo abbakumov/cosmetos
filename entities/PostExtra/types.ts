@@ -6,7 +6,7 @@ import {POST_EXTRA_DATA_FETCHED} from './actions';
 export interface PostExtra {
     id: PostId;
     imageUrlBig: string;
-    instaUrl: string;
+    instaPostId: string;
     description: string;
     partIds: PostPartId[],
 }

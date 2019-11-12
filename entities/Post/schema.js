@@ -3,12 +3,12 @@ const {schema} = require('normalizr');
 const postSchema = new schema.Entity('posts');
 
 const brandSchema = new schema.Entity('brands');
+const productColorSchema = new schema.Entity('productColors');
 
 const productSchema = new schema.Entity('products', {
     Brand: brandSchema,
+    ProductColors: [productColorSchema],
 });
-
-const productColorSchema = new schema.Entity('productColors');
 
 const postPartProductsSchema = new schema.Entity('postPartProducts', {
     Product: productSchema,

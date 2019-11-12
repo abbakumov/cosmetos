@@ -128,10 +128,10 @@ class PostEditPartProductDropDown extends Component<Props> {
 
 function getFilteredBrandItems(items: BrandMap, value: string): SuggestItem[] {
     return Object.keys(items)
-        .filter(id => items[id].fullName.toLowerCase().includes(value.toLowerCase()))
+        .filter(id => items[id].titleFull.toLowerCase().includes(value.toLowerCase()))
         .map(id => ({
             id: items[id].id,
-            value: items[id].fullName,
+            value: items[id].titleFull,
         }))
 }
 

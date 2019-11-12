@@ -9,8 +9,8 @@ import {postEditDataFetchedAction} from '../../../components/pages/post-edit/sto
 
 import {getPostEditById} from '../../../entities/PostEdit/api';
 import {postPartsDataFetchedAction} from '../../../entities/PostPart/actions';
-import {productBaseDataFetchedAction} from '../../../entities/ProductBase/actions';
-import {productExtraDataFetchedAction} from '../../../entities/ProductExtra/actions';
+import {productsBaseDataFetchedAction} from '../../../entities/ProductBase/actions';
+import {productsExtraDataFetchedAction} from '../../../entities/ProductExtra/actions';
 import {productColorsDataFetchedAction} from '../../../entities/ProductColor/actions';
 import {postProductsDataFetchedAction} from '../../../entities/PostProduct/actions';
 import {brandsDataFetchedAction} from '../../../entities/Brand/actions';
@@ -33,8 +33,8 @@ PostEditPageWrapper.getInitialProps = async function(context: ICosPageContext): 
         postPartIds: data.postPartIds,
     }));
     store.dispatch(postPartsDataFetchedAction(data.postPart));
-    store.dispatch(productBaseDataFetchedAction(data.productBase));
-    store.dispatch(productExtraDataFetchedAction(data.productExtra));
+    store.dispatch(productsBaseDataFetchedAction(data.productBase));
+    store.dispatch(productsExtraDataFetchedAction(data.productExtra));
     store.dispatch(productColorsDataFetchedAction(data.productColor));
     store.dispatch(postProductsDataFetchedAction(data.postProduct));
     store.dispatch(brandsDataFetchedAction(data.brand));

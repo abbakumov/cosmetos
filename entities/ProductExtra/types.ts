@@ -1,4 +1,7 @@
-import {PRODUCT_EXTRA_DATA_FETCHED} from './actions';
+import {
+    PRODUCT_EXTRA_DATA_FETCHED,
+    PRODUCTS_EXTRA_DATA_FETCHED,
+} from './actions';
 import {ProductId} from '../ProductBase/types';
 import {PostId} from '../Post/types';
 import {ProductColorId} from '../ProductColor/types';
@@ -12,6 +15,10 @@ export interface ProductExtra {
     colorIds: ProductColorId[];
 }
 
+export interface ProductExtraMap {
+    [id: number]: ProductExtra;
+}
+
 // ACTIONS ->
 export interface ProductExtraDataFetchedAction {
     type: typeof PRODUCT_EXTRA_DATA_FETCHED;
@@ -19,10 +26,19 @@ export interface ProductExtraDataFetchedAction {
         data: ProductExtra;
     };
 }
+
+export interface ProductsExtraDataFetchedAction {
+    type: typeof PRODUCTS_EXTRA_DATA_FETCHED;
+    payload: {
+        data: ProductExtraMap;
+    };
+}
 // <- ACTIONS
 
 export type ProductExtraActionType =
-    | ProductExtraDataFetchedAction;
+    | ProductExtraDataFetchedAction
+    | ProductsExtraDataFetchedAction
+    ;
 
 export interface ProductExtraState {
     items: {

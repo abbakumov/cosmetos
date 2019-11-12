@@ -2,9 +2,9 @@ import fetch from 'isomorphic-fetch';
 
 import {PostId} from '../Post/types';
 import {PostPart, PostPartId} from '../PostPart/types';
-import {ProductBase} from '../ProductBase/types';
+import {ProductBaseMap} from '../ProductBase/types';
 import {PostProduct} from '../PostProduct/types';
-import {ProductExtra} from '../ProductExtra/types';
+import {ProductExtraMap} from '../ProductExtra/types';
 import {ProductColor} from '../ProductColor/types';
 import {BrandMap} from '../Brand/types';
 
@@ -20,8 +20,8 @@ export interface GetPostEditByIdResponse {
     postPart: {
         [id: number]: PostPart;
     };
-    productBase: ProductBase;
-    productExtra: ProductExtra;
+    productBase: ProductBaseMap;
+    productExtra: ProductExtraMap;
     productColor: {
         [id: number]: ProductColor;
     };
