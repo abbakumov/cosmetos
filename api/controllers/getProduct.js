@@ -58,10 +58,10 @@ module.exports = async function getProduct(ctx) {
         brands,
         postPartProducts,
         postParts,
-        posts,
-        productColors,
+        posts = {},
+        productColors = {},
         products,
-        users,
+        users = {},
     } = normalizedData.entities;
 
     const productEntity = products[normalizedData.result];

@@ -60,7 +60,7 @@ module.exports = async function getAdminProduct(ctx) {
         {}
     );
 
-    const productColorEntities = normalizedProduct.entities.productColors;
+    const productColorEntities = normalizedProduct.entities.productColors || {};
     const productColor = Object.keys(productColorEntities).reduce(
         (acc, id) => ({
             ...acc,
