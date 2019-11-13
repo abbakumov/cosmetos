@@ -3,7 +3,7 @@ const _ = require('lodash');
 
 const {fullPostSchema} = require('../../entities/Post/schema');
 const {makePostPicUrl} = require('../../entities/Post/helpers');
-const {makeProductPicUrl} = require('../../entities/ProductBase/helpers');
+const {makeProductColorPicUrl} = require('../../entities/ProductColor/helpers');
 
 const {
     Post,
@@ -33,7 +33,7 @@ module.exports = async function getPostEdit(ctx) {
                             include: [
                                 {
                                     model: Product,
-                                    attributes: ['id', 'title', 'kind'],
+                                    attributes: ['id', 'title', 'description', 'kind', 'brandId'],
                                     include: [
                                         {
                                             model: ProductColor,
@@ -86,8 +86,8 @@ module.exports = async function getPostEdit(ctx) {
             [part.id]: {
                 ..._.pick(part, ['id', 'title']),
                 position: {
-                    x: part.positionX,
-                    y: part.positionY,
+                    x: part.positionX * 100,
+                    y: part.positionY * 100,
                 },
                 color: part.colorHex,
                 productIds: part.PostPartProducts.map(id => postPartProducts[id].Product),
@@ -96,16 +96,72 @@ module.exports = async function getPostEdit(ctx) {
         {}
     );
 
-    // const productBase = {
-    //     ..._.pick('id'),
-    //     brand
-    // }
+    const productBase = {};
+    const productExtra = {};
+
+    const brandsMap = brandsDataPlain.reduce(
+        (acc, brand) => ({
+            ...acc,
+            [brand.id]: brand,
+        }),
+        {}
+    );
+
+    Object.values(products).forEach(product => {
+        productBase[product.id] = {
+            ..._.pick(product, ['id', 'kind', 'title']),
+            brand: brandsMap[product.brandId].titleShort,
+            smallPicUrl: '',
+        };
+
+        productExtra[product.id] = {
+            ..._.pick(product, ['id', 'description']),
+            postIds: [],
+            bigPicUrl: '',
+            colorIds: product.ProductColors,
+        };
+    });
+
+    const postProduct = Object.values(postPartProducts).reduce(
+        (acc, ppp) => ({
+            ...acc,
+            [ppp.id]: {
+                id: ppp.id,
+                postId: parseInt(id),
+                productId: ppp.Product,
+                colorId: ppp.productColorId,
+            },
+        }),
+        {}
+    );
+
+    const productColor = Object.values(productColors).reduce(
+        (acc, color) => ({
+            ...acc,
+            [color.id]: {
+                ..._.pick(color, ['id', 'title']),
+                pictureUrl: makeProductColorPicUrl(color.picture),
+            },
+        }),
+        {}
+    );
+
+    const brand = brandsData.reduce(
+        (acc, _brand) => ({
+            ...acc,
+            [_brand.id]: _brand,
+        }),
+        {}
+    );
 
     ctx.body = {
-        debug: {normalizedPostData},
         postEdit,
         postPartIds,
         postPart,
-
+        productBase,
+        productExtra,
+        postProduct,
+        productColor,
+        brand,
     };
 }
