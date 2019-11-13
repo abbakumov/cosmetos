@@ -4,6 +4,7 @@ const {upload} = require('./helpers/multerSetup');
 const getBlog = require('./controllers/getBlog');
 const getPost = require('./controllers/getPost');
 const getPostEdit = require('./controllers/getPostEdit');
+const postPostEdit = require('./controllers/postPostEdit');
 const postPostAddProduct = require('./controllers/postPostAddProduct');
 const postPostSavePart = require('./controllers/postPostSavePart');
 const getProduct = require('./controllers/getProduct');
@@ -34,6 +35,11 @@ const routes = [
         route: '/post/:id/edit',
         method: 'get',
         controllers: [getPostEdit],
+    },
+    {
+        route: '/post',
+        method: 'post',
+        controllers: [upload.single('pictureFile'), postPostEdit],
     },
     {
         route: '/post/:id/add-product',
