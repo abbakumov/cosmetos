@@ -202,13 +202,19 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
             };
 
         case POST_EDIT_PART_SAVE_SUCCESS:
+            let newPostPartIds = [];
+            if (state.postPartIds.indexOf(action.payload.data.id) !== -1) {
+                // exists
+                newPostPartIds = state.postPartIds;
+            } else {
+                // new
+                newPostPartIds = [...state.postPartIds, action.payload.data.id];
+            }
+
             return {
                 ...state,
                 editPostPart: null,
-                postPartIds: [
-                    ...state.postPartIds,
-                    action.payload.data.id,
-                ],
+                postPartIds: newPostPartIds,
             };
 
         case POST_EDIT_PART_SAVE_FAIL:
