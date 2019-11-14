@@ -1,4 +1,4 @@
-const makePostPicUrl = picture => `/static/public/post/photo/${picture}`;
+const makePostPicUrl = picture => `/static/uploads/${picture}`;
 
 module.exports = {
     makePostPicUrl,
