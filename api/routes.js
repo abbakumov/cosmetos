@@ -5,7 +5,7 @@ const getBlog = require('./controllers/getBlog');
 const getPost = require('./controllers/getPost');
 const getPostEdit = require('./controllers/getPostEdit');
 const postPostEdit = require('./controllers/postPostEdit');
-const postPostAddProduct = require('./controllers/postPostAddProduct');
+const postPostProduct = require('./controllers/postPostProduct');
 const postPostPart = require('./controllers/postPostPart');
 const getProduct = require('./controllers/getProduct');
 const getProductColors = require('./controllers/getProductColors');
@@ -42,11 +42,6 @@ const routes = [
         controllers: [upload.single('pictureFile'), postPostEdit],
     },
     {
-        route: '/post/:id/add-product',
-        method: 'post',
-        controllers: [postPostAddProduct],
-    },
-    {
         route: '/post/:postId/part',
         method: 'post',
         controllers: [postPostPart],
@@ -60,6 +55,11 @@ const routes = [
         route: '/product/:id/colors',
         method: 'get',
         controllers: [getProductColors],
+    },
+    {
+        route: '/post-product',
+        method: 'post',
+        controllers: [postPostProduct],
     },
     {
         route: '/brand/:id/products',
