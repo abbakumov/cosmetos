@@ -199,14 +199,14 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
             break;
 
         case 'color':
-            const broductExtraItem = state.productExtra.items[productId]
-            if (productId && broductExtraItem) {
+            const productExtraItem = state.productExtra.items[productId]
+            if (productId && productExtraItem) {
                 label = 'Цвет';
                 isActive = true;
 
                 inputValue = productColorText;
                 items = getFilteredColorItems(
-                    broductExtraItem.colorIds.map(id => state.productColor.items[id]),
+                    productExtraItem.colorIds.map(id => state.productColor.items[id]),
                     productColorText
                 );
                 selectedItem = items.find(item => item.id === productColorId) || null;

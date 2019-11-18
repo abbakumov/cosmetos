@@ -129,7 +129,7 @@ module.exports = async function getPostEdit(ctx) {
                 id: ppp.id,
                 postId: parseInt(id),
                 productId: ppp.Product,
-                colorId: ppp.productColorId,
+                productColorId: ppp.productColorId,
             },
         }),
         {}

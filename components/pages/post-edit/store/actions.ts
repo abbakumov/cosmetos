@@ -158,22 +158,29 @@ export function postEditProductSaveAction(): any {
 
         const {editPostPartProduct} = state.pagePostEdit;
 
-        fetch(`/api/post/${id}/add-product`, {
+        // TODO: move to api file
+        fetch('/api/post-product', {
             method: 'POST',
             body: JSON.stringify(editPostPartProduct),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
         })
             .then(response => response.json())
             .then(data => {
+                const payload = {
+                    postId: id,
+                    postPartId: editPostPartProduct.postPartId,
+                    productId: editPostPartProduct.productId,
+                    productColorId: editPostPartProduct.productColorId,
+                    postPartProductId: data.postPartProductId,
+                };
+
                 if (data.status === 'success') {
                     dispatch({
                         type: POST_EDIT_PRODUCT_SAVE_SUCCESS,
-                        payload: {
-                            postId: id,
-                            postPartId: editPostPartProduct.postPartId,
-                            productId: editPostPartProduct.productId,
-                            productColorId: editPostPartProduct.productColorId,
-                            postPartProductId: data.postPartProductId,
-                        },
+                        payload,
                     });
                 } else {
                     dispatch({

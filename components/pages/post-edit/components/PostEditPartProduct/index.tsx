@@ -38,16 +38,14 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductProps) {
     const {brand, title} = product;
 
     const ppItems = state.postProduct.items;
-    const ppIds = Object.keys(ppItems);
-    const postProductId = ppIds.find(ppId => (
-        // post product postId is our post id?
-        ppItems[ppId].postId === state.pagePostEdit.postEdit.id
-        // post product productId is our product id?
-        && ppItems[ppId].productId === ownProps.id
+    const postProduct = Object.values(ppItems).find(_postProduct => (
+        // post product postId is current post id?
+        _postProduct.postId === state.pagePostEdit.postEdit.id
+        // post product productId is current product id?
+        && _postProduct.productId === ownProps.id
     ));
-    const postProduct = state.postProduct.items[postProductId];
 
-    const color = state.productColor.items[postProduct.colorId];
+    const color = state.productColor.items[postProduct.productColorId];
 
     return {
         brand,
