@@ -10,6 +10,7 @@ module.exports = {
             postPartId: {
                 allowNull: true,
                 type: Sequelize.INTEGER,
+                onDelete: 'CASCADE',
                 references: {
                     model: 'PostParts',
                     key: 'id',

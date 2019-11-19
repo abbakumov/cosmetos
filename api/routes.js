@@ -7,6 +7,7 @@ const getPostEdit = require('./controllers/getPostEdit');
 const postPostEdit = require('./controllers/postPostEdit');
 const postPostProduct = require('./controllers/postPostProduct');
 const deletePostProduct = require('./controllers/deletePostProduct');
+const deletePostPart = require('./controllers/deletePostPart');
 const postPostPart = require('./controllers/postPostPart');
 const getProduct = require('./controllers/getProduct');
 const getProductColors = require('./controllers/getProductColors');
@@ -66,6 +67,11 @@ const routes = [
         route: '/post-product/:id',
         method: 'delete',
         controllers: [deletePostProduct],
+    },
+    {
+        route: '/post-part/:id',
+        method: 'delete',
+        controllers: [deletePostPart],
     },
     {
         route: '/brand/:id/products',

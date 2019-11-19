@@ -19,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
 
     PostPartProduct.associate = function(models) {
-        PostPartProduct.belongsTo(models.PostPart, { foreignKey: 'postPartId' });
+        PostPartProduct.belongsTo(models.PostPart, {
+            foreignKey: 'postPartId',
+            onDelete: 'CASCADE',
+        });
         PostPartProduct.belongsTo(models.Product, { foreignKey: 'productId' });
         PostPartProduct.belongsTo(models.ProductColor, { foreignKey: 'productColorId' });
         PostPartProduct.belongsTo(models.UnassignedProduct, { foreignKey: 'unassignedProductId' });
