@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 
@@ -64,10 +65,12 @@ const PostEditPart: FunctionComponent<Props> = (props: Props) => (
         <div className={styles.productsContainer}>
             <Table size="small">
                 <TableHead>
-                    <TableCell>Бренд</TableCell>
-                    <TableCell>Продукт</TableCell>
-                    <TableCell>Цвет</TableCell>
-                    <TableCell align="right">Действия</TableCell>
+                    <TableRow>
+                        <TableCell>Бренд</TableCell>
+                        <TableCell>Продукт</TableCell>
+                        <TableCell>Цвет</TableCell>
+                        <TableCell align="right">Действия</TableCell>
+                    </TableRow>
                 </TableHead>
                 <TableBody>
                     {props.productIds.map(id => <PostEditPartProduct key={id} id={id} />)}
