@@ -220,6 +220,9 @@ export interface PostEditPartRemoveAction {
 
 export interface PostEditPartRemoveSuccessAction {
     type: typeof POST_EDIT_PART_REMOVE_SUCCESS;
+    payload: {
+        postPartId: PostPartId;
+    };
 }
 
 export interface PostEditPartRemoveFailAction {

@@ -230,7 +230,10 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
             return state;
 
         case POST_EDIT_PART_REMOVE_SUCCESS:
-            return state;
+            return {
+                ...state,
+                postPartIds: state.postPartIds.filter(id => id !== action.payload.postPartId),
+            };
 
         case POST_EDIT_PART_REMOVE_FAIL:
             return state;

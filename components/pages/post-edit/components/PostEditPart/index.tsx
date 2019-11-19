@@ -14,6 +14,7 @@ import TableCell from '@material-ui/core/TableCell';
 import {
     postEditStartAddProductAction,
     postEditPartEditAction,
+    postEditPartRemoveAction,
 } from '../../store/actions';
 import {PostPart, PostPartId} from '../../../../../entities/PostPart/types';
 import {AppState} from '../../../../../store';
@@ -34,6 +35,7 @@ interface MappedProps extends PostPart {
 interface ActionProps {
     postEditStartAddProductAction(id: PostPartId): void;
     postEditPartEditAction(id: PostPartId): void;
+    postEditPartRemoveAction(id: PostPartId): void;
 }
 
 interface Props extends MappedProps, ActionProps {}
@@ -55,6 +57,7 @@ const PostEditPart: FunctionComponent<Props> = (props: Props) => (
                 className={styles.control}
                 size="small"
                 color="secondary"
+                onClick={() => props.postEditPartRemoveAction(props.id)}
             >
                 <Icon fontSize="small">delete</Icon>
             </Button>
@@ -102,6 +105,7 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProps): MappedPr
 const mapDispatchToProps: ActionProps = {
     postEditStartAddProductAction,
     postEditPartEditAction,
+    postEditPartRemoveAction,
 };
 
 const ConnectedPostEditPart = connect(mapStateToProps, mapDispatchToProps)(PostEditPart);

@@ -10,7 +10,6 @@ export interface SavePostPartResponse {
     status: string;
     partId: PostPartId;
 }
-
 export function savePostPart(postId: PostId, partData: PostPart): Promise<SavePostPartResponse> {
     return fetch(
         `${getOrigin()}/api/post/${postId}/part`,
@@ -28,6 +27,16 @@ export function savePostPart(postId: PostId, partData: PostPart): Promise<SavePo
                 }
                 return response.json() as Promise<SavePostPartResponse>
             });
+}
+
+export interface DeletePostPartResponse {
+    status: 'success' | 'fail';
+}
+export function deletePostPart(id: PostPartId): Promise<DeletePostPartResponse> {
+    return fetch(
+        `${getOrigin()}/api/post-part/${id}`,
+        {method: 'DELETE'}
+    ).then(response => response.json());
 }
 
 

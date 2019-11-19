@@ -34,6 +34,7 @@ import {ProductId} from '../../../../entities/ProductBase/types';
 import {Position} from '../../../../entities/Position';
 import {
     savePostPart,
+    deletePostPart,
     savePostPartProduct,
     deletePostPartProduct,
 } from '../../../../entities/PostPart/api';
@@ -283,3 +284,18 @@ export function postEditPartCancelAction(): PostEditPartCancelAction {
     };
 }
 
+export const postEditPartRemoveAction = (postPartId: PostPartId) => (dispatch, getState) => {
+    deletePostPart(postPartId)
+        .then(data => {
+            if (data.status === 'success') {
+                dispatch({
+                    type: POST_EDIT_PART_REMOVE_SUCCESS,
+                    payload: {postPartId},
+                });
+            } else {
+                dispatch({
+                    type: POST_EDIT_PART_REMOVE_FAIL,
+                });
+            }
+        });
+};
