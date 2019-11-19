@@ -1,6 +1,7 @@
 import {
     PostEditProductSaveSuccessAction,
     PostEditPartSaveSuccessAction,
+    PostEditProductRemoveSuccess,
 } from '../../components/pages/post-edit/store/types';
 
 import {ProductId} from '../ProductBase/types';
@@ -33,6 +34,7 @@ export type PostPartActionType =
     | PostPartsDataFetchedAction
     | PostEditProductSaveSuccessAction
     | PostEditPartSaveSuccessAction
+    | PostEditProductRemoveSuccess
     ;
 
 export interface PostPartState {

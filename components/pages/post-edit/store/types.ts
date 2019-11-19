@@ -21,6 +21,8 @@ import {
     POST_EDIT_PRODUCT_CANCEL,
     POST_EDIT_PRODUCT_SAVE,
     POST_EDIT_PRODUCT_SAVE_SUCCESS,
+    POST_EDIT_PRODUCT_REMOVE_SUCCESS,
+    POST_EDIT_PRODUCT_REMOVE_FAIL,
     POST_EDIT_PART_NEW,
     POST_EDIT_PART_CHANGE_FIELD,
     POST_EDIT_PART_CHANGE_POSITION,
@@ -34,36 +36,38 @@ import {
     POST_EDIT_PART_EDIT,
 } from './actions';
 
+export interface EditPostPartProduct {
+    postPartId?: PostPartId;
+    // in each next section there can be only text(not selected item) or id of selected item:
+
+    // BRAND
+    brandText: string;
+    brandId?: BrandId;
+    // TODO: use statuses!
+    // brandProductsFetchStatus: {
+    //     [id: number]: FetchStatus;
+    // }
+
+    // PRODUCT
+    productText: string;
+    productId?: ProductId;
+    // productExtra contains all colors
+    // productExtraFetchStatus: {
+    //     [id: number]: FetchStatus;
+    // }
+
+    // PRODUCT COLOR
+    productColorText: string;
+    productColorId?: ProductColorId;
+}
+
 export interface PagePostEditState {
     postEdit: PostEdit;
     // separate from postEdit for easier state management
     postPartIds: PostPartId[];
     editPostPart?: PostPart;
     // used for additing
-    editPostPartProduct: {
-        postPartId?: PostPartId;
-        // in each next section there can be only text(not selected item) or id of selected item:
-
-        // BRAND
-        brandText: string;
-        brandId?: BrandId;
-        // TODO: use statuses!
-        // brandProductsFetchStatus: {
-        //     [id: number]: FetchStatus;
-        // }
-
-        // PRODUCT
-        productText: string;
-        productId?: ProductId;
-        // productExtra contains all colors
-        // productExtraFetchStatus: {
-        //     [id: number]: FetchStatus;
-        // }
-
-        // PRODUCT COLOR
-        productColorText: string;
-        productColorId?: ProductColorId;
-    };
+    editPostPartProduct: EditPostPartProduct;
 }
 
 export interface PostEditPageData {
@@ -155,6 +159,18 @@ export interface PostEditProductSaveSuccessAction {
     };
 }
 
+export interface PostEditProductRemoveSuccess {
+    type: typeof POST_EDIT_PRODUCT_REMOVE_SUCCESS;
+    payload: {
+        postProductId: PostProductId;
+        productId: ProductId;
+    };
+}
+
+export interface PostEditProductRemoveFail {
+    type: typeof POST_EDIT_PRODUCT_REMOVE_FAIL;
+}
+
 export interface PostEditPartNewAction {
     type: typeof POST_EDIT_PART_NEW;
 }
@@ -224,6 +240,8 @@ export type PagePostEditActionType =
     | PostEditProductCancelAction
     | PostEditProductSaveAction
     | PostEditProductSaveSuccessAction
+    | PostEditProductRemoveSuccess
+    | PostEditProductRemoveFail
     | PostEditPartNewAction
     | PostEditPartEditAction
     | PostEditPartChangeFieldAction

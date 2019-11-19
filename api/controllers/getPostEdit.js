@@ -66,10 +66,10 @@ module.exports = async function getPostEdit(ctx) {
 
     // fields mapping
     const {
-        productColors,
-        products,
-        postPartProducts,
-        postParts,
+        productColors = {},
+        products = {},
+        postPartProducts = {},
+        postParts = {},
         posts,
     } = normalizedPostData.entities;
 

@@ -8,16 +8,25 @@ import TableCell from '@material-ui/core/TableCell';
 
 import {AppState} from '../../../../../store';
 import {ProductId} from '../../../../../entities/ProductBase/types';
+import {postEditProductRemoveAction} from '../../store/actions';
+import {PostProductId} from '../../../../../entities/PostProduct/types';
 
 export interface PostEditPartProductProps {
     id: ProductId;
 }
 
-interface Props {
+interface MappedProps {
+    postProductId: PostProductId;
     brand: string;
     product: string;
     color: string;
 }
+
+interface ActionProps {
+    productRemoveAction(id: PostProductId): void;
+}
+
+interface Props extends MappedProps, ActionProps {}
 
 const PostEditPartProduct: FunctionComponent<Props> = (props: Props) => (
     <TableRow>
@@ -25,7 +34,10 @@ const PostEditPartProduct: FunctionComponent<Props> = (props: Props) => (
         <TableCell>{props.product}</TableCell>
         <TableCell>{props.color}</TableCell>
         <TableCell align="right">
-            <Button size="small">
+            <Button
+                size="small"
+                onClick={() => props.productRemoveAction(props.postProductId)}
+            >
                 <Icon>delete</Icon>
                 Удалить
             </Button>
@@ -48,12 +60,17 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductProps) {
     const color = state.productColor.items[postProduct.productColorId];
 
     return {
+        postProductId: postProduct.id,
         brand,
         product: title,
         color: color.title,
     };
 }
 
-const ConnectedPostEditPartProduct = connect(mapStateToProps)(PostEditPartProduct);
+const actionProps = {
+    productRemoveAction: postEditProductRemoveAction,
+};
+
+const ConnectedPostEditPartProduct = connect(mapStateToProps, actionProps)(PostEditPartProduct);
 
 export default ConnectedPostEditPartProduct;

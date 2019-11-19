@@ -5,6 +5,7 @@ import {
 import {
     POST_EDIT_PRODUCT_SAVE_SUCCESS,
     POST_EDIT_PART_SAVE_SUCCESS,
+    POST_EDIT_PRODUCT_REMOVE_SUCCESS,
 } from '../../components/pages/post-edit/store/actions';
 
 const initialState: PostPartState = {
@@ -43,6 +44,26 @@ export function postPartReducer(state = initialState, action: PostPartActionType
                 items: {
                     ...state.items,
                     [action.payload.data.id]: action.payload.data,
+                },
+            };
+
+        case POST_EDIT_PRODUCT_REMOVE_SUCCESS:
+            const item = Object.values(state.items)
+                .find(item => item.productIds.indexOf(action.payload.productId) !== -1);
+
+            if (!item) {
+                console.warn('No item found in POST_EDIT_PRODUCT_REMOVE_SUCCESS');
+                return state;
+            }
+
+            return {
+                ...state,
+                items: {
+                    ...state.items,
+                    [item.id]: {
+                        ...item,
+                        productIds: item.productIds.filter(_id => _id !== action.payload.productId),
+                    },
                 },
             };
     }

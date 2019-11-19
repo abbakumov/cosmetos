@@ -32,7 +32,12 @@ import {ProductColorId} from '../../../../entities/ProductColor/types';
 import {BrandId} from '../../../../entities/Brand/types';
 import {ProductId} from '../../../../entities/ProductBase/types';
 import {Position} from '../../../../entities/Position';
-import {savePostPart} from '../../../../entities/PostPart/api';
+import {
+    savePostPart,
+    savePostPartProduct,
+    deletePostPartProduct,
+} from '../../../../entities/PostPart/api';
+import {PostProductId} from '../../../../entities/PostProduct/types';
 
 import {AppState} from '../../../../store';
 
@@ -51,6 +56,9 @@ export const POST_EDIT_PRODUCT_CANCEL = 'POST_EDIT_PRODUCT_CANCEL';
 export const POST_EDIT_PRODUCT_SAVE = 'POST_EDIT_PRODUCT_SAVE';
 export const POST_EDIT_PRODUCT_SAVE_SUCCESS = 'POST_EDIT_PRODUCT_SAVE_SUCCESS';
 export const POST_EDIT_PRODUCT_SAVE_FAIL = 'POST_EDIT_PRODUCT_SAVE_FAIL';
+export const POST_EDIT_PRODUCT_REMOVE = 'POST_EDIT_PRODUCT_REMOVE';
+export const POST_EDIT_PRODUCT_REMOVE_SUCCESS = 'POST_EDIT_PRODUCT_REMOVE_SUCCESS';
+export const POST_EDIT_PRODUCT_REMOVE_FAIL = 'POST_EDIT_PRODUCT_REMOVE_FAIL';
 
 export const POST_EDIT_PART_NEW = 'POST_EDIT_PART_NEW';
 export const POST_EDIT_PART_EDIT = 'POST_EDIT_PART_EDIT';
@@ -108,6 +116,7 @@ export function postEditProductBrandChangeAction(id: BrandId): any {
             payload: {id},
         })
 
+        // TODO: move to api
         fetch(`/api/brand/${id}/products`)
             .then(response => response.json() as Promise<GetBrandProductsResponse>)
             .then(data => {
@@ -125,6 +134,7 @@ export function postEditProductProductChangeAction(id: ProductId): any {
             payload: {id},
         });
 
+        // TODO: move to api
         fetch(`/api/product/${id}/colors`)
             .then(response => response.json() as Promise<GetProductColorsResponse>)
             .then(data => {
@@ -158,16 +168,7 @@ export function postEditProductSaveAction(): any {
 
         const {editPostPartProduct} = state.pagePostEdit;
 
-        // TODO: move to api file
-        fetch('/api/post-product', {
-            method: 'POST',
-            body: JSON.stringify(editPostPartProduct),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(response => response.json())
+        savePostPartProduct(editPostPartProduct)
             .then(data => {
                 const payload = {
                     postId: id,
@@ -189,6 +190,28 @@ export function postEditProductSaveAction(): any {
                 }
             });
     };
+}
+
+export const postEditProductRemoveAction = (postProductId: PostProductId): any => (dispatch, getState) => {
+    const state: AppState = getState();
+    const productId = state.postProduct.items[postProductId].productId;
+
+    deletePostPartProduct(postProductId)
+        .then(data => {
+            if (data.status === 'success') {
+                dispatch({
+                    type: POST_EDIT_PRODUCT_REMOVE_SUCCESS,
+                    payload: {
+                        postProductId,
+                        productId,
+                    },
+                });
+            } else {
+                dispatch({
+                    type: POST_EDIT_PRODUCT_REMOVE_FAIL,
+                });
+            }
+        });
 }
 
 export function postEditPartNewAction(): PostEditPartNewAction {
