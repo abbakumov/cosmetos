@@ -16,20 +16,7 @@ interface InitialProps {
 }
 
 PostEditPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<InitialProps> {
-    const {query, store} = context;
-    const queryId = query.id;
-    const id = parseInt(_.castArray(queryId)[0]);
-
-    const data = {} // await getPostEditById(id);
-
-    // store.dispatch(blogDataFetchedAction(data.blog));
-
     let title = 'Новый пост – Cosmetos';
-
-    // const postTitle = data.postBase && data.postBase.title;
-    // if (typeof postTitle !== 'undefined') {
-    //     title = `${postTitle} – Cosmetos`;
-    // }
 
     return {title};
 };

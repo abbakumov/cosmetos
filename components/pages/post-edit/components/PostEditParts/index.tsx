@@ -47,16 +47,16 @@ const PostЕditParts: FunctionComponent<Props> = (props: Props) => (
         {!props.postId && (
             <Paper className={styles.placeholder}>
                 <p>
-                    Чтобы начать добавлять области,
+                    Чтобы начать добавлять области, выберите фото,
                     <br/>
-                    выберите фото и заполните информацию о посте
+                    заполните информацию о посте и сохраните его
                 </p>
             </Paper>
         )}
         {props.activeEditPartId === 0 &&
             <PostEditPartEdit />
         }
-        {props.activeEditPartId === null &&
+        {(props.activeEditPartId === null && props.postId) &&
             <Paper className={styles.controls}>
                 <Button
                     variant="contained"

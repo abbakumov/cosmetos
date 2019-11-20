@@ -5,7 +5,7 @@ export interface PostEdit {
     id?: PostId;
     title: string;
     imageUrl: string;
-    imageFile?: File;
+    pictureFile?: File;
     instaPostId: string;
     description: string;
     isPublic: boolean;

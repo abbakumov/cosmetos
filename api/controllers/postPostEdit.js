@@ -19,7 +19,7 @@ module.exports = async function postPostEdit(ctx) {
     let post = null;
     if (id) {
         // update
-        Post.update(
+        await Post.update(
             postFields,
             {
                 where: {id}
@@ -27,11 +27,11 @@ module.exports = async function postPostEdit(ctx) {
         );
     } else {
         // new
-        post = Post.create(postFields);
+        post = await Post.create(postFields);
     }
 
     ctx.body = {
         status: 'success',
-        postId: post ? post.id : id,
+        postId: post ? post.id : parseInt(id),
     };
 }

@@ -38,6 +38,9 @@ import {
     savePostPartProduct,
     deletePostPartProduct,
 } from '../../../../entities/PostPart/api';
+import {
+    savePost,
+} from '../../../../entities/Post/api';
 import {PostProductId} from '../../../../entities/PostProduct/types';
 
 import {AppState} from '../../../../store';
@@ -46,6 +49,9 @@ export const POST_EDIT_PAGE_DATA_FETCHED = 'POST_EDIT_PAGE_DATA_FETCHED';
 export const POST_EDIT_FILE_CHANGE = 'POST_EDIT_FILE_CHANGE';
 export const POST_EDIT_FIELD_CHANGE = 'POST_EDIT_FIELD_CHANGE';
 export const POST_EDIT_IS_PUBLIC_CHANGE = 'POST_EDIT_IS_PUBLIC_CHANGE';
+export const POST_EDIT_SAVE = 'POST_EDIT_SAVE';
+export const POST_EDIT_SAVE_SUCCESS = 'POST_EDIT_SAVE_SUCCESS';
+export const POST_EDIT_SAVE_FAIL = 'POST_EDIT_SAVE_FAIL';
 
 export const POST_EDIT_START_ADD_PRODUCT = 'POST_EDIT_START_ADD_PRODUCT';
 // changing of suggest text value, not chosing the item
@@ -94,6 +100,20 @@ export const postEditIsPublicChange = (value: boolean): PostEditIsPublicChange =
     type: POST_EDIT_IS_PUBLIC_CHANGE,
     payload: {value},
 });
+
+export const postEditSaveAction = () => (dispatch, getState) => {
+    const state: AppState = getState();
+    const {postEdit} = state.pagePostEdit;
+
+    savePost(postEdit)
+        .then(data => {
+            if (postEdit.id !== data.postId) {
+                window.location.href = `/post/${data.postId}/edit`;
+            } else {
+                dispatch({type: POST_EDIT_SAVE_SUCCESS})
+            }
+        });
+};
 
 export function postEditStartAddProductAction(partId: PostPartId): PostEditStartAddProductAction {
     return {

@@ -13,6 +13,8 @@ import {
     POST_EDIT_FILE_CHANGE,
     POST_EDIT_FIELD_CHANGE,
     POST_EDIT_IS_PUBLIC_CHANGE,
+    POST_EDIT_SAVE_SUCCESS,
+    POST_EDIT_SAVE_FAIL,
     POST_EDIT_START_ADD_PRODUCT,
     POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE,
     POST_EDIT_PRODUCT_BRAND_CHANGE,
@@ -97,6 +99,14 @@ export interface PostEditIsPublicChange {
     payload: {
         value: boolean;
     };
+}
+
+export interface PostEditSaveSuccess {
+    type: typeof POST_EDIT_SAVE_SUCCESS;
+}
+
+export interface PostEditSaveFail {
+    type: typeof POST_EDIT_SAVE_FAIL;
 }
 
 export interface PostEditPageDataFetchedAction {
@@ -235,6 +245,8 @@ export type PagePostEditActionType =
     | PostEditFileChange
     | PostEditFieldChange
     | PostEditIsPublicChange
+    | PostEditSaveSuccess
+    | PostEditSaveFail
     | PostEditStartAddProductAction
     | PostEditProductFieldTextChangeAction
     | PostEditProductBrandChangeAction

@@ -8,6 +8,8 @@ import {
     POST_EDIT_FILE_CHANGE,
     POST_EDIT_FIELD_CHANGE,
     POST_EDIT_IS_PUBLIC_CHANGE,
+    POST_EDIT_SAVE_SUCCESS,
+    POST_EDIT_SAVE_FAIL,
     POST_EDIT_START_ADD_PRODUCT,
     POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE,
     POST_EDIT_PRODUCT_BRAND_CHANGE,
@@ -42,7 +44,7 @@ const initialState: PagePostEditState = {
     postEdit: {
         title: '',
         imageUrl: '',
-        imageFile: null,
+        pictureFile: null,
         instaPostId: '',
         description: '',
         isPublic: false,
@@ -66,7 +68,7 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 postEdit: {
                     ...state.postEdit,
                     imageUrl: action.payload.url,
-                    imageFile: action.payload.file,
+                    pictureFile: action.payload.file,
                 },
             };
 
@@ -87,6 +89,12 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                     isPublic: action.payload.value,
                 },
             };
+
+        case POST_EDIT_SAVE_SUCCESS:
+            return state;
+
+        case POST_EDIT_SAVE_FAIL:
+            return state;
 
         case POST_EDIT_START_ADD_PRODUCT:
             return {
