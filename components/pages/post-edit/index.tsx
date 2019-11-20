@@ -1,10 +1,12 @@
 import {FunctionComponent} from 'react';
+import {connect} from 'react-redux';
 
 import CssBaseLine from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 
+import {AppState} from '../../../store';
 import DesktopLayout from '../../layouts/DesktopLayout';
 
 import PostEditPhoto from './components/PostEditPhoto';
@@ -13,7 +15,11 @@ import PostEditParts from './components/PostEditParts';
 
 const styles = require('./styles.styl');
 
-const PostEditPage: FunctionComponent = () => (
+interface Props {
+    pageTitle: string;
+} 
+
+const PostEditPage: FunctionComponent<Props> = (props: Props) => (
     <DesktopLayout>
         <CssBaseLine />
         <AppBar>
@@ -25,7 +31,7 @@ const PostEditPage: FunctionComponent = () => (
                     className={styles.header}
                     noWrap
                 >
-                    Новый пост
+                    {props.pageTitle}
                 </Typography>
             </Toolbar>
         </AppBar>
@@ -41,4 +47,18 @@ const PostEditPage: FunctionComponent = () => (
     </DesktopLayout>
 );
 
-export default PostEditPage;
+function mapStateToProps(state: AppState) {
+    const {id, title} = state.pagePostEdit.postEdit;
+
+    let pageTitle = 'Новый пост';
+
+    if (id) {
+        pageTitle = `Редактирование поста "${title}"`;
+    }
+
+    return {pageTitle};
+}
+
+const ConnectedPostEditPage = connect(mapStateToProps)(PostEditPage);
+
+export default ConnectedPostEditPage;
