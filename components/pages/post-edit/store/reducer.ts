@@ -180,7 +180,7 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                         x: 50,
                         y: 50,
                     },
-                    color: '000000',
+                    color: 'ccd4bf',
                     productIds: [],
                 },
             };
