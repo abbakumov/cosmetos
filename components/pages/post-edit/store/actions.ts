@@ -51,7 +51,9 @@ import {
 } from './types';
 
 import {
-    postEditSchema
+    postEditSchema,
+    postPartEditSchema,
+    postProductEditSchema,
 } from './validationSchemas';
 
 export const POST_EDIT_PAGE_DATA_FETCHED = 'POST_EDIT_PAGE_DATA_FETCHED';
@@ -207,6 +209,15 @@ export function postEditProductSaveAction(): any {
 
         const {editPostPartProduct} = state.pagePostEdit;
 
+        // validation
+        const editPostPartProductClone = JSON.parse(JSON.stringify(editPostPartProduct));
+        const validationErrors = postProductEditSchema.validate(editPostPartProductClone);
+        if (validationErrors.length) {
+            const error = validationErrors[0] as any;
+            dispatch(notificationShowErrorAction(error.message as string));
+            return;
+        }
+
         savePostPartProduct(editPostPartProduct)
             .then(data => {
                 const payload = {
@@ -294,6 +305,15 @@ export function postEditPartSaveAction(): any {
         const partData = state.pagePostEdit.editPostPart;
 
         if (partData === null) return;
+
+        // validation
+        const partDataClone = JSON.parse(JSON.stringify(partData));
+        const validationErrors = postPartEditSchema.validate(partDataClone);
+        if (validationErrors.length) {
+            const error = validationErrors[0] as any;
+            dispatch(notificationShowErrorAction(error.message as string));
+            return;
+        }
 
         savePostPart(postId, partData)
             .then(data => {

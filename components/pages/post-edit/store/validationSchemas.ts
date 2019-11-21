@@ -17,3 +17,29 @@ export const postEditSchema = new Schema({
         message: 'ID поста в инстаграме не может быть пустым',
     },
 });
+
+export const postPartEditSchema = new Schema({
+    title: {
+        type: String,
+        required: true,
+        message: 'Название области не может быть пустым',
+    },
+});
+
+export const postProductEditSchema = new Schema({
+    brandId: {
+        type: Number,
+        required: true,
+        message: 'Бренд не может быть пустым',
+    },
+    productId: {
+        type: Number,
+        required: true,
+        message: 'Продукт не может быть пустым',
+    },
+    productColorId: {
+        type: Number,
+        required: true,
+        message: 'Цвет продукта не может быть пустым',
+    },
+});
