@@ -51,7 +51,7 @@ const PostEditInfo: FunctionComponent<Props> = (props: Props) => {
             />
             <TextField
                 className={styles.input}
-                label="instagram post id"
+                label="ID поста в инстаграме"
                 variant="outlined"
                 value={props.instaPostId}
                 onChange={e => {props.postEditFieldChange('instaPostId', e.target.value)}}

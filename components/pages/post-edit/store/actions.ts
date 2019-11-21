@@ -3,6 +3,31 @@ import _ from 'lodash';
 import {PostPartId} from '../../../../entities/PostPart/types';
 import {GetBrandProductsResponse} from '../../../../entities/BrandProducts/api';
 import {GetProductColorsResponse} from '../../../../entities/ProductBase/api';
+import {brandProductsDataFetchedAction} from '../../../../entities/BrandProducts/actions';
+import {productsBaseDataFetchedAction} from '../../../../entities/ProductBase/actions';
+import {productColorsDataFetchedAction} from '../../../../entities/ProductColor/actions';
+import {productExtraDataFetchedAction} from '../../../../entities/ProductExtra/actions';
+import {ProductColorId} from '../../../../entities/ProductColor/types';
+import {BrandId} from '../../../../entities/Brand/types';
+import {ProductId} from '../../../../entities/ProductBase/types';
+import {Position} from '../../../../entities/Position';
+import {
+    savePostPart,
+    deletePostPart,
+    savePostPartProduct,
+    deletePostPartProduct,
+} from '../../../../entities/PostPart/api';
+import {
+    savePost,
+} from '../../../../entities/Post/api';
+import {PostProductId} from '../../../../entities/PostProduct/types';
+import {
+    notificationShowSuccessAction,
+    notificationShowErrorAction,
+} from '../../../../entities/Notification/actions';
+
+import {AppState} from '../../../../store';
+
 import {
     PostEditPageDataFetchedAction,
 
@@ -24,27 +49,10 @@ import {
     PostEditPageData,
     PostEditFieldChangeName,
 } from './types';
-import {brandProductsDataFetchedAction} from '../../../../entities/BrandProducts/actions';
-import {productsBaseDataFetchedAction} from '../../../../entities/ProductBase/actions';
-import {productColorsDataFetchedAction} from '../../../../entities/ProductColor/actions';
-import {productExtraDataFetchedAction} from '../../../../entities/ProductExtra/actions';
-import {ProductColorId} from '../../../../entities/ProductColor/types';
-import {BrandId} from '../../../../entities/Brand/types';
-import {ProductId} from '../../../../entities/ProductBase/types';
-import {Position} from '../../../../entities/Position';
-import {
-    savePostPart,
-    deletePostPart,
-    savePostPartProduct,
-    deletePostPartProduct,
-} from '../../../../entities/PostPart/api';
-import {
-    savePost,
-} from '../../../../entities/Post/api';
-import {PostProductId} from '../../../../entities/PostProduct/types';
-import {notificationShowSuccessAction} from '../../../../entities/Notification/actions';
 
-import {AppState} from '../../../../store';
+import {
+    postEditSchema
+} from './validationSchemas';
 
 export const POST_EDIT_PAGE_DATA_FETCHED = 'POST_EDIT_PAGE_DATA_FETCHED';
 export const POST_EDIT_FILE_CHANGE = 'POST_EDIT_FILE_CHANGE';
@@ -105,6 +113,15 @@ export const postEditIsPublicChange = (value: boolean): PostEditIsPublicChange =
 export const postEditSaveAction = () => (dispatch, getState) => {
     const state: AppState = getState();
     const {postEdit} = state.pagePostEdit;
+
+    // validation
+    const postEditClone = JSON.parse(JSON.stringify(postEdit));
+    const validationErrors = postEditSchema.validate(postEditClone);
+    if (validationErrors.length) {
+        const error = validationErrors[0] as any;
+        dispatch(notificationShowErrorAction(error.message as string));
+        return;
+    }
 
     savePost(postEdit)
         .then(data => {
