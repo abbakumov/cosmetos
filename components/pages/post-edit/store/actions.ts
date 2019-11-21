@@ -42,6 +42,7 @@ import {
     savePost,
 } from '../../../../entities/Post/api';
 import {PostProductId} from '../../../../entities/PostProduct/types';
+import {notificationShowSuccessAction} from '../../../../entities/Notification/actions';
 
 import {AppState} from '../../../../store';
 
@@ -110,7 +111,7 @@ export const postEditSaveAction = () => (dispatch, getState) => {
             if (postEdit.id !== data.postId) {
                 window.location.href = `/post/${data.postId}/edit`;
             } else {
-                dispatch({type: POST_EDIT_SAVE_SUCCESS})
+                dispatch(notificationShowSuccessAction('Пост сохранен!'));
             }
         });
 };

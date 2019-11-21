@@ -1,6 +1,8 @@
 import React, {Component, FunctionComponent} from 'react';
 import Head from 'next/head';
 
+import NotificationMaterial from '../../widgets/NotificationMaterial';
+
 const styles = require('./styles.styl');
 
 export interface DesktopLayoutPublicProps {}
@@ -14,6 +16,7 @@ const DesktopLayout: FunctionComponent<DesktopLayoutPublicProps> = (props) => (
         <div className={styles.content}>
             {props.children}
         </div>
+        <NotificationMaterial />
     </div>
 );
 

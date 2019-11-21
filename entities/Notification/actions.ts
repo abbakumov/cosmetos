@@ -13,9 +13,13 @@ function waitAndHideIfEqual(text, dispatch, getState) {
     setTimeout(
         () => {
             const state: AppState = getState();
-            // hide notification
+            const stateText = state.notification.text;
+
+            if (text === stateText) {
+                dispatch(notificationHideAction());
+            }
         },
-        6000
+        3000
     );
 }
 

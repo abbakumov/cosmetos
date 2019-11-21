@@ -18,17 +18,25 @@ const initialState: NotificationState = {
 export function notificationReducer(state: NotificationState = initialState, action: NotificationAction) {
     switch (action.type) {
         case NOTIFICATION_SHOW_SUCCESS:
-            return state;
+            return {
+                text: action.payload.text,
+                type: 'success',
+            };
 
         case NOTIFICATION_SHOW_INFO:
-            return state;
+            return {
+                text: action.payload.text,
+                type: 'info',
+            };
 
         case NOTIFICATION_SHOW_ERROR:
-            return state;
+            return {
+                text: action.payload.text,
+                type: 'error',
+            };
 
         case NOTIFICATION_HIDE:
-            return state;
-
+            return initialState;
     }
 
     return state;
