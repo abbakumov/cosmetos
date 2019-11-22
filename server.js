@@ -1,7 +1,8 @@
 const Koa = require('koa');
 const logger = require('koa-logger');
+const session = require('koa-session');
+const passport = require('koa-passport');
 const next = require('next');
-const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -9,6 +10,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const serverOnly = process.env.COS_SERVER_ONLY === '1';
 
 const makeRouter = require('./api/routes');
+const {checkRequiredKeys} = require('./configs/environment');
 
 const defaultStatusCodeMiddleware = async (ctx, next) => {
     ctx.res.statusCode = 200;
@@ -16,6 +18,9 @@ const defaultStatusCodeMiddleware = async (ctx, next) => {
 }
 
 (async function() {
+    // check all environment keys
+    checkRequiredKeys();
+
     let app, handle;
 
     const server = new Koa();
@@ -41,6 +46,18 @@ const defaultStatusCodeMiddleware = async (ctx, next) => {
     }
 
     server.use(bodyParser()); // parse json data
+
+    // setting up a session
+    const secretKey = process.env.COSMETOS_SECRET;
+    if (!secretKey) {
+        throw Error('Provide env variable COSMETOS_SECRET for sessions');
+    }
+    server.keys = [secretKey];
+    server.use(session(server));
+
+    // setting up passport for authentication
+    server.use(passport.initialize());
+    server.use(passport.session());
 
     server.use(router.routes());
 
