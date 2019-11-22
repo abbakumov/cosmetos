@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
         name: DataTypes.STRING(255),
         avatarPicture: DataTypes.STRING(255),
         bio: DataTypes.STRING(1023),
+        passwordHash: {
+            type: DataTypes.STRING(1023),
+            allowNull: false,
+        },
     }, {});
 
     User.associate = models => {

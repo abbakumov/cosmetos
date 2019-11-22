@@ -1,8 +1,6 @@
 
 const requiredKeys = [
     'COSMETOS_SECRET',
-    'INSTAGRAM_CLIENT_ID',
-    'INSTAGRAM_CLIENT_SECRET',
 ];
 
 const envKeys = requiredKeys.reduce(
