@@ -4,13 +4,14 @@ import {
 } from './types';
 
 import {
-    PAGE_LOGIN_UPDATE_VALUE
+    PAGE_LOGIN_UPDATE_VALUE,
+    PAGE_LOGIN_ENTER_SUCCESS,
 } from './actions';
 
 const initialState = {
     login: '',
     password: ''
-}
+};
 
 export function pageLoginReducer(state: PageLoginState = initialState, action: PageLoginActionType): PageLoginState {
     switch (action.type) {
@@ -19,6 +20,9 @@ export function pageLoginReducer(state: PageLoginState = initialState, action: P
                 ...state,
                 [action.payload.name]: action.payload.value,
             };
+
+        case PAGE_LOGIN_ENTER_SUCCESS:
+            return initialState;
 
     }
 

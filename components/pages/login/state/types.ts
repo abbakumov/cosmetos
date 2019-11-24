@@ -1,5 +1,6 @@
 import {
-    PAGE_LOGIN_UPDATE_VALUE
+    PAGE_LOGIN_UPDATE_VALUE,
+    PAGE_LOGIN_ENTER_SUCCESS,
 } from './actions';
 
 export interface PageLoginState {
@@ -15,5 +16,11 @@ export interface PageLoginUpdateValue {
     }
 }
 
+export interface PageLoginEnterSuccess {
+    type: typeof PAGE_LOGIN_ENTER_SUCCESS;
+}
+
 export type PageLoginActionType =
-    | PageLoginUpdateValue;
+    | PageLoginUpdateValue
+    | PageLoginEnterSuccess
+    ;

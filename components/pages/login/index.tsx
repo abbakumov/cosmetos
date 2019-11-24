@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import LoginForm from './components/LoginForm';
+import NotificationMaterial from '../../widgets/NotificationMaterial';
 
 const styles = require('./styles.styl');
 
@@ -31,6 +32,7 @@ class LoginPage extends Component<LoginPageProps> {
                         <div className={styles.mail}>hello@cosmetos.online</div>
                     </div>
                 </div>
+                <NotificationMaterial />
             </div>
         )
     }
