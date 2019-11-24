@@ -12,6 +12,8 @@ const serverOnly = process.env.COS_SERVER_ONLY === '1';
 const makeRouter = require('./api/routes');
 const {checkRequiredKeys} = require('./configs/environment');
 
+require('./api/authentication/passport');
+
 const defaultStatusCodeMiddleware = async (ctx, next) => {
     ctx.res.statusCode = 200;
     await next();

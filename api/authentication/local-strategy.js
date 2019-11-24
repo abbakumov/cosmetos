@@ -1,3 +1,4 @@
+const passport = require('koa-passport');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
 
@@ -18,7 +19,7 @@ const localStrategy = new LocalStrategy(
 
         const passwordComparisonResult = await bcrypt.compare(
             password,
-            user.passportHash
+            user.passwordHash
         );
 
         // just to be shure it's boolean value
