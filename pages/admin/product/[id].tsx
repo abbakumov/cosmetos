@@ -28,7 +28,7 @@ AdminProductPageWrapper.getInitialProps = async function(context: ICosPageContex
 
     if (soloId === 'new') {
         // fetch only brands
-        const data = await getAdminBrands(); // TODO: will fetch only 50
+        const data = await getAdminBrands({}, context); // TODO: will fetch only 50
         store.dispatch(brandsDataFetchedAction(data.brand));
         store.dispatch(pageAdminProductBrandsFetchedAction(data.ids));
     } else {

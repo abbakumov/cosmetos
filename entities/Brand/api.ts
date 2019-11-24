@@ -1,6 +1,9 @@
 import fetch from 'isomorphic-fetch';
 
 import {getOrigin} from '../../configs/location';
+import {ICosPageContext} from '../../types/context';
+import fetchData from '../../src/helpers/fetchData';
+
 import {BrandId, BrandMap, Brand} from './types';
 
 export interface GetAdminBrandsResponse {
@@ -8,14 +11,12 @@ export interface GetAdminBrandsResponse {
     ids: BrandId[];
 }
 
-export function getAdminBrands(): Promise<GetAdminBrandsResponse> {
-    return fetch(`${getOrigin()}/api/admin/brands`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json() as Promise<GetAdminBrandsResponse>
-        });
+export function getAdminBrands(params: Object, context: ICosPageContext): Promise<GetAdminBrandsResponse> {
+    return fetchData<GetAdminBrandsResponse>(
+        `${getOrigin()}/api/admin/brands`,
+        {},
+        context,
+    );
 }
 
 interface SaveBrandResponse {

@@ -19,7 +19,7 @@ interface InitialProps extends AdminBrandsPagePublicProps {
 AdminBrandsPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<InitialProps> {
     const {store} = context;
 
-    const data = await getAdminBrands();
+    const data = await getAdminBrands({}, context);
 
     store.dispatch(brandsDataFetchedAction(data.brand));
     store.dispatch(pageAdminBrandsFetchSuccessAction(data.ids));
