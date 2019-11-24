@@ -10,7 +10,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const serverOnly = process.env.COS_SERVER_ONLY === '1';
 
 const makeRouter = require('./api/routes');
-const {checkRequiredKeys} = require('./configs/environment');
+const {checkRequiredKeys, envKeys} = require('./configs/environment');
 
 require('./api/authentication/passport');
 
@@ -50,11 +50,7 @@ const defaultStatusCodeMiddleware = async (ctx, next) => {
     server.use(bodyParser()); // parse json data
 
     // setting up a session
-    const secretKey = process.env.COSMETOS_SECRET;
-    if (!secretKey) {
-        throw Error('Provide env variable COSMETOS_SECRET for sessions');
-    }
-    server.keys = [secretKey];
+    server.keys = [envKeys.COSMETOS_SECRET];
     server.use(session(server));
 
     // setting up passport for authentication

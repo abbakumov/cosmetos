@@ -1,5 +1,7 @@
 const Router = require('koa-router');
+
 const {upload} = require('./helpers/multerSetup');
+const adminOnly = require('./helpers/adminOnly');
 
 const getBlog = require('./controllers/getBlog');
 const getPost = require('./controllers/getPost');
@@ -15,7 +17,7 @@ const getBrandProducts = require('./controllers/getBrandProducts');
 
 const postLogin = require('./controllers/postLogin');
 
-const getUnProducts = require('./controllers/admin/getUnProducts');
+// const getUnProducts = require('./controllers/admin/getUnProducts');
 const getAdminBrands = require('./controllers/admin/getAdminBrands');
 const postAdminBrand = require('./controllers/admin/postAdminBrand');
 const getAdminProducts = require('./controllers/admin/getAdminProducts');
@@ -87,45 +89,71 @@ const routes = [
     },
 
     //admin
-    {
-        route: '/admin/un-products',
-        method: 'get',
-        controllers: [getUnProducts],
-    },
+    // {
+    //     route: '/admin/un-products',
+    //     method: 'get',
+    //     controllers: [
+    //         passport.authenticate(),
+    //         getUnProducts
+    //     ],
+    // },
     {
         route: '/admin/brands',
         method: 'get',
-        controllers: [getAdminBrands],
+        controllers: [
+            adminOnly,
+            getAdminBrands
+        ],
     },
     {
         route: '/admin/brands',
         method: 'post',
-        controllers: [postAdminBrand],
+        controllers: [
+            adminOnly,
+            postAdminBrand
+        ],
     },
     {
         route: '/admin/product',
         method: 'get',
-        controllers: [getAdminProducts],
+        controllers: [
+            adminOnly,
+            getAdminProducts
+        ],
     },
     {
         route: '/admin/product/:id',
         method: 'get',
-        controllers: [getAdminProduct],
+        controllers: [
+            adminOnly,
+            getAdminProduct
+        ],
     },
     {
         route: '/admin/product',
         method: 'post',
-        controllers: [upload.single('pictureFile'), postAdminProduct],
+        controllers: [
+            adminOnly,
+            upload.single('pictureFile'),
+            postAdminProduct
+        ],
     },
     {
         route: '/admin/product-color',
         method: 'post',
-        controllers: [upload.single('pictureFile'), postAdminProductColor],
+        controllers: [
+            adminOnly,
+            upload.single('pictureFile'),
+            postAdminProductColor
+        ],
     },
     {
         route: '/admin/product-color/:id',
         method: 'delete',
-        controllers: [deleteAdminProductColor],
+        controllers: [
+            adminOnly,
+            deleteAdminProductColor
+        ],
     },
 ];
 
