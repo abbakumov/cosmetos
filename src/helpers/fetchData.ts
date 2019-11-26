@@ -2,12 +2,12 @@ import fetch from 'isomorphic-fetch';
 
 import {ICosPageContext} from '../../types/context';
 
-export default function fetchData<ResponseType>(url: string, options: RequestInit, context?: ICosPageContext) {
+export default function fetchData<ResponseType>(url: string, options: RequestInit = {}, context?: ICosPageContext) {
     const isServer = Boolean(typeof process !== 'undefined');
 
     let fetchOptions: RequestInit = options;
 
-    if (isServer) {
+    if (isServer && context) {
         const serverHeaders: HeadersInit = {
             // passing all user headers to server
             // very useful for cookies and other stuff

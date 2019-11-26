@@ -33,7 +33,7 @@ AdminProductPageWrapper.getInitialProps = async function(context: ICosPageContex
         store.dispatch(pageAdminProductBrandsFetchedAction(data.ids));
     } else {
         const productId = parseInt(soloId, 10);
-        const data = await getAdminProductById(productId);
+        const data = await getAdminProductById(productId, context);
     
         store.dispatch(pageAdminProductDataFetchedAction(data.product, data.brandIds));
         store.dispatch(brandsDataFetchedAction(data.brand));

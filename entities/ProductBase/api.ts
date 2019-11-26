@@ -2,6 +2,9 @@ import fetch from 'isomorphic-fetch';
 import querystring from 'query-string';
 import _ from 'lodash';
 
+import {ICosPageContext} from '../../types/context';
+import fetchData from '../../src/helpers/fetchData';
+
 import {getOrigin} from '../../configs/location';
 
 import {ProductBase, ProductId} from './types';
@@ -65,7 +68,6 @@ interface GetAdminProductsResponse {
         [id: number]: ProductBase;
     };
 }
-
 export interface GetAdminProductsParams {
     filterTitle?: string;
     offset?: number;
@@ -74,27 +76,28 @@ export interface GetAdminProductsParams {
 const defaultParams = {
     limit: 25,
 };
-export function getAdminProducts (_params: GetAdminProductsParams = {}): Promise<GetAdminProductsResponse> {
-    const params = _.defaults(_params, defaultParams);
-    const notEmptyParams = Object.keys(params)
-        .filter(param => params[param])
-        .reduce(
-            (acc, param) => ({
-                ...acc,
-                [param]: params[param],
-            }),
-            {}
-        );
+export function getAdminProducts(
+        _params: GetAdminProductsParams = {},
+        context?: ICosPageContext
+    ): Promise<GetAdminProductsResponse> {
+        const params = _.defaults(_params, defaultParams);
+        const notEmptyParams = Object.keys(params)
+            .filter(param => params[param])
+            .reduce(
+                (acc, param) => ({
+                    ...acc,
+                    [param]: params[param],
+                }),
+                {}
+            );
 
-    const qs = querystring.stringify(notEmptyParams);
-    return fetch(`${getOrigin()}/api/admin/product/${qs.length ? '?' + qs : ''}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json() as Promise<GetAdminProductsResponse>
-        });
-}
+        const qs = querystring.stringify(notEmptyParams);
+        return fetchData<GetAdminProductsResponse>(
+            `${getOrigin()}/api/admin/product/${qs.length ? '?' + qs : ''}`,
+            {},
+            context
+        );
+    }
 
 
 export interface GetAdminProductByIdResponse {
@@ -103,14 +106,13 @@ export interface GetAdminProductByIdResponse {
     brand: BrandMap;
     productColor: ProductColorMap;
 }
-export const getAdminProductById = (id: ProductId): Promise<GetAdminProductByIdResponse> =>
-    fetch(`${getOrigin()}/api/admin/product/${id}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json() as Promise<GetAdminProductByIdResponse>
-        });
+export const getAdminProductById = (id: ProductId, context: ICosPageContext): Promise<GetAdminProductByIdResponse> =>
+    fetchData<GetAdminProductByIdResponse>(
+        `${getOrigin()}/api/admin/product/${id}`,
+        {},
+        context
+    );
+
 
 export interface PostAdminProductResponse {
     status: 'saccess' | 'fail',
@@ -130,18 +132,11 @@ export const postAdminProduct = (data: ProductEdit): Promise<PostAdminProductRes
         formData.append('pictureFile', data.pictureFile);
     }
 
-    return fetch(
+    return fetchData<PostAdminProductResponse>(
         `${getOrigin()}/api/admin/product`,
         {
             body: formData,
             method: 'POST',
         }
-    )
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json() as Promise<PostAdminProductResponse>
-        });
+    );
 }
-

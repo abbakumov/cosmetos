@@ -18,7 +18,7 @@ interface InitialProps extends AdminProductsPagePublicProps {
 AdminProductsPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<InitialProps> {
     const {store} = context;
 
-    const data = await getAdminProducts();
+    const data = await getAdminProducts({}, context);
 
     store.dispatch(pageAdminProductsFetchSuccessAction(data.total, data.ids));
     store.dispatch(productsBaseDataFetchedAction(data.product));

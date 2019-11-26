@@ -1,3 +1,4 @@
+import fetchData from '../../src/helpers/fetchData';
 import {getOrigin} from '../../configs/location';
 import {ProductColorEdit} from '../../components/pages/admin/product/store/types';
 
@@ -15,33 +16,20 @@ export function postProductColor(data: ProductColorEdit, productId: ProductId): 
     formData.append('title', data.title);
     formData.append('pictureFile', data.pictureFile);
 
-    return fetch(
-            `${getOrigin()}/api/admin/product-color`,
-            {
-                method: 'POST',
-                body: formData
-            }
-        )
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json() as Promise<PostProductColorResponse>
-        });
+    return fetchData<PostProductColorResponse>(
+        `${getOrigin()}/api/admin/product-color`,
+        {
+            method: 'POST',
+            body: formData
+        }
+    );
 }
 
 export interface DeleteProductColorResponse {
     status: 'success' | 'fail';
 }
-export function deleteProductColor(id: ProductColorId): Promise<DeleteProductColorResponse> {
-    return fetch(
-            `${getOrigin()}/api/admin/product-color/${id}`,
-            {method: 'DELETE'}
-        )
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json() as Promise<DeleteProductColorResponse>
-        });
-}
+export const deleteProductColor = (id: ProductColorId): Promise<DeleteProductColorResponse> =>
+    fetchData<DeleteProductColorResponse>(
+        `${getOrigin()}/api/admin/product-color/${id}`,
+        {method: 'DELETE'}
+    );

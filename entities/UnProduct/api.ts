@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import fetchData from '../../src/helpers/fetchData';
 
 import {getOrigin} from '../../configs/location';
 
@@ -18,13 +18,5 @@ export interface GetAdminUnProductsResponse {
         [id: number]: ProductBase;
     };
 }
-
-export function getAdminUnProducts(): Promise<GetAdminUnProductsResponse> {
-    return fetch(`${getOrigin}/api/admin/un-products`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json() as Promise<GetAdminUnProductsResponse>
-        });
-}
+export const getAdminUnProducts = (): Promise<GetAdminUnProductsResponse> =>
+    fetchData<GetAdminUnProductsResponse>(`${getOrigin}/api/admin/un-products`);
