@@ -21,7 +21,7 @@ module.exports = async function getPostEdit(ctx) {
     const postDataPromise = Post.findByPk(
         id,
         {
-            attributes: ['id', 'title', 'picture', 'instaPostId', 'description', 'isPublic'],
+            attributes: ['id', 'title', 'picture', 'instaPostId', 'description', 'isPublic', 'userId'],
             include: [
                 {
                     model: PostPart,
@@ -54,6 +54,15 @@ module.exports = async function getPostEdit(ctx) {
     });
 
     const [postData, brandsData] = await Promise.all([postDataPromise, brandsDataPromise]);
+
+    // ACCESS CHECK
+    // after post fetching to check access
+    // only post owner and admins can edit post
+    const {user} = ctx.req;
+    if (!user || (!user.isAdmin && user.id !== postData.userId)) {
+        ctx.res.statusCode = 401;
+        return;
+    }
 
     const postDataPlain = JSON.parse(JSON.stringify(postData));
     const brandsDataPlain = JSON.parse(JSON.stringify(brandsData));

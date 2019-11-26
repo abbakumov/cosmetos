@@ -1,14 +1,31 @@
 const {Post} = require('../database/models');
 
 module.exports = async function postPostEdit(ctx) {
+    const {user} = ctx.req;
+
     const {id, title, instaPostId, description, isPublic} = ctx.request.body;
     const {file} = ctx.request;
+
+    // ACCESS CHECK
+    // this checks if post owned by current user if it's already exist (post)
+    let isExistingPostOwner = !id; // no id = no existing post
+    if (id) {
+        const post = await Post.findByPk(id, {attributes: ['userId']});
+        const postOwnerUserId = post.userId;
+        isExistingPostOwner = postOwnerUserId === user.id;
+    }
+
+    if (!user || user.isAdmin || !isExistingPostOwner) {
+        ctx.res.statusCode = 401;
+        ctx.body = {status: 'fail'};
+        return;
+    }
 
     const postFields = {
         title,
         instaPostId,
         description,
-        userId: 1, // TODO: add user info
+        userId: user.id,
         isPublic: isPublic === 'true',
     };
 

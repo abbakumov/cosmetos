@@ -1,10 +1,22 @@
 const _ = require('lodash');
 
-const {PostPart} = require('../database/models');
+const {Post, PostPart} = require('../database/models');
 
-module.exports = async function postPostAddProduct(ctx) {
+module.exports = async function postPostPart(ctx) {
     const {id, title, position, color} = ctx.request.body;
     const {postId: strPostId} = ctx.params;
+
+    // ACCESS CHECK
+    const post = await Post.findByPk(
+        postId,
+        {attributes: ['userId']}
+    );
+    const {user} = ctx.req;
+    if (!user || (!user.isAdmin && user.id !== post.userId)) {
+        ctx.res.statusCode = 401;
+        ctx.body = {status: fail};
+        return;
+    }
 
     const postId = parseInt(strPostId, 10);
 
