@@ -23,6 +23,11 @@ module.exports = async function getBlog(ctx) {
         ],
     });
 
+    if (data.isAdmin) {
+        ctx.res.statusCode = 404;
+        return;
+    }
+
     const plainData = JSON.parse(JSON.stringify(data));
 
     // normalization
