@@ -1,4 +1,4 @@
-const {Post, PostPart, PostPartProduct} = require('../database/models');
+const {Post, PostPart, PostPartProduct} = require('../../database/models');
 
 module.exports = async function postPostProduct(ctx) {
     const {

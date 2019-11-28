@@ -1,4 +1,4 @@
-const {Post, PostPart, PostPartProduct} = require('../database/models');
+const {Post, PostPart, PostPartProduct} = require('../../database/models');
 
 module.exports = async function deletePostProduct(ctx) {
     const {id} = ctx.params;
@@ -8,10 +8,10 @@ module.exports = async function deletePostProduct(ctx) {
     const postPartProduct = await PostPartProduct.findByPk(
         id,
         {
-            attributes: [],
+            attributes: ['postPartId'],
             include: [{
                 model: PostPart,
-                attributes: [],
+                attributes: ['postId'],
                 include: [{
                     model: Post,
                     attributes: ['userId']
@@ -19,6 +19,7 @@ module.exports = async function deletePostProduct(ctx) {
             }],
         }
     );
+
     const postOwnerId = postPartProduct.PostPart.Post.userId;
     if (!user || (!user.isAdmin && user.id !== postOwnerId)) {
         ctx.res.statusCode = 401;

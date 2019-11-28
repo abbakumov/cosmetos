@@ -1,9 +1,9 @@
 const {normalize} = require('normalizr');
 const _ = require('lodash');
 
-const {fullPostSchema} = require('../../entities/Post/schema');
-const {makePostPicUrl} = require('../../entities/Post/helpers');
-const {makeProductColorPicUrl} = require('../../entities/ProductColor/helpers');
+const {fullPostSchema} = require('../../../entities/Post/schema');
+const {makePostPicUrl} = require('../../../entities/Post/helpers');
+const {makeProductColorPicUrl} = require('../../../entities/ProductColor/helpers');
 
 const {
     Post,
@@ -12,7 +12,7 @@ const {
     PostPartProduct,
     ProductColor,
     Brand,
-} = require('../database/models');
+} = require('../../database/models');
 
 module.exports = async function getPostEdit(ctx) {
     const {id} = ctx.params;

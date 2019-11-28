@@ -1,10 +1,13 @@
 const _ = require('lodash');
 
-const {Post, PostPart} = require('../database/models');
+const {Post, PostPart} = require('../../database/models');
 
 module.exports = async function postPostPart(ctx) {
     const {id, title, position, color} = ctx.request.body;
     const {postId: strPostId} = ctx.params;
+
+    const postId = parseInt(strPostId, 10);
+
 
     // ACCESS CHECK
     const post = await Post.findByPk(
@@ -13,12 +16,11 @@ module.exports = async function postPostPart(ctx) {
     );
     const {user} = ctx.req;
     if (!user || (!user.isAdmin && user.id !== post.userId)) {
-        ctx.res.statusCode = 401;
-        ctx.body = {status: fail};
+        ctx.res.statusCode = 401; // TODO: status doesn't work
+        ctx.body = {status: 'fail'};
         return;
     }
 
-    const postId = parseInt(strPostId, 10);
 
     const partParams = {
         title,

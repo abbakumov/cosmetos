@@ -1,4 +1,4 @@
-const {Post} = require('../database/models');
+const {Post} = require('../../database/models');
 
 module.exports = async function postPostEdit(ctx) {
     const {user} = ctx.req;
@@ -16,7 +16,7 @@ module.exports = async function postPostEdit(ctx) {
     }
 
     if (!user || user.isAdmin || !isExistingPostOwner) {
-        ctx.res.statusCode = 401;
+        ctx.res.statusCode = 401; // TODO: status does not work
         ctx.body = {status: 'fail'};
         return;
     }

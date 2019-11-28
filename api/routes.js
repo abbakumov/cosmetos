@@ -5,18 +5,21 @@ const adminOnly = require('./helpers/adminOnly');
 
 const getBlog = require('./controllers/getBlog');
 const getPost = require('./controllers/getPost');
-const getPostEdit = require('./controllers/getPostEdit');
-const postPostEdit = require('./controllers/postPostEdit');
-const postPostProduct = require('./controllers/postPostProduct');
-const deletePostProduct = require('./controllers/deletePostProduct');
-const deletePostPart = require('./controllers/deletePostPart');
-const postPostPart = require('./controllers/postPostPart');
 const getProduct = require('./controllers/getProduct');
 const getProductColors = require('./controllers/getProductColors');
 const getBrandProducts = require('./controllers/getBrandProducts');
 
 const postLogin = require('./controllers/postLogin');
 
+// /postEdit
+const getPostEdit = require('./controllers/postEdit/getPostEdit');
+const postPostEdit = require('./controllers/postEdit/postPostEdit');
+const postPostProduct = require('./controllers/postEdit/postPostProduct');
+const deletePostProduct = require('./controllers/postEdit/deletePostProduct');
+const deletePostPart = require('./controllers/postEdit/deletePostPart');
+const postPostPart = require('./controllers/postEdit/postPostPart');
+
+// /admin
 // const getUnProducts = require('./controllers/admin/getUnProducts');
 const getAdminBrands = require('./controllers/admin/getAdminBrands');
 const postAdminBrand = require('./controllers/admin/postAdminBrand');
