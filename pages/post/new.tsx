@@ -5,10 +5,6 @@ import {NextPage} from 'next';
 import PostEditPage from '../../components/pages/post-edit';
 import {ICosPageContext} from '../../types/context';
 
-// import {blogDataFetchedAction} from '../../entities/Blog/actions';
-
-// import {getPostEditById} from '../../entities/PostBase/api';
-
 const PostEditPageWrapper: NextPage<{}> = (props) => (<PostEditPage {...props} />);
 
 interface InitialProps {

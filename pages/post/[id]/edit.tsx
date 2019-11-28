@@ -26,7 +26,7 @@ PostEditPageWrapper.getInitialProps = async function(context: ICosPageContext): 
     const queryId = query.id;
     const id = parseInt(_.castArray(queryId)[0]);
 
-    const data = await getPostEditById(id);
+    const data = await getPostEditById(id, context);
 
     store.dispatch(postEditDataFetchedAction({
         postEdit: data.postEdit,

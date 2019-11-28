@@ -7,12 +7,13 @@ module.exports = async function postPostProduct(ctx) {
         productColorId,
     } = ctx.request.body;
 
+
     // ACCESS CHECK
     const {user} = ctx.req;
     const postPart = await PostPart.findByPk(
         postPartId,
         {
-            attributes: [],
+            attributes: ['postId'],
             include: [{
                 model: Post,
                 attributes: ['userId']
@@ -25,6 +26,7 @@ module.exports = async function postPostProduct(ctx) {
         ctx.body = {status: 'fail'};
         return;
     }
+
 
     const result = await PostPartProduct.create({
         postPartId,

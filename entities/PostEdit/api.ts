@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import fetchData from '../../src/helpers/fetchData';
 
 import {PostId} from '../Post/types';
 import {PostPart, PostPartId} from '../PostPart/types';
@@ -10,6 +10,7 @@ import {BrandMap} from '../Brand/types';
 
 import {PostEdit} from './types';
 import {getOrigin} from '../../configs/location';
+import {ICosPageContext} from '../../types/context';
 
 export interface GetPostEditByIdResponse {
     postEdit: PostEdit;
@@ -28,12 +29,9 @@ export interface GetPostEditByIdResponse {
     brand: BrandMap;
 }
 
-export function getPostEditById(id: PostId): Promise<GetPostEditByIdResponse> {
-    return fetch(`${getOrigin()}/api/post/${id}/edit`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json() as Promise<GetPostEditByIdResponse>
-        });
-}
+export const getPostEditById = (id: PostId, context?: ICosPageContext): Promise<GetPostEditByIdResponse> =>
+    fetchData<GetPostEditByIdResponse>(
+        `${getOrigin()}/api/post/${id}/edit`,
+        {},
+        context
+    );
