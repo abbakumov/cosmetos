@@ -1,6 +1,7 @@
 
 const requiredKeys = [
     'COSMETOS_SECRET',
+    'PG_HOST',
 ];
 
 const envKeys = requiredKeys.reduce(

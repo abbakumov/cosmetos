@@ -4,7 +4,7 @@ export function getOrigin(): string {
     }
 
     if (process.env.NODE_ENV === 'production') {
-        return 'https://cosmetos.ru';
+        return 'https://cosmetos.online';
     }
 
     return 'http://127.0.0.1:3000';

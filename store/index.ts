@@ -72,8 +72,6 @@ const getMiddlewares = () => applyMiddleware(
 );
 
 export const makeStore = (initialState) => {
-    console.log('store initialState: ', initialState);
-
     return createStore(
         rootReducer,
         initialState,

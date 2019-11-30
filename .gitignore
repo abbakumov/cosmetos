@@ -64,7 +64,7 @@ typings/
 *.DS_Store
 
 # Data base info
-api/database/sequelize-config.json
+api/database/sequelize-config.js
 
 # files
 static/fake
