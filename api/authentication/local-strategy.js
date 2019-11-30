@@ -1,6 +1,6 @@
 const passport = require('koa-passport');
 const LocalStrategy = require('passport-local');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const {User} = require('../database/models');
 
@@ -17,7 +17,7 @@ const localStrategy = new LocalStrategy(
             return done(null, false);
         }
 
-        const passwordComparisonResult = await bcrypt.compare(
+        const passwordComparisonResult = bcrypt.compareSync(
             password,
             user.passwordHash
         );
