@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      COSMETOS_SECRET: wrong_secret
+      PG_HOST: 192.168.0.11
+      PG_LOGIN: postgres
+      PG_PASSWORD: postgres

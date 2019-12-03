@@ -1,7 +1,9 @@
 
 const requiredKeys = [
-    'COSMETOS_SECRET',
+    'COSMETOS_SECRET', // for cookie sessions
     'PG_HOST',
+    'PG_LOGIN',
+    'PG_PASSWORD',
 ];
 
 const envKeys = requiredKeys.reduce(

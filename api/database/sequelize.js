@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize(
-    'cosmetos-dev', // db name
-    'postgres', // db login
-    'postgres', // db password
+    process.env.NODE_ENV === 'production' ? 'cosmetos-production' : 'cosmetos-dev', // db name
+    process.env.PG_LOGIN,
+    process.env.PG_PASSWORD,
     {
-        host: '127.0.0.1',
+        host: process.env.PG_HOST,
         dialect: 'postgres',
     }
 );
