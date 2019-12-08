@@ -5,8 +5,10 @@ services:
     build: .
     ports:
       - 3000:3000
+    volumes:
+      - ${COSMETOS_UPLOADS_PATH}:/usr/src/app/static/uploads
     environment:
-      COSMETOS_SECRET
-      PG_HOST
-      PG_LOGIN
-      PG_PASSWORD
+      - COSMETOS_SECRET
+      - PG_HOST
+      - PG_LOGIN
+      - PG_PASSWORD
