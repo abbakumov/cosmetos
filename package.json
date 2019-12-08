@@ -7,7 +7,7 @@
     "dev": "node --inspect server.js",
     "dev-api": "COS_SERVER_ONLY=1 nodemon --inspect server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production pm2 start server.js"
   },
   "repository": {
     "type": "git",
@@ -51,6 +51,7 @@
     "passport-local": "1.0.0",
     "pg": "7.12.1",
     "pg-hstore": "2.3.3",
+    "pm2": "4.2.0",
     "query-string": "6.8.3",
     "react": "16.9.0",
     "react-dom": "16.9.0",
