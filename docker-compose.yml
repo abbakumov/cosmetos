@@ -12,3 +12,10 @@ services:
       - PG_HOST
       - PG_LOGIN
       - PG_PASSWORD
+  nginx:
+    image: nginx:1.17.6
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
