@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    build: abbakumov/cosmetos:latest
+    image: abbakumov/cosmetos:latest
     ports:
       - 3000:3000
     volumes:
@@ -19,3 +19,14 @@ services:
       - 443:443
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - ${COSMETOS_CERTBOT_PATH}/conf:/etc/letsencrypt
+      - ${COSMETOS_CERTBOT_PATH}/www:/var/www/certbot
+      # this makes nginx reload its configuration (and certificates) every six hours in the background and launches nginx in the foreground
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ${COSMETOS_CERTBOT_PATH}/conf:/etc/letsencrypt
+      - ${COSMETOS_CERTBOT_PATH}/www:/var/www/certbot
+    # automatic renewal of our ssl certificate
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
