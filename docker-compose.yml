@@ -6,6 +6,7 @@ services:
     image: abbakumov/cosmetos:first-release
     ports:
       - 3000:3000
+      - 9229:9229
     volumes:
       - ${COSMETOS_UPLOADS_PATH}:/usr/src/app/static/uploads
       - ${COSMETOS_LOGS_PATH}:/usr/src/app/logs
