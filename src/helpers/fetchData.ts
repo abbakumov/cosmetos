@@ -15,6 +15,10 @@ export default function fetchData<ResponseType>(url: string, options: RequestIni
             ...options.headers,
         } as HeadersInit;
 
+        if (process.env.NODE_ENV === 'production') {
+            serverHeaders['Host'] = 'cosmetos.online';
+        }
+
         fetchOptions = {
             ...options,
             headers: serverHeaders,
