@@ -2,7 +2,9 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import App from 'next/app';
 import Head from 'next/head';
+import Router from 'next/router';
 import withRedux from 'next-redux-wrapper';
+import withGA from 'next-ga';
 
 import {makeStore} from '../store';
 
@@ -34,4 +36,4 @@ class CosmetosApp extends App {
     }
 }
 
-export default withRedux(makeStore)(CosmetosApp);
+export default withGA('UA-111535910-2', Router)(withRedux(makeStore)(CosmetosApp));
