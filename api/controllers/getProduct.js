@@ -23,21 +23,37 @@ module.exports = async function getProduct(ctx) {
     const id = parseInt(_id);
 
     const data = await Product.findOne({
-        where: { id },
+        where: {id},
+        attributes: ['id', 'kind', 'title', 'description'],
         include: [
-            { model: ProductPicture },
-            { model: Brand },
-            { model: ProductColor },
+            {
+                model: ProductPicture,
+                attributes: ['id', 'picture'],
+            },
+            {
+                model: Brand,
+                attributes: ['id', 'titleShort'],
+            },
+            {
+                model: ProductColor,
+                attributes: ['id', 'title', 'colorHex', 'picture'],
+            },
             {
                 model: PostPartProduct,
+                attributes: ['id', 'postPartId'],
                 include: [
                     {
                         model: PostPart,
+                        attributes: ['id', 'postId'],
                         include: [
                             {
                                 model: Post,
+                                attributes: ['id', 'title', 'picture'],
                                 include: [
-                                    { model: User },
+                                    {
+                                        model: User,
+                                        attributes: ['id', 'login', 'name', 'avatarPicture'],
+                                    },
                                 ],
                             },
                         ],
@@ -100,7 +116,7 @@ module.exports = async function getProduct(ctx) {
     const postBase = Object.keys(posts)
         .map(_id => posts[_id])
         .map(post => ({
-            ..._.pick(post, ['id', 'title', ]),
+            ..._.pick(post, ['id', 'title']),
             imageUrl: makePostPicUrl(post.picture),
             authorLogin: users[post.User].login,
         }))
