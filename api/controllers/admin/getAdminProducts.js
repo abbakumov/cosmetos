@@ -47,7 +47,8 @@ module.exports = async function getAdminProducts(ctx) {
     );
 
     // fields mapping
-    const {products, brands} = normalizedData.entities;
+    const {products = {}, brands = {}} = normalizedData.entities;
+
     const product = Object.keys(products).reduce(
         (acc, id) => ({
             ...acc,

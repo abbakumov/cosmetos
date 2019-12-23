@@ -30,8 +30,8 @@ async function updateProducts(dispatch, getState) {
 
     const data = await getAdminProducts(params);
     // TODO: check if params not changed, or replace to RxJS
-    dispatch(pageAdminProductsFetchSuccessAction(data.total, data.ids));
     dispatch(productsBaseDataFetchedAction(data.product));
+    dispatch(pageAdminProductsFetchSuccessAction(data.total, data.ids));
 }
 
 export const pageAdminProductsFilterTitleChangeAction = (value: string) => (dispatch, getState) => {
