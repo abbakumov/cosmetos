@@ -29,7 +29,7 @@ class LoginPage extends Component<LoginPageProps> {
                             <br />
                             напиши нам на почту
                         </div>
-                        <div className={styles.mail}>hello@cosmetos.online</div>
+                        <div className={styles.mail}>hello.cosmetos@gmail.com</div>
                     </div>
                 </div>
                 <NotificationMaterial />
