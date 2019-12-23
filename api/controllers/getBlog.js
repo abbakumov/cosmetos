@@ -12,7 +12,7 @@ module.exports = async function getBlog(ctx) {
     // data fetching
     const data = await User.findOne({
         where: {login},
-        attributes: ['login', 'name'],
+        attributes: ['login', 'name', 'avatarPicture'],
         include: [
             {
                 model: UserSocial,
