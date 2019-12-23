@@ -23,21 +23,37 @@ module.exports = async function getPost(ctx) {
 
     // data fetching
     const data = await Post.findOne({
-        where: { id },
+        where: {id},
+        attributes: ['id', 'title', 'picture', 'userId', 'instaPostId', 'description', 'isPublic'],
         include: [
-            { model: User },
+            {
+                model: User,
+                attributes: ['id', 'login', 'name', 'avatarPicture'],
+            },
             {
                 model: PostPart,
+                attributes: ['id', 'title', 'positionX', 'positionY', 'colorHex'],
                 include: [
                     {
                         model: PostPartProduct,
+                        attributes: ['id', 'productId', 'productColorId'],
                         include: [
-                            { model: ProductColor },
+                            {
+                                model: ProductColor,
+                                attributes: ['id', 'title', 'picture'],
+                            },
                             {
                                 model: Product,
+                                attributes: ['id', 'title', 'kind', 'brandId'],
                                 include: [
-                                    { model: ProductPicture },
-                                    { model: Brand },
+                                    {
+                                        model: ProductPicture,
+                                        attributes: ['id', 'picture'],
+                                    },
+                                    {
+                                        model: Brand,
+                                        attributes: ['id', 'titleShort'],
+                                    },
                                 ],
                             },
                         ],
