@@ -2,9 +2,21 @@ import fetch from 'isomorphic-fetch';
 
 import {getOrigin} from '../../../../configs/location';
 
-export interface PostLoginResponse {
-    status: 'success' | 'fail';
+interface PostLoginSuccessResponse {
+    status: 'success',
+    isAdmin: boolean,
+    login: string,
 }
+
+interface PostLoginFailResponse {
+    status: 'fail',
+}
+
+export type PostLoginResponse =
+    | PostLoginSuccessResponse
+    | PostLoginFailResponse
+    ;
+
 export function postLogin(username: string, password: string): Promise<PostLoginResponse> {
     return fetch(
         `${getOrigin()}/api/login`,

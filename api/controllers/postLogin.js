@@ -6,6 +6,8 @@ module.exports = function postLogin(ctx) {
             ctx.login(user);
             ctx.body = {
                 status: 'success',
+                login: user.login,
+                isAdmin: user.isAdmin,
             };
         } else {
             ctx.status = 400;

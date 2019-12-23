@@ -33,6 +33,11 @@ export const pageLoginEnterAction = () => async (dispatch, getState) => {
     if (result.status === 'success') {
         dispatch({type: PAGE_LOGIN_ENTER_SUCCESS});
         dispatch(notificationShowSuccessAction('Успешная авторизация'));
+        if (result.isAdmin) {
+            window.location.href = '/admin/product';
+        } else {
+            window.location.href = `/blog/${result.login}`;
+        }
     } else {
         dispatch(notificationShowErrorAction('Неправильный login или пароль'));
     }
