@@ -24,6 +24,11 @@ interface LoginFormProps extends LoginFormMappedProps, LoginFormConnectedActions
 class LoginForm extends Component<LoginFormProps> {
     fieldValueChanged = (event) => this.props.pageLoginUpdateValue(event.target.name, event.target.value);
     enterAction = () => this.props.enterAction();
+    onKeyUp = (e) => {
+        if (e.keyCode === 13) {
+            this.enterAction();
+        }
+    };
 
     render() {
         const {login, password} = this.props;
@@ -37,6 +42,7 @@ class LoginForm extends Component<LoginFormProps> {
                     className={styles.input}
                     value={login}
                     onChange={this.fieldValueChanged}
+                    onKeyUp={this.onKeyUp}
                 />
                 <input
                     id="password"
@@ -45,6 +51,7 @@ class LoginForm extends Component<LoginFormProps> {
                     className={styles.input}
                     value={password}
                     onChange={this.fieldValueChanged}
+                    onKeyUp={this.onKeyUp}
                     type="password"
                 />
                 <button
