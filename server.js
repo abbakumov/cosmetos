@@ -19,9 +19,6 @@ const defaultStatusCodeMiddleware = async (ctx, next) => {
     await next();
 }
 
-// loading environment variables from .env file (only if not set in bash env)
-require('dotenv').config();
-
 (async function() {
     // check all environment keys
     checkRequiredKeys();

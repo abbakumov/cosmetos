@@ -6,6 +6,9 @@ const requiredKeys = [
     'PG_PASSWORD',
 ];
 
+// loading environment variables from .env file (only if not set in bash env)
+require('dotenv').config();
+
 const envKeys = requiredKeys.reduce(
     (acc, key) => ({
         ...acc,
