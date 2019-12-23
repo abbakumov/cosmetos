@@ -22,12 +22,18 @@ export const pageLoginEnterAction = () => async (dispatch, getState) => {
     const state: AppState = getState();
     const {login, password} = state.pageLogin;
 
-    const result = await postLogin(login, password);
+    let result;
+    try {
+        result = await postLogin(login, password);
+    } catch (e) {
+        dispatch(notificationShowErrorAction('Ошибка авторизации'));
+        return;
+    }
 
     if (result.status === 'success') {
         dispatch({type: PAGE_LOGIN_ENTER_SUCCESS});
         dispatch(notificationShowSuccessAction('Успешная авторизация'));
     } else {
-        dispatch(notificationShowErrorAction('Ошибка авторизации'));
+        dispatch(notificationShowErrorAction('Неправильный login или пароль'));
     }
 };
