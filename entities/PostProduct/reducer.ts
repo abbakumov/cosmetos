@@ -1,5 +1,5 @@
 import {
-    POST_EDIT_PRODUCT_SAVE_SUCCESS,
+    POST_EDIT_PRODUCT_SAVE_SUCCESS, POST_EDIT_PRODUCT_REMOVE_SUCCESS,
 } from '../../components/pages/post-edit/store/actions';
 
 import {PostProductState, PostProductActionType} from './types';
@@ -32,7 +32,13 @@ export function postProductReducer(state = initialState, action: PostProductActi
                         productColorId: action.payload.productColorId,
                     },
                 },
-            }
+            };
+
+        case POST_EDIT_PRODUCT_REMOVE_SUCCESS:
+            const newItems = Object.values(state.items).filter(item => item.productId !== action.payload.productId);
+            return {
+                items: newItems,
+            };
     }
 
     return state;

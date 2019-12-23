@@ -15,8 +15,8 @@ import {
     postEditProductProductChangeAction,
     postEditProductColorChangeAction,
 } from '../../store/actions';
-import { ProductBase } from '../../../../../entities/ProductBase/types';
-import { ProductColor } from '../../../../../entities/ProductColor/types';
+import {ProductBase, ProductId} from '../../../../../entities/ProductBase/types';
+import {ProductColor} from '../../../../../entities/ProductColor/types';
 
 const styles = require('./styles.styl');
 
@@ -135,9 +135,10 @@ function getFilteredBrandItems(items: BrandMap, value: string): SuggestItem[] {
         }))
 }
 
-function getFilteredProductItems(items: ProductBase[], value: string): SuggestItem[] {
+function getFilteredProductItems(items: ProductBase[], value: string, usedIds: ProductId[]): SuggestItem[] {
     return items
-        .filter(product => product.title.toLowerCase().includes(value.toLowerCase()))
+        .filter(product => usedIds.indexOf(product.id) === -1) // not used in this post
+        .filter(product => product.title.toLowerCase().includes(value.toLowerCase())) // matches search string
         .map(({id, title}) => ({
             id,
             value: title,
@@ -152,7 +153,7 @@ function getFilteredColorItems(items: ProductColor[], value: string): SuggestIte
 
 function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownProps): MappedProps {
     const {id} = ownProps;
-    const {editPostPartProduct} = state.pagePostEdit;
+    const {postEdit, editPostPartProduct} = state.pagePostEdit;
 
     const {
         brandId,
@@ -165,7 +166,6 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
 
     let inputValue = '';
     let selectedItem = null;
-    let value = '';
     let items = [];
     let label = '';
 
@@ -184,6 +184,19 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
 
         case 'product':
             const brandProductsItem = state.brandProducts.items[brandId];
+            const postId = postEdit.id;
+
+            // collect all ids which already in use in this post
+            // we need to filter them and make them unable to chose
+            const usedIds = Object.values(state.postProduct.items)
+                .reduce(
+                    (acc, postProductItem) => {
+                        if (postId !== postProductItem.postId) {return acc;}
+                        return [...acc, postProductItem.productId];
+                    },
+                    []
+                );
+
             if (brandId && brandProductsItem) {
                 label = 'Продукт';
                 isActive = true;
@@ -191,7 +204,8 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
                 inputValue = productText;
                 items = getFilteredProductItems(
                     brandProductsItem.productIds.map(id => state.productBase.items[id]),
-                    productText
+                    productText,
+                    usedIds
                 );
                 selectedItem = items.find(item => item.id === productId) || null;
                 if (selectedItem) { inputValue = selectedItem.value; }
