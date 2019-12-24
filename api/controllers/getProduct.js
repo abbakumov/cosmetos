@@ -2,9 +2,9 @@ const {normalize} = require('normalizr');
 const _ = require('lodash');
 
 const {makeUserAvatarUrl} = require('../../entities/Blog/helpers');
-const {makePostPicUrl} = require('../../entities/Post/helpers');
-const {makeProductPicUrl} = require('../../entities/ProductBase/helpers');
-const {makeProductColorPicUrl} = require('../../entities/ProductColor/helpers');
+const {makePostSmallPicUrl} = require('../../entities/Post/helpers');
+const {makeProductSmallPicUrl, makeProductBigPicUrl} = require('../../entities/ProductBase/helpers');
+const {makeProductColorSmallPicUrl} = require('../../entities/ProductColor/helpers');
 const {productSchema} = require('../../entities/ProductBase/schema');
 
 const {
@@ -85,7 +85,7 @@ module.exports = async function getProduct(ctx) {
     const productBase = {
         ..._.pick(productEntity, ['id', 'kind', 'title']),
         brand: brands[productEntity.Brand].titleShort,
-        smallPicUrl: makeProductPicUrl(productEntity.ProductPictures[0].picture),
+        smallPicUrl: makeProductSmallPicUrl(productEntity.ProductPictures[0].picture),
     };
 
     const postIds = productEntity
@@ -95,7 +95,7 @@ module.exports = async function getProduct(ctx) {
     const productExtra = {
         ..._.pick(productEntity, ['id', 'description']),
         postIds,
-        bigPicUrl: makeProductPicUrl(productEntity.ProductPictures[0].picture),
+        bigPicUrl: makeProductBigPicUrl(productEntity.ProductPictures[0].picture),
         colorIds: productEntity.ProductColors,
     }
 
@@ -103,7 +103,7 @@ module.exports = async function getProduct(ctx) {
         .map(_id => productColors[_id])
         .map(color => ({
             ..._.pick(color, ['id', 'title', 'colorHex']),
-            picUrl: makeProductColorPicUrl(color.picture),
+            picUrl: makeProductColorSmallPicUrl(color.picture),
         }))
         .reduce(
             (acc, item) => ({
@@ -117,7 +117,7 @@ module.exports = async function getProduct(ctx) {
         .map(_id => posts[_id])
         .map(post => ({
             ..._.pick(post, ['id', 'title']),
-            imageUrl: makePostPicUrl(post.picture),
+            imageUrl: makePostSmallPicUrl(post.picture),
             authorLogin: users[post.User].login,
         }))
         .reduce(

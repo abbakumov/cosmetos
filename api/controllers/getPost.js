@@ -2,9 +2,9 @@ const {normalize} = require('normalizr');
 const _ = require('lodash');
 
 const {fullPostSchema} = require('../../entities/Post/schema');
-const {makePostPicUrl} = require('../../entities/Post/helpers');
+const {makePostSmallPicUrl, makePostBigPicUrl} = require('../../entities/Post/helpers');
 const {makeUserAvatarUrl} = require('../../entities/Blog/helpers');
-const {makeProductPicUrl} = require('../../entities/ProductBase/helpers');
+const {makeProductSmallPicUrl} = require('../../entities/ProductBase/helpers');
 
 const {
     Post,
@@ -78,13 +78,13 @@ module.exports = async function getPost(ctx) {
 
     const postBase = {
         ..._.pick(postEntity, ['id', 'title']),
-        imageUrl: makePostPicUrl(postEntity.picture),
+        imageUrl: makePostSmallPicUrl(postEntity.picture),
         authorLogin: users[postEntity.userId].login,
     };
 
     const postExtra = {
         ..._.pick(postEntity, ['id', 'instaPostId', 'description']),
-        imageUrlBig: makePostPicUrl(postEntity.picture),
+        imageUrlBig: makePostBigPicUrl(postEntity.picture),
         partIds: postEntity.PostParts,
     };
 
@@ -118,7 +118,7 @@ module.exports = async function getPost(ctx) {
         .map(product => ({
             ..._.pick(product, ['id', 'title', 'kind']),
             brand: brands[product.Brand].titleShort,
-            smallPicUrl: makeProductPicUrl(product.ProductPictures[0].picture),
+            smallPicUrl: makeProductSmallPicUrl(product.ProductPictures[0].picture),
         }))
         .reduce(
             (acc, item) => ({

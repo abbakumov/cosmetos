@@ -3,7 +3,7 @@ const _ = require('lodash');
 
 const {userSchema} = require('../../entities/Blog/schema');
 const {makeUserAvatarUrl} = require('../../entities/Blog/helpers');
-const {makePostPicUrl} = require('../../entities/Post/helpers');
+const {makePostSmallPicUrl} = require('../../entities/Post/helpers');
 const {User, UserSocial, Post} = require('../database/models');
 
 module.exports = async function getBlog(ctx) {
@@ -58,7 +58,7 @@ module.exports = async function getBlog(ctx) {
 
     const postsBase = postEntities.map(post => ({
         ..._.pick(post, ['id', 'title']),
-        imageUrl: makePostPicUrl(post.picture),
+        imageUrl: makePostSmallPicUrl(post.picture),
         authorLogin: blog.login,
     })).reduce(
         (acc, post) => ({
