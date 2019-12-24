@@ -5,10 +5,12 @@ RUN mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
-RUN npm install
-
 COPY . .
+
+RUN npm install
+# download specific npm package to run sharp on linux
+RUN rm -rf node_modules/sharp
+RUN npm install --arch=x64 --platform=linux --target=10.16.3 sharp
 
 RUN npm run build
 
