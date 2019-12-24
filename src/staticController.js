@@ -33,7 +33,9 @@ async function cropController(ctx) {
         sizeArr.push(height)
     };
 
-    const originalFilePath = `${envKeys.COSMETOS_UPLOADS_PATH}${fileNameNoFormat}.${format}`;
+    const originalFilePath = `${envKeys.COSMETOS_UPLOADS_PATH}/${fileNameNoFormat}.${format}`;
+
+    console.log('originalFilePath: ', originalFilePath);
 
     // check if file exists
     if(!fs.existsSync(originalFilePath)) {
