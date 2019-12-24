@@ -1,6 +1,6 @@
-import {connect} from 'react-redux';
 import _ from 'lodash';
 import {NextPage} from 'next';
+import {batchActions} from 'redux-batched-actions';
 
 import PostPage, {PostPagePublicProps} from '../../../components/pages/post';
 import {ICosPageContext} from '../../../types/context';
@@ -27,12 +27,14 @@ PostPageWrapper.getInitialProps = async function(context: ICosPageContext): Prom
 
     const data = await getPostById(id);
 
-    store.dispatch(blogDataFetchedAction(data.blog));
-    store.dispatch(postBaseDataFetchedAction(data.postBase));
-    store.dispatch(postExtraDataFetchedAction(data.postExtra));
-    store.dispatch(postPartsDataFetchedAction(data.postPart));
-    store.dispatch(productsBaseDataFetchedAction(data.productBase));
-    store.dispatch(blogProductsDataFetchedAction(data.blogProduct));
+    store.dispatch(batchActions([
+        blogDataFetchedAction(data.blog),
+        postBaseDataFetchedAction(data.postBase),
+        postExtraDataFetchedAction(data.postExtra),
+        postPartsDataFetchedAction(data.postPart),
+        productsBaseDataFetchedAction(data.productBase),
+        blogProductsDataFetchedAction(data.blogProduct),
+    ]));
 
     let title = 'Cosmetos';
 

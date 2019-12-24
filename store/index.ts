@@ -2,6 +2,7 @@ import {createStore, combineReducers, applyMiddleware} from "redux";
 import thunk from 'redux-thunk';
 import {createScrollMiddleware} from 'react-redux-scroll';
 import {composeWithDevTools} from 'redux-devtools-extension';
+import {batchDispatchMiddleware} from 'redux-batched-actions';
 
 import {pagePostReducer} from '../components/pages/post/state/reducer';
 import {pagePostEditReducer} from '../components/pages/post-edit/store/reducer';
@@ -68,6 +69,7 @@ export type AppState = ReturnType<typeof rootReducer>;
 
 const getMiddlewares = () => applyMiddleware(
     thunk,
+    batchDispatchMiddleware,
     createScrollMiddleware()
 );
 
