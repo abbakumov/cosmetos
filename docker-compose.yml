@@ -9,7 +9,6 @@ services:
       - 9229:9229
     volumes:
       - ${COSMETOS_UPLOADS_PATH}:/usr/src/app/static/uploads
-      - ${COSMETOS_LOGS_PATH}:/usr/src/app/logs
     environment:
       - COSMETOS_SECRET
       - PG_HOST

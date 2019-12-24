@@ -11,7 +11,7 @@ const serverOnly = process.env.COS_SERVER_ONLY === '1';
 
 const makeRouter = require('./api/routes');
 const {checkRequiredKeys, envKeys} = require('./configs/environment');
-const {staticController} = require('./src/staticController');
+const {staticController, cropController} = require('./src/staticController');
 
 require('./api/authentication/passport');
 
@@ -35,6 +35,9 @@ const defaultStatusCodeMiddleware = async (ctx, next) => {
 
     // Router with API routes
     const router = makeRouter();
+
+    // serve cropped static files
+    router.get('/static/crop/*', cropController);
 
     // serve static files
     router.get('/static/*', staticController);

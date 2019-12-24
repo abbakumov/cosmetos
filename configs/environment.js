@@ -4,6 +4,7 @@ const requiredKeys = [
     'PG_HOST',
     'PG_LOGIN',
     'PG_PASSWORD',
+    'COSMETOS_UPLOADS_PATH',
 ];
 
 // loading environment variables from .env file (only if not set in bash env)
