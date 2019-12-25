@@ -6,6 +6,7 @@ import MobileLayout from '../../layouts/MobileLayout';
 import ProductInfo from './components/ProductInfo';
 import ProductPics from './components/ProductPics';
 import ProductColors from './components/ProductColors';
+import ProductDescription from './components/ProductDescription';
 // import ProductOpinions from './components/ProductOpinions';
 
 import {ProductId} from '../../../entities/ProductBase/types';
@@ -31,6 +32,7 @@ class ProductPage extends Component<ProductPageProps> {
                 <ProductInfo id={id} />
                 <ProductPics id={id} />
                 <ProductColors id={id} />
+                <ProductDescription id={id} />
                 <PostsList
                     title="Последние посты"
                     postIds={postIds}

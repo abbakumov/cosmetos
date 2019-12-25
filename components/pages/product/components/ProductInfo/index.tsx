@@ -13,18 +13,16 @@ export interface ProductInfoPublicProps {
 interface ProductInfoProps {
     brand: string;
     title: string;
-    description: string;
 }
 
 class ProductInfo extends Component<ProductInfoProps> {
     render() {
-        const {brand, title, description} = this.props;
+        const {brand, title} = this.props;
 
         return (
             <div>
                 <span className={styles.brand}>{brand}</span>
                 <h1 className={styles.title}>{title}</h1>
-                <p className={styles.description}>{description}</p>
             </div>
         );
     }
@@ -34,15 +32,11 @@ function mapStateToProps(state: AppState, ownProps: ProductInfoPublicProps): Pro
     const {id} = ownProps;
 
     const productBase = state.productBase.items[id];
-    const productExtra = state.productExtra.items[id];
-
     const {title, brand} = productBase;
-    const {description} = productExtra;
 
     return {
         brand,
         title,
-        description,
     };
 }
 
