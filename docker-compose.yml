@@ -3,7 +3,7 @@ version: '3'
 services:
   app:
     restart: always
-    image: abbakumov/cosmetos:1.12
+    image: abbakumov/cosmetos:1.13
     ports:
       - 3000:3000
       - 9229:9229
@@ -15,8 +15,6 @@ services:
       - PG_HOST
       - PG_LOGIN
       - PG_PASSWORD
-      - COSMETOS_UPLOADS_PATH
-      - COSMETOS_CROP_PATH
   nginx:
     restart: always
     image: nginx:1.17.6

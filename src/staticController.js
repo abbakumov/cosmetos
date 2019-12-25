@@ -3,8 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
-const {envKeys} = require('../configs/environment');
-
 async function staticController(ctx) {
     await send(ctx, ctx.path, {root: '.'});
 }
@@ -33,9 +31,7 @@ async function cropController(ctx) {
         sizeArr.push(height)
     };
 
-    const originalFilePath = `${envKeys.COSMETOS_UPLOADS_PATH}/${fileNameNoFormat}.${format}`;
-
-    console.log('originalFilePath: ', originalFilePath);
+    const originalFilePath = `./static/uploads/${fileNameNoFormat}.${format}`;
 
     // check if file exists
     if(!fs.existsSync(originalFilePath)) {
