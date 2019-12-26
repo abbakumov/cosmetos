@@ -30,12 +30,62 @@ interface DispatchedProps {
 }
 
 interface Props extends MappedProps, DispatchedProps {}
+interface State {
+    // are nodes rendered in DOM?
+    isNodesActive: boolean;
+    // are nodes shown to user?
+    isNodesShown: boolean;
+    removeTimeoutId?: number;
+}
 
-class PostProductsPart extends Component<Props> {
-    togglePart = () => this.props.postPageTogglePartAction(this.props.id)
+class PostProductsPart extends Component<Props, State> {
+    state = {
+        isNodesActive: false,
+        isNodesShown: false,
+        removeTimeoutId: null,
+    };
+
+    togglePart = () => this.props.postPageTogglePartAction(this.props.id);
+
+    showNodes = () => {
+        // immediatly render nodes
+        this.setState({isNodesActive: true});
+
+        clearTimeout(this.state.removeTimeoutId);
+
+        // show them to user after 100ms
+        setTimeout(
+            () => {
+                // of course if it's still need to be shown
+                if (this.props.isOpen) {
+                    this.setState({isNodesShown: true});
+                }
+            },
+            100
+        );
+    };
+
+    hideNodes = () => {
+        // immediatly hide nodes
+        this.setState({isNodesShown: false});
+
+        // delete them after 3 secons if they were not shown back
+        const timeoutId = window.setTimeout(
+            () => this.setState({isNodesActive: false}),
+            3000
+        );
+
+        this.setState({removeTimeoutId: timeoutId});
+    };
+
+    componentDidUpdate(prevProps: Props) {
+        if (!prevProps.isOpen && this.props.isOpen) this.showNodes();
+        if (prevProps.isOpen && !this.props.isOpen) this.hideNodes();
+    }
 
     render() {
         const {id, title, color, productIds, isOpen} = this.props;
+        const {isNodesActive, isNodesShown} = this.state;
 
         return (
             <div className={styles.root}>
@@ -58,10 +108,16 @@ class PostProductsPart extends Component<Props> {
                         />
                     }
                 </div>
-                {isOpen &&
+                {isNodesActive &&
                     <div className={styles.productsContainer}>
-                        {productIds.map(_id => (
-                            <PostProduct key={id} id={_id} partId={id}/>
+                        {productIds.map((_id, index, arr) => (
+                            <PostProduct
+                                key={_id}
+                                id={_id}
+                                partId={id}
+                                backIndex={arr.length - index}
+                                isShown={isNodesShown}
+                            />
                         ))}
                     </div>
                 }

@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import {connect} from 'react-redux';
 import Link from 'next/link';
+import cn from 'classnames';
 
 import {AppState} from '../../../../../store';
 import {PostPartId} from '../../../../../entities/PostPart/types';
@@ -11,6 +12,8 @@ const styles = require('./styles.styl');
 export interface PostProductsPartPublicProps {
     id: ProductId;
     partId: PostPartId;
+    backIndex: number;
+    isShown: boolean;
 }
 
 interface PostProductsPartProps {
@@ -20,15 +23,26 @@ interface PostProductsPartProps {
     smallPicUrl: string;
     comment: string;
     color: string;
+    backIndex: number;
+    isShown: boolean;
 }
 
 class PostProductsPart extends Component<PostProductsPartProps> {
     render() {
-        const {id, brand, title, smallPicUrl, comment, color} = this.props;
+        const {id, brand, title, smallPicUrl, comment, color, backIndex, isShown} = this.props;
+
+        const style = {
+            borderColor: `#${color}`,
+            zIndex: backIndex,
+        };
+
+        const rootClassName = cn(styles.root, {
+            [styles.rootHidden]: !isShown,
+        });
 
         return (
             <Link href="/product/[id]" as={`/product/${id}`}>
-                <a className={styles.root} style={{borderColor: `#${color}`}}>
+                <a className={rootClassName} style={style}>
                     <div className={styles.left}>
                         <img className={styles.img} src={smallPicUrl} />
                     </div>
@@ -45,7 +59,7 @@ class PostProductsPart extends Component<PostProductsPartProps> {
 }
 
 function mapStateToProps(state: AppState, ownProps: PostProductsPartPublicProps): PostProductsPartProps {
-    const {id, partId} = ownProps;
+    const {id, partId, backIndex, isShown} = ownProps;
 
     const product = state.productBase.items[id];
     const {brand, title, smallPicUrl} = product;
@@ -65,6 +79,8 @@ function mapStateToProps(state: AppState, ownProps: PostProductsPartPublicProps)
         smallPicUrl,
         comment,
         color,
+        backIndex,
+        isShown,
     };
 }
 

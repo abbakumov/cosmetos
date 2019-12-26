@@ -1,12 +1,20 @@
 .root
-    border-width 3px
+    border-width 1px
     border-style solid
     border-radius 10px
     display flex
     position relative
+    background #fff
+    max-height 160px
+    transition all .3s
+    top 0px
+    overflow hidden
+    margin-top -18px
+    padding-top 16px
 
-    & + &
-        margin-top 8px
+.rootHidden
+    max-height 0px
+    top -32px
 
 .left
     width 56px
@@ -19,7 +27,7 @@
     align-self center
 
 .content
-    margin 16px 30px 10px 0
+    margin 20px 30px 20px 0
 
 .title
     font-size 15px
@@ -40,5 +48,5 @@
 
 .arr
     position absolute
-    top calc(50% - 18px)
+    top calc(50% - 12px)
     right 8px
