@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {AppState} from '../../../../../store';
 import {ProductId} from '../../../../../entities/ProductBase/types';
 import {ProductColor} from '../../../../../entities/ProductColor/types';
+import ActionButton from '../../../../widgets/ActionButton';
 
 const styles = require('./styles.styl');
 
@@ -26,13 +27,16 @@ class ProductColors extends Component<ProductColorsProps> {
         for (let i = 0; i < restSlotsCount; i++) fakeIds.push(i * -1);
 
         return (
-            <div className={styles.root}>
-                {colors.map(color => (
-                    <div key={color.id} className={styles.item}>
-                        <img className={styles.image} src={color.picUrl} />
-                    </div>
-                ))}
-                {fakeIds.map(id => (<div key={id} className={styles.item} />))}
+            <div>
+                <div className={styles.colors}>
+                    {colors.map(color => (
+                        <div key={color.id} className={styles.item}>
+                            <img className={styles.image} src={color.picUrl} />
+                        </div>
+                    ))}
+                    {fakeIds.map(id => (<div key={id} className={styles.item} />))}
+                </div>
+                <ActionButton text="другие цвета" />
             </div>
         );
     }
