@@ -1,12 +1,13 @@
 import {Component} from 'react';
 import {connect} from 'react-redux';
-import Link from 'next/link';
 
 import {AppState} from '../../../../../store';
 import {PostId} from '../../../../../entities/Post/types';
 import {PostPartId} from '../../../../../entities/PostPart/types';
 
 import PostProductsPart from '../PostProductsPart';
+
+const styles = require('./styles.styl');
 
 export interface PostProductsPublicProps {
     id: PostId;
@@ -21,7 +22,7 @@ class PostProducts extends Component<PostProductsProps> {
         const {partIds} = this.props;
 
         return (
-            <div>
+            <div className={styles.root}>
                 {partIds.map(id => (
                     <PostProductsPart key={id} id={id} />
                 ))}

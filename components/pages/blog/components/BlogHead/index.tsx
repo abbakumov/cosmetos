@@ -13,13 +13,14 @@ export interface BlogHeadPublicProps {
 
 interface BlogHeadProps {
     name: string;
+    login: string;
     instagramLogin: string,
     imageUrl: string,
 }
 
 class BlogHead extends Component<BlogHeadProps> {
     render() {
-        const {name, instagramLogin, imageUrl} = this.props;
+        const {name, login, instagramLogin, imageUrl} = this.props;
 
         return (
             <div className={styles.root}>
@@ -30,9 +31,11 @@ class BlogHead extends Component<BlogHeadProps> {
                         alt={`фото ${name}`}
                     />
                 </div>
-                <div className={styles.right}>
+                <div className={styles.center}>
+                    <h1 className={styles.name}>{name}</h1>
+                    <div className={styles.login}>@{login}</div>
                     <a
-                        className={styles.instaIcon}
+                        className={styles.instaButton}
                         target="_blank"
                         href={`https://www.instagram.com/${instagramLogin}/`}
                     >
@@ -40,11 +43,8 @@ class BlogHead extends Component<BlogHeadProps> {
                             src="/static/icons/blog-page/insta.svg"
                             alt="иконка Istagram"
                         />
+                        <span className={styles.instaLogin}>{instagramLogin}</span>
                     </a>
-                </div>
-                <div className={styles.center}>
-                    <h1 className={styles.name}>{name}</h1>
-                    <div className={styles.instaLogin}>@{instagramLogin}</div>
                 </div>
             </div>
         )
@@ -57,6 +57,7 @@ function mapStateToProps(state: AppState, ownProps: BlogHeadPublicProps): BlogHe
 
     return {
         name: blogData.name,
+        login: blogData.login,
         instagramLogin: blogExtraData.instagramLogin,
         imageUrl: blogData.imageUrl,
     };

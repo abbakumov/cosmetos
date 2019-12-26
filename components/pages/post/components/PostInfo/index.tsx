@@ -11,15 +11,19 @@ export interface PostInfoPublicProps {
 }
 
 interface PostInfoProps {
+    title: string;
     description: string;
 }
 
 class PostInfo extends Component<PostInfoProps> {
     render() {
-        const {description} = this.props;
+        const {title, description} = this.props;
 
         return (
             <div className={styles.root}>
+                <h1 className={styles.title}>
+                    {title}
+                </h1>
                 <p className={styles.description}>
                     {description}
                 </p>
@@ -31,12 +35,12 @@ class PostInfo extends Component<PostInfoProps> {
 function mapStateToProps(state: AppState, ownProps: PostInfoPublicProps): PostInfoProps {
     const {id} = ownProps;
 
+    const postBase = state.postBase.items[id];
     const postExtra = state.postExtra.items[id];
 
-    const {description} = postExtra;
-
     return {
-        description,
+        title: postBase.title,
+        description: postExtra.description,
     };
 }
 
