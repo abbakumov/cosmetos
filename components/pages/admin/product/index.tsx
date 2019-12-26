@@ -78,6 +78,7 @@ class AdminProductPage extends Component<Props> {
                                     </InputLabel>
                                     <Select
                                         value={this.props.brandId}
+                                        className={styles.brandInput}
                                         inputProps={{
                                             name: 'brand',
                                         }}
@@ -113,7 +114,7 @@ class AdminProductPage extends Component<Props> {
                                     label="Описание"
                                     multiline
                                     value={this.props.description}
-                                    rows={4}
+                                    rows={7}
                                     onChange={e => this.props.changeFieldAction('description', e.target.value)}
                                 />
                             </Grid>
