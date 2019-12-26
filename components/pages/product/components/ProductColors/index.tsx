@@ -16,9 +16,31 @@ interface ProductColorsProps {
     colors: ProductColor[]
 }
 
-class ProductColors extends Component<ProductColorsProps> {
-    render() {
+interface State {
+    isOpen: boolean;
+}
+
+class ProductColors extends Component<ProductColorsProps, State> {
+    state = {
+        isOpen: false,
+    };
+
+    getColorsToShow():ProductColor[] {
         const {colors} = this.props;
+
+        if (this.state.isOpen || colors.length <= 12) {
+            return colors;
+        }
+        
+        return colors.slice(0, 6);
+    }
+
+    open = () => {
+        this.setState({isOpen: true});
+    };
+
+    render() {
+        const colors = this.getColorsToShow();
 
         const _restSlotsCount = 6 - (colors.length % 6);
         const restSlotsCount = _restSlotsCount === 6 ? 0 : _restSlotsCount;
@@ -36,7 +58,14 @@ class ProductColors extends Component<ProductColorsProps> {
                     ))}
                     {fakeIds.map(id => (<div key={id} className={styles.item} />))}
                 </div>
-                <ActionButton text="другие цвета" />
+                {this.props.colors.length > 12 && !this.state.isOpen &&
+                    <div className={styles.actionButton}>
+                        <ActionButton
+                            text="другие цвета"
+                            onClick={this.open}
+                        />
+                    </div>
+                }
             </div>
         );
     }
