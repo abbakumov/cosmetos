@@ -8,7 +8,7 @@ import AppBar from '@material-ui/core/AppBar';
 const styles = require('../styles.styl');
 
 const TopBar: FunctionComponent = () => {
-    const {route} = useRouter();
+    const {route, asPath} = useRouter();
 
     let title = 'No title';
 
@@ -18,6 +18,14 @@ const TopBar: FunctionComponent = () => {
 
     if (route === '/admin/product') {
         title = 'Продукты';
+    }
+
+    if (route === '/admin/product/[id]') {
+        if (asPath === '/admin/product/new') {
+            title = 'Добавление нового продукта';
+        } else {
+            title = 'Редактирование продукта';
+        }
     }
 
     return (
