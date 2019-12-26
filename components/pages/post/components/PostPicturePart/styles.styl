@@ -1,32 +1,41 @@
 .root
     position absolute
-    width 15px
-    height 15px
-
-.isOpen
-    height 28px
+    height 0
     width auto
 
 .content
     position relative
     left -50%
-    top 8px
+    top -19px
     font-family Roboto
     font-size 15px
     color #4C4C4C
     padding 5px 14px 7px
     border 3px solid #fff
     border-radius 20px
+    opacity 1
+    transition all .3s
 
-.circleOuter
-    position relative
-    left -13px
-    top 13px
+.contentHidden
+    transform scale(.5)
+    opacity 0
+
+.circle
+    position absolute
+    left -14px
+    top -14px
     width 27px
     height 27px
     border 1px solid #fff
     background rgba(255, 255, 255, .5)
     border-radius 14px
+    transform scale(1)
+    opacity 1
+    transition all .3s
+
+.circleHidden
+    transform scale(1.5)
+    opacity 0
 
 .circleInner
     width 15px

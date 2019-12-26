@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import {connect} from 'react-redux';
+import cn from 'classnames';
 
 import {AppState} from '../../../../../store';
 import {PostPartId} from '../../../../../entities/PostPart/types';
@@ -40,31 +41,34 @@ class PostPicturePart extends Component<Props> {
         const style = {
             left: `${position.x}%`,
             bottom: `${position.y}%`,
-        }
+        };
 
         const contentStyle = {
             backgroundColor: `#${color}`,
-        }
+        };
 
-        // TODO: it's always open styled
-        const className = `${styles.root} ${styles.isOpen}`;
+        const circleClassName = cn(
+            styles.circle,
+            {[styles.circleHidden]: isOpen}
+        );
+
+        const contentClassName = cn(
+            styles.content,
+            {[styles.contentHidden]: !isOpen}
+        );
 
         return (
             <div
-                className={className}
+                className={styles.root}
                 style={style}
                 onClick={() => postPageOpenScrollPartAction(id)}
             >
-                {isOpen &&
-                    <div className={styles.content} style={contentStyle}>
-                        {title}
-                    </div>
-                }
-                {!isOpen &&
-                    <div className={styles.circleOuter}>
-                        <div className={styles.circleInner} style={contentStyle} />
-                    </div>
-                }
+                <div className={circleClassName}>
+                    <div className={styles.circleInner} style={contentStyle} />
+                </div>
+                <div className={contentClassName} style={contentStyle}>
+                    {title}
+                </div>
             </div>
         );
     }
