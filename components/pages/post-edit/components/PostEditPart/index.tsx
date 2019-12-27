@@ -1,4 +1,4 @@
-import {FunctionComponent} from 'react';
+import {FunctionComponent, useCallback} from 'react';
 import {connect} from 'react-redux';
 
 import Paper from '@material-ui/core/Paper';
@@ -40,56 +40,62 @@ interface ActionProps {
 
 interface Props extends MappedProps, ActionProps {}
 
-const PostEditPart: FunctionComponent<Props> = (props: Props) => (
-    <Paper className={styles.root}>
-        <div className={styles.controls}>
-            <Button
-                variant="contained"
-                className={styles.control}
-                size="small"
-                color="secondary"
-                onClick={() => props.postEditPartEditAction(props.id)}
-            >
-                <Icon fontSize="small">edit</Icon>
-            </Button>
-            <Button
-                variant="contained"
-                className={styles.control}
-                size="small"
-                color="secondary"
-                onClick={() => props.postEditPartRemoveAction(props.id)}
-            >
-                <Icon fontSize="small">delete</Icon>
-            </Button>
-        </div>
-        <Typography variant="subtitle2">
-            {props.title}
-        </Typography>
-        <div className={styles.productsContainer}>
-            <Table size="small">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Бренд</TableCell>
-                        <TableCell>Продукт</TableCell>
-                        <TableCell>Цвет</TableCell>
-                        <TableCell align="right">Действия</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {props.productIds.map(id => <PostEditPartProduct key={id} id={id} />)}
-                </TableBody>
-            </Table>
-        </div>
-        {props.isActiveAddProduct && <PostEditPartAddProduct />}
-        {!props.isActiveAddProduct &&
-            <div className={styles.bottomControls}>
-                <Button onClick={() => props.postEditStartAddProductAction(props.id)}>
-                    Добавить продукт
+const PostEditPart: FunctionComponent<Props> = (props: Props) => {
+    const _postEditPartEditAction = useCallback(() => props.postEditPartEditAction(props.id), [props.id]);
+    const _postEditPartRemoveAction = useCallback(() => props.postEditPartRemoveAction(props.id), [props.id]);
+    const _postEditStartAddProductAction = useCallback(() => props.postEditStartAddProductAction(props.id), [props.id]);
+
+    return (
+        <Paper className={styles.root}>
+            <div className={styles.controls}>
+                <Button
+                    variant="contained"
+                    className={styles.control}
+                    size="small"
+                    color="secondary"
+                    onClick={_postEditPartEditAction}
+                >
+                    <Icon fontSize="small">edit</Icon>
+                </Button>
+                <Button
+                    variant="contained"
+                    className={styles.control}
+                    size="small"
+                    color="secondary"
+                    onClick={_postEditPartRemoveAction}
+                >
+                    <Icon fontSize="small">delete</Icon>
                 </Button>
             </div>
-        }
-    </Paper>
-);
+            <Typography variant="subtitle2">
+                {props.title}
+            </Typography>
+            <div className={styles.productsContainer}>
+                <Table size="small">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Бренд</TableCell>
+                            <TableCell>Продукт</TableCell>
+                            <TableCell>Цвет</TableCell>
+                            <TableCell align="right">Действия</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {props.productIds.map(id => <PostEditPartProduct key={id} id={id} />)}
+                    </TableBody>
+                </Table>
+            </div>
+            {props.isActiveAddProduct && <PostEditPartAddProduct />}
+            {!props.isActiveAddProduct &&
+                <div className={styles.bottomControls}>
+                    <Button onClick={_postEditStartAddProductAction}>
+                        Добавить продукт
+                    </Button>
+                </div>
+            }
+        </Paper>
+    );
+};
 
 function mapStateToProps(state: AppState, ownProps: PostEditPartProps): MappedProps {
     const postPart = state.postPart.items[ownProps.id];
