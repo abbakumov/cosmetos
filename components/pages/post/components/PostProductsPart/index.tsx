@@ -1,5 +1,4 @@
 import {Component} from 'react';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {scrollToWhen} from 'react-redux-scroll';
 
@@ -77,6 +76,10 @@ class PostProductsPart extends Component<Props, State> {
 
         this.setState({removeTimeoutId: timeoutId});
     };
+
+    componentDidMount() {
+        if (this.props.isOpen) this.showNodes();
+    }
 
     componentDidUpdate(prevProps: Props) {
         if (!prevProps.isOpen && this.props.isOpen) this.showNodes();
