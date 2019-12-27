@@ -23,6 +23,7 @@ const styles = require('./styles.styl');
 interface MappedProps {
     title: string,
     activeColorHex: string,
+    isSaving: boolean,
 }
 
 interface ActionProps {
@@ -41,6 +42,7 @@ const PostEditPartEdit: FunctionComponent<Props> = (props: Props) => (
                 className={styles.control}
                 size="small"
                 color="secondary"
+                disabled={props.isSaving}
                 onClick={() => props.postEditPartSaveAction()}
             >
                 <Icon fontSize="small">done</Icon>
@@ -90,11 +92,12 @@ const PostEditPartEdit: FunctionComponent<Props> = (props: Props) => (
 );
 
 function mapStateToProps(state: AppState) {
-    const {editPostPart} = state.pagePostEdit;
+    const {editPostPart, editPostPartIsSaving} = state.pagePostEdit;
 
     return {
         title: editPostPart.title,
         activeColorHex: editPostPart.color,
+        isSaving: editPostPartIsSaving,
     };
 }
 

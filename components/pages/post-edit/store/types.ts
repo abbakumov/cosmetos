@@ -72,6 +72,7 @@ export interface PagePostEditState {
     // separate from postEdit for easier state management
     postPartIds: PostPartId[];
     editPostPart?: PostPart;
+    editPostPartIsSaving: boolean;
     // used for additing
     editPostPartProduct: EditPostPartProduct;
 }

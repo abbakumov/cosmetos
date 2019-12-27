@@ -56,6 +56,7 @@ const initialState: PagePostEditState = {
     isSaving: false,
     postPartIds: [],
     editPostPart: null,
+    editPostPartIsSaving: false,
     editPostPartProduct: emptyEditPostPartProduct,
 };
 
@@ -244,6 +245,12 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 },
             };
 
+        case POST_EDIT_PART_SAVE:
+            return {
+                ...state,
+                editPostPartIsSaving: true,
+            };
+
         case POST_EDIT_PART_SAVE_SUCCESS:
             let newPostPartIds = [];
             if (state.postPartIds.indexOf(action.payload.data.id) !== -1) {
@@ -257,11 +264,15 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
             return {
                 ...state,
                 editPostPart: null,
+                editPostPartIsSaving: false,
                 postPartIds: newPostPartIds,
             };
 
         case POST_EDIT_PART_SAVE_FAIL:
-            return state;
+            return {
+                ...state,
+                editPostPartIsSaving: false,
+            };
 
         case POST_EDIT_PART_CANCEL:
             return {

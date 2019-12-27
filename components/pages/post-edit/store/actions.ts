@@ -299,6 +299,8 @@ export function postEditPartChangePositionAction(position: Position): PostEditPa
 
 export function postEditPartSaveAction(): any {
     return (dispatch, getState) => {
+        dispatch({type: POST_EDIT_PART_SAVE});
+
         const state: AppState = getState();
 
         const postId = state.pagePostEdit.postEdit.id;
