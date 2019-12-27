@@ -24,6 +24,7 @@ import {
     POST_EDIT_PRODUCT_CANCEL,
     POST_EDIT_PRODUCT_SAVE,
     POST_EDIT_PRODUCT_SAVE_SUCCESS,
+    POST_EDIT_PRODUCT_SAVE_FAIL,
     POST_EDIT_PRODUCT_REMOVE_SUCCESS,
     POST_EDIT_PRODUCT_REMOVE_FAIL,
     POST_EDIT_PART_NEW,
@@ -62,6 +63,7 @@ export interface EditPostPartProduct {
     // PRODUCT COLOR
     productColorText: string;
     productColorId?: ProductColorId;
+    isSaving: boolean;
 }
 
 export interface PagePostEditState {
@@ -175,6 +177,10 @@ export interface PostEditProductSaveSuccessAction {
     };
 }
 
+export interface PostEditProductSaveFailAction {
+    type: typeof POST_EDIT_PRODUCT_SAVE_FAIL;
+}
+
 export interface PostEditProductRemoveSuccess {
     type: typeof POST_EDIT_PRODUCT_REMOVE_SUCCESS;
     payload: {
@@ -262,6 +268,7 @@ export type PagePostEditActionType =
     | PostEditProductCancelAction
     | PostEditProductSaveAction
     | PostEditProductSaveSuccessAction
+    | PostEditProductSaveFailAction
     | PostEditProductRemoveSuccess
     | PostEditProductRemoveFail
     | PostEditPartNewAction

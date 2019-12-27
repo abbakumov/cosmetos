@@ -17,7 +17,9 @@ import {
     POST_EDIT_PRODUCT_PRODUCT_CHANGE,
     POST_EDIT_PRODUCT_COLOR_CHANGE,
     POST_EDIT_PRODUCT_CANCEL,
+    POST_EDIT_PRODUCT_SAVE,
     POST_EDIT_PRODUCT_SAVE_SUCCESS,
+    POST_EDIT_PRODUCT_SAVE_FAIL,
     POST_EDIT_PART_NEW,
     POST_EDIT_PART_EDIT,
     POST_EDIT_PART_CHANGE_FIELD,
@@ -39,6 +41,7 @@ const emptyEditPostPartProduct = {
     productId: null,
     productColorText: '',
     productColorId: null,
+    isSaving: false,
 };
 
 const initialState: PagePostEditState = {
@@ -177,11 +180,29 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 ...state,
                 editPostPartProduct: emptyEditPostPartProduct,
             };
-        
+
+        case POST_EDIT_PRODUCT_SAVE:
+            return {
+                ...state,
+                editPostPartProduct: {
+                    ...state.editPostPartProduct,
+                    isSaving: true,
+                },
+            };
+
         case POST_EDIT_PRODUCT_SAVE_SUCCESS:
             return {
                 ...state,
                 editPostPartProduct: emptyEditPostPartProduct,
+            };
+
+        case POST_EDIT_PRODUCT_SAVE_FAIL:
+            return {
+                ...state,
+                editPostPartProduct: {
+                    ...state.editPostPartProduct,
+                    isSaving: false,
+                },
             };
 
         case POST_EDIT_PART_NEW:

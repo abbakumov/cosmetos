@@ -1,4 +1,4 @@
-import {FunctionComponent} from 'react';
+import {FunctionComponent, useCallback} from 'react';
 import {connect} from 'react-redux';
 
 import Button from '@material-ui/core/Button';
@@ -16,7 +16,7 @@ import {
 const styles = require('./styles.styl');
 
 interface MappedProps {
-
+    isSaving: boolean;
 }
 
 interface ActionProps {
@@ -26,41 +26,49 @@ interface ActionProps {
 
 interface Props extends MappedProps, ActionProps {}
 
-const PostEditPartAddProduct: FunctionComponent<Props> = (props: Props) => (
-    <div className={styles.root}>
-        <div className={styles.head}>Добавление продукта</div>
-        <div className={styles.content}>
-            <Grid container spacing={3}>
-                <Grid item xs={4}>
-                    <PostEditPartProductDropDown id="brand" />
+const PostEditPartAddProduct: FunctionComponent<Props> = (props: Props) => {
+    const _postEditProductCancelAction = useCallback(props.postEditProductCancelAction, []);
+    const _postEditProductSaveAction = useCallback(props.postEditProductSaveAction, []);
+
+    return (
+        <div className={styles.root}>
+            <div className={styles.head}>Добавление продукта</div>
+            <div className={styles.content}>
+                <Grid container spacing={3}>
+                    <Grid item xs={4}>
+                        <PostEditPartProductDropDown id="brand" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <PostEditPartProductDropDown id="product" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <PostEditPartProductDropDown id="color" />
+                    </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                    <PostEditPartProductDropDown id="product" />
-                </Grid>
-                <Grid item xs={4}>
-                    <PostEditPartProductDropDown id="color" />
-                </Grid>
-            </Grid>
-            <div className={styles.bottomControls}>
-                <Button className={styles.control} onClick={() => props.postEditProductCancelAction()}>
-                    Отмена
-                </Button>
-                <Button
-                    className={styles.control}
-                    color="secondary"
-                    variant="contained"
-                    onClick={() => props.postEditProductSaveAction()}
-                >
-                    Добавить
-                </Button>
+                <div className={styles.bottomControls}>
+                    <Button className={styles.control} onClick={_postEditProductCancelAction}>
+                        Отмена
+                    </Button>
+                    <Button
+                        className={styles.control}
+                        color="secondary"
+                        variant="contained"
+                        disabled={props.isSaving}
+                        onClick={_postEditProductSaveAction}
+                    >
+                        Добавить
+                    </Button>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 function mapStateToProps(state: AppState) {
-    return {
+    const {isSaving} = state.pagePostEdit.editPostPartProduct;
 
+    return {
+        isSaving,
     };
 }
 

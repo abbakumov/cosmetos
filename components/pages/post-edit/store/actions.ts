@@ -204,9 +204,7 @@ export function postEditProductCancelAction(): PostEditProductCancelAction {
 
 export function postEditProductSaveAction(): any {
     return (dispatch, getState) => {
-        dispatch({
-            type: POST_EDIT_PRODUCT_SAVE,
-        });
+        dispatch({type: POST_EDIT_PRODUCT_SAVE});
 
         const state: AppState = getState();
         const id = state.pagePostEdit.postEdit.id;
@@ -238,9 +236,7 @@ export function postEditProductSaveAction(): any {
                         payload,
                     });
                 } else {
-                    dispatch({
-                        type: POST_EDIT_PRODUCT_SAVE_FAIL,
-                    });
+                    dispatch({type: POST_EDIT_PRODUCT_SAVE_FAIL});
                 }
             });
     };
