@@ -27,6 +27,7 @@ interface MappedProps {
     instaPostId: string;
     description: string;
     isPublic: boolean;
+    isSaving: boolean;
 }
 
 interface ActionProps {
@@ -78,6 +79,7 @@ const PostEditInfo: FunctionComponent<Props> = (props: Props) => {
                 className={styles.saveButton}
                 variant="contained"
                 color="primary"
+                disabled={props.isSaving}
                 onClick={_saveAction}
             >
                 Сохранить
@@ -87,8 +89,9 @@ const PostEditInfo: FunctionComponent<Props> = (props: Props) => {
 };
 
 function mapStateToProps(state: AppState): MappedProps {
-    const {title, instaPostId, description, isPublic} = state.pagePostEdit.postEdit;
-    return {title, instaPostId, description, isPublic};
+    const {isSaving, postEdit} = state.pagePostEdit;
+    const {title, instaPostId, description, isPublic} = postEdit;
+    return {title, instaPostId, description, isPublic, isSaving};
 }
 
 const mapDispatchToProps = {

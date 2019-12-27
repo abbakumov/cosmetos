@@ -8,6 +8,7 @@ import {
     POST_EDIT_FILE_CHANGE,
     POST_EDIT_FIELD_CHANGE,
     POST_EDIT_IS_PUBLIC_CHANGE,
+    POST_EDIT_SAVE,
     POST_EDIT_SAVE_SUCCESS,
     POST_EDIT_SAVE_FAIL,
     POST_EDIT_START_ADD_PRODUCT,
@@ -49,6 +50,7 @@ const initialState: PagePostEditState = {
         description: '',
         isPublic: false,
     },
+    isSaving: false,
     postPartIds: [],
     editPostPart: null,
     editPostPartProduct: emptyEditPostPartProduct,
@@ -90,11 +92,23 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 },
             };
 
+        case POST_EDIT_SAVE:
+            return {
+                ...state,
+                isSaving: true,
+            };
+
         case POST_EDIT_SAVE_SUCCESS:
-            return state;
+            return {
+                ...state,
+                isSaving: false,
+            };
 
         case POST_EDIT_SAVE_FAIL:
-            return state;
+            return {
+                ...state,
+                isSaving: false,
+            };
 
         case POST_EDIT_START_ADD_PRODUCT:
             return {

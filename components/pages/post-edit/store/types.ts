@@ -13,6 +13,7 @@ import {
     POST_EDIT_FILE_CHANGE,
     POST_EDIT_FIELD_CHANGE,
     POST_EDIT_IS_PUBLIC_CHANGE,
+    POST_EDIT_SAVE,
     POST_EDIT_SAVE_SUCCESS,
     POST_EDIT_SAVE_FAIL,
     POST_EDIT_START_ADD_PRODUCT,
@@ -65,6 +66,7 @@ export interface EditPostPartProduct {
 
 export interface PagePostEditState {
     postEdit: PostEdit;
+    isSaving: boolean;
     // separate from postEdit for easier state management
     postPartIds: PostPartId[];
     editPostPart?: PostPart;
@@ -99,6 +101,10 @@ export interface PostEditIsPublicChange {
     payload: {
         value: boolean;
     };
+}
+
+export interface PostEditSave {
+    type: typeof POST_EDIT_SAVE;
 }
 
 export interface PostEditSaveSuccess {
@@ -245,6 +251,7 @@ export type PagePostEditActionType =
     | PostEditFileChange
     | PostEditFieldChange
     | PostEditIsPublicChange
+    | PostEditSave
     | PostEditSaveSuccess
     | PostEditSaveFail
     | PostEditStartAddProductAction

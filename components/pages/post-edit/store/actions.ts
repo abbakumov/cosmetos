@@ -116,12 +116,15 @@ export const postEditSaveAction = () => (dispatch, getState) => {
     const state: AppState = getState();
     const {postEdit} = state.pagePostEdit;
 
+    dispatch({type: POST_EDIT_SAVE});
+
     // validation
     const postEditClone = JSON.parse(JSON.stringify(postEdit));
     const validationErrors = postEditSchema.validate(postEditClone);
     if (validationErrors.length) {
         const error = validationErrors[0] as any;
         dispatch(notificationShowErrorAction(error.message as string));
+        dispatch({type: POST_EDIT_SAVE_FAIL});
         return;
     }
 
@@ -131,6 +134,7 @@ export const postEditSaveAction = () => (dispatch, getState) => {
                 window.location.href = `/post/${data.postId}/edit`;
             } else {
                 dispatch(notificationShowSuccessAction('Пост сохранен!'));
+                dispatch({type: POST_EDIT_SAVE_SUCCESS});
             }
         });
 };
