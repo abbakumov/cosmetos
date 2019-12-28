@@ -99,36 +99,24 @@ module.exports = async function getProduct(ctx) {
         colorIds: productEntity.ProductColors,
     }
 
-    const productColor = productEntity.ProductColors
+    const productColorMap = productEntity.ProductColors
         .map(_id => productColors[_id])
         .map(color => ({
             ..._.pick(color, ['id', 'title', 'colorHex']),
             picUrl: makeProductColorSmallPicUrl(color.picture),
         }))
-        .reduce(
-            (acc, item) => ({
-                ...acc,
-                [item.id]: item,
-            }),
-            {}
-        ); // TODO: replace by keyBy
+    const productColor = _.keyBy(productColorMap, 'id');
 
-    const postBase = Object.keys(posts)
+    const postBaseMap = Object.keys(posts)
         .map(_id => posts[_id])
         .map(post => ({
             ..._.pick(post, ['id', 'title']),
             imageUrl: makePostSmallPicUrl(post.picture),
             authorLogin: users[post.User].login,
         }))
-        .reduce(
-            (acc, item) => ({
-                ...acc,
-                [item.id]: item,
-            }),
-            {}
-        ); // TODO: replace by keyBy
+    const postBase = _.keyBy(postBaseMap, 'id');
 
-    const blog = Object.keys(users)
+    const blogMap = Object.keys(users)
         .map(_id => users[_id])
         .map(user => ({
             ..._.pick(user, ['login', 'name']),
@@ -136,13 +124,7 @@ module.exports = async function getProduct(ctx) {
             instagramLogin: '',
             postIds: [],
         }))
-        .reduce(
-            (acc, item) => ({
-                ...acc,
-                [item.login]: item,
-            }),
-            {}
-        ); // TODO: replace by keyBy
+    const blog = _.keyBy(blogMap, 'id');
 
     const result = {
         productBase,
