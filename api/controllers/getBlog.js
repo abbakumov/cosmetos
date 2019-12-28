@@ -56,17 +56,12 @@ module.exports = async function getBlog(ctx) {
 
     const postEntities = Object.keys(posts).map(id => posts[id]);
 
-    const postsBase = postEntities.map(post => ({
+    const postsBaseMap = postEntities.map(post => ({
         ..._.pick(post, ['id', 'title']),
         imageUrl: makePostSmallPicUrl(post.picture),
         authorLogin: blog.login,
-    })).reduce(
-        (acc, post) => ({
-            ...acc,
-            [post.id]: post,
-        }),
-        {}
-    );
+    }));
+    const postsBase = _.keyBy(postsBaseMap, 'id');
 
     const result = {
         blog,
