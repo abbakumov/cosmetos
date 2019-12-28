@@ -11,6 +11,7 @@ const serverOnly = process.env.COS_SERVER_ONLY === '1';
 
 const makeRouter = require('./api/routes');
 const {checkRequiredKeys, envKeys} = require('./configs/environment');
+const {sessionConfig} = require('./configs/sessionConfig');
 const {staticController, cropController} = require('./src/staticController');
 
 require('./api/authentication/passport');
@@ -58,7 +59,7 @@ const defaultStatusCodeMiddleware = async (ctx, next) => {
 
     // setting up a session
     server.keys = [envKeys.COSMETOS_SECRET];
-    server.use(session(server));
+    server.use(session(sessionConfig, server));
 
     // setting up passport for authentication
     server.use(passport.initialize());
