@@ -30,16 +30,11 @@ module.exports = async function getProductColors(ctx) {
         colorIds: productColors.map(color => color.id),
     };
 
-    const productColor = productColors.reduce(
-        (acc, color) => ({
-            ...acc,
-            [color.id]: {
-                ...color,
-                picUrl: '', // TODO: and this, yes
-            },
-        }),
-        {}
-    );
+    const productColorMap = productColors.map(color => ({
+        ...color,
+        picUrl: '', // TODO: and this, yes
+    }));
+    const productColor = _.keyBy(productColorMap, 'id');
 
     // it's ok for some fields to be empty
     // if interface will need them, that's easy to do
