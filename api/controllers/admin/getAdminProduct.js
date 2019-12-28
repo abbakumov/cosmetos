@@ -52,25 +52,15 @@ module.exports = async function getAdminProduct(ctx) {
     };
 
     const brandIds = plainBrandsData.map(brand => brand.id);
-    const brand = plainBrandsData.reduce(
-        (acc, item) => ({
-            ...acc,
-            [item.id]: item,
-        }),
-        {}
-    );
+    const brand = _.keyBy(plainBrandsData, 'id')
 
     const productColorEntities = normalizedProduct.entities.productColors || {};
-    const productColor = Object.keys(productColorEntities).reduce(
-        (acc, id) => ({
-            ...acc,
-            [id]: {
-                ..._.pick(productColorEntities[id], ['id', 'title']),
-                picUrl: makeProductColorPicUrl(productColorEntities[id].picture),
-            },
-        }),
-        {}
-    );
+    const productColorMap = Object.values(productColorEntities)
+        .map(value => ({
+            ..._.pick(value, ['id', 'title']),
+            picUrl: makeProductColorPicUrl(value.picture),
+        }))
+    const productColor = _.keyBy(productColorMap, 'id');
 
     ctx.body = {
         product,
