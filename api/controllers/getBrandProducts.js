@@ -29,17 +29,12 @@ module.exports = async function getBrandProducts(ctx) {
         productIds,
     };
 
-    const productBase = plainData.reduce(
-        (acc, product) => ({
-            ...acc,
-            [product.id]: {
-                ... product,
-                brand: brandData.titleShort,
-                smallPicUrl: '', // TODO: do something
-            },
-        }),
-        {}
-    );
+    const productBaseMap = plainData.map(product => ({
+        ...product,
+        brand: brandData.titleShort,
+        smallPicUrl: '', // TODO: do something
+    }));
+    const productBase = _.keyBy(productBaseMap, 'id');
 
     ctx.body = {brandProducts, productBase};
 };
