@@ -89,32 +89,21 @@ module.exports = async function getPostEdit(ctx) {
     };
 
     const postPartIds = post.PostParts;
-    const postPart = Object.values(postParts).reduce(
-        (acc, part) => ({
-            ...acc,
-            [part.id]: {
-                ..._.pick(part, ['id', 'title']),
-                position: {
-                    x: part.positionX * 100,
-                    y: part.positionY * 100,
-                },
-                color: part.colorHex,
-                productIds: part.PostPartProducts.map(id => postPartProducts[id].Product),
-            }
-        }),
-        {}
-    );
+    const postPartMap = Object.values(postParts).map(part => ({
+        ..._.pick(part, ['id', 'title']),
+        position: {
+            x: part.positionX * 100,
+            y: part.positionY * 100,
+        },
+        color: part.colorHex,
+        productIds: part.PostPartProducts.map(id => postPartProducts[id].Product),
+    }));
+    const postPart = _.keyBy(postPartMap, 'id');
 
     const productBase = {};
     const productExtra = {};
 
-    const brandsMap = brandsDataPlain.reduce(
-        (acc, brand) => ({
-            ...acc,
-            [brand.id]: brand,
-        }),
-        {}
-    );
+    const brandsMap = _.keyBy(brandsDataPlain, 'id');
 
     Object.values(products).forEach(product => {
         productBase[product.id] = {
@@ -131,37 +120,22 @@ module.exports = async function getPostEdit(ctx) {
         };
     });
 
-    const postProduct = Object.values(postPartProducts).reduce(
-        (acc, ppp) => ({
-            ...acc,
-            [ppp.id]: {
-                id: ppp.id,
-                postId: parseInt(id),
-                productId: ppp.Product,
-                productColorId: ppp.productColorId,
-            },
-        }),
-        {}
-    );
+    const postProductMap = Object.values(postPartProducts).map(ppp => ({
+        id: ppp.id,
+        postId: parseInt(id),
+        productId: ppp.Product,
+        productColorId: ppp.productColorId,
+    }));
+    const postProduct = _.keyBy(postProductMap, 'id');
 
-    const productColor = Object.values(productColors).reduce(
-        (acc, color) => ({
-            ...acc,
-            [color.id]: {
-                ..._.pick(color, ['id', 'title']),
-                pictureUrl: makeProductColorPicUrl(color.picture),
-            },
-        }),
-        {}
-    );
+    const productColorMap = Object.values(productColors).map(
+        color => ({
+            ..._.pick(color, ['id', 'title']),
+            pictureUrl: makeProductColorPicUrl(color.picture),
+        }));
+    const productColor = _.keyBy(productColorMap, 'id');
 
-    const brand = brandsData.reduce(
-        (acc, _brand) => ({
-            ...acc,
-            [_brand.id]: _brand,
-        }),
-        {}
-    );
+    const brand = _.keyBy(brandsData, 'id');
 
     ctx.body = {
         postEdit,
