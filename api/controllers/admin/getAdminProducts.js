@@ -49,19 +49,14 @@ module.exports = async function getAdminProducts(ctx) {
     // fields mapping
     const {products = {}, brands = {}} = normalizedData.entities;
 
-    const product = Object.keys(products).reduce(
-        (acc, id) => ({
-            ...acc,
-            [id]: {
-                ..._.pick(products[id], ['id', 'title']),
-                brand: brands[products[id].Brand].titleFull,
-                smallPicUrl: products[id].ProductPictures.length
-                    ? makeProductPicUrl(products[id].ProductPictures[0].picture)
-                    : ''
-            },
-        }),
-        {}
-    );
+    const productMap = Object.values(products).map(value => ({
+        ..._.pick(value, ['id', 'title']),
+        brand: brands[value.Brand].titleFull,
+        smallPicUrl: value.ProductPictures.length
+            ? makeProductPicUrl(value.ProductPictures[0].picture)
+            : ''
+    }));
+    const product = _.keyBy(productMap, 'id');
 
     ctx.body = {
         total: count,
