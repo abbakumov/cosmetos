@@ -94,7 +94,7 @@ module.exports = async function getPost(ctx) {
         postIds: userEntity.Posts,
     };
 
-    const postPart = Object.keys(postParts)
+    const postPartMap = Object.keys(postParts)
         .map(id => postParts[id])
         .map(pp => ({
             ..._.pick(pp, ['id', 'title']),
@@ -104,29 +104,17 @@ module.exports = async function getPost(ctx) {
             },
             color: pp.colorHex, // TODO: refact
             productIds: pp.PostPartProducts.map(id => postPartProducts[id].productId),
-        }))
-        .reduce(
-            (acc, item) => ({
-                ...acc,
-                [item.id]: item,
-            }),
-            {}
-        ); // TODO: replace by keyBy
+        }));
+    const postPart = _.keyBy(postPartMap, 'id');
 
-    const productBase = Object.keys(products)
+    const productBaseMap = Object.keys(products)
         .map(id => products[id])
         .map(product => ({
             ..._.pick(product, ['id', 'title', 'kind']),
             brand: brands[product.Brand].titleShort,
             smallPicUrl: makeProductSmallPicUrl(product.ProductPictures[0].picture),
-        }))
-        .reduce(
-            (acc, item) => ({
-                ...acc,
-                [item.id]: item,
-            }),
-            {}
-        ); // TODO: replace by keyBy
+        }));
+    const productBase = _.keyBy(productBaseMap, 'id');
 
     const result = {
         postBase,
