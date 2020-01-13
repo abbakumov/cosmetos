@@ -40,7 +40,10 @@ module.exports = async function getBlog(ctx) {
     );
 
     // fields mapping
-    const {users, posts} = nomalizedUser.entities;
+    const {
+        users,
+        posts = {},
+    } = nomalizedUser.entities;
     const userEntity = users[nomalizedUser.result];
 
     const blog = {
