@@ -48,7 +48,7 @@ module.exports = async function getProduct(ctx) {
                         include: [
                             {
                                 model: Post,
-                                attributes: ['id', 'title', 'picture'],
+                                attributes: ['id', 'title', 'picture', 'isPublic'],
                                 include: [
                                     {
                                         model: User,
@@ -110,7 +110,7 @@ module.exports = async function getProduct(ctx) {
     const postBaseMap = Object.keys(posts)
         .map(_id => posts[_id])
         .map(post => ({
-            ..._.pick(post, ['id', 'title']),
+            ..._.pick(post, ['id', 'title', 'isPublic']),
             imageUrl: makePostSmallPicUrl(post.picture),
             authorLogin: users[post.User].login,
         }))

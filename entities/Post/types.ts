@@ -8,6 +8,7 @@ export interface PostBase {
     title: string;
     imageUrl?: string;
     authorLogin: BlogLogin;
+    isPublic: boolean;
 }
 
 // ACTIONS ->

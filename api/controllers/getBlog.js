@@ -21,7 +21,7 @@ module.exports = async function getBlog(ctx) {
             {
                 model: Post,
                 limit: 10,
-                attributes: ['id', 'title', 'picture'],
+                attributes: ['id', 'title', 'picture', 'isPublic'],
             },
         ],
     });
@@ -60,7 +60,7 @@ module.exports = async function getBlog(ctx) {
     const postEntities = Object.keys(posts).map(id => posts[id]);
 
     const postsBaseMap = postEntities.map(post => ({
-        ..._.pick(post, ['id', 'title']),
+        ..._.pick(post, ['id', 'title', 'isPublic']),
         imageUrl: makePostSmallPicUrl(post.picture),
         authorLogin: blog.login,
     }));

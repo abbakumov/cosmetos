@@ -77,7 +77,7 @@ module.exports = async function getPost(ctx) {
     const userEntity = users[postEntity.userId];
 
     const postBase = {
-        ..._.pick(postEntity, ['id', 'title']),
+        ..._.pick(postEntity, ['id', 'title', 'isPublic']),
         imageUrl: makePostSmallPicUrl(postEntity.picture),
         authorLogin: users[postEntity.userId].login,
     };
