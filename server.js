@@ -16,11 +16,6 @@ const {staticController, cropController} = require('./src/staticController');
 
 require('./api/authentication/passport');
 
-const defaultStatusCodeMiddleware = async (ctx, next) => {
-    ctx.res.statusCode = 200;
-    await next();
-}
-
 (async function() {
     // check all environment keys
     checkRequiredKeys();
@@ -30,9 +25,6 @@ const defaultStatusCodeMiddleware = async (ctx, next) => {
     const server = new Koa();
 
     server.use(logger());
-
-    // default status code
-    server.use(defaultStatusCodeMiddleware);
 
     // Router with API routes
     const router = makeRouter();
