@@ -17,7 +17,7 @@ class BlogPageWrapper extends Component<InitialProps> {
         const {query, store} = ctx;
 
         // TODO: validate server data
-        const blogData = await getBlogByName(_.castArray(query.name));
+        const blogData = await getBlogByName(_.castArray(query.name), ctx);
 
         store.dispatch(blogDataFetchedAction(blogData.blog));
         store.dispatch(blogExtraDataFetchedAction(blogData.blogExtra));

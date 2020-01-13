@@ -1,9 +1,11 @@
-import fetch from 'isomorphic-fetch';
+import fetchData from '../../src/helpers/fetchData';
+import {getOrigin} from '../../configs/location';
+import {ICosPageContext} from '../../types/context';
 
-import {Blog} from './types';
 import {BlogExtra} from '../BlogExtra/types';
 import {PostBase} from '../Post/types';
-import {getOrigin} from '../../configs/location';
+
+import {Blog} from './types';
 
 interface GetBlogByNameResponse {
     blog: Blog;
@@ -13,12 +15,10 @@ interface GetBlogByNameResponse {
     }
 }
 
-export function getBlogByName(name: string[]): Promise<GetBlogByNameResponse> {
-    return fetch(`${getOrigin()}/api/blog/${name[0]}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json() as Promise<GetBlogByNameResponse>
-        });
+export function getBlogByName(name: string[], context?: ICosPageContext): Promise<GetBlogByNameResponse> {
+    return fetchData<GetBlogByNameResponse>(
+        `${getOrigin()}/api/blog/${name[0]}`,
+        {},
+        context
+    );
 }
