@@ -63,6 +63,17 @@ module.exports = async function getPost(ctx) {
         ],
     });
 
+    const {user} = ctx.req;
+
+    // ACCESS CHECK
+    // if post is not public then show it only for admin or author
+    const isAdminOrOwner = !!user && (user.isAdmin || user.id === data.userId);
+    if (!data.isPublic && !isAdminOrOwner) {
+        // ACCESS DENIED
+        ctx.req.statusCode = 404;
+        return;
+    }
+
     const plainData = JSON.parse(JSON.stringify(data));
 
     // normalization
