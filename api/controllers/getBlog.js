@@ -9,6 +9,14 @@ const {User, UserSocial, Post} = require('../database/models');
 module.exports = async function getBlog(ctx) {
     const {login} = ctx.params;
 
+    // check if not public posts are available
+    const {user} = ctx.req;
+    const isAdminOrOwner = !!user && (user.isAdmin || user.login === login);
+    const postWhere = {};
+    if (!isAdminOrOwner) {
+        postWhere.isPublic = true;
+    }
+
     // data fetching
     const data = await User.findOne({
         where: {login},
@@ -22,6 +30,7 @@ module.exports = async function getBlog(ctx) {
                 model: Post,
                 limit: 10,
                 attributes: ['id', 'title', 'picture', 'isPublic'],
+                where: postWhere,
             },
         ],
     });
