@@ -1,6 +1,9 @@
 import fetch from 'isomorphic-fetch';
 
+import fetchData from '../../src/helpers/fetchData';
 import {getOrigin} from '../../configs/location';
+
+import {ICosPageContext} from '../../types/context';
 
 import {PostBase, PostId} from './types';
 import {PostExtra} from '../PostExtra/types';
@@ -24,14 +27,12 @@ export interface GetPostByIdResponse {
         [id: number]: BlogProduct,
     }
 }
-export function getPostById(id: PostId): Promise<GetPostByIdResponse> {
-    return fetch(`${getOrigin()}/api/post/${id}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json() as Promise<GetPostByIdResponse>
-        });
+export function getPostById(id: PostId, context?: ICosPageContext): Promise<GetPostByIdResponse> {
+    return fetchData<GetPostByIdResponse>(
+        `${getOrigin()}/api/post/${id}`,
+        {},
+        context
+    );
 }
 
 export interface SavePostResponse {

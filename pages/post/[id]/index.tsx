@@ -25,7 +25,7 @@ PostPageWrapper.getInitialProps = async function(context: ICosPageContext): Prom
     const queryId = query.id;
     const id = parseInt(_.castArray(queryId)[0]);
 
-    const data = await getPostById(id);
+    const data = await getPostById(id, context);
 
     store.dispatch(batchActions([
         blogDataFetchedAction(data.blog),
