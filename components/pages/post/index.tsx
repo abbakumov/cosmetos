@@ -6,6 +6,7 @@ import MobileLayout from '../../layouts/MobileLayout';
 import PostHead from './components/PostHead';
 import PostPicture from './components/PostPicture';
 import PostBar from './components/PostBar';
+import PostPublishing from './components/PostPublishing';
 import PostInfo from './components/PostInfo';
 import PostProducts from './components/PostProducts';
 
@@ -22,6 +23,7 @@ class PostPage extends Component<PostPagePublicProps> {
                 <PostHead id={id} />
                 <PostPicture id={id} />
                 <PostBar id={id} />
+                <PostPublishing id={id} />
                 <PostInfo id={id} />
                 <PostProducts id={id} />
             </MobileLayout>
