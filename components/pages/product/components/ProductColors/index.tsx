@@ -5,6 +5,7 @@ import {AppState} from '../../../../../store';
 import {ProductId} from '../../../../../entities/ProductBase/types';
 import {ProductColor} from '../../../../../entities/ProductColor/types';
 import ActionButton from '../../../../widgets/ActionButton';
+import SectionTitle from '../../../../widgets/SectionTitle';
 
 const styles = require('./styles.styl');
 
@@ -49,7 +50,8 @@ class ProductColors extends Component<ProductColorsProps, State> {
         for (let i = 0; i < restSlotsCount; i++) fakeIds.push(i * -1);
 
         return (
-            <div>
+            <div className={styles.root}>
+                <SectionTitle>Оттенки</SectionTitle>
                 <div className={styles.colors}>
                     {colors.map(color => (
                         <div key={color.id} className={styles.item}>
