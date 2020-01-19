@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {AppState} from '../../../store';
 import {PostId} from '../../../entities/Post/types';
+
+import SectionTitle from '../SectionTitle';
 
 import PostsListPost from './Post';
 
@@ -23,7 +23,7 @@ class PostsList extends Component<PostsListPublicProps> {
 
         return (
             <div className={styles.root}>
-                <div className={styles.title}>{title}</div>
+                <SectionTitle>{title}</SectionTitle>
                 <div className={styles.container}>
                     {postIds.map(id => (
                         <PostsListPost
