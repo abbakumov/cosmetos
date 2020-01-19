@@ -5,6 +5,7 @@ import {batchActions} from 'redux-batched-actions';
 import PostPage, {PostPagePublicProps} from '../../../components/pages/post';
 import {ICosPageContext} from '../../../types/context';
 
+import {postPageDataFetchedAction} from '../../../components/pages/post/state/actions';
 import {blogDataFetchedAction} from '../../../entities/Blog/actions';
 import {postBaseDataFetchedAction} from '../../../entities/Post/actions';
 import {postExtraDataFetchedAction} from '../../../entities/PostExtra/actions';
@@ -28,6 +29,7 @@ PostPageWrapper.getInitialProps = async function(context: ICosPageContext): Prom
     const data = await getPostById(id, context);
 
     store.dispatch(batchActions([
+        postPageDataFetchedAction(data.postBase.id),
         blogDataFetchedAction(data.blog),
         postBaseDataFetchedAction(data.postBase),
         postExtraDataFetchedAction(data.postExtra),

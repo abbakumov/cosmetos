@@ -1,5 +1,8 @@
-import {POST_BASE_DATA_FETCHED, POSTS_BASE_DATA_FETCHED} from './actions';
+import {PostPagePublishSuccessAction} from '../../components/pages/post/state/types';
+
 import {BlogLogin} from '../Blog/types';
+
+import {POST_BASE_DATA_FETCHED, POSTS_BASE_DATA_FETCHED} from './actions';
 
 export type PostId = number;
 
@@ -30,7 +33,9 @@ export interface PostsBaseDataFetchedAction {
 
 export type PostBaseActionType =
     | PostBaseDataFetchedAction
-    | PostsBaseDataFetchedAction;
+    | PostsBaseDataFetchedAction
+    | PostPagePublishSuccessAction
+    ;
 
 export interface PostBaseState {
     items: {

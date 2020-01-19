@@ -5,32 +5,33 @@ import cn from 'classnames';
 import {AppState} from '../../../../../store';
 import {PostId} from '../../../../../entities/Post/types';
 
+import {postPagePublishAction} from '../../state/actions';
+
 const styles = require('./styles.styl');
 
-export interface PostPublishingPublicProps {
+export interface PostPublishingProps {
     id: PostId;
 }
 
-interface PostPublishingProps {
+interface MappedProps {
     isPublic: boolean;
 }
 
-class PostPublishing extends Component<PostPublishingProps> {
+interface ActionProps {
+    publishAction(): void;
+}
+
+interface Props extends MappedProps, ActionProps {}
+interface State {
+    isStartsPublic: boolean;
+}
+
+class PostPublishing extends Component<Props, State> {
     state = {
         isStartsPublic: this.props.isPublic,
-        isPublic: this.props.isPublic,
     };
 
-    onPublishClick = () => {
-        setTimeout(
-            () => {
-                this.setState({
-                    isPublic: true,
-                })
-            },
-            400
-        )
-    };
+    onPublishClick = () => this.props.publishAction();
 
     render() {
         if (this.state.isStartsPublic) {
@@ -42,7 +43,7 @@ class PostPublishing extends Component<PostPublishingProps> {
         const contentClassName = cn(
             styles.content,
             {
-                [styles.contentPublic]: this.state.isPublic,
+                [styles.contentPublic]: this.props.isPublic,
             }
         );
 
@@ -72,7 +73,7 @@ class PostPublishing extends Component<PostPublishingProps> {
     }
 }
 
-function mapStateToProps(state: AppState, ownProps: PostPublishingPublicProps): PostPublishingProps {
+function mapStateToProps(state: AppState, ownProps: PostPublishingProps): MappedProps {
     const {id} = ownProps;
 
     const postBase = state.postBase.items[id];
@@ -83,6 +84,10 @@ function mapStateToProps(state: AppState, ownProps: PostPublishingPublicProps): 
     };
 }
 
-const ConnectedPostPublishing = connect(mapStateToProps)(PostPublishing);
+const actions = {
+    publishAction: postPagePublishAction,
+};
+
+const ConnectedPostPublishing = connect(mapStateToProps, actions)(PostPublishing);
 
 export default ConnectedPostPublishing;
