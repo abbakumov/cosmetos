@@ -16,7 +16,7 @@ module.exports = async function postPostPart(ctx) {
     );
     const {user} = ctx.req;
     if (!user || (!user.isAdmin && user.id !== post.userId)) {
-        ctx.res.statusCode = 401; // TODO: status doesn't work
+        ctx.res.statusCode = 401;
         ctx.body = {status: 'fail'};
         return;
     }

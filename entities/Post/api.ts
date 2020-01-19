@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch';
-
 import fetchData from '../../src/helpers/fetchData';
 import {getOrigin} from '../../configs/location';
 
@@ -60,4 +59,16 @@ export function savePost(data: PostEdit): Promise<SavePostResponse> {
         }
     )
         .then(response => response.json());
+}
+
+export interface PublishPostResponse {
+    status: 'success' | 'fail';
+}
+export function publishPost(id: PostId): Promise<PublishPostResponse> {
+    return fetchData(
+        `${getOrigin()}/api/post/${id}/publish`,
+        {
+            method: 'POST',
+        }
+    );
 }

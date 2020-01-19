@@ -15,8 +15,8 @@ module.exports = async function postPostEdit(ctx) {
         isExistingPostOwner = postOwnerUserId === user.id;
     }
 
-    if (!user || user.isAdmin || !isExistingPostOwner) {
-        ctx.res.statusCode = 401; // TODO: status does not work
+    if (!user || (!user.isAdmin && !isExistingPostOwner)) {
+        ctx.res.statusCode = 401;
         ctx.body = {status: 'fail'};
         return;
     }

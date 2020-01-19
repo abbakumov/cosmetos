@@ -13,6 +13,7 @@ const postLogin = require('./controllers/postLogin');
 
 // /postEdit
 const getPostEdit = require('./controllers/postEdit/getPostEdit');
+const postPostPublish = require('./controllers/postEdit/postPostPublish');
 const postPostEdit = require('./controllers/postEdit/postPostEdit');
 const postPostProduct = require('./controllers/postEdit/postPostProduct');
 const deletePostProduct = require('./controllers/postEdit/deletePostProduct');
@@ -44,6 +45,11 @@ const routes = [
         route: '/post/:id/edit',
         method: 'get',
         controllers: [getPostEdit],
+    },
+    {
+        route: '/post/:id/publish',
+        method: 'post',
+        controllers: [postPostPublish],
     },
     {
         route: '/post',
