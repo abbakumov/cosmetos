@@ -29,6 +29,7 @@ module.exports = async function getBlog(ctx) {
             {
                 model: Post,
                 limit: 10,
+                order: [['createdAt', 'DESC']],
                 attributes: ['id', 'title', 'picture', 'isPublic'],
                 where: postWhere,
             },
