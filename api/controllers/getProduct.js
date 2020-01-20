@@ -48,6 +48,7 @@ module.exports = async function getProduct(ctx) {
                         include: [
                             {
                                 model: Post,
+                                where: {isPublic: true},
                                 attributes: ['id', 'title', 'picture', 'isPublic'],
                                 include: [
                                     {
@@ -90,7 +91,15 @@ module.exports = async function getProduct(ctx) {
 
     const postIds = productEntity
         .PostPartProducts.map(_id => postPartProducts[_id].PostPart)
-        .map(_id => postParts[_id].Post);
+        .map(_id => {
+            // because Posts might not exist there if they aren't public
+            if (!_id) {
+                return null;
+            };
+
+            return postParts[_id].Post;
+        })
+        .filter(id => !!id);
 
     const productExtra = {
         ..._.pick(productEntity, ['id', 'description']),
