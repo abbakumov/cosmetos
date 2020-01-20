@@ -215,6 +215,7 @@ export function postEditProductSaveAction(): any {
         const editPostPartProductClone = JSON.parse(JSON.stringify(editPostPartProduct));
         const validationErrors = postProductEditSchema.validate(editPostPartProductClone);
         if (validationErrors.length) {
+            dispatch({type: POST_EDIT_PRODUCT_SAVE_FAIL});
             const error = validationErrors[0] as any;
             dispatch(notificationShowErrorAction(error.message as string));
             return;
@@ -312,6 +313,7 @@ export function postEditPartSaveAction(): any {
         const partDataClone = JSON.parse(JSON.stringify(partData));
         const validationErrors = postPartEditSchema.validate(partDataClone);
         if (validationErrors.length) {
+            dispatch({type: POST_EDIT_PART_SAVE_FAIL});
             const error = validationErrors[0] as any;
             dispatch(notificationShowErrorAction(error.message as string));
             return;
@@ -330,9 +332,7 @@ export function postEditPartSaveAction(): any {
                         },
                     });
                 } else {
-                    dispatch({
-                        type: POST_EDIT_PART_SAVE_FAIL,
-                    });
+                    dispatch({type: POST_EDIT_PART_SAVE_FAIL});
                 }
             });
     }
