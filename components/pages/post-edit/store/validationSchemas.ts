@@ -37,9 +37,4 @@ export const postProductEditSchema = new Schema({
         required: true,
         message: 'Продукт не может быть пустым',
     },
-    productColorId: {
-        type: Number,
-        required: true,
-        message: 'Цвет продукта не может быть пустым',
-    },
 });

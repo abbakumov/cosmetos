@@ -63,7 +63,7 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductProps) {
         postProductId: postProduct.id,
         brand,
         product: title,
-        color: color.title,
+        color: color ? color.title : null,
     };
 }
 
