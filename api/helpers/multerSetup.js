@@ -8,7 +8,7 @@ const limits = {
     // Max field name size (Default: 100 bytes)
     fieldNameSize: 100,
     // Max field value size (Default: 1MB)
-    fieldSize: 10000000, // 10 MB
+    fieldSize: 16000000, // 16 MB
     // Max number of non- file fields (Default: Infinity)
     fields: 100,
     // For multipart forms, the max file size (in bytes)(Default: Infinity)
