@@ -34,7 +34,7 @@ class ProductPage extends Component<ProductPageProps> {
                 <ProductColors id={id} />
                 <ProductDescription id={id} />
                 <PostsList
-                    title="Последние посты"
+                    title="Все посты с продуктом"
                     postIds={postIds}
                     namesVisible={true}
                 />
