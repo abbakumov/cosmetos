@@ -25,6 +25,7 @@ module.exports = async function getProduct(ctx) {
     const data = await Product.findOne({
         where: {id},
         attributes: ['id', 'kind', 'title', 'description'],
+        order: [[PostPartProduct, 'createdAt', 'DESC']],
         include: [
             {
                 model: ProductPicture,
@@ -38,27 +39,25 @@ module.exports = async function getProduct(ctx) {
                 model: ProductColor,
                 attributes: ['id', 'title', 'colorHex', 'picture'],
             },
-        ],
-    });
-
-    // second request because nested order is not working well now, waiting for fix
-    const postPartProductsData = await PostPartProduct.findAll({
-        where: {productId: id},
-        attributes: ['id', 'postPartId'],
-        order: [['createdAt', 'DESC']],
-        include: [
             {
-                model: PostPart,
-                attributes: ['id', 'postId'],
+                model: PostPartProduct,
+                where: {productId: id},
+                attributes: ['id', 'postPartId'],
                 include: [
                     {
-                        model: Post,
-                        where: {isPublic: true},
-                        attributes: ['id', 'title', 'picture', 'isPublic'],
+                        model: PostPart,
+                        attributes: ['id', 'postId'],
                         include: [
                             {
-                                model: User,
-                                attributes: ['id', 'login', 'name', 'avatarPicture'],
+                                model: Post,
+                                where: {isPublic: true},
+                                attributes: ['id', 'title', 'picture', 'isPublic'],
+                                include: [
+                                    {
+                                        model: User,
+                                        attributes: ['id', 'login', 'name', 'avatarPicture'],
+                                    },
+                                ],
                             },
                         ],
                     },
@@ -67,9 +66,7 @@ module.exports = async function getProduct(ctx) {
         ],
     });
 
-    // just work around
     const plainData = JSON.parse(JSON.stringify(data));
-    plainData.PostPartProducts = JSON.parse(JSON.stringify(postPartProductsData));
 
     const normalizedData = normalize(
         plainData,
