@@ -25,6 +25,10 @@ module.exports = async function getPost(ctx) {
     const data = await Post.findOne({
         where: {id},
         attributes: ['id', 'title', 'picture', 'userId', 'instaPostId', 'description', 'isPublic'],
+        order: [
+            [PostPart, 'createdAt', 'ASC'],
+            [PostPart, PostPartProduct, 'createdAt', 'ASC'],
+        ],
         include: [
             {
                 model: User,
@@ -59,7 +63,7 @@ module.exports = async function getPost(ctx) {
                         ],
                     },
                 ],
-            },
+            }
         ],
     });
 
