@@ -7,6 +7,7 @@ import {batchDispatchMiddleware} from 'redux-batched-actions';
 import {pagePostReducer} from '../components/pages/post/state/reducer';
 import {pagePostEditReducer} from '../components/pages/post-edit/store/reducer';
 import {pageLoginReducer} from '../components/pages/login/state/reducer';
+import {pageProductReducer} from '../components/pages/product/state/reducer';
 import {pageAdminProductsUnassignedReducer}
     from '../components/pages/admin/products-unassigned/state/reducer';
 import {pageAdminBrandsReducer} from '../components/pages/admin/brands/store/reducer';
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
     pagePost: pagePostReducer,
     pagePostEdit: pagePostEditReducer,
     pageLogin: pageLoginReducer,
+    pageProduct: pageProductReducer,
     pageAdminProductsUnassigned: pageAdminProductsUnassignedReducer,
     pageAdminBrands: pageAdminBrandsReducer,
     pageAdminProducts: pageAdminProductsReducer,

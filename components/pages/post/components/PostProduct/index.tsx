@@ -6,6 +6,7 @@ import cn from 'classnames';
 import {AppState} from '../../../../../store';
 import {PostPartId} from '../../../../../entities/PostPart/types';
 import {ProductId} from '../../../../../entities/ProductBase/types';
+import {PostId} from '../../../../../entities/Post/types';
 
 const styles = require('./styles.styl');
 
@@ -25,11 +26,12 @@ interface PostProductsPartProps {
     color: string;
     backIndex: number;
     isShown: boolean;
+    postId: PostId;
 }
 
 class PostProductsPart extends Component<PostProductsPartProps> {
     render() {
-        const {id, brand, title, smallPicUrl, comment, color, backIndex, isShown} = this.props;
+        const {id, brand, title, smallPicUrl, comment, color, backIndex, isShown, postId} = this.props;
 
         const style = {
             borderColor: `#${color}`,
@@ -41,7 +43,7 @@ class PostProductsPart extends Component<PostProductsPartProps> {
         });
 
         return (
-            <Link href="/product/[id]" as={`/product/${id}`}>
+            <Link href="/product/[id]" as={`/product/${id}?refPost=${postId}`}>
                 <a className={rootClassName} style={style}>
                     <div className={styles.left}>
                         <img className={styles.img} src={smallPicUrl} />
@@ -69,8 +71,9 @@ function mapStateToProps(state: AppState, ownProps: PostProductsPartPublicProps)
     const blogProductItem = blockProductKey && blogProductItems[blockProductKey];
     const comment = blogProductItem && blogProductItem.comment;
 
-    const postPart = state.postPart.items[partId]
+    const postPart = state.postPart.items[partId];
     const {color} = postPart;
+    const {postId} = state.pagePost;
 
     return {
         id,
@@ -81,6 +84,7 @@ function mapStateToProps(state: AppState, ownProps: PostProductsPartPublicProps)
         color,
         backIndex,
         isShown,
+        postId,
     };
 }
 

@@ -3,9 +3,9 @@ import {NextPage} from 'next';
 
 import ProductPage, {ProductPagePublicProps} from '../../components/pages/product';
 import {ICosPageContext} from '../../types/context';
+import {PostId} from '../../entities/Post/types';
 
-// import {blogDataFetchedAction} from '../../entities/Blog/actions';
-
+import {pageProductDataFetchedAction} from '../../components/pages/product/state/actions';
 import {getProductById} from '../../entities/ProductBase/api';
 import {blogsDataFetchedAction} from '../../entities/Blog/actions';
 import {blogProductsDataFetchedAction} from '../../entities/BlogProduct/actions';
@@ -22,11 +22,16 @@ interface InitialProps extends ProductPagePublicProps {
 
 ProductPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<InitialProps> {
     const {query, store} = context;
-    const queryId = query.id;
+    const {
+        id: queryId,
+        refPost: queryRefPost,
+    } = query;
     const id = parseInt(_.castArray(queryId)[0]);
+    const refPost = parseInt(_.castArray(queryRefPost)[0]) as PostId;
 
     const data = await getProductById(id);
 
+    store.dispatch(pageProductDataFetchedAction(refPost));
     store.dispatch(blogsDataFetchedAction(data.blog));
     store.dispatch(blogProductsDataFetchedAction(data.blogProduct));
     store.dispatch(postsBaseDataFetchedAction(data.postBase));
