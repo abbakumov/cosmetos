@@ -43,6 +43,10 @@ class ProductColors extends Component<ProductColorsProps, State> {
     render() {
         const colors = this.getColorsToShow();
 
+        if (!colors.length) {
+            return null;
+        }
+
         const _restSlotsCount = 6 - (colors.length % 6);
         const restSlotsCount = _restSlotsCount === 6 ? 0 : _restSlotsCount;
 
