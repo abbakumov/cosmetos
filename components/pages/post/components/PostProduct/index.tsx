@@ -43,7 +43,10 @@ class PostProductsPart extends Component<PostProductsPartProps> {
         });
 
         return (
-            <Link href="/product/[id]" as={`/product/${id}?refPost=${postId}`}>
+            <Link
+                href={`/product/[id]?refPost=${postId}`}
+                as={`/product/${id}?refPost=${postId}`}
+            >
                 <a className={rootClassName} style={style}>
                     <div className={styles.left}>
                         <img className={styles.img} src={smallPicUrl} />

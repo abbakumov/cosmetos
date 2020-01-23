@@ -1,11 +1,9 @@
 import {FunctionComponent} from 'react';
-import Link from 'next/link';
 import {connect} from 'react-redux';
 
 import {AppState} from '../../../../../store';
 import {PostId} from '../../../../../entities/Post/types';
-
-const styles = require('./styles.styl');
+import BackLink from '../../../../widgets/BackLink';
 
 interface PostHeadProps {
     id: PostId;
@@ -17,12 +15,9 @@ interface Props {
 }
 
 const PostHead: FunctionComponent<Props> = ({title, authorLogin}: Props) => (
-    <Link href="/blog/[name]" as={`/blog/${authorLogin}`}>
-        <a className={styles.root}>
-            <img className={styles.icon} src="/static/icons/post-page/blog-arr.svg" />
-            <span className={styles.name}>{title}</span>
-        </a>
-    </Link>
+    <BackLink href="/blog/[name]" as={`/blog/${authorLogin}`}>
+        {title}
+    </BackLink>
 );
 
 function mapStateToProps(state: AppState, ownProps: PostHeadProps) {

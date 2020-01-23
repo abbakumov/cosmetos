@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import MobileLayout from '../../layouts/MobileLayout';
 
+import ProductHead from './components/ProductHead';
 import ProductInfo from './components/ProductInfo';
 import ProductPics from './components/ProductPics';
 import ProductColors from './components/ProductColors';
@@ -29,6 +30,7 @@ class ProductPage extends Component<ProductPageProps> {
 
         return (
             <MobileLayout>
+                <ProductHead />
                 <ProductInfo id={id} />
                 <ProductPics id={id} />
                 <ProductColors id={id} />
