@@ -28,14 +28,17 @@ interface ActionProps {
 interface Props extends DataProps, ActionProps {}
 
 class PostPicturePart extends Component<Props> {
+    onClick = e => {
+        e.stopPropagation();
+        this.props.postPageOpenScrollPartAction(this.props.id);
+    };
+
     render() {
         const {
-            id,
             position,
             title,
             color,
             isOpen,
-            postPageOpenScrollPartAction,
         } = this.props;
 
         const style = {
@@ -61,7 +64,7 @@ class PostPicturePart extends Component<Props> {
             <div
                 className={styles.root}
                 style={style}
-                onClick={() => postPageOpenScrollPartAction(id)}
+                onClick={this.onClick}
             >
                 <div className={circleClassName}>
                     <div className={styles.circleInner} style={contentStyle} />

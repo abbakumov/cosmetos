@@ -1,32 +1,44 @@
 import {Component} from 'react';
 import {connect} from 'react-redux';
-import Link from 'next/link';
 
 import {AppState} from '../../../../../store';
 import {PostId} from '../../../../../entities/Post/types';
 import {PostPartId} from '../../../../../entities/PostPart/types';
 
+import {postPageToggleIsPicPartsOpenAction} from '../../state/actions';
+
 import PostPicturePart from '../PostPicturePart';
 
 const styles = require('./styles.styl');
 
-export interface PostPicturePublicProps {
+export interface PostPictureProps {
     id: PostId;
 }
 
-interface PostPictureProps {
+interface MappedProps {
     imageUrl: string,
     partIds: PostPartId[];
 }
 
-class PostPicture extends Component<PostPictureProps> {
+interface ActionProps {
+    toggleIsPicPartsOpenAction(): void;
+}
+
+interface Props extends MappedProps, ActionProps {}
+
+class PostPicture extends Component<Props> {
+    onPartsContainerClick = () => this.props.toggleIsPicPartsOpenAction();
+
     render() {
         const {imageUrl, partIds} = this.props;
 
         return (
             <div className={styles.root}>
                 <img className={styles.image} src={imageUrl} />
-                <div className={styles.partsContainer}>
+                <div
+                    className={styles.partsContainer}
+                    onClick={this.onPartsContainerClick}
+                >
                     {partIds.map(partId => (
                         <PostPicturePart key={partId} id={partId}/>
                     ))}
@@ -36,7 +48,7 @@ class PostPicture extends Component<PostPictureProps> {
     }
 }
 
-function mapStateToProps(state: AppState, ownProps: PostPicturePublicProps): PostPictureProps {
+function mapStateToProps(state: AppState, ownProps: PostPictureProps): MappedProps {
     const {id} = ownProps;
 
     const postExtra = state.postExtra.items[id];
@@ -49,6 +61,10 @@ function mapStateToProps(state: AppState, ownProps: PostPicturePublicProps): Pos
     };
 }
 
-const ConnectedPostPicture = connect(mapStateToProps)(PostPicture);
+const actionProps = {
+    toggleIsPicPartsOpenAction: postPageToggleIsPicPartsOpenAction,
+};
+
+const ConnectedPostPicture = connect(mapStateToProps, actionProps)(PostPicture);
 
 export default ConnectedPostPicture;
