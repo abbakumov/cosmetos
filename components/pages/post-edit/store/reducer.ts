@@ -142,7 +142,7 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                             : state.editPostPartProduct.productId
                     ),
                     productColorId: (
-                        ['brandText', 'productText', 'colorText'].includes(fieldName)
+                        ['brandText', 'productText', 'productColorText'].includes(fieldName)
                             ? null
                             : state.editPostPartProduct.productColorId
                     ),
