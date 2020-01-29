@@ -6,14 +6,17 @@ import {ICosPageContext} from '../../types/context';
 
 import {PostBase, PostId} from './types';
 import {PostExtra} from '../PostExtra/types';
-import {Blog} from '../Blog/types';
+import {BlogMap, BlogLogin} from '../Blog/types';
 import {BlogProduct} from '../BlogProduct/types';
 import {PostPart} from '../PostPart/types';
 import {ProductBase} from '../ProductBase/types';
 import {PostEdit} from '../PostEdit/types';
 
 export interface GetPostByIdResponse {
-    blog: Blog;
+    blog: {
+        data: BlogMap
+        currentLogin: BlogLogin
+    }
     postBase: PostBase,
     postExtra: PostExtra,
     postPart: {

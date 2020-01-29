@@ -102,10 +102,16 @@ module.exports = async function getPost(ctx) {
         partIds: postEntity.PostParts,
     };
 
-    const blog = {
+    const blogItem = {
         ..._.pick(userEntity, ['login', 'name']),
         imageUrl: makeUserAvatarUrl(userEntity.avatarPicture),
         postIds: userEntity.Posts,
+    };
+    const blog = {
+        data: {
+            [blogItem.login]: blogItem
+        },
+        currentLogin: user ? user.login : null,
     };
 
     const postPartMap = Object.keys(postParts)

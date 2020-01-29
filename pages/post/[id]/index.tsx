@@ -6,7 +6,7 @@ import PostPage, {PostPagePublicProps} from '../../../components/pages/post';
 import {ICosPageContext} from '../../../types/context';
 
 import {postPageDataFetchedAction} from '../../../components/pages/post/state/actions';
-import {blogDataFetchedAction} from '../../../entities/Blog/actions';
+import {blogsDataFetchedAction} from '../../../entities/Blog/actions';
 import {postBaseDataFetchedAction} from '../../../entities/Post/actions';
 import {postExtraDataFetchedAction} from '../../../entities/PostExtra/actions';
 import {postPartsDataFetchedAction} from '../../../entities/PostPart/actions';
@@ -30,7 +30,7 @@ PostPageWrapper.getInitialProps = async function(context: ICosPageContext): Prom
 
     store.dispatch(batchActions([
         postPageDataFetchedAction(data.postBase.id),
-        blogDataFetchedAction(data.blog),
+        blogsDataFetchedAction(data.blog.data, data.blog.currentLogin),
         postBaseDataFetchedAction(data.postBase),
         postExtraDataFetchedAction(data.postExtra),
         postPartsDataFetchedAction(data.postPart),

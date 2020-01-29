@@ -1,5 +1,7 @@
 import {
     Blog,
+    BlogLogin,
+    BlogMap,
     BlogDataFetchedAction,
     BlogsDataFetchedAction,
 } from './types';
@@ -14,13 +16,10 @@ export const blogDataFetchedAction = (data: Blog): BlogDataFetchedAction => ({
     },
 });
 
-export interface BlogMap {
-    [id: number]: Blog;
-}
-
-export const blogsDataFetchedAction = (data: BlogMap): BlogsDataFetchedAction => ({
+export const blogsDataFetchedAction = (data: BlogMap, currentLogin?: BlogLogin): BlogsDataFetchedAction => ({
     type: BLOGS_DATA_FETCHED,
     payload: {
         data,
+        currentLogin,
     }
 });

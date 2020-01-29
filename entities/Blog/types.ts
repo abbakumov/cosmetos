@@ -11,6 +11,10 @@ export interface Blog {
     imageUrl: string,
 };
 
+export interface BlogMap {
+    [id: number]: Blog;
+}
+
 // ACTIONS ->
 export interface BlogDataFetchedAction {
     type: typeof BLOG_DATA_FETCHED;
@@ -24,6 +28,7 @@ export interface BlogsDataFetchedAction {
         data: {
             [id: number]: Blog;
         }
+        currentLogin?: BlogLogin
     }
 }
 // <- ACTIONS
@@ -33,6 +38,7 @@ export type BlogActionType =
     | BlogsDataFetchedAction;
 
 export interface BlogState {
+    currentLogin?: BlogLogin;
     items: {
         [s: string]: Blog;
     }
