@@ -3,6 +3,7 @@ import {
     useCallback,
 } from 'react';
 import {connect} from 'react-redux';
+import Link from 'next/link';
 
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -11,6 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
 import {AppState} from '../../../../../store';
+import {PostId} from '../../../../../entities/Post/types';
 
 import {
     // TODO: add Action
@@ -23,6 +25,7 @@ import {PostEditFieldChangeName} from '../../store/types';
 const styles = require('./styles.styl');
 
 interface MappedProps {
+    id?: PostId
     title: string;
     instaPostId: string;
     description: string;
@@ -76,22 +79,35 @@ const PostEditInfo: FunctionComponent<Props> = (props: Props) => {
                 label="Опубликован"
             />
             <Button
-                className={styles.saveButton}
+                className={styles.button}
                 variant="contained"
                 color="primary"
                 disabled={props.isSaving}
                 onClick={_saveAction}
             >
-                Сохранить
+                {props.id ? 'Создать' : 'Сохранить'}
             </Button>
+            <Link
+                href="/post/[id]"
+                as={`/post/1`}
+            >
+                <Button
+                    className={styles.button}
+                    variant="contained"
+                    color="primary"
+                    disabled={!props.id}
+                >
+                    Открыть
+                </Button>
+            </Link>
         </Paper>
     );
 };
 
 function mapStateToProps(state: AppState): MappedProps {
     const {isSaving, postEdit} = state.pagePostEdit;
-    const {title, instaPostId, description, isPublic} = postEdit;
-    return {title, instaPostId, description, isPublic, isSaving};
+    const {id, title, instaPostId, description, isPublic} = postEdit;
+    return {id, title, instaPostId, description, isPublic, isSaving};
 }
 
 const mapDispatchToProps = {
