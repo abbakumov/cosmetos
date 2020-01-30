@@ -97,10 +97,17 @@ export function postEditDataFetchedAction(data: PostEditPageData): PostEditPageD
     };
 }
 
-export const postEditFileChange = (file: File, url: string): PostEditFileChange => ({
-    type: POST_EDIT_FILE_CHANGE,
-    payload: {file, url},
-});
+export const postEditFileChange = (file: File, url: string) => (dispatch) => {
+    if (file.size > 16000000) { // 16 mb
+        dispatch(notificationShowErrorAction('Размер файла превышает 16 мегабайт!'));
+        return;
+    }
+
+    dispatch({
+        type: POST_EDIT_FILE_CHANGE,
+        payload: {file, url},
+    });
+}
 
 export const postEditFieldChange = (name: PostEditFieldChangeName, value: string): PostEditFieldChange => ({
     type: POST_EDIT_FIELD_CHANGE,
@@ -136,6 +143,9 @@ export const postEditSaveAction = () => (dispatch, getState) => {
                 dispatch(notificationShowSuccessAction('Пост сохранен!'));
                 dispatch({type: POST_EDIT_SAVE_SUCCESS});
             }
+        }).catch(() => {
+            dispatch(notificationShowErrorAction('Ошибка при сохранении поста!'));
+            dispatch({type: POST_EDIT_SAVE_FAIL});
         });
 };
 

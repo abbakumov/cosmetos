@@ -85,7 +85,7 @@ const PostEditInfo: FunctionComponent<Props> = (props: Props) => {
                 disabled={props.isSaving}
                 onClick={_saveAction}
             >
-                {props.id ? 'Создать' : 'Сохранить'}
+                {props.id ? 'Сохранить' : 'Создать'}
             </Button>
             <Link
                 href="/post/[id]"

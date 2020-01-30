@@ -2,6 +2,7 @@ import {Component, createRef} from 'react';
 import {connect} from 'react-redux';
 
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 import {AppState} from '../../../../../store';
 import {PostPartId} from '../../../../../entities/PostPart/types';
@@ -61,11 +62,12 @@ class PostEditPhoto extends Component<Props> {
         fileReader.onload = () => {
             this.props.postEditFileChange(file, fileReader.result as string);
         };
+
+        // clean input
+        target.value = null;
     }
 
     render() {
-        const imageText = this.props.imageUrl ? 'Новое изображение' : 'Изображение';
-
         return (
             <Paper className={styles.root}>
                 {this.props.imageUrl &&
@@ -86,12 +88,21 @@ class PostEditPhoto extends Component<Props> {
                     </div>
                 }
                 <div className={styles.imagePickerContainer}>
-                    <p className={styles.imagePickerLabel}>{imageText} (.png или .jpeg):</p>
-                    <input
-                        type="file"
-                        accept="image/x-png,image/jpeg"
-                        onChange={this.onImageChange}
-                    />
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        className={styles.fileButton}
+                        component="label"
+                    >
+                        <span>{this.props.imageUrl ? 'Заменить' : 'Выбрать'} изображение</span>
+                        <input
+                            style={{display: 'none'}}
+                            type="file"
+                            accept="image/x-png,image/jpeg"
+                            onChange={this.onImageChange}
+                        />
+                    </Button>
+                    <p className={styles.imagePickerLabel}>(.png или .jpeg, не более 16 мегабайт)</p>
                 </div>
             </Paper>
         );

@@ -12,7 +12,7 @@ const limits = {
     // Max number of non- file fields (Default: Infinity)
     fields: 100,
     // For multipart forms, the max file size (in bytes)(Default: Infinity)
-    fileSize: 10000000, // 10 MB
+    fileSize: 16000000, // 16 MB
     // For multipart forms, the max number of file fields (Default: Infinity)
     files: 40,
     // For multipart forms, the max number of parts (fields + files)(Default: Infinity)
