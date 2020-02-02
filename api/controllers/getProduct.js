@@ -135,7 +135,13 @@ module.exports = async function getProduct(ctx) {
             instagramLogin: '',
             postIds: [],
         }))
-    const blog = _.keyBy(blogMap, 'login');
+    const blogData = _.keyBy(blogMap, 'login');
+    const {user} = ctx.req;
+
+    const blog = {
+        data: blogData,
+        currentLogin: user ? user.login : null,
+    };
 
     const result = {
         productBase,

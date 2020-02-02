@@ -8,7 +8,7 @@ import fetchData from '../../src/helpers/fetchData';
 import {getOrigin} from '../../configs/location';
 
 import {ProductBase, ProductId} from './types';
-import {Blog} from '../Blog/types';
+import {BlogMap, BlogLogin} from '../Blog/types';
 import {BlogProduct} from '../BlogProduct/types';
 import {PostBase} from '../Post/types';
 import {ProductExtra} from '../ProductExtra/types';
@@ -18,31 +18,29 @@ import {ProductColorMap} from '../ProductColor/types';
 import {ProductEdit} from '../../components/pages/admin/product/store/types';
 
 export interface GetProductByIdResponse {
-    productBase: ProductBase;
-    productExtra: ProductExtra;
+    productBase: ProductBase
+    productExtra: ProductExtra
     productColor: {
-        [id: number]: ProductColor;
-    };
+        [id: number]: ProductColor
+    }
     postBase: {
-        [id: number]: PostBase;
-    };
+        [id: number]: PostBase
+    }
     blog: {
-        [login: string]: Blog;
-    };
+        data: BlogMap
+        currentLogin: BlogLogin
+    }
     blogProduct: {
-        [id: number]: BlogProduct,
-    };
+        [id: number]: BlogProduct
+    }
 }
 
-export function getProductById(id: ProductId): Promise<GetProductByIdResponse> {
-    return fetch(`${getOrigin()}/api/product/${id}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json() as Promise<GetProductByIdResponse>
-        });
-}
+export const getProductById = (id: ProductId, context?: ICosPageContext): Promise<GetProductByIdResponse> =>
+    fetchData(
+        `${getOrigin()}/api/product/${id}`,
+        {},
+        context
+    );
 
 
 export interface GetProductColorsResponse {
