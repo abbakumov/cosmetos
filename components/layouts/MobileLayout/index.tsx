@@ -1,12 +1,22 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import Head from 'next/head';
+import Link from 'next/link';
+
+import {AppState} from '../../../store';
+import {BlogLogin} from '../../../entities/Blog/types';
 
 const styles = require('./styles.styl');
 
-export interface MobileLayoutPublicProps {}
+interface Props {
+    currentUserLogin?: BlogLogin
+    currentUserImageUrl?: string
+}
 
-export default class MobileLayout extends Component<MobileLayoutPublicProps> {
+class MobileLayout extends Component<Props> {
     render() {
+        const {currentUserLogin, currentUserImageUrl} = this.props;
+
         return (
             <div className={styles.root}>
                 <Head>
@@ -18,6 +28,19 @@ export default class MobileLayout extends Component<MobileLayoutPublicProps> {
                 </Head>
                 <div className={styles.header}>
                     <img className={styles.logo} src="/static/icons/header-logo.png"/>
+                    {currentUserLogin &&
+                        <Link
+                            href="/blog/[login]"
+                            as={`/blog/${currentUserLogin}`}
+                        >
+                            <a className={styles.profileLink}>
+                                <img
+                                    className={styles.profileLinkPic}
+                                    src={currentUserImageUrl}
+                                />
+                            </a>
+                        </Link>
+                    }
                 </div>
                 <div className={styles.content}>
                     {this.props.children}
@@ -26,3 +49,24 @@ export default class MobileLayout extends Component<MobileLayoutPublicProps> {
         );
     }
 }
+
+function mapStateToProps(state: AppState): Props {
+    const {currentLogin, items} = state.blog;
+    const user = items[currentLogin];
+
+    if (!user) {
+        return {
+            currentUserLogin: null,
+            currentUserImageUrl: null,
+        };
+    }
+
+    return {
+        currentUserLogin: user.login,
+        currentUserImageUrl: user.imageUrl,
+    };
+}
+
+const ConnectedMobileLayout = connect(mapStateToProps)(MobileLayout);
+
+export default ConnectedMobileLayout;

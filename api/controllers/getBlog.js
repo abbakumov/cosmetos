@@ -66,6 +66,13 @@ module.exports = async function getBlog(ctx) {
         },
         currentLogin: user ? user.login : null,
     };
+    if (user) {
+        const currentUserItem = {
+            ..._.pick(user, ['login', 'name']),
+            imageUrl: makeUserAvatarUrl(user.avatarPicture),
+        };
+        blog.data[currentUserItem.login] = currentUserItem;
+    }
 
     const blogExtra = {
         ..._.pick(userEntity, ['login']),
