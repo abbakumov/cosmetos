@@ -56,9 +56,15 @@ module.exports = async function getBlog(ctx) {
     } = nomalizedUser.entities;
     const userEntity = users[nomalizedUser.result];
 
-    const blog = {
+    const blogItem = {
         ..._.pick(userEntity, ['login', 'name']),
         imageUrl: makeUserAvatarUrl(userEntity.avatarPicture),
+    };
+    const blog = {
+        data: {
+            [blogItem.login]: blogItem,
+        },
+        currentLogin: user ? user.login : null,
     };
 
     const blogExtra = {
@@ -72,7 +78,7 @@ module.exports = async function getBlog(ctx) {
     const postsBaseMap = postEntities.map(post => ({
         ..._.pick(post, ['id', 'title', 'isPublic']),
         imageUrl: makePostSmallPicUrl(post.picture),
-        authorLogin: blog.login,
+        authorLogin: blogItem.login,
     }));
     const postsBase = _.keyBy(postsBaseMap, 'id');
 
