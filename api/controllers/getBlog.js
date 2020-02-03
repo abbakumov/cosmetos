@@ -8,6 +8,7 @@ const {User, UserSocial, Post} = require('../database/models');
 
 module.exports = async function getBlog(ctx) {
     const {login} = ctx.params;
+    const {offset = '0'} = ctx.request.query;
 
     // check if not public posts are available
     const {user} = ctx.req;
@@ -17,10 +18,12 @@ module.exports = async function getBlog(ctx) {
         postWhere.isPublic = true;
     }
 
+    const parsedOffset = parseInt(offset, 10);
+
     // data fetching
     const data = await User.findOne({
         where: {login},
-        attributes: ['login', 'name', 'avatarPicture'],
+        attributes: ['id', 'login', 'name', 'avatarPicture'],
         include: [
             {
                 model: UserSocial,
@@ -29,11 +32,16 @@ module.exports = async function getBlog(ctx) {
             {
                 model: Post,
                 limit: 10,
+                offset: parsedOffset,
                 order: [['createdAt', 'DESC']],
                 attributes: ['id', 'title', 'picture', 'isPublic'],
                 where: postWhere,
             },
         ],
+    });
+
+    const postsTotal = await Post.count({
+        where: {userId: data.id},
     });
 
     if (data.isAdmin) {
@@ -78,6 +86,7 @@ module.exports = async function getBlog(ctx) {
         ..._.pick(userEntity, ['login']),
         postIds: userEntity.Posts,
         instagramLogin: userEntity.UserSocial.instaLogin,
+        postsTotal,
     };
 
     const postEntities = Object.keys(posts).map(id => posts[id]);
