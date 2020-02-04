@@ -24,7 +24,7 @@ const limits = {
 };
 
 function fileFilter(req, file, cb) {
-    const fileTypes = /jpeg|jpg|png/;
+    const fileTypes = /jpeg|jpg|png/i;
     const extName = path.extname(file.originalname);
 
     fileExtentionTest = fileTypes.test(extName);
