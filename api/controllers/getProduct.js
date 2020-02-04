@@ -41,7 +41,6 @@ module.exports = async function getProduct(ctx) {
             },
             {
                 model: PostPartProduct,
-                where: {productId: id},
                 attributes: ['id', 'postPartId'],
                 include: [
                     {
