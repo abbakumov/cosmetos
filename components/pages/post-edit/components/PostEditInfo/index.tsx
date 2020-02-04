@@ -89,7 +89,7 @@ const PostEditInfo: FunctionComponent<Props> = (props: Props) => {
             </Button>
             <Link
                 href="/post/[id]"
-                as={`/post/1`}
+                as={`/post/${props.id}`}
             >
                 <Button
                     className={styles.button}
