@@ -1,6 +1,7 @@
-import {BlogExtraState, BlogExtraActionType} from './types';
+import {BlogExtraState, BlogExtraActionType, BlogExtra} from './types';
 import {
     BLOG_EXTRA_DATA_FETCHED,
+    BLOG_EXTRA_MORE_POSTS_FETCHED,
 } from './actions';
 
 const initialState: BlogExtraState = {
@@ -8,15 +9,28 @@ const initialState: BlogExtraState = {
 };
 
 export function blogExtraReducer(state = initialState, action: BlogExtraActionType): BlogExtraState {
-    const {type, payload} = action;
-
-    switch (type) {
+    switch (action.type) {
         case BLOG_EXTRA_DATA_FETCHED:
             return {
                 items: {
                     ...state.items,
-                    [payload.data.login]: payload.data,
+                    [action.payload.data.login]: action.payload.data,
                 }
+            };
+
+        case BLOG_EXTRA_MORE_POSTS_FETCHED:
+            const blogItem = state.items[action.payload.login] as BlogExtra;
+            const newBlogItem: BlogExtra = {
+                ...blogItem,
+                postIds: [...blogItem.postIds, ...action.payload.postIds],
+            };
+
+            return {
+                ...state,
+                items: {
+                    ...state.items,
+                    [newBlogItem.login]: newBlogItem,
+                },
             };
     }
 

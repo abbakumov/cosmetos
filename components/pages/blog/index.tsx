@@ -4,24 +4,34 @@ import {connect} from 'react-redux';
 import {BlogLogin} from '../../../entities/Blog/types';
 import {BlogExtra} from '../../../entities/BlogExtra/types';
 
-import BlogHead from './components/BlogHead';
 import PostsList from '../../widgets/PostsList';
+import ViewSensor from '../../widgets/ViewSensor';
 import MobileLayout from '../../layouts/MobileLayout';
 import {AppState} from '../../../store';
 import {PostId} from '../../../entities/Post/types';
 
-export interface BlogPagePublicProps {
-    login: BlogLogin,
+import BlogHead from './components/BlogHead';
+import {pageBlogFetchMoreAction} from './state/actions';
+
+export interface BlogPageProps {
 };
 
-interface BlogPageProps {
-    login: BlogLogin;
-    postIds: PostId[];
+interface MappedProps {
+    login: BlogLogin
+    postIds: PostId[]
+    isViewSensorActive: boolean
+    isFetchingMore: boolean
 }
 
-class BlogPage extends Component<BlogPageProps> {
+interface ActionProps {
+    fetchMoreAction(): void
+}
+
+interface Props extends MappedProps, ActionProps {}
+
+class BlogPage extends Component<Props> {
     render() {
-        const {login, postIds} = this.props;
+        const {login, postIds, isViewSensorActive, isFetchingMore, fetchMoreAction} = this.props;
 
         return (
             <MobileLayout>
@@ -31,21 +41,35 @@ class BlogPage extends Component<BlogPageProps> {
                     postIds={postIds}
                     namesVisible={false}
                 />
+                <ViewSensor
+                    isFetching={isFetchingMore}
+                    onViewed={fetchMoreAction}
+                    isActive={isViewSensorActive}
+                />
             </MobileLayout>
         )
     }
 }
 
-function mapStateToProps(state: AppState, ownProps: BlogPagePublicProps) {
-    const blogExtraData: BlogExtra = state.blogExtra.items[ownProps.login];
+function mapStateToProps(state: AppState, ownProps: BlogPageProps): MappedProps {
+    const {blogLogin, isFetchingMore} = state.pageBlog;
+    const blogExtraData: BlogExtra = state.blogExtra.items[blogLogin];
 
-    const {postIds} = blogExtraData;
+    const {postIds, postsTotal} = blogExtraData;
+    const isViewSensorActive = postIds.length < postsTotal;
 
     return {
+        login: blogLogin,
         postIds,
+        isViewSensorActive,
+        isFetchingMore,
     };
 }
 
-const ConnectedBlogPage = connect(mapStateToProps)(BlogPage);
+const actionProps = {
+    fetchMoreAction: pageBlogFetchMoreAction,
+};
+
+const ConnectedBlogPage = connect(mapStateToProps, actionProps)(BlogPage);
 
 export default ConnectedBlogPage;

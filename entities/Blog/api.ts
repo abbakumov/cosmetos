@@ -18,9 +18,9 @@ interface GetBlogByNameResponse {
     }
 }
 
-export function getBlogByName(name: string, context?: ICosPageContext): Promise<GetBlogByNameResponse> {
+export function getBlogByName(name: string, offset: number = 0, context?: ICosPageContext): Promise<GetBlogByNameResponse> {
     return fetchData<GetBlogByNameResponse>(
-        `${getOrigin()}/api/blog/${name}`,
+        `${getOrigin()}/api/blog/${name}?offset=${offset}`,
         {},
         context
     );

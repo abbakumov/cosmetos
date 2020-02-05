@@ -4,12 +4,12 @@ import _ from 'lodash';
 import {getBlogByName} from '../../entities/Blog/api';
 import {blogsDataFetchedAction} from '../../entities/Blog/actions';
 import {blogExtraDataFetchedAction} from '../../entities/BlogExtra/actions';
-import BlogPage, {BlogPagePublicProps} from '../../components/pages/blog';
+import BlogPage, {BlogPageProps} from '../../components/pages/blog';
 import {pageBlogFetchSuccessAction} from '../../components/pages/blog/state/actions';
 import {ICosPageContext} from '../../types/context';
 import {postsBaseDataFetchedAction} from '../../entities/Post/actions';
 
-interface InitialProps extends BlogPagePublicProps {
+interface InitialProps extends BlogPageProps {
     title: string;
 }
 
@@ -19,7 +19,7 @@ class BlogPageWrapper extends Component<InitialProps> {
         const login = _.castArray(query.login)[0];
 
         // TODO: validate server data
-        const {blog, blogExtra, postsBase} = await getBlogByName(login, ctx);
+        const {blog, blogExtra, postsBase} = await getBlogByName(login, 0, ctx);
 
         store.dispatch(pageBlogFetchSuccessAction(login));
         store.dispatch(blogsDataFetchedAction(blog.data, blog.currentLogin));
@@ -34,7 +34,6 @@ class BlogPageWrapper extends Component<InitialProps> {
         }
 
         return {
-            login,
             title,
         };
     }
