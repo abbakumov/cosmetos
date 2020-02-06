@@ -3,6 +3,7 @@ const _ = require('lodash');
 
 const {fullPostSchema} = require('../../entities/Post/schema');
 const {makePostSmallPicUrl, makePostBigPicUrl} = require('../../entities/Post/helpers');
+const {makeProductColorSmallPicUrl} = require('../../entities/ProductColor/helpers');
 const {makeUserAvatarUrl} = require('../../entities/Blog/helpers');
 const {makeProductSmallPicUrl} = require('../../entities/ProductBase/helpers');
 
@@ -86,7 +87,7 @@ module.exports = async function getPost(ctx) {
     );
 
     // fields mapping
-    const {brands, products, postPartProducts, postParts, users, posts} = normalizedPost.entities;
+    const {brands, products, postPartProducts, productColors, postParts, users, posts} = normalizedPost.entities;
     const postEntity = posts[normalizedPost.result];
     const userEntity = users[postEntity.userId];
 
@@ -136,12 +137,17 @@ module.exports = async function getPost(ctx) {
     const postPartProductMap = Object.keys(postPartProducts)
         .map(id => postPartProducts[id])
         .map(postPartProduct => ({
-            id: postPartProduct.id,
-            postPartId: postPartProduct.postPartId,
-            productId: postPartProduct.productId,
-            productColorId: postPartProduct.productColorId,
+            ..._.pick(postPartProduct, ['id', 'postPartId', 'productId', 'productColorId']),
         }));
     const postPartProduct = _.keyBy(postPartProductMap, 'id');
+
+    const productColorMap = Object.keys(productColors)
+        .map(id => productColors[id])
+        .map(productColor => ({
+            ..._.pick(productColor, ['id', 'title']),
+            picUrl: makeProductColorSmallPicUrl(productColor.picture),
+        }));
+    const productColor = _.keyBy(productColorMap, 'id');
 
     const productBaseMap = Object.keys(products)
         .map(id => products[id])
@@ -158,6 +164,7 @@ module.exports = async function getPost(ctx) {
         blog,
         postPart,
         postPartProduct,
+        productColor,
         productBase,
         blogProduct: {}, // TO BE DONE
     }
