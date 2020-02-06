@@ -133,6 +133,16 @@ module.exports = async function getPost(ctx) {
         }));
     const postPart = _.keyBy(postPartMap, 'id');
 
+    const postPartProductMap = Object.keys(postPartProducts)
+        .map(id => postPartProducts[id])
+        .map(postPartProduct => ({
+            id: postPartProduct.id,
+            postPartId: postPartProduct.postPartId,
+            productId: postPartProduct.productId,
+            productColorId: postPartProduct.productColorId,
+        }));
+    const postPartProduct = _.keyBy(postPartProductMap, 'id');
+
     const productBaseMap = Object.keys(products)
         .map(id => products[id])
         .map(product => ({
@@ -147,6 +157,7 @@ module.exports = async function getPost(ctx) {
         postExtra,
         blog,
         postPart,
+        postPartProduct,
         productBase,
         blogProduct: {}, // TO BE DONE
     }
