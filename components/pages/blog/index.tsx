@@ -51,7 +51,7 @@ class BlogPage extends Component<Props> {
     }
 }
 
-function mapStateToProps(state: AppState, ownProps: BlogPageProps): MappedProps {
+function mapStateToProps(state: AppState): MappedProps {
     const {blogLogin, isFetchingMore} = state.pageBlog;
     const blogExtraData: BlogExtra = state.blogExtra.items[blogLogin];
 
