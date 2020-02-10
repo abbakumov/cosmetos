@@ -7,31 +7,46 @@ import {AppState} from '../../../../../store';
 import {PostPartId} from '../../../../../entities/PostPart/types';
 import {ProductId} from '../../../../../entities/ProductBase/types';
 import {PostId} from '../../../../../entities/Post/types';
+import {PostPartProduct} from '../../../../../entities/PostPartProduct/types';
 
 const styles = require('./styles.styl');
 
-export interface PostProductsPartPublicProps {
+export interface PostProductPublicProps {
     id: ProductId;
     partId: PostPartId;
     backIndex: number;
     isShown: boolean;
 }
 
-interface PostProductsPartProps {
-    id: ProductId;
-    brand: string;
-    title: string;
-    smallPicUrl: string;
-    comment: string;
-    color: string;
-    backIndex: number;
-    isShown: boolean;
-    postId: PostId;
+interface PostProductProps {
+    id: ProductId
+    brand: string
+    title: string
+    smallPicUrl: string
+    comment: string
+    color: string
+    backIndex: number
+    isShown: boolean
+    postId: PostId
+    colorPicUrl?: string
+    colorTitle?: string
 }
 
-class PostProductsPart extends Component<PostProductsPartProps> {
+class PostProduct extends Component<PostProductProps> {
     render() {
-        const {id, brand, title, smallPicUrl, comment, color, backIndex, isShown, postId} = this.props;
+        const {
+            id,
+            brand,
+            title,
+            smallPicUrl,
+            comment,
+            color,
+            backIndex,
+            isShown,
+            postId,
+            colorTitle,
+            colorPicUrl,
+        } = this.props;
 
         const style = {
             borderColor: `#${color}`,
@@ -52,8 +67,14 @@ class PostProductsPart extends Component<PostProductsPartProps> {
                         <img className={styles.img} src={smallPicUrl} />
                     </div>
                     <div className={styles.content}>
-                        <h3 className={styles.title}>{title}</h3>
                         <div className={styles.brand}>{brand}</div>
+                        <h3 className={styles.title}>{title}</h3>
+                        {colorTitle &&
+                            <div className={styles.color}>
+                                {colorPicUrl && <img className={styles.colorImage} src={colorPicUrl} />}
+                                <span className={styles.colorText}>{colorTitle}</span>
+                            </div>
+                        }
                         {!!comment && <div className={styles.comment}>"{comment}"</div>}
                     </div>
                     <img className={styles.arr} src="/static/icons/post-page/product-arr.svg" />
@@ -63,7 +84,7 @@ class PostProductsPart extends Component<PostProductsPartProps> {
     }
 }
 
-function mapStateToProps(state: AppState, ownProps: PostProductsPartPublicProps): PostProductsPartProps {
+function mapStateToProps(state: AppState, ownProps: PostProductPublicProps): PostProductProps {
     const {id, partId, backIndex, isShown} = ownProps;
 
     const product = state.productBase.items[id];
@@ -78,6 +99,18 @@ function mapStateToProps(state: AppState, ownProps: PostProductsPartPublicProps)
     const {color} = postPart;
     const {postId} = state.pagePost;
 
+    const {items} = state.postPartProduct;
+    const postPartProductItem: PostPartProduct = Object.values(items)
+        .find((item: PostPartProduct) => item.postPartId === partId && item.productId === id);
+
+    if (!postPartProductItem) {throw new Error('PostProduct: postPartProductItem must not be empty!')}
+
+    const productColor = state.productColor.items[postPartProductItem.productColorId];
+    const {
+        title: colorTitle,
+        picUrl: colorPicUrl,
+    } = productColor || {};
+
     return {
         id,
         brand,
@@ -88,9 +121,11 @@ function mapStateToProps(state: AppState, ownProps: PostProductsPartPublicProps)
         backIndex,
         isShown,
         postId,
+        colorPicUrl,
+        colorTitle,
     };
 }
 
-const ConnectedPostProductsPart = connect(mapStateToProps)(PostProductsPart);
+const ConnectedPostProduct = connect(mapStateToProps)(PostProduct);
 
-export default ConnectedPostProductsPart;
+export default ConnectedPostProduct;

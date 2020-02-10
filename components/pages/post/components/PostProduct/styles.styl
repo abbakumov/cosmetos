@@ -5,6 +5,7 @@
     display flex
     position relative
     background #fff
+    min-height 90px
     max-height 160px
     transition all .3s
     top 0px
@@ -27,18 +28,22 @@
     align-self center
 
 .content
-    margin 20px 30px 20px 0
+    margin 12px 30px 12px 0
+    display flex
+    flex-direction column
+    justify-content center
+    width calc(100% - 110px)
+
+.brand
+    font-size 15px
+    text-transform uppercase
+    font-weight 900
 
 .title
     font-size 15px
     text-transform uppercase
     font-weight 100
-
-.brand
-    font-size 15px
-    margin-top 6px
-    text-transform uppercase
-    font-weight 900
+    margin-top 4px
 
 .comment
     font-style italic
@@ -51,3 +56,23 @@
     position absolute
     top calc(50% - 10px)
     right 12px
+
+.color
+    margin-top 6px
+    display flex
+
+.colorImage
+    height 26px
+    margin-right 8px
+
+.colorText
+    text-transform uppercase
+    color #4D4C4C
+    font-size 14px
+    font-style italic
+    font-weight 100
+    line-height 26px
+    white-space nowrap
+    text-overflow ellipsis
+    overflow hidden
+    padding-right 2px

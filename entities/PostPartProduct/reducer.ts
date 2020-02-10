@@ -14,6 +14,7 @@ export function postPartProductReducer(state = initialState, action: PostPartPro
                 ...state,
                 items: {
                     ...state.items,
+                    ...action.payload.items,
                 },
             };
     }

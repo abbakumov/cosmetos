@@ -10,6 +10,8 @@ import {blogsDataFetchedAction} from '../../../entities/Blog/actions';
 import {postBaseDataFetchedAction} from '../../../entities/Post/actions';
 import {postExtraDataFetchedAction} from '../../../entities/PostExtra/actions';
 import {postPartsDataFetchedAction} from '../../../entities/PostPart/actions';
+import {postPartProductsDataFetchedAction} from '../../../entities/PostPartProduct/actions';
+import {productColorsDataFetchedAction} from '../../../entities/ProductColor/actions';
 import {productsBaseDataFetchedAction} from '../../../entities/ProductBase/actions';
 import {blogProductsDataFetchedAction} from '../../../entities/BlogProduct/actions';
 
@@ -34,6 +36,8 @@ PostPageWrapper.getInitialProps = async function(context: ICosPageContext): Prom
         postBaseDataFetchedAction(data.postBase),
         postExtraDataFetchedAction(data.postExtra),
         postPartsDataFetchedAction(data.postPart),
+        productColorsDataFetchedAction(data.productColor),
+        postPartProductsDataFetchedAction(data.postPartProduct),
         productsBaseDataFetchedAction(data.productBase),
         blogProductsDataFetchedAction(data.blogProduct),
     ]));

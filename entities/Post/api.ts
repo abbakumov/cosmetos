@@ -9,6 +9,8 @@ import {PostExtra} from '../PostExtra/types';
 import {BlogMap, BlogLogin} from '../Blog/types';
 import {BlogProduct} from '../BlogProduct/types';
 import {PostPart} from '../PostPart/types';
+import {PostPartProductMap} from '../PostPartProduct/types';
+import {ProductColorMap} from '../ProductColor/types';
 import {ProductBase} from '../ProductBase/types';
 import {PostEdit} from '../PostEdit/types';
 
@@ -17,16 +19,18 @@ export interface GetPostByIdResponse {
         data: BlogMap
         currentLogin: BlogLogin
     }
-    postBase: PostBase,
-    postExtra: PostExtra,
+    postBase: PostBase
+    postExtra: PostExtra
     postPart: {
-        [id: number]: PostPart,
+        [id: number]: PostPart
     },
+    postPartProduct: PostPartProductMap
+    productColor: ProductColorMap
     productBase: {
-        [id: number]: ProductBase,
+        [id: number]: ProductBase
     },
     blogProduct: {
-        [id: number]: BlogProduct,
+        [id: number]: BlogProduct
     }
 }
 export function getPostById(id: PostId, context?: ICosPageContext): Promise<GetPostByIdResponse> {

@@ -41,7 +41,7 @@ module.exports = async function getPost(ctx) {
                 include: [
                     {
                         model: PostPartProduct,
-                        attributes: ['id', 'productId', 'productColorId'],
+                        attributes: ['id', 'postPartId','productId', 'productColorId'],
                         include: [
                             {
                                 model: ProductColor,
