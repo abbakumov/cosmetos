@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import {connect} from 'react-redux';
+import cn from 'classnames';
 
 import {AppState} from '../../../../../store';
 import {ProductId} from '../../../../../entities/ProductBase/types';
@@ -28,12 +29,28 @@ interface State {
 }
 
 class ProductColorItem extends Component<Props, State> {
-
     render() {
         const {title, picUrl, index} = this.props;
 
+        const isLeftItem = (index % 6) === 0;
+        const isRightItem = (index % 6) === 5;
+
+        const tooltipClassName = cn(
+            styles.tooltip,
+            {
+                [styles.tooltipLeft]: isLeftItem,
+                [styles.tooltipRight]: isRightItem,
+            }
+        );
+
         return (
             <div className={styles.root}>
+                {false && (
+                    <div className={tooltipClassName}>
+                        <div className={styles.tooltipContent}>{title}</div>
+                        <div className={styles.tooltipTriangle} />
+                    </div>
+                )}
                 <img src={picUrl} />
             </div>
         );
