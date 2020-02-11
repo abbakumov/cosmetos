@@ -3,18 +3,20 @@ import {connect} from 'react-redux';
 
 import {AppState} from '../../../../../store';
 import {ProductId} from '../../../../../entities/ProductBase/types';
-import {ProductColor} from '../../../../../entities/ProductColor/types';
+import {ProductColorId} from '../../../../../entities/ProductColor/types';
 import ActionButton from '../../../../widgets/ActionButton';
 import SectionTitle from '../../../../widgets/SectionTitle';
+
+import ProductColorItem from '../ProductColorItem';
 
 const styles = require('./styles.styl');
 
 export interface ProductColorsPublicProps {
-    id: ProductId;
+    id: ProductId
 }
 
 interface ProductColorsProps {
-    colors: ProductColor[]
+    colorIds: ProductColorId[]
 }
 
 interface State {
@@ -26,14 +28,14 @@ class ProductColors extends Component<ProductColorsProps, State> {
         isOpen: false,
     };
 
-    getColorsToShow():ProductColor[] {
-        const {colors} = this.props;
+    getColorsToShow():ProductColorId[] {
+        const {colorIds} = this.props;
 
-        if (this.state.isOpen || colors.length <= 12) {
-            return colors;
+        if (this.state.isOpen || colorIds.length <= 12) {
+            return colorIds;
         }
         
-        return colors.slice(0, 6);
+        return colorIds.slice(0, 6);
     }
 
     open = () => {
@@ -57,14 +59,12 @@ class ProductColors extends Component<ProductColorsProps, State> {
             <div className={styles.root}>
                 <SectionTitle>Оттенки</SectionTitle>
                 <div className={styles.colors}>
-                    {colors.map(color => (
-                        <div key={color.id} className={styles.item}>
-                            <img className={styles.image} src={color.picUrl} />
-                        </div>
+                    {colors.map((colorId, index) => (
+                        <ProductColorItem id={colorId} key={colorId} index={index} />
                     ))}
                     {fakeIds.map(id => (<div key={id} className={styles.item} />))}
                 </div>
-                {this.props.colors.length > 12 && !this.state.isOpen &&
+                {this.props.colorIds.length > 12 && !this.state.isOpen &&
                     <div className={styles.actionButton}>
                         <ActionButton
                             text="другие цвета"
@@ -83,11 +83,7 @@ function mapStateToProps(state: AppState, ownProps: ProductColorsPublicProps): P
     const productExtra = state.productExtra.items[id];
     const {colorIds} = productExtra;
 
-    const colors = colorIds.map(id => state.productColor.items[id]);
-
-    return {
-        colors,
-    };
+    return {colorIds};
 }
 
 const ConnectedProductColors = connect(mapStateToProps)(ProductColors);
