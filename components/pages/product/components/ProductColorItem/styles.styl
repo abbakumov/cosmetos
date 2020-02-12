@@ -8,20 +8,26 @@
     position absolute
     width 164px // about 3 items
     left calc(50% - 82px)
-    bottom calc(100% + 8px)
+    bottom calc(100% + 3px)
     height 30px
     z-index 100
     display flex
     justify-content center
+    opacity 0
+    transition .3s all
 
 .tooltipLeft
     left 0
     justify-content flex-start
 
 .tooltipRight
-    left none
+    left auto
     right 0
     justify-content flex-end
+
+.tooltipActive
+    bottom calc(100% + 8px)
+    opacity 1
 
 .tooltipContent
     display block
@@ -39,8 +45,11 @@
 
 .tooltipTriangle
     position absolute
-    top calc(100% - 2px)
+    bottom calc(100% + 5px)
     left calc(50% - 10px)
+    z-index 100
+    opacity 0
+    transition .3s all
 
     &:before
     &:after
@@ -58,3 +67,7 @@
         border 7px solid transparent
         border-top 7px solid #fff
         left 3px
+
+.tooltipTriangleActive
+    bottom calc(100% + 10px)
+    opacity 1

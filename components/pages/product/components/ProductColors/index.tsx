@@ -62,7 +62,7 @@ class ProductColors extends Component<ProductColorsProps, State> {
                     {colors.map((colorId, index) => (
                         <ProductColorItem id={colorId} key={colorId} index={index} />
                     ))}
-                    {fakeIds.map(id => (<div key={id} className={styles.item} />))}
+                    {fakeIds.map(id => (<div key={id} className={styles.emptyItem} />))}
                 </div>
                 {this.props.colorIds.length > 12 && !this.state.isOpen &&
                     <div className={styles.actionButton}>
