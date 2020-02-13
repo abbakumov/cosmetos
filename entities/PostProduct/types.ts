@@ -18,6 +18,10 @@ export interface PostProduct {
     productColorId: ProductColorId;
 };
 
+export interface PostProductMap {
+    [id: number]: PostProduct;
+}
+
 // ACTIONS ->
 export interface PostProductsDataFetchedAction {
     type: typeof POST_PRODUCTS_DATA_FETCHED;

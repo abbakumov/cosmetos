@@ -9,6 +9,7 @@ import {pageProductDataFetchedAction} from '../../components/pages/product/state
 import {getProductById} from '../../entities/ProductBase/api';
 import {blogsDataFetchedAction} from '../../entities/Blog/actions';
 import {blogProductsDataFetchedAction} from '../../entities/BlogProduct/actions';
+import {postProductsDataFetchedAction} from '../../entities/PostProduct/actions';
 import {postsBaseDataFetchedAction} from '../../entities/Post/actions';
 import {productBaseDataFetchedAction} from '../../entities/ProductBase/actions';
 import {productColorsDataFetchedAction} from '../../entities/ProductColor/actions';
@@ -34,6 +35,7 @@ ProductPageWrapper.getInitialProps = async function(context: ICosPageContext): P
     store.dispatch(pageProductDataFetchedAction(refPost));
     store.dispatch(blogsDataFetchedAction(data.blog.data, data.blog.currentLogin));
     store.dispatch(blogProductsDataFetchedAction(data.blogProduct));
+    store.dispatch(postProductsDataFetchedAction(data.postProduct));
     store.dispatch(postsBaseDataFetchedAction(data.postBase));
     store.dispatch(productBaseDataFetchedAction(data.productBase));
     store.dispatch(productColorsDataFetchedAction(data.productColor));
