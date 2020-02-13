@@ -8,14 +8,15 @@ import PostsListPost from './Post';
 const styles = require('./styles.styl');
 
 export interface PostsListPublicProps {
-    title: string;
-    postIds: PostId[];
-    namesVisible: boolean;
+    title: string
+    postIds: PostId[]
+    namesVisible: boolean
+    colorsVisible: boolean
 }
 
 class PostsList extends Component<PostsListPublicProps> {
     render() {
-        const {title, postIds, namesVisible} = this.props;
+        const {title, postIds, namesVisible, colorsVisible} = this.props;
 
         if (!postIds || !postIds.length) {
             return null;
@@ -30,6 +31,7 @@ class PostsList extends Component<PostsListPublicProps> {
                             key={id}
                             id={id}
                             nameVisible={namesVisible}
+                            colorVisible={colorsVisible}
                         />
                     ))}
                 </div>

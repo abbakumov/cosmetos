@@ -1,5 +1,6 @@
 import {PostId} from '../../../../entities/Post/types';
 import {ProductColorId} from '../../../../entities/ProductColor/types';
+import {ProductId} from '../../../../entities/ProductBase/types';
 
 import {
     PAGE_PRODUCT_DATA_FETCHED,
@@ -8,6 +9,7 @@ import {
 } from './actions';
 
 export interface PageProductState {
+    id?: ProductId
     refPost?: PostId
     activeColorId?: ProductColorId
 }
@@ -15,7 +17,8 @@ export interface PageProductState {
 export interface PageProductDataFetchedAction {
     type: typeof PAGE_PRODUCT_DATA_FETCHED
     payload: {
-        refPost: PostId
+        id: ProductId,
+        refPost: PostId,
     }
 };
 

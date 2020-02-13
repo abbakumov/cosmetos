@@ -1,5 +1,6 @@
 import {PostId} from '../../../../entities/Post/types';
 import {ProductColorId} from '../../../../entities/ProductColor/types';
+import {ProductId} from '../../../../entities/ProductBase/types';
 import {AppState} from '../../../../store';
 
 import {
@@ -13,9 +14,9 @@ export const PAGE_PRODUCT_HIDE_COLOR = 'PAGE_PRODUCT_HIDE_COLOR';
 
 let lastHideTimeout = 0;
 
-export const pageProductDataFetchedAction = (refPost: PostId): PageProductDataFetchedAction => ({
+export const pageProductDataFetchedAction = (id: ProductId, refPost: PostId): PageProductDataFetchedAction => ({
     type: PAGE_PRODUCT_DATA_FETCHED,
-    payload: {refPost},
+    payload: {id, refPost},
 });
 
 export const pageProductShowColorAction = (colorId: ProductColorId) => (dispatch, getState) => {

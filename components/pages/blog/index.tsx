@@ -40,6 +40,7 @@ class BlogPage extends Component<Props> {
                     title="Последние посты"
                     postIds={postIds}
                     namesVisible={false}
+                    colorsVisible={false}
                 />
                 <ViewSensor
                     isFetching={isFetchingMore}

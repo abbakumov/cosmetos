@@ -39,6 +39,7 @@ class ProductPage extends Component<ProductPageProps> {
                     title="Все посты с продуктом"
                     postIds={postIds}
                     namesVisible={true}
+                    colorsVisible={true}
                 />
                 {/* <ProductOpinions id={id} /> */}
             </MobileLayout>

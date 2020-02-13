@@ -32,7 +32,7 @@ ProductPageWrapper.getInitialProps = async function(context: ICosPageContext): P
 
     const data = await getProductById(id, context);
 
-    store.dispatch(pageProductDataFetchedAction(refPost));
+    store.dispatch(pageProductDataFetchedAction(id, refPost));
     store.dispatch(blogsDataFetchedAction(data.blog.data, data.blog.currentLogin));
     store.dispatch(blogProductsDataFetchedAction(data.blogProduct));
     store.dispatch(postProductsDataFetchedAction(data.postProduct));

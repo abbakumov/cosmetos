@@ -114,8 +114,8 @@ module.exports = async function getProduct(ctx) {
 
             return {
                 id: item.id,
-                postId: id,
-                productId: postPart.postId,
+                postId: postPart.postId,
+                productId: id,
                 productColorId: item.productColorId,
             };
         })

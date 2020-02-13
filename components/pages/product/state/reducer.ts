@@ -10,6 +10,7 @@ import {
 } from './actions';
 
 const initialState: PageProductState = {
+    id: null,
     refPost: null,
     activeColorId: null,
 };
@@ -19,6 +20,7 @@ export function pageProductReducer(state: PageProductState = initialState, actio
         case PAGE_PRODUCT_DATA_FETCHED:
             return {
                 ...state,
+                id: action.payload.id,
                 refPost: action.payload.refPost || null,
             };
 
