@@ -41,7 +41,7 @@ module.exports = async function getProduct(ctx) {
             },
             {
                 model: PostPartProduct,
-                attributes: ['id', 'postPartId'],
+                attributes: ['id', 'postPartId', 'productColorId'],
                 include: [
                     {
                         model: PostPart,
@@ -102,6 +102,26 @@ module.exports = async function getProduct(ctx) {
         })
         .filter(id => !!id);
 
+    const postProductArr = productEntity
+        .PostPartProducts.map(_id => {
+            const item = postPartProducts[_id];
+
+            const postPart = postParts[item.postPartId];
+
+            if (!postPart) {
+                return null;
+            }
+
+            return {
+                id: item.id,
+                postId: id,
+                productId: postPart.postId,
+                productColorId: item.productColorId,
+            };
+        })
+        .filter(item => !!item);
+    const postProduct = _.keyBy(postProductArr, 'id');
+
     const productExtra = {
         ..._.pick(productEntity, ['id', 'description']),
         postIds,
@@ -152,6 +172,7 @@ module.exports = async function getProduct(ctx) {
         productBase,
         productExtra,
         productColor,
+        postProduct,
         postBase,
         blog,
         blogProduct: {},
