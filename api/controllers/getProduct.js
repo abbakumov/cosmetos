@@ -9,6 +9,7 @@ const {productSchema} = require('../../entities/ProductBase/schema');
 
 const {
     User,
+    UserProduct,
     Post,
     Product,
     ProductColor,
@@ -21,6 +22,7 @@ const {
 module.exports = async function getProduct(ctx) {
     const {id: _id} = ctx.params;
     const id = parseInt(_id);
+    const {user} = ctx.req;
 
     const data = await Product.findOne({
         where: {id},
@@ -39,6 +41,11 @@ module.exports = async function getProduct(ctx) {
                 model: ProductColor,
                 attributes: ['id', 'title', 'colorHex', 'picture'],
             },
+            // {
+            //     model: UserProduct,
+            //     attributes: ['id', 'userId', 'review'],
+            //     limit: 10,
+            // },
             {
                 model: PostPartProduct,
                 attributes: ['id', 'postPartId', 'productColorId'],
@@ -65,6 +72,16 @@ module.exports = async function getProduct(ctx) {
         ],
     });
 
+    // let ownUserProduct = null;
+    // if (user) {
+    //     ownUserProduct = await UserProduct.findOne({
+    //         attributes: ['id', 'userId', 'review'],
+    //         where: {userId: user.id}
+    //     });
+    // }
+
+    // console.log('ownUserProduct: ', ownUserProduct);
+
     const plainData = JSON.parse(JSON.stringify(data));
 
     const normalizedData = normalize(
@@ -74,7 +91,7 @@ module.exports = async function getProduct(ctx) {
 
     const {
         brands,
-        postPartProducts,
+        postPartProducts = {},
         postParts,
         posts = {},
         productColors = {},
@@ -155,7 +172,6 @@ module.exports = async function getProduct(ctx) {
             postIds: [],
         }))
     const blogData = _.keyBy(blogMap, 'login');
-    const {user} = ctx.req;
     const blog = {
         data: blogData,
         currentLogin: user ? user.login : null,
