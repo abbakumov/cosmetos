@@ -92,7 +92,7 @@ module.exports = async function getProduct(ctx) {
     const {
         brands,
         postPartProducts = {},
-        postParts,
+        postParts = {},
         posts = {},
         productColors = {},
         products,
