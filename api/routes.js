@@ -7,6 +7,7 @@ const getBlog = require('./controllers/getBlog');
 const getPost = require('./controllers/getPost');
 const getProduct = require('./controllers/getProduct');
 const getProductColors = require('./controllers/getProductColors');
+const postProductComment = require('./controllers/postProductComment');
 const getBrandProducts = require('./controllers/getBrandProducts');
 
 const postLogin = require('./controllers/postLogin');
@@ -70,6 +71,11 @@ const routes = [
         route: '/product/:id/colors',
         method: 'get',
         controllers: [getProductColors],
+    },
+    {
+        route: '/product/:id/comment',
+        method: 'post',
+        controllers: [postProductComment],
     },
     {
         route: '/post-product',
