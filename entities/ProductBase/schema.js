@@ -4,6 +4,10 @@ const productColorSchema = new schema.Entity('productColors');
 
 const userSchema = new schema.Entity('users');
 
+const userProductSchema = new schema.Entity('userProducts', {
+    User: userSchema,
+});
+
 const postSchema = new schema.Entity('posts', {
     User: userSchema,
 });
@@ -22,6 +26,7 @@ const productSchema = new schema.Entity('products', {
     Brand: brandSchema,
     PostPartProducts: [postPartProductSchema],
     ProductColors: [productColorSchema],
+    UserProducts: [userProductSchema],
 });
 
 module.exports = {

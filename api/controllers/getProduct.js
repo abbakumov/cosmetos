@@ -1,5 +1,6 @@
 const {normalize} = require('normalizr');
 const _ = require('lodash');
+const {Op} = require('sequelize');
 
 const {makeUserAvatarUrl} = require('../../entities/Blog/helpers');
 const {makePostSmallPicUrl} = require('../../entities/Post/helpers');
@@ -24,6 +25,13 @@ module.exports = async function getProduct(ctx) {
     const id = parseInt(_id);
     const {user} = ctx.req;
 
+    const userProductWhere = {};
+    if (user && user.id) {
+        userProductWhere[Op.not] = [
+            {userId: user.id},
+        ];
+    }
+
     const data = await Product.findOne({
         where: {id},
         attributes: ['id', 'kind', 'title', 'description'],
@@ -41,11 +49,18 @@ module.exports = async function getProduct(ctx) {
                 model: ProductColor,
                 attributes: ['id', 'title', 'colorHex', 'picture'],
             },
-            // {
-            //     model: UserProduct,
-            //     attributes: ['id', 'userId', 'review'],
-            //     limit: 10,
-            // },
+            {
+                model: UserProduct,
+                attributes: ['id', 'userId', 'review'],
+                where: userProductWhere,
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id', 'login', 'name', 'avatarPicture'],
+                    },
+                ],
+                limit: 10,
+            },
             {
                 model: PostPartProduct,
                 attributes: ['id', 'postPartId', 'productColorId'],
@@ -72,16 +87,6 @@ module.exports = async function getProduct(ctx) {
         ],
     });
 
-    // let ownUserProduct = null;
-    // if (user) {
-    //     ownUserProduct = await UserProduct.findOne({
-    //         attributes: ['id', 'userId', 'review'],
-    //         where: {userId: user.id}
-    //     });
-    // }
-
-    // console.log('ownUserProduct: ', ownUserProduct);
-
     const plainData = JSON.parse(JSON.stringify(data));
 
     const normalizedData = normalize(
@@ -97,9 +102,31 @@ module.exports = async function getProduct(ctx) {
         productColors = {},
         products,
         users = {},
+        userProducts = {},
     } = normalizedData.entities;
 
     const productEntity = products[normalizedData.result];
+
+    const userProductIds = productEntity.UserProducts;
+
+    if (user) {
+        const ownUserProduct = await UserProduct.findOne({
+            attributes: ['id', 'userId', 'review'],
+            where: {
+                userId: user.id,
+                productId: id,
+            },
+        });
+
+        if (ownUserProduct) {
+            const plainOwnUserProduct = JSON.parse(JSON.stringify(ownUserProduct));
+            userProducts[plainOwnUserProduct.id] = plainOwnUserProduct;
+            userProductIds.push(plainOwnUserProduct.id);
+        }
+    }
+    const userProductArr = Object.values(userProducts)
+        .map(usProd => _.pick(usProd, ['id', 'userId', 'review']));
+    const userProduct = _.keyBy(userProductArr, 'id');
 
     const productBase = {
         ..._.pick(productEntity, ['id', 'kind', 'title']),
@@ -144,6 +171,7 @@ module.exports = async function getProduct(ctx) {
         postIds,
         bigPicUrl: makeProductBigPicUrl(productEntity.ProductPictures[0].picture),
         colorIds: productEntity.ProductColors,
+        userProductIds,
     }
 
     const productColorMap = productEntity.ProductColors
@@ -192,6 +220,7 @@ module.exports = async function getProduct(ctx) {
         postBase,
         blog,
         blogProduct: {},
+        userProduct,
     };
 
     ctx.body = result;
