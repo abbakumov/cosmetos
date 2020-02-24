@@ -4,22 +4,32 @@ import {connect} from 'react-redux';
 import {AppState} from '../../../../../store';
 import {ProductId} from '../../../../../entities/ProductBase/types';
 import {BlogProductId} from '../../../../../entities/BlogProduct/types';
+import {pageProductEditCommentAction} from '../../state/actions';
+import ActionButton from '../../../../widgets/ActionButton';
 
 import ProductOpinionsItem from './Item';
-import ActionButton from '../../../../widgets/ActionButton';
+import ProductOpinionsEdit from './Edit';
 const styles = require('./styles.styl');
 
-export interface ProductOpinionsPublicProps {
+export interface ProductOpinionsProps {
     id: ProductId
 }
 
-interface ProductOpinionsProps {
+interface MappedProps {
     opinionIds: BlogProductId[]
     isVisible: boolean
     isAddCommentActive: boolean
 }
 
-class ProductOpinions extends Component<ProductOpinionsProps> {
+interface ActionProps {
+    editCommentAction(): void
+}
+
+interface Props extends MappedProps, ActionProps {}
+
+class ProductOpinions extends Component<Props> {
+    editCommentAction = () => this.props.editCommentAction();
+
     render() {
         const {opinionIds, isVisible, isAddCommentActive} = this.props;
 
@@ -34,10 +44,11 @@ class ProductOpinions extends Component<ProductOpinionsProps> {
                     <div className={styles.addCommentButton}>
                         <ActionButton
                             text="Оставить отзыв"
-                            // onClick={}
+                            onClick={this.editCommentAction}
                         />
                     </div>
                 )}
+                <ProductOpinionsEdit />
                 <div>
                     {opinionIds.map(id => (
                         <ProductOpinionsItem key={id} id={id} />
@@ -49,7 +60,7 @@ class ProductOpinions extends Component<ProductOpinionsProps> {
     }
 }
 
-function mapStateToProps(state: AppState, ownProps: ProductOpinionsPublicProps): ProductOpinionsProps {
+function mapStateToProps(state: AppState, ownProps: ProductOpinionsProps): MappedProps {
     const {id} = ownProps;
     const bpItems = state.blogProduct.items;
     const {currentLogin} = state.blog;
@@ -81,6 +92,10 @@ function mapStateToProps(state: AppState, ownProps: ProductOpinionsPublicProps):
     };
 }
 
-const ConnectedProductOpinions = connect(mapStateToProps)(ProductOpinions);
+const actions = {
+    editCommentAction: pageProductEditCommentAction,
+};
+
+const ConnectedProductOpinions = connect(mapStateToProps, actions)(ProductOpinions);
 
 export default ConnectedProductOpinions;

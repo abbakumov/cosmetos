@@ -5,12 +5,25 @@ import {AppState} from '../../../../store';
 
 import {
     PageProductDataFetchedAction,
-    PageProductHideColorAction,
+    PageProductEditCommentAction,
+    PageProductEditCommentCancelAction,
+    PageProductCommentChangeAction,
+    PageProductSaveCommentAction,
+    PageProductSaveCommentSuccessAction,
+    PageProductSaveCommentFailAction,
+    PageProductDeleteCommentAction,
 } from './types';
 
 export const PAGE_PRODUCT_DATA_FETCHED = 'PAGE_PRODUCT_DATA_FETCHED';
 export const PAGE_PRODUCT_SHOW_COLOR = 'PAGE_PRODUCT_SHOW_COLOR';
 export const PAGE_PRODUCT_HIDE_COLOR = 'PAGE_PRODUCT_HIDE_COLOR';
+export const PAGE_PRODUCT_EDIT_COMMENT = 'PAGE_PRODUCT_EDIT_COMMENT';
+export const PAGE_PRODUCT_EDIT_COMMENT_CANCEL = 'PAGE_PRODUCT_EDIT_COMMENT_CANCEL';
+export const PAGE_PRODUCT_COMMENT_CHANGE = 'PAGE_PRODUCT_COMMENT_CHANGE';
+export const PAGE_PRODUCT_SAVE_COMMENT = 'PAGE_PRODUCT_SAVE_COMMENT';
+export const PAGE_PRODUCT_SAVE_COMMENT_SUCCESS = 'PAGE_PRODUCT_SAVE_COMMENT_SUCCESS';
+export const PAGE_PRODUCT_SAVE_COMMENT_FAIL = 'PAGE_PRODUCT_SAVE_COMMENT_FAIL';
+export const PAGE_PRODUCT_DELETE_COMMENT = 'PAGE_PRODUCT_DELETE_COMMENT';
 
 let lastHideTimeout = 0;
 
@@ -42,3 +55,22 @@ export const pageProductShowColorAction = (colorId: ProductColorId) => (dispatch
 export const pageProductHideColorAction = () => ({
     type: PAGE_PRODUCT_HIDE_COLOR,
 });
+
+export const pageProductEditCommentAction = (text?: string): PageProductEditCommentAction => ({
+    type: PAGE_PRODUCT_EDIT_COMMENT,
+    payload: {text}
+});
+
+export const pageProductEditCommentCancelAction = (): PageProductEditCommentCancelAction => ({
+    type: PAGE_PRODUCT_EDIT_COMMENT_CANCEL,
+});
+
+export const pageProductCommentChangeAction = (text): PageProductCommentChangeAction => ({
+    type: PAGE_PRODUCT_COMMENT_CHANGE,
+    payload: {text},
+});
+
+// PageProductSaveCommentAction
+// PageProductSaveCommentSuccessAction
+// PageProductSaveCommentFailAction
+// PageProductDeleteCommentAction
