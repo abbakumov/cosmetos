@@ -5,6 +5,7 @@ import {AppState} from '../../../../../../store';
 import {
     pageProductEditCommentCancelAction,
     pageProductCommentChangeAction,
+    pageProductSaveCommentAction,
 } from '../../../state/actions';
 
 import DoubleActionButton from '../../../../../widgets/DoubleActionButton';
@@ -19,6 +20,7 @@ interface MappedProps {
 interface ActionProps {
     editCommentCancelAction(): void
     commentChangeAction(text: string): void
+    saveCommentAction(): void
 }
 
 interface Props extends MappedProps, ActionProps {}
@@ -28,7 +30,7 @@ class ProductOpinionsEdit extends Component<Props> {
 
     editCommentCancelAction = () => this.props.editCommentCancelAction();
 
-    editCommentSaveAction = () => {};
+    saveCommentAction = () => this.props.saveCommentAction();
 
     render() {
         const {text, isActive} = this.props;
@@ -53,7 +55,7 @@ class ProductOpinionsEdit extends Component<Props> {
                         leftText="Отмена"
                         rightText="Сохранить"
                         onLeftClick={this.editCommentCancelAction}
-                        onRightClick={this.editCommentSaveAction}
+                        onRightClick={this.saveCommentAction}
                     />
                 </div>
             </div>
@@ -82,6 +84,7 @@ function mapStateToProps(state: AppState): MappedProps {
 const actionProps = {
     editCommentCancelAction: pageProductEditCommentCancelAction,
     commentChangeAction: pageProductCommentChangeAction,
+    saveCommentAction: pageProductSaveCommentAction,
 }
 
 const ConnectedProductOpinionsEdit = connect(mapStateToProps, actionProps)(ProductOpinionsEdit);

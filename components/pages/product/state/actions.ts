@@ -2,13 +2,15 @@ import {PostId} from '../../../../entities/Post/types';
 import {ProductColorId} from '../../../../entities/ProductColor/types';
 import {ProductId} from '../../../../entities/ProductBase/types';
 import {AppState} from '../../../../store';
+import {postProductComment} from '../../../../entities/BlogProduct/api';
+import {BlogProductId} from '../../../../entities/BlogProduct/types';
+import {BlogLogin} from '../../../../entities/Blog/types';
 
 import {
     PageProductDataFetchedAction,
     PageProductEditCommentAction,
     PageProductEditCommentCancelAction,
     PageProductCommentChangeAction,
-    PageProductSaveCommentAction,
     PageProductSaveCommentSuccessAction,
     PageProductSaveCommentFailAction,
     PageProductDeleteCommentAction,
@@ -70,7 +72,30 @@ export const pageProductCommentChangeAction = (text): PageProductCommentChangeAc
     payload: {text},
 });
 
-// PageProductSaveCommentAction
-// PageProductSaveCommentSuccessAction
-// PageProductSaveCommentFailAction
+export const pageProductSaveCommentAction = () => async (dispatch, getState) => {
+    const state: AppState = getState();
+    const {commentEdit, id: productId} = state.pageProduct;
+    const {text} = commentEdit;
+
+    dispatch({type: PAGE_PRODUCT_SAVE_COMMENT});
+
+    const {status, id: blogProductId} = await postProductComment(productId, text);
+
+    if (status === 'success') {
+        dispatch(pageProductSaveCommentSuccessAction(blogProductId, text, productId, state.blog.currentLogin));
+    } else {
+        dispatch(pageProductSaveCommentFailAction());
+    }
+}
+
+export const pageProductSaveCommentSuccessAction =
+    (id: BlogProductId, review: string, productId: ProductId, blogLogin: BlogLogin): PageProductSaveCommentSuccessAction => ({
+    type: PAGE_PRODUCT_SAVE_COMMENT_SUCCESS,
+    payload: {id, review, productId, blogLogin},
+});
+
+export const pageProductSaveCommentFailAction = (): PageProductSaveCommentFailAction => ({
+    type: PAGE_PRODUCT_SAVE_COMMENT_FAIL,
+});
+
 // PageProductDeleteCommentAction

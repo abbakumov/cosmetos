@@ -5,7 +5,7 @@ const {
 module.exports = async function postLogin(ctx) {
     const {user} = ctx.req;
     const {id: productId} = ctx.params;
-    const {review} = ctx.request.body;
+    const {text} = ctx.request.body;
 
     if (!user || user.isAdmin) {
         ctx.body = {status: 'fail'};
@@ -17,7 +17,7 @@ module.exports = async function postLogin(ctx) {
     const userProductUpdatedParams = {
         userId: user.id,
         productId,
-        review,
+        review: text,
     };
 
     let userProduct = await UserProduct.findOne({
@@ -27,10 +27,8 @@ module.exports = async function postLogin(ctx) {
     try {
         if (userProduct) {
             await userProduct.update(userProductUpdatedParams);
-            console.log('updated userProduct: ', userProduct);
         } else {
             userProduct = await UserProduct.create(userProductUpdatedParams);
-            console.log('created userProduct: ', userProduct);
         }
     } catch (e) {
         ctx.body = {status: 'fail'};

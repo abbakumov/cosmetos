@@ -1,3 +1,5 @@
+import {PageProductSaveCommentSuccessAction} from '../../components/pages/product/state/types';
+
 import {BlogLogin} from '../Blog/types';
 
 import {BLOG_PRODUCTS_DATA_FETCHED} from './actions';
@@ -12,6 +14,12 @@ export interface BlogProduct {
     review: string;
 };
 
+export interface BlogProductState {
+    items: {
+        [s: number]: BlogProduct;
+    }
+};
+
 // ACTIONS ->
 export interface BlogProductsDataFetchedAction {
     type: typeof BLOG_PRODUCTS_DATA_FETCHED;
@@ -24,10 +32,6 @@ export interface BlogProductsDataFetchedAction {
 // <- ACTIONS
 
 export type BlogProductActionType =
-    | BlogProductsDataFetchedAction;
-
-export interface BlogProductState {
-    items: {
-        [s: number]: BlogProduct;
-    }
-};
+    | BlogProductsDataFetchedAction
+    | PageProductSaveCommentSuccessAction
+    ;

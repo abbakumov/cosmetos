@@ -1,6 +1,8 @@
 import {PostId} from '../../../../entities/Post/types';
 import {ProductColorId} from '../../../../entities/ProductColor/types';
 import {ProductId} from '../../../../entities/ProductBase/types';
+import {BlogProductId} from '../../../../entities/BlogProduct/types';
+import {BlogLogin} from '../../../../entities/Blog/types';
 
 import {
     PAGE_PRODUCT_DATA_FETCHED,
@@ -70,6 +72,12 @@ export interface PageProductSaveCommentAction {
 
 export interface PageProductSaveCommentSuccessAction {
     type: typeof PAGE_PRODUCT_SAVE_COMMENT_SUCCESS
+    payload: {
+        id: BlogProductId
+        review: string
+        productId: ProductId
+        blogLogin: BlogLogin
+    }
 }
 
 export interface PageProductSaveCommentFailAction {

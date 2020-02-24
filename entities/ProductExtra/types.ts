@@ -1,11 +1,14 @@
-import {
-    PRODUCT_EXTRA_DATA_FETCHED,
-    PRODUCTS_EXTRA_DATA_FETCHED,
-} from './actions';
+import {PageProductSaveCommentSuccessAction} from '../../components/pages/product/state/types';
+
 import {ProductId} from '../ProductBase/types';
 import {PostId} from '../Post/types';
 import {ProductColorId} from '../ProductColor/types';
 import {BlogProductId} from '../BlogProduct/types';
+
+import {
+    PRODUCT_EXTRA_DATA_FETCHED,
+    PRODUCTS_EXTRA_DATA_FETCHED,
+} from './actions';
 
 export interface ProductExtra {
     id: ProductId
@@ -39,6 +42,7 @@ export interface ProductsExtraDataFetchedAction {
 export type ProductExtraActionType =
     | ProductExtraDataFetchedAction
     | ProductsExtraDataFetchedAction
+    | PageProductSaveCommentSuccessAction
     ;
 
 export interface ProductExtraState {
