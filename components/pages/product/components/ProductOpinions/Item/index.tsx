@@ -16,12 +16,12 @@ interface ProductOpinionsItemProps {
     blogLogin: BlogLogin;
     name: string;
     imageUrl: string;
-    comment: string;
+    review: string;
 }
 
 class ProductOpinionsItem extends Component<ProductOpinionsItemProps> {
     render() {
-        const {blogLogin, name, imageUrl, comment} = this.props;
+        const {blogLogin, name, imageUrl, review} = this.props;
 
         return (
             <div className={styles.root}>
@@ -34,7 +34,7 @@ class ProductOpinionsItem extends Component<ProductOpinionsItemProps> {
                 </div>
                 <div className={styles.content}>
                     <span className={styles.name}>{name}</span>
-                    <span className={styles.comment}>{comment}</span>
+                    <span className={styles.review}>"{review}"</span>
                 </div>
             </div>
         );
@@ -44,14 +44,14 @@ class ProductOpinionsItem extends Component<ProductOpinionsItemProps> {
 function mapStateToProps(state: AppState, ownProps: ProductOpinionsItemPublicProps): ProductOpinionsItemProps {
     const {id} = ownProps;
 
-    const {blogLogin, comment} = state.blogProduct.items[id];
+    const {blogLogin, review} = state.blogProduct.items[id];
     const {name, imageUrl} = state.blog.items[blogLogin];
 
     return {
         blogLogin,
         name,
         imageUrl,
-        comment,
+        review,
     };
 }
 

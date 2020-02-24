@@ -22,12 +22,13 @@ class ProductOpinions extends Component<ProductOpinionsProps> {
 
         return (
             <div className={styles.root}>
-                <div className={styles.title}>Мнение блогеров</div>
+                <div className={styles.title}>Отзывы о продукте</div>
                 <div>
                     {opinionIds.map(id => (
                         <ProductOpinionsItem key={id} id={id} />
                     ))}
                 </div>
+                {/* TODO: more button */}
             </div>
         );
     }

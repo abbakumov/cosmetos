@@ -9,7 +9,7 @@ export interface BlogProduct {
     id: BlogProductId;
     blogLogin: BlogLogin;
     productId: ProductId;
-    comment: string;
+    review: string;
 };
 
 // ACTIONS ->

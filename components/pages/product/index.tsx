@@ -8,7 +8,7 @@ import ProductInfo from './components/ProductInfo';
 import ProductPics from './components/ProductPics';
 import ProductColors from './components/ProductColors';
 import ProductDescription from './components/ProductDescription';
-// import ProductOpinions from './components/ProductOpinions';
+import ProductOpinions from './components/ProductOpinions';
 
 import {ProductId} from '../../../entities/ProductBase/types';
 import PostsList from '../../widgets/PostsList';
@@ -35,13 +35,13 @@ class ProductPage extends Component<ProductPageProps> {
                 <ProductPics id={id} />
                 <ProductColors id={id} />
                 <ProductDescription id={id} />
+                <ProductOpinions id={id} />
                 <PostsList
                     title="Все посты с продуктом"
                     postIds={postIds}
                     namesVisible={true}
                     colorsVisible={true}
                 />
-                {/* <ProductOpinions id={id} /> */}
             </MobileLayout>
         )
     }

@@ -125,7 +125,11 @@ module.exports = async function getProduct(ctx) {
         }
     }
     const userProductArr = Object.values(userProducts)
-        .map(usProd => _.pick(usProd, ['id', 'userId', 'review']));
+        .map(usProd => ({
+            ..._.pick(usProd, ['id', 'review']),
+            blogLogin: users[usProd.userId].login,
+            productId: id,
+        }));
     const userProduct = _.keyBy(userProductArr, 'id');
 
     const productBase = {
@@ -219,8 +223,7 @@ module.exports = async function getProduct(ctx) {
         postProduct,
         postBase,
         blog,
-        blogProduct: {},
-        userProduct,
+        blogProduct: userProduct,
     };
 
     ctx.body = result;
