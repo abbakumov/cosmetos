@@ -7,6 +7,8 @@ import {
     pageProductCommentChangeAction,
 } from '../../../state/actions';
 
+import DoubleActionButton from '../../../../../widgets/DoubleActionButton';
+
 const styles = require('./styles.styl');
 
 interface MappedProps {
@@ -25,6 +27,8 @@ class ProductOpinionsEdit extends Component<Props> {
     commentChangeAction = (e) => this.props.commentChangeAction(e.target.value);
 
     editCommentCancelAction = () => this.props.editCommentCancelAction();
+
+    editCommentSaveAction = () => {};
 
     render() {
         const {text, isActive} = this.props;
@@ -45,17 +49,12 @@ class ProductOpinionsEdit extends Component<Props> {
                     onChange={this.commentChangeAction}
                 />
                 <div className={styles.controls}>
-                    <button
-                        className={styles.cancel}
-                        onClick={this.editCommentCancelAction}
-                    >
-                        Отмена
-                    </button>
-                    <button
-                        className={styles.save}
-                    >
-                        Сохранить
-                    </button>
+                    <DoubleActionButton
+                        leftText="Отмена"
+                        rightText="Сохранить"
+                        onLeftClick={this.editCommentCancelAction}
+                        onRightClick={this.editCommentSaveAction}
+                    />
                 </div>
             </div>
         );
