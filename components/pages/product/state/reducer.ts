@@ -75,10 +75,12 @@ export function pageProductReducer(state: PageProductState = initialState, actio
         case PAGE_PRODUCT_SAVE_COMMENT:
             return {
                 ...state,
-                commentEdit: {
-                    ...state.commentEdit,
-                    isSaving: true,
-                },
+                commentEdit: state.commentEdit
+                    ? {
+                        ...state.commentEdit,
+                        isSaving: true,
+                    }
+                    : null,
             };
 
         case PAGE_PRODUCT_SAVE_COMMENT_SUCCESS:
@@ -90,10 +92,12 @@ export function pageProductReducer(state: PageProductState = initialState, actio
         case PAGE_PRODUCT_SAVE_COMMENT_FAIL:
             return {
                 ...state,
-                commentEdit: {
-                    ...state.commentEdit,
-                    isSaving: true,
-                },
+                commentEdit: state.commentEdit
+                    ? {
+                        ...state.commentEdit,
+                        isSaving: false,
+                    }
+                    : null,
             };
     }
 

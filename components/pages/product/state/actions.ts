@@ -13,7 +13,6 @@ import {
     PageProductCommentChangeAction,
     PageProductSaveCommentSuccessAction,
     PageProductSaveCommentFailAction,
-    PageProductDeleteCommentAction,
 } from './types';
 
 export const PAGE_PRODUCT_DATA_FETCHED = 'PAGE_PRODUCT_DATA_FETCHED';
@@ -72,21 +71,21 @@ export const pageProductCommentChangeAction = (text): PageProductCommentChangeAc
     payload: {text},
 });
 
-export const pageProductSaveCommentAction = () => async (dispatch, getState) => {
+export const pageProductSaveCommentAction = (isRemove: boolean = false) => async (dispatch, getState) => {
     const state: AppState = getState();
     const {commentEdit, id: productId} = state.pageProduct;
-    const {text} = commentEdit;
+    const {text} = commentEdit || {};
 
     dispatch({type: PAGE_PRODUCT_SAVE_COMMENT});
 
-    const {status, id: blogProductId} = await postProductComment(productId, text);
+    const {status, id: blogProductId} = await postProductComment(productId, isRemove ? '' : text);
 
     if (status === 'success') {
         dispatch(pageProductSaveCommentSuccessAction(blogProductId, text, productId, state.blog.currentLogin));
     } else {
         dispatch(pageProductSaveCommentFailAction());
     }
-}
+};
 
 export const pageProductSaveCommentSuccessAction =
     (id: BlogProductId, review: string, productId: ProductId, blogLogin: BlogLogin): PageProductSaveCommentSuccessAction => ({
@@ -98,4 +97,8 @@ export const pageProductSaveCommentFailAction = (): PageProductSaveCommentFailAc
     type: PAGE_PRODUCT_SAVE_COMMENT_FAIL,
 });
 
-// PageProductDeleteCommentAction
+export const pageProductDeleteCommentAction = () => async (dispatch) => {
+    if (confirm('Удалить отзыв?')) {
+        dispatch(pageProductSaveCommentAction(true));
+    }
+};

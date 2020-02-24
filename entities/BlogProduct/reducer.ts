@@ -24,7 +24,7 @@ export function blogProductReducer(state = initialState, action: BlogProductActi
             };
         
         case PAGE_PRODUCT_SAVE_COMMENT_SUCCESS:
-            if (action.payload.review.length) {
+            if (action.payload.review && action.payload.review.length) {
                 // change item or create
                 return {
                     ...state,

@@ -6,7 +6,10 @@ import {BlogProductId} from '../../../../../../entities/BlogProduct/types';
 import {BlogLogin} from '../../../../../../entities/Blog/types';
 import Link from 'next/link';
 import DoubleActionButton from '../../../../../widgets/DoubleActionButton';
-import { pageProductEditCommentAction } from '../../../state/actions';
+import {
+    pageProductEditCommentAction,
+    pageProductDeleteCommentAction,
+} from '../../../state/actions';
 
 const styles = require('./styles.styl');
 
@@ -25,12 +28,15 @@ interface MappedProps {
 
 interface ActionProps {
     editCommentAction(text: string): void
+    deleteCommentAction(): void
 }
 
 interface Props extends MappedProps, ActionProps {}
 
 class ProductOpinionsItem extends Component<Props> {
     editCommentAction = () => this.props.editCommentAction(this.props.review);
+
+    deleteCommentAction = () => this.props.deleteCommentAction();
 
     render() {
         const {blogLogin, name, imageUrl, review, isEditable, isHidden} = this.props;
@@ -59,7 +65,7 @@ class ProductOpinionsItem extends Component<Props> {
                         <DoubleActionButton
                             leftText="Удалить"
                             rightText="Изменить"
-                            onLeftClick={() => {}}
+                            onLeftClick={this.deleteCommentAction}
                             onRightClick={this.editCommentAction}
                         />
                     </div>
@@ -89,7 +95,8 @@ function mapStateToProps(state: AppState, ownProps: ProductOpinionsItemProps): M
 }
 
 const actions = {
-    editCommentAction: pageProductEditCommentAction
+    editCommentAction: pageProductEditCommentAction,
+    deleteCommentAction: pageProductDeleteCommentAction,
 };
 
 const ConnectedProductOpinionsItem = connect(mapStateToProps, actions)(ProductOpinionsItem);

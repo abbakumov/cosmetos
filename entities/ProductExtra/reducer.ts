@@ -23,7 +23,7 @@ export function productExtraReducer(state = initialState, action: ProductExtraAc
         case PAGE_PRODUCT_SAVE_COMMENT_SUCCESS:
             const item = state.items[action.payload.productId];
 
-            if (action.payload.review.length) {
+            if (action.payload.review && action.payload.review.length) {
                 if (item.blogProductIds.indexOf(action.payload.id) === -1) {
                     // new
                     return {

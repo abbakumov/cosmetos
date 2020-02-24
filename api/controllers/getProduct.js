@@ -25,11 +25,15 @@ module.exports = async function getProduct(ctx) {
     const id = parseInt(_id);
     const {user} = ctx.req;
 
-    const userProductWhere = {};
+    const userProductWhere = {
+        review: {
+            [Op.not]: '',
+        },
+    };
     if (user && user.id) {
-        userProductWhere[Op.not] = [
-            {userId: user.id},
-        ];
+        userProductWhere.userId = {
+            [Op.not]: user.id,
+        };
     }
 
     const data = await Product.findOne({
@@ -115,6 +119,9 @@ module.exports = async function getProduct(ctx) {
             where: {
                 userId: user.id,
                 productId: id,
+                review: {
+                    [Op.not]: '',
+                },
             },
         });
 
