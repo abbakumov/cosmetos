@@ -9,16 +9,21 @@ import ProductOpinionsItem from './Item';
 const styles = require('./styles.styl');
 
 export interface ProductOpinionsPublicProps {
-    id: ProductId;
+    id: ProductId
 }
 
 interface ProductOpinionsProps {
-    opinionIds: BlogProductId[];
+    opinionIds: BlogProductId[]
+    isVisible: boolean
 }
 
 class ProductOpinions extends Component<ProductOpinionsProps> {
     render() {
-        const {opinionIds} = this.props;
+        const {opinionIds, isVisible} = this.props;
+
+        if (!isVisible) {
+            return null;
+        }
 
         return (
             <div className={styles.root}>
@@ -42,8 +47,17 @@ function mapStateToProps(state: AppState, ownProps: ProductOpinionsPublicProps):
         .filter(_id => state.blogProduct.items[_id].productId === id)
         .map(_id => parseInt(_id));
 
+    let isVisible = false;
+    try {
+        isVisible = Boolean(state.blog.currentLogin) // blogger is logged in
+        || state.productExtra.items[id].blogProductIds.length > 0; // any opinions is able
+    } catch (e) {
+        console.warn('error in ProductOpinions mapStateToProps');
+    }
+
     return {
         opinionIds: filteredOpinionIds,
+        isVisible,
     };
 }
 

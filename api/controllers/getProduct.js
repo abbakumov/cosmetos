@@ -175,7 +175,7 @@ module.exports = async function getProduct(ctx) {
         postIds,
         bigPicUrl: makeProductBigPicUrl(productEntity.ProductPictures[0].picture),
         colorIds: productEntity.ProductColors,
-        userProductIds,
+        blogProductIds: userProductIds,
     }
 
     const productColorMap = productEntity.ProductColors

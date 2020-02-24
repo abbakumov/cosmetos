@@ -5,14 +5,15 @@ import {
 import {ProductId} from '../ProductBase/types';
 import {PostId} from '../Post/types';
 import {ProductColorId} from '../ProductColor/types';
+import {BlogProductId} from '../BlogProduct/types';
 
 export interface ProductExtra {
-    id: ProductId;
-    description: string;
-    postIds: PostId[];
-    bigPicUrl: string;
-    isMultyColor: boolean;
-    colorIds: ProductColorId[];
+    id: ProductId
+    description: string
+    postIds: PostId[]
+    bigPicUrl: string
+    colorIds: ProductColorId[]
+    blogProductIds: BlogProductId[]
 }
 
 export interface ProductExtraMap {
