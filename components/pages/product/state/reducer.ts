@@ -13,6 +13,7 @@ const initialState: PageProductState = {
     id: null,
     refPost: null,
     activeColorId: null,
+    commentEdit: null,
 };
 
 export function pageProductReducer(state: PageProductState = initialState, action: PageProductAction): PageProductState {

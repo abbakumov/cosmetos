@@ -8,10 +8,16 @@ import {
     PAGE_PRODUCT_HIDE_COLOR,
 } from './actions';
 
+export interface CommentEdit {
+    text: string
+    isSaving: boolean
+}
+
 export interface PageProductState {
     id?: ProductId
     refPost?: PostId
     activeColorId?: ProductColorId
+    commentEdit?: CommentEdit
 }
 
 export interface PageProductDataFetchedAction {
