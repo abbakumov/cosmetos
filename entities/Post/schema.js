@@ -4,10 +4,12 @@ const postSchema = new schema.Entity('posts');
 
 const brandSchema = new schema.Entity('brands');
 const productColorSchema = new schema.Entity('productColors');
+const userProductSchema = new schema.Entity('userProducts');
 
 const productSchema = new schema.Entity('products', {
     Brand: brandSchema,
     ProductColors: [productColorSchema],
+    UserProducts: [userProductSchema],
 });
 
 const postPartProductsSchema = new schema.Entity('postPartProducts', {

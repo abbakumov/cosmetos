@@ -12,6 +12,7 @@ const {
     User,
     PostPart,
     Product,
+    UserProduct,
     PostPartProduct,
     ProductColor,
     ProductPicture,
@@ -21,6 +22,11 @@ const {
 module.exports = async function getPost(ctx) {
     const {id: _id} = ctx.params;
     const id = parseInt(_id);
+
+    const {userId} = await Post.findOne({
+        where: {id},
+        attributes: ['userId'],
+    });
 
     // data fetching
     const data = await Post.findOne({
@@ -59,6 +65,12 @@ module.exports = async function getPost(ctx) {
                                         model: Brand,
                                         attributes: ['id', 'titleShort'],
                                     },
+                                    {
+                                        model: UserProduct,
+                                        attributes: ['id', 'productId', 'review'],
+                                        where: {userId},
+                                        required: false,
+                                    },
                                 ],
                             },
                         ],
@@ -87,7 +99,16 @@ module.exports = async function getPost(ctx) {
     );
 
     // fields mapping
-    const {brands, products, postPartProducts, productColors, postParts, users, posts} = normalizedPost.entities;
+    const {
+        brands,
+        products = {},
+        postPartProducts,
+        productColors,
+        postParts,
+        users,
+        posts,
+        userProducts = {},
+    } = normalizedPost.entities;
     const postEntity = posts[normalizedPost.result];
     const userEntity = users[postEntity.userId];
 
@@ -158,6 +179,13 @@ module.exports = async function getPost(ctx) {
         }));
     const productBase = _.keyBy(productBaseMap, 'id');
 
+    const blogProductArr = Object.values(userProducts)
+        .map(userProduct => ({
+            ..._.pick(userProduct, ['id', 'productId', 'review']),
+            blogLogin: blogItem.login,
+        }))
+    const blogProduct = _.keyBy(blogProductArr, 'id');
+
     const result = {
         postBase,
         postExtra,
@@ -166,8 +194,8 @@ module.exports = async function getPost(ctx) {
         postPartProduct,
         productColor,
         productBase,
-        blogProduct: {}, // TO BE DONE
-    }
+        blogProduct,
+    };
 
     ctx.body = result;
 };
