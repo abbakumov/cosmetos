@@ -3,7 +3,7 @@ version: '3'
 services:
   app:
     restart: always
-    image: abbakumov/cosmetos:2.8
+    image: abbakumov/cosmetos:2.9
     ports:
       - 3000:3000
       - 9229:9229
