@@ -23,7 +23,8 @@ interface PostProductProps {
     brand: string
     title: string
     smallPicUrl: string
-    comment: string
+    review: string
+    reviewAuthorImageUrl: string
     color: string
     backIndex: number
     isShown: boolean
@@ -39,7 +40,8 @@ class PostProduct extends Component<PostProductProps> {
             brand,
             title,
             smallPicUrl,
-            comment,
+            review,
+            reviewAuthorImageUrl,
             color,
             backIndex,
             isShown,
@@ -75,7 +77,12 @@ class PostProduct extends Component<PostProductProps> {
                                 <span className={styles.colorText}>{colorTitle}</span>
                             </div>
                         }
-                        {!!comment && <div className={styles.comment}>"{comment}"</div>}
+                        {!!review && (
+                            <div className={styles.review}>
+                                <img className={styles.reviewImage} src={reviewAuthorImageUrl}/>
+                                <div className={styles.reviewText}>"{review}"</div>
+                            </div>
+                        )}
                     </div>
                     <img className={styles.arr} src="/static/icons/post-page/product-arr.svg" />
                 </a>
@@ -91,9 +98,12 @@ function mapStateToProps(state: AppState, ownProps: PostProductPublicProps): Pos
     const {brand, title, smallPicUrl} = product;
 
     const blogProductItems = state.blogProduct.items;
-    const blockProductKey = Object.keys(blogProductItems).find(_id => blogProductItems[_id].productId === id);
-    const blogProductItem = blockProductKey && blogProductItems[blockProductKey];
-    const comment = blogProductItem && blogProductItem.comment;
+    const blogProductItem = Object.values(blogProductItems).find(item => item.productId === id);
+    let review, reviewAuthorImageUrl;
+    if (blogProductItem) {
+        review = blogProductItem.review;
+        reviewAuthorImageUrl = state.blog.items[blogProductItem.blogLogin].imageUrl;
+    }
 
     const postPart = state.postPart.items[partId];
     const {color} = postPart;
@@ -116,7 +126,8 @@ function mapStateToProps(state: AppState, ownProps: PostProductPublicProps): Pos
         brand,
         title,
         smallPicUrl,
-        comment,
+        review,
+        reviewAuthorImageUrl,
         color,
         backIndex,
         isShown,
