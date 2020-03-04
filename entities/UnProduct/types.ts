@@ -5,28 +5,29 @@ import {ProductId} from '../ProductBase/types';
 export type UnProductId = number;
 
 export interface UnProduct {
-    id: UnProductId;
-    brandId?: BrandId;
-    brandText: string;
-    productId: ProductId;
-    productText: string;
-    colorText: string;
+    id: UnProductId
+    brandId?: BrandId
+    brandText?: string
+    productId?: ProductId
+    productText?: string
+    colorText?: string
+}
+
+export interface UnProductMap {
+    [id: number]: UnProduct
 }
 
 export interface UnProductState {
-    items: {
-        [id: number]: UnProduct;
-    };
+    items: UnProductMap
 }
 
 export interface UnProductsDataFetchedAction {
-    type: typeof UN_PRODUCTS_DATA_FETCHED;
+    type: typeof UN_PRODUCTS_DATA_FETCHED
     payload: {
-        data: {
-            [id: number]: UnProduct;
-        };
+        data: UnProductMap
     };
 }
 
 export type UnProductAction =
-    | UnProductsDataFetchedAction;
+    | UnProductsDataFetchedAction
+    ;
