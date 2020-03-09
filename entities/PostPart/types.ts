@@ -4,7 +4,7 @@ import {
     PostEditProductRemoveSuccess,
 } from '../../components/pages/post-edit/store/types';
 
-import {ProductId} from '../ProductBase/types';
+import {AbstractProductId} from '../AbstractProduct/types';
 import {Position} from '../Position';
 
 import {POST_PARTS_DATA_FETCHED} from './actions';
@@ -16,7 +16,7 @@ export interface PostPart {
     title: string;
     position: Position;
     color: string;
-    productIds: ProductId[];
+    productIds: AbstractProductId[];
 }
 
 // ACTIONS ->

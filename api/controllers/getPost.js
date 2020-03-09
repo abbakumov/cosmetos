@@ -151,7 +151,7 @@ module.exports = async function getPost(ctx) {
                 y: pp.positionY * 100, // TODO: refact
             },
             color: pp.colorHex, // TODO: refact
-            productIds: pp.PostPartProducts.map(id => postPartProducts[id].productId),
+            productIds: pp.PostPartProducts.map(id => 'a' + postPartProducts[id].productId),
         }));
     const postPart = _.keyBy(postPartMap, 'id');
 
@@ -170,14 +170,14 @@ module.exports = async function getPost(ctx) {
         }));
     const productColor = _.keyBy(productColorMap, 'id');
 
-    const productBaseMap = Object.keys(products)
+    const productBaseArr = Object.keys(products)
         .map(id => products[id])
         .map(product => ({
             ..._.pick(product, ['id', 'title', 'kind']),
             brand: brands[product.Brand].titleShort,
             smallPicUrl: makeProductSmallPicUrl(product.ProductPictures[0].picture),
         }));
-    const productBase = _.keyBy(productBaseMap, 'id');
+    const productBase = _.keyBy(productBaseArr, 'id');
 
     const blogProductArr = Object.values(userProducts)
         .map(userProduct => ({

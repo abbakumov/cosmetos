@@ -5,23 +5,23 @@ import {scrollToWhen} from 'react-redux-scroll';
 import {AppState} from '../../../../../store';
 import {PostId} from '../../../../../entities/Post/types';
 import {PostPartId} from '../../../../../entities/PostPart/types';
-import {ProductId} from '../../../../../entities/ProductBase/types';
+import {AbstractProductId} from '../../../../../entities/AbstractProduct/types';
 
-import PostProduct from '../PostProduct';
 import {postPageTogglePartAction, POST_PAGE_SCROLL_TO_PART} from '../../state/actions';
+import AbstractPostProduct from '../AbstractPostProduct';
 
 const styles = require('./styles.styl');
 
 export interface PostProductsPartPublicProps {
-    id: PostId;
+    id: PostId
 }
 
 interface MappedProps {
-    id: PostPartId;
-    title: string;
-    color: string;
-    productIds: ProductId[];
-    isOpen: boolean;
+    id: PostPartId
+    title: string
+    color: string
+    productIds: AbstractProductId[]
+    isOpen: boolean
 }
 
 interface DispatchedProps {
@@ -31,10 +31,10 @@ interface DispatchedProps {
 interface Props extends MappedProps, DispatchedProps {}
 interface State {
     // are nodes rendered in DOM?
-    isNodesActive: boolean;
+    isNodesActive: boolean
     // are nodes shown to user?
-    isNodesShown: boolean;
-    removeTimeoutId?: number;
+    isNodesShown: boolean
+    removeTimeoutId?: number
 }
 
 class PostProductsPart extends Component<Props, State> {
@@ -114,7 +114,7 @@ class PostProductsPart extends Component<Props, State> {
                 {isNodesActive &&
                     <div className={styles.productsContainer}>
                         {productIds.map((_id, index, arr) => (
-                            <PostProduct
+                            <AbstractPostProduct
                                 key={_id}
                                 id={_id}
                                 partId={id}
