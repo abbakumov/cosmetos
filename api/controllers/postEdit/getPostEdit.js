@@ -96,7 +96,7 @@ module.exports = async function getPostEdit(ctx) {
             y: part.positionY * 100,
         },
         color: part.colorHex,
-        productIds: part.PostPartProducts.map(id => postPartProducts[id].Product),
+        productIds: part.PostPartProducts.map(id => 'a' + postPartProducts[id].Product),
     }));
     const postPart = _.keyBy(postPartMap, 'id');
 

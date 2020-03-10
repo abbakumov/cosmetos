@@ -1,32 +1,25 @@
 import {FunctionComponent} from 'react';
-import {connect} from 'react-redux';
 
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-import {AppState} from '../../../../../store';
-import {ProductId} from '../../../../../entities/ProductBase/types';
-import {postEditProductRemoveAction} from '../../store/actions';
 import {PostProductId} from '../../../../../entities/PostProduct/types';
+import {UnProductId} from '../../../../../entities/UnProduct/types';
 
-export interface PostEditPartProductProps {
-    id: ProductId;
+export interface DataProps {
+    id: PostProductId | UnProductId
+    brand: string
+    product: string
+    color: string
 }
 
-interface MappedProps {
-    postProductId: PostProductId;
-    brand: string;
-    product: string;
-    color: string;
+export interface ActionProps {
+    productRemoveAction(id: PostProductId | UnProductId): void
 }
 
-interface ActionProps {
-    productRemoveAction(id: PostProductId): void;
-}
-
-interface Props extends MappedProps, ActionProps {}
+interface Props extends DataProps, ActionProps {}
 
 const PostEditPartProduct: FunctionComponent<Props> = (props: Props) => (
     <TableRow>
@@ -36,7 +29,7 @@ const PostEditPartProduct: FunctionComponent<Props> = (props: Props) => (
         <TableCell align="right">
             <Button
                 size="small"
-                onClick={() => props.productRemoveAction(props.postProductId)}
+                onClick={() => props.productRemoveAction(props.id)}
             >
                 <Icon>delete</Icon>
                 Удалить
@@ -45,32 +38,4 @@ const PostEditPartProduct: FunctionComponent<Props> = (props: Props) => (
     </TableRow>
 );
 
-function mapStateToProps(state: AppState, ownProps: PostEditPartProductProps) {
-    const product = state.productBase.items[ownProps.id];
-    const {brand, title} = product;
-
-    const ppItems = state.postProduct.items;
-    const postProduct = Object.values(ppItems).find(_postProduct => (
-        // post product postId is current post id?
-        _postProduct.postId === state.pagePostEdit.postEdit.id
-        // post product productId is current product id?
-        && _postProduct.productId === ownProps.id
-    ));
-
-    const color = state.productColor.items[postProduct.productColorId];
-
-    return {
-        postProductId: postProduct.id,
-        brand,
-        product: title,
-        color: color ? color.title : null,
-    };
-}
-
-const actionProps = {
-    productRemoveAction: postEditProductRemoveAction,
-};
-
-const ConnectedPostEditPartProduct = connect(mapStateToProps, actionProps)(PostEditPartProduct);
-
-export default ConnectedPostEditPartProduct;
+export default PostEditPartProduct;

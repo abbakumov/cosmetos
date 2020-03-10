@@ -19,7 +19,7 @@ import {
 import {PostPart, PostPartId} from '../../../../../entities/PostPart/types';
 import {AppState} from '../../../../../store';
 
-import PostEditPartProduct from '../PostEditPartProduct';
+import PostEditPartAbstractProduct from '../PostEditPartAbstractProduct';
 import PostEditPartAddProduct from '../PostEditPartAddProduct';
 
 const styles = require('./styles.styl');
@@ -81,7 +81,7 @@ const PostEditPart: FunctionComponent<Props> = (props: Props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {/* {props.productIds.map(id => <PostEditPartProduct key={id} id={id} />)} */}
+                        {props.productIds.map(id => <PostEditPartAbstractProduct key={id} id={id} />)}
                     </TableBody>
                 </Table>
             </div>

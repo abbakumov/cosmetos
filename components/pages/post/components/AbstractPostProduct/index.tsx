@@ -23,7 +23,7 @@ const AbstractPostProduct: FC<AbstractPostProductProps> = (props: AbstractPostPr
             return <AsPostProductContainer {...props} id={numberId} />;
 
         case 'UNASSIGNED':
-            return <UnPostProductContainer {...props} id={numberId} />
+            return <UnPostProductContainer {...props} id={numberId} />;
     }
 
     return null;
