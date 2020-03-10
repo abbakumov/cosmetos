@@ -14,7 +14,7 @@ export interface UnPostProductProps {
 }
 
 function mapStateToProps(state: AppState, props: UnPostProductProps): PostProductProps {
-    const {id, backIndex, isShown} = props;
+    const {backIndex, isShown} = props;
 
     return {
         brand: '',

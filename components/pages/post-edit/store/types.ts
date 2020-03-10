@@ -6,7 +6,6 @@ import {ProductColorId} from '../../../../entities/ProductColor/types';
 import {PostId} from '../../../../entities/Post/types';
 import {PostProductId} from '../../../../entities/PostProduct/types';
 import {Position} from '../../../../entities/Position';
-import {AbstractProductId} from '../../../../entities/AbstractProduct/types';
 
 import {
     POST_EDIT_PAGE_DATA_FETCHED,
@@ -172,7 +171,7 @@ export interface PostEditProductSaveSuccessAction {
     payload: {
         postId: PostId
         postPartId: PostPartId
-        productId: AbstractProductId
+        productId: ProductId
         productColorId?: ProductColorId
         postPartProductId: PostProductId
     };
@@ -186,7 +185,7 @@ export interface PostEditProductRemoveSuccess {
     type: typeof POST_EDIT_PRODUCT_REMOVE_SUCCESS;
     payload: {
         postProductId: PostProductId
-        productId: AbstractProductId
+        productId: ProductId
     };
 }
 

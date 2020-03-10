@@ -32,7 +32,7 @@ export function postPartReducer(state = initialState, action: PostPartActionType
                         ...state.items[action.payload.postPartId],
                         productIds: [
                             ...state.items[action.payload.postPartId].productIds,
-                            action.payload.productId,
+                            'a' + action.payload.productId,
                         ],
                     },
                 },
@@ -48,8 +48,9 @@ export function postPartReducer(state = initialState, action: PostPartActionType
             };
 
         case POST_EDIT_PRODUCT_REMOVE_SUCCESS:
+            const abstractId = 'a' + action.payload.productId;
             const item = Object.values(state.items)
-                .find(item => item.productIds.indexOf(action.payload.productId) !== -1);
+                .find(item => item.productIds.indexOf(abstractId) !== -1);
 
             if (!item) {
                 console.warn('No item found in POST_EDIT_PRODUCT_REMOVE_SUCCESS');
@@ -62,7 +63,7 @@ export function postPartReducer(state = initialState, action: PostPartActionType
                     ...state.items,
                     [item.id]: {
                         ...item,
-                        productIds: item.productIds.filter(_id => _id !== action.payload.productId),
+                        productIds: item.productIds.filter(_id => _id !== abstractId),
                     },
                 },
             };
