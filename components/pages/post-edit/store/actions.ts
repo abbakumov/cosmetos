@@ -164,7 +164,7 @@ export function postEditProductFieldTextChangeAction(fieldName: string, value: s
 }
 
 // TODO: TypeScript
-export function postEditProductBrandChangeAction(id: BrandId): any {
+export function postEditProductBrandChangeAction(id: BrandId | null): any {
     return (dispatch) => {
         dispatch({
             type: POST_EDIT_PRODUCT_BRAND_CHANGE,
@@ -182,7 +182,7 @@ export function postEditProductBrandChangeAction(id: BrandId): any {
 }
 
 // TODO: TypeScript
-export function postEditProductProductChangeAction(id: ProductId): any {
+export function postEditProductProductChangeAction(id: ProductId | null): any {
     return (dispatch) => {
         dispatch({
             type: POST_EDIT_PRODUCT_PRODUCT_CHANGE,
@@ -199,7 +199,7 @@ export function postEditProductProductChangeAction(id: ProductId): any {
     }
 }
 
-export function postEditProductColorChangeAction(colorId: ProductColorId): PostEditProductColorChangeAction {
+export function postEditProductColorChangeAction(colorId: ProductColorId | null): PostEditProductColorChangeAction {
     return {
         type: POST_EDIT_PRODUCT_COLOR_CHANGE,
         payload: {colorId},

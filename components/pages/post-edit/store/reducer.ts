@@ -124,47 +124,56 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
             };
 
         case POST_EDIT_PRODUCT_FIELD_TEXT_CHANGE:
-            const {fieldName} = action.payload;
+            const {fieldName, value} = action.payload;
 
             return {
                 ...state,
                 editPostPartProduct: {
                     ...state.editPostPartProduct,
+                    productText: (
+                        fieldName === 'brandText' && value === ''
+                            ? ''
+                            : state.editPostPartProduct.productText
+                    ),
+                    productColorText: (
+                        ['brandText', 'productText'].includes(fieldName) && value === ''
+                            ? ''
+                            : state.editPostPartProduct.productColorText
+                    ),
                     [fieldName]: action.payload.value,
-                    brandId: (
-                        fieldName === 'brandText'
-                            ? null
-                            : state.editPostPartProduct.brandId
-                    ),
-                    productId: (
-                        ['brandText', 'productText'].includes(fieldName)
-                            ? null
-                            : state.editPostPartProduct.productId
-                    ),
-                    productColorId: (
-                        ['brandText', 'productText', 'productColorText'].includes(fieldName)
-                            ? null
-                            : state.editPostPartProduct.productColorId
-                    ),
                 },
             };
 
         case POST_EDIT_PRODUCT_BRAND_CHANGE:
+            const brandChangeNewEditPostPartProduct = {
+                ...state.editPostPartProduct,
+                brandId: action.payload.id,
+                brandText: '',
+            };
+            if (action.payload.id === null) {
+                brandChangeNewEditPostPartProduct.productText = '';
+                brandChangeNewEditPostPartProduct.productId = null;
+                brandChangeNewEditPostPartProduct.productColorText = '';
+                brandChangeNewEditPostPartProduct.productColorId = null;
+            }
             return {
                 ...state,
-                editPostPartProduct: {
-                    ...state.editPostPartProduct,
-                    brandId: action.payload.id,
-                },
+                editPostPartProduct: brandChangeNewEditPostPartProduct,
             };
 
         case POST_EDIT_PRODUCT_PRODUCT_CHANGE:
+            const productChangeNewEditPostPartProduct = {
+                ...state.editPostPartProduct,
+                productId: action.payload.id,
+                productText: '',
+            };
+            if (action.payload.id === null) {
+                productChangeNewEditPostPartProduct.productColorText = '';
+                productChangeNewEditPostPartProduct.productColorId = null;
+            }
             return {
                 ...state,
-                editPostPartProduct: {
-                    ...state.editPostPartProduct,
-                    productId: action.payload.id,
-                },
+                editPostPartProduct: productChangeNewEditPostPartProduct,
             };
 
         case POST_EDIT_PRODUCT_COLOR_CHANGE:
@@ -173,6 +182,7 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 editPostPartProduct: {
                     ...state.editPostPartProduct,
                     productColorId: action.payload.colorId,
+                    productColorText: '',
                 },
             };
 

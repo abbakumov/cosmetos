@@ -1,6 +1,5 @@
 import {Component} from 'react';
 import {connect} from 'react-redux';
-import Downshift from 'downshift';
 
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -44,32 +43,34 @@ interface ActionProps {
 
 interface Props extends MappedProps, ActionProps {}
 
-function getItemId<T>(items: {id?: T, value: string}[], value: string): T {
-    return items.find(item => item.value === value).id;
+interface State {
+    isOpen: boolean
 }
 
-class PostEditPartProductDropDown extends Component<Props> {
-    onChange = (value) => {
-        // console.log('onChange value: ', value);
+class PostEditPartProductDropDown extends Component<Props, State> {
+    state = {
+        isOpen: false,
+    };
 
-        if (this.props.items.length && this.props.items[0].id) {
-            const id = getItemId(this.props.items, value);
-            console.log('id: ', id);
-            this.props.fieldChange(id);
-        } else {
-            this.props.fieldChange(value);
-        }
+    onChange = (item) => {
+        this.props.fieldChange(item.id);
     }
 
-    onInputValueChange = (value) => {
-        // console.log('current selected item: ', this.props.selectedItem);
-        // console.log('current inputValue: ', this.props.inputValue);
-        // console.log('value: ', value);
+    onInputValueChange = (event) => {
+        const {value} = event.target;
 
         if (this.props.inputValue !== value) {
             this.props.fieldTextChange(value);
         }
     }
+
+    onFocus = () => {
+        this.setState({isOpen: true});
+    };
+
+    onBlur = () => {
+        this.setState({isOpen: false});
+    };
 
     render() {
         if (!this.props.isActive) {
@@ -78,49 +79,30 @@ class PostEditPartProductDropDown extends Component<Props> {
 
         return (
             <div className={styles.root}>
-                <Downshift
-                    onChange={this.onChange}
-                    inputValue={this.props.inputValue}
-                    selectedItem={this.props.selectedItem}
-                    onInputValueChange={this.onInputValueChange}
-                    itemToString={item => (item ? item.value : '')}
-                >
-                    {({
-                        getInputProps,
-                        getItemProps,
-                        getLabelProps,
-                        getMenuProps,
-                        isOpen,
-                        inputValue,
-                        highlightedIndex,
-                        selectedItem,
-                    }) => {
-                        return (
-                            <div className={styles.container}>
-                                <TextField
-                                    label={this.props.label}
-                                    {...getInputProps()}
-                                    fullWidth
-                                />
-                                {isOpen &&
-                                    <Paper className={styles.suggest}>
-                                        {this.props.items
-                                            .map((item, index) => (
-                                                <MenuItem
-                                                    {...getItemProps({item: item.value})}
-                                                    key={item.value}
-                                                    selected={highlightedIndex === index}
-                                                >
-                                                    {item.value}
-                                                </MenuItem>
-                                            ))
-                                        }
-                                    </Paper>
-                                }
-                            </div>
-                        )
-                    }}
-                </Downshift>
+                <div className={styles.container}>
+                    <TextField
+                        label={this.props.label}
+                        fullWidth
+                        onChange={this.onInputValueChange}
+                        onFocus={this.onFocus}
+                        onBlur={this.onBlur}
+                    />
+                    {this.state.isOpen &&
+                        <Paper className={styles.suggest}>
+                            {this.props.items
+                                .map((item, index) => (
+                                    <MenuItem
+                                        key={item.value}
+                                        selected={false}
+                                        onMouseDown={() => this.onChange(item)}
+                                    >
+                                        {item.value}
+                                    </MenuItem>
+                                ))
+                            }
+                        </Paper>
+                    }
+                </div>
             </div>
         );
     }
@@ -184,6 +166,8 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
 
         case 'product':
             const brandProductsItem = state.brandProducts.items[brandId];
+            const productIds = brandProductsItem ? brandProductsItem.productIds : [];
+
             const postId = postEdit.id;
 
             // collect all ids which already in use in this post
@@ -197,13 +181,13 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
                     []
                 );
 
-            if (brandId && brandProductsItem) {
+            if (brandId || brandText) {
                 label = 'Продукт';
                 isActive = true;
 
                 inputValue = productText;
                 items = getFilteredProductItems(
-                    brandProductsItem.productIds.map(id => state.productBase.items[id]),
+                    productIds.map(id => state.productBase.items[id]),
                     productText,
                     usedIds
                 );
@@ -213,14 +197,16 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
             break;
 
         case 'color':
-            const productExtraItem = state.productExtra.items[productId]
-            if (productId && productExtraItem) {
+            const productExtraItem = state.productExtra.items[productId];
+            const colorIds = productExtraItem ? productExtraItem.colorIds : [];
+
+            if (productId || productText) {
                 label = 'Цвет';
                 isActive = true;
 
                 inputValue = productColorText;
                 items = getFilteredColorItems(
-                    productExtraItem.colorIds.map(id => state.productColor.items[id]),
+                    colorIds.map(id => state.productColor.items[id]),
                     productColorText
                 );
                 selectedItem = items.find(item => item.id === productColorId) || null;
@@ -267,7 +253,6 @@ function mapDispatchToProps(dispatch, ownProps: PostEditPartProductDropDownProps
             }
         },
         fieldTextChange(value?: string) {
-            console.log('fieldTextChange value: ', value);
             dispatch(postEditProductFieldTextChangeAction(textChangeFieldName, value || ''));
         }
     };
