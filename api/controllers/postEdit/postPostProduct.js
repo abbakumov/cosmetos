@@ -1,9 +1,23 @@
-const {Post, PostPart, PostPartProduct} = require('../../database/models');
+const {Post, PostPart, PostPartProduct, UnassignedProduct} = require('../../database/models');
+
+/**
+ * If there is productId and no productColorText, then product is assigned anyway
+ * @param {Object} productInfo
+ * @param {number} productInfo.productId
+ * @param {string} productInfo.productColorText
+ */
+function checkIfAssigned({productId, productColorText}) {
+    return !!productId && !productColorText;
+}
 
 module.exports = async function postPostProduct(ctx) {
     const {
         postPartId,
+        brandText,
+        brandId,
+        productText,
         productId,
+        productColorText,
         productColorId,
     } = ctx.request.body;
 
@@ -27,15 +41,22 @@ module.exports = async function postPostProduct(ctx) {
         return;
     }
 
+    if (!checkIfAssigned({productId, productColorText})) {
+        const {id: unassignedProductId} = await UnassignedProduct.create({
+            brandId,
+            brandText,
+            productId,
+            productText,
+            productColorText,
+        });
+        ctx.body = {status: 'success', unassignedProductId};
+        return;
+    }
 
-    const result = await PostPartProduct.create({
+    const {id: postPartProductId} = await PostPartProduct.create({
         postPartId,
         productId,
         productColorId,
     });
-
-    ctx.body = {
-        status: 'success',
-        postPartProductId: result.id,
-    };
+    ctx.body = {status: 'success', postPartProductId};
 };
