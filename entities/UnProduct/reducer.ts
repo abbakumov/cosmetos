@@ -1,3 +1,9 @@
+import _ from 'lodash';
+
+import {
+    POST_EDIT_PRODUCT_SAVE_SUCCESS_UN,
+} from '../../components/pages/post-edit/store/actions';
+
 import {
     UnProductState,
     UnProductAction,
@@ -18,6 +24,26 @@ export function unProductReducer(state: UnProductState = initialState, action: U
                 items: {
                     ...state.items,
                     ...action.payload.data,
+                },
+            };
+
+        case POST_EDIT_PRODUCT_SAVE_SUCCESS_UN:
+            return {
+                items: {
+                    ...state.items,
+                    [action.payload.unProductId]: {
+                        id: action.payload.unProductId,
+                        ..._.pick(
+                            action.payload,
+                            [
+                                'brandText',
+                                'brandId',
+                                'productText',
+                                'productId',
+                                'productColorText',
+                            ]
+                        ),
+                    }
                 },
             };
     }

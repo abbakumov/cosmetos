@@ -6,6 +6,7 @@ import {ProductColorId} from '../../../../entities/ProductColor/types';
 import {PostId} from '../../../../entities/Post/types';
 import {PostProductId} from '../../../../entities/PostProduct/types';
 import {Position} from '../../../../entities/Position';
+import {UnProductId} from '../../../../entities/UnProduct/types';
 
 import {
     POST_EDIT_PAGE_DATA_FETCHED,
@@ -22,7 +23,8 @@ import {
     POST_EDIT_PRODUCT_COLOR_CHANGE,
     POST_EDIT_PRODUCT_CANCEL,
     POST_EDIT_PRODUCT_SAVE,
-    POST_EDIT_PRODUCT_SAVE_SUCCESS,
+    POST_EDIT_PRODUCT_SAVE_SUCCESS_AS,
+    POST_EDIT_PRODUCT_SAVE_SUCCESS_UN,
     POST_EDIT_PRODUCT_SAVE_FAIL,
     POST_EDIT_PRODUCT_REMOVE_SUCCESS,
     POST_EDIT_PRODUCT_REMOVE_FAIL,
@@ -166,14 +168,28 @@ export interface PostEditProductSaveAction {
     type: typeof POST_EDIT_PRODUCT_SAVE;
 }
 
-export interface PostEditProductSaveSuccessAction {
-    type: typeof POST_EDIT_PRODUCT_SAVE_SUCCESS
+export interface PostEditProductSaveSuccessAsAction {
+    type: typeof POST_EDIT_PRODUCT_SAVE_SUCCESS_AS
     payload: {
         postId: PostId
         postPartId: PostPartId
         productId: ProductId
         productColorId?: ProductColorId
         postPartProductId: PostProductId
+    };
+}
+
+export interface PostEditProductSaveSuccessUnAction {
+    type: typeof POST_EDIT_PRODUCT_SAVE_SUCCESS_UN
+    payload: {
+        postId: PostId
+        postPartId: PostPartId
+        unProductId: UnProductId
+        brandId?: BrandId
+        brandText?: string
+        productId?: ProductId
+        productText?: string
+        productColorText?: string
     };
 }
 
@@ -267,7 +283,8 @@ export type PagePostEditActionType =
     | PostEditProductColorChangeAction
     | PostEditProductCancelAction
     | PostEditProductSaveAction
-    | PostEditProductSaveSuccessAction
+    | PostEditProductSaveSuccessAsAction
+    | PostEditProductSaveSuccessUnAction
     | PostEditProductSaveFailAction
     | PostEditProductRemoveSuccess
     | PostEditProductRemoveFail

@@ -1,5 +1,6 @@
 import {
-    POST_EDIT_PRODUCT_SAVE_SUCCESS, POST_EDIT_PRODUCT_REMOVE_SUCCESS,
+    POST_EDIT_PRODUCT_SAVE_SUCCESS_AS,
+    POST_EDIT_PRODUCT_REMOVE_SUCCESS,
 } from '../../components/pages/post-edit/store/actions';
 
 import {PostProductState, PostProductActionType} from './types';
@@ -21,7 +22,7 @@ export function postProductReducer(state = initialState, action: PostProductActi
                 },
             };
 
-        case POST_EDIT_PRODUCT_SAVE_SUCCESS:
+        case POST_EDIT_PRODUCT_SAVE_SUCCESS_AS:
             return {
                 items: {
                     ...state.items,

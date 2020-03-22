@@ -25,16 +25,3 @@ export const postPartEditSchema = new Schema({
         message: 'Название области не может быть пустым',
     },
 });
-
-export const postProductEditSchema = new Schema({
-    brandId: {
-        type: Number,
-        required: true,
-        message: 'Бренд не может быть пустым',
-    },
-    productId: {
-        type: Number,
-        required: true,
-        message: 'Продукт не может быть пустым',
-    },
-});

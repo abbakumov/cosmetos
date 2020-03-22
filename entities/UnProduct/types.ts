@@ -1,3 +1,5 @@
+import {PostEditProductSaveSuccessUnAction} from '../../components/pages/post-edit/store/types';
+
 import {UN_PRODUCTS_DATA_FETCHED} from './actions';
 import {BrandId} from '../Brand/types';
 import {ProductId} from '../ProductBase/types';
@@ -30,4 +32,5 @@ export interface UnProductsDataFetchedAction {
 
 export type UnProductAction =
     | UnProductsDataFetchedAction
+    | PostEditProductSaveSuccessUnAction
     ;

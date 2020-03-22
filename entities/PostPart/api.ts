@@ -5,6 +5,7 @@ import {PostId} from '../Post/types';
 import {PostPartId, PostPart} from './types';
 import {EditPostPartProduct} from '../../components/pages/post-edit/store/types';
 import {PostProductId} from '../PostProduct/types';
+import {UnProductId} from '../UnProduct/types';
 
 export interface SavePostPartResponse {
     status: string;
@@ -40,14 +41,30 @@ export function deletePostPart(id: PostPartId): Promise<DeletePostPartResponse> 
 }
 
 
-interface SavePostPartProductResponse {
-    status: 'success' | 'fail';
-    postPartProductId: PostProductId;
+type SavePostPartProductOptions = Pick<EditPostPartProduct,
+    | 'postPartId'
+    | 'brandText'
+    | 'brandId'
+    | 'productText'
+    | 'productId'
+    | 'productColorText'
+>;
+interface SavePostPartProductAssignedResponse {
+    status: 'success' | 'fail'
+    postPartProductId: PostProductId
 }
-export const savePostPartProduct = (editPostPartProduct: EditPostPartProduct): Promise<SavePostPartProductResponse> =>
+interface SavePostPartProductUnassignedResponse {
+    status: 'success' | 'fail'
+    unassignedProductId: UnProductId
+}
+type SavePostPartProductResponse =
+    | SavePostPartProductAssignedResponse
+    | SavePostPartProductUnassignedResponse
+    ;
+export const savePostPartProduct = (options: SavePostPartProductOptions): Promise<SavePostPartProductResponse> =>
     fetch('/api/post-product', {
         method: 'POST',
-        body: JSON.stringify(editPostPartProduct),
+        body: JSON.stringify(options),
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

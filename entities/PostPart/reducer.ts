@@ -3,7 +3,8 @@ import {
     POST_PARTS_DATA_FETCHED,
 } from './actions';
 import {
-    POST_EDIT_PRODUCT_SAVE_SUCCESS,
+    POST_EDIT_PRODUCT_SAVE_SUCCESS_AS,
+    POST_EDIT_PRODUCT_SAVE_SUCCESS_UN,
     POST_EDIT_PART_SAVE_SUCCESS,
     POST_EDIT_PRODUCT_REMOVE_SUCCESS,
 } from '../../components/pages/post-edit/store/actions';
@@ -23,7 +24,8 @@ export function postPartReducer(state = initialState, action: PostPartActionType
                 },
             };
 
-        case POST_EDIT_PRODUCT_SAVE_SUCCESS:
+        case POST_EDIT_PRODUCT_SAVE_SUCCESS_AS:
+        case POST_EDIT_PRODUCT_SAVE_SUCCESS_UN:
             return {
                 ...state,
                 items: {
@@ -32,7 +34,9 @@ export function postPartReducer(state = initialState, action: PostPartActionType
                         ...state.items[action.payload.postPartId],
                         productIds: [
                             ...state.items[action.payload.postPartId].productIds,
-                            'a' + action.payload.productId,
+                            action.type === POST_EDIT_PRODUCT_SAVE_SUCCESS_AS
+                                ? 'a' + action.payload.productId
+                                : 'u' + action.payload.unProductId,
                         ],
                     },
                 },

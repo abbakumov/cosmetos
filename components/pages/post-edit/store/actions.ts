@@ -53,7 +53,6 @@ import {
 import {
     postEditSchema,
     postPartEditSchema,
-    postProductEditSchema,
 } from './validationSchemas';
 
 export const POST_EDIT_PAGE_DATA_FETCHED = 'POST_EDIT_PAGE_DATA_FETCHED';
@@ -72,7 +71,8 @@ export const POST_EDIT_PRODUCT_PRODUCT_CHANGE = 'POST_EDIT_PRODUCT_PRODUCT_CHANG
 export const POST_EDIT_PRODUCT_COLOR_CHANGE = 'POST_EDIT_PRODUCT_COLOR_CHANGE';
 export const POST_EDIT_PRODUCT_CANCEL = 'POST_EDIT_PRODUCT_CANCEL';
 export const POST_EDIT_PRODUCT_SAVE = 'POST_EDIT_PRODUCT_SAVE';
-export const POST_EDIT_PRODUCT_SAVE_SUCCESS = 'POST_EDIT_PRODUCT_SAVE_SUCCESS';
+export const POST_EDIT_PRODUCT_SAVE_SUCCESS_AS = 'POST_EDIT_PRODUCT_SAVE_SUCCESS_AS';
+export const POST_EDIT_PRODUCT_SAVE_SUCCESS_UN = 'POST_EDIT_PRODUCT_SAVE_SUCCESS_UN';
 export const POST_EDIT_PRODUCT_SAVE_FAIL = 'POST_EDIT_PRODUCT_SAVE_FAIL';
 export const POST_EDIT_PRODUCT_REMOVE = 'POST_EDIT_PRODUCT_REMOVE';
 export const POST_EDIT_PRODUCT_REMOVE_SUCCESS = 'POST_EDIT_PRODUCT_REMOVE_SUCCESS';
@@ -217,37 +217,61 @@ export function postEditProductSaveAction(): any {
         dispatch({type: POST_EDIT_PRODUCT_SAVE});
 
         const state: AppState = getState();
-        const id = state.pagePostEdit.postEdit.id;
+        const postId = state.pagePostEdit.postEdit.id;
 
         const {editPostPartProduct} = state.pagePostEdit;
 
         // validation
-        const editPostPartProductClone = JSON.parse(JSON.stringify(editPostPartProduct));
-        const validationErrors = postProductEditSchema.validate(editPostPartProductClone);
-        if (validationErrors.length) {
+        let errorMessage: string = null;
+        if (!editPostPartProduct.productId && !editPostPartProduct.productText) {
+            errorMessage = 'Продукт не может быть пустым';
+        }
+        if (!editPostPartProduct.brandId && !editPostPartProduct.brandText) {
+            errorMessage = 'Бренд не может быть пустым';
+        }
+        if (errorMessage) {
             dispatch({type: POST_EDIT_PRODUCT_SAVE_FAIL});
-            const error = validationErrors[0] as any;
-            dispatch(notificationShowErrorAction(error.message as string));
+            dispatch(notificationShowErrorAction(errorMessage));
             return;
         }
 
-        savePostPartProduct(editPostPartProduct)
-            .then(data => {
-                const payload = {
-                    postId: id,
-                    postPartId: editPostPartProduct.postPartId,
-                    productId: editPostPartProduct.productId,
-                    productColorId: editPostPartProduct.productColorId,
-                    postPartProductId: data.postPartProductId,
-                };
+        const pickedEditPostPartProductData = _.pick(editPostPartProduct, [
+            'postPartId',
+            'brandText',
+            'brandId',
+            'productText',
+            'productId',
+            'productColorText',
+        ])
 
-                if (data.status === 'success') {
+        savePostPartProduct(pickedEditPostPartProductData)
+            .then(data => {
+                if (data.status !== 'success') {
+                    dispatch({type: POST_EDIT_PRODUCT_SAVE_FAIL});
+                }
+
+                if ('postPartProductId' in data) {
+                    const payload = {
+                        postId,
+                        postPartId: editPostPartProduct.postPartId,
+                        productId: editPostPartProduct.productId,
+                        productColorId: editPostPartProduct.productColorId,
+                        postPartProductId: data.postPartProductId,
+                    };
                     dispatch({
-                        type: POST_EDIT_PRODUCT_SAVE_SUCCESS,
+                        type: POST_EDIT_PRODUCT_SAVE_SUCCESS_AS,
                         payload,
                     });
                 } else {
-                    dispatch({type: POST_EDIT_PRODUCT_SAVE_FAIL});
+                    const payload = {
+                        unProductId: data.unassignedProductId,
+                        postId,
+                        ...pickedEditPostPartProductData
+                    };
+                    dispatch({
+                        type: POST_EDIT_PRODUCT_SAVE_SUCCESS_UN,
+                        payload,
+                    });
                 }
             });
     };

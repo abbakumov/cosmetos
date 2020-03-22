@@ -18,7 +18,8 @@ import {
     POST_EDIT_PRODUCT_COLOR_CHANGE,
     POST_EDIT_PRODUCT_CANCEL,
     POST_EDIT_PRODUCT_SAVE,
-    POST_EDIT_PRODUCT_SAVE_SUCCESS,
+    POST_EDIT_PRODUCT_SAVE_SUCCESS_AS,
+    POST_EDIT_PRODUCT_SAVE_SUCCESS_UN,
     POST_EDIT_PRODUCT_SAVE_FAIL,
     POST_EDIT_PART_NEW,
     POST_EDIT_PART_EDIT,
@@ -201,7 +202,8 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                 },
             };
 
-        case POST_EDIT_PRODUCT_SAVE_SUCCESS:
+        case POST_EDIT_PRODUCT_SAVE_SUCCESS_AS:
+        case POST_EDIT_PRODUCT_SAVE_SUCCESS_UN:
             return {
                 ...state,
                 editPostPartProduct: emptyEditPostPartProduct,
