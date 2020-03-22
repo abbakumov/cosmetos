@@ -49,6 +49,10 @@ module.exports = async function postPostProduct(ctx) {
             productText,
             productColorText,
         });
+        await PostPartProduct.create({
+            postPartId,
+            unassignedProductId,
+        });
         ctx.body = {status: 'success', unassignedProductId};
         return;
     }
