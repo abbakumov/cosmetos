@@ -9,10 +9,21 @@ const {
     Post,
     PostPart,
     Product,
+    UnassignedProduct,
     PostPartProduct,
     ProductColor,
     Brand,
 } = require('../../database/models');
+
+function getPartProductIds(part, postPartProducts) {
+    return part.PostPartProducts.map(id => {
+        if (postPartProducts[id].Product) {
+            return 'a' + postPartProducts[id].Product;
+        } else {
+            return 'u' + postPartProducts[id].UnassignedProduct;
+        }
+    });
+}
 
 module.exports = async function getPostEdit(ctx) {
     const {id} = ctx.params;
@@ -22,6 +33,9 @@ module.exports = async function getPostEdit(ctx) {
         id,
         {
             attributes: ['id', 'title', 'picture', 'instaPostId', 'description', 'isPublic', 'userId'],
+            order: [
+                [PostPart, PostPartProduct, 'createdAt', 'ASC'],
+            ],
             include: [
                 {
                     model: PostPart,
@@ -29,7 +43,7 @@ module.exports = async function getPostEdit(ctx) {
                     include: [
                         {
                             model: PostPartProduct,
-                            attributes: ['id', 'productColorId'],
+                            attributes: ['id', 'productColorId', 'createdAt'],
                             include: [
                                 {
                                     model: Product,
@@ -41,6 +55,20 @@ module.exports = async function getPostEdit(ctx) {
                                         },
                                     ],
                                 },
+                                {
+                                    model: UnassignedProduct,
+                                    attributes: ['id', 'brandId', 'brandText', 'productId', 'productText', 'productColorText'],
+                                    include: [
+                                        {
+                                            model: Brand,
+                                            attributes: ['id', 'titleShort'],
+                                        },
+                                        {
+                                            model: Product,
+                                            attributes: ['id', 'title'],
+                                        }
+                                    ],
+                                }
                             ],
                         },
                     ],
@@ -77,6 +105,7 @@ module.exports = async function getPostEdit(ctx) {
     const {
         productColors = {},
         products = {},
+        unassignedProducts = {},
         postPartProducts = {},
         postParts = {},
         posts,
@@ -89,16 +118,16 @@ module.exports = async function getPostEdit(ctx) {
     };
 
     const postPartIds = post.PostParts;
-    const postPartMap = Object.values(postParts).map(part => ({
+    const postPartArr = Object.values(postParts).map(part => ({
         ..._.pick(part, ['id', 'title']),
         position: {
             x: part.positionX * 100,
             y: part.positionY * 100,
         },
         color: part.colorHex,
-        productIds: part.PostPartProducts.map(id => 'a' + postPartProducts[id].Product),
+        productIds: getPartProductIds(part, postPartProducts),
     }));
-    const postPart = _.keyBy(postPartMap, 'id');
+    const postPart = _.keyBy(postPartArr, 'id');
 
     const productBase = {};
     const productExtra = {};
@@ -120,22 +149,26 @@ module.exports = async function getPostEdit(ctx) {
         };
     });
 
-    const postProductMap = Object.values(postPartProducts).map(ppp => ({
+    const postProductArr = Object.values(postPartProducts).map(ppp => ({
         id: ppp.id,
         postId: parseInt(id),
         productId: ppp.Product,
         productColorId: ppp.productColorId,
     }));
-    const postProduct = _.keyBy(postProductMap, 'id');
+    const postProduct = _.keyBy(postProductArr, 'id');
 
-    const productColorMap = Object.values(productColors).map(
+    const productColorArr = Object.values(productColors).map(
         color => ({
             ..._.pick(color, ['id', 'title']),
             pictureUrl: makeProductColorPicUrl(color.picture),
         }));
-    const productColor = _.keyBy(productColorMap, 'id');
+    const productColor = _.keyBy(productColorArr, 'id');
 
     const brand = _.keyBy(brandsData, 'id');
+
+    const unProductArr = Object.values(unassignedProducts).map(
+        unProduct => _.pick(unProduct, ['id', 'brandId', 'brandText', 'productId', 'productText', 'productColorText']));
+    const unProduct = _.keyBy(unProductArr, 'id');
 
     ctx.body = {
         postEdit,
@@ -146,5 +179,6 @@ module.exports = async function getPostEdit(ctx) {
         postProduct,
         productColor,
         brand,
+        unProduct,
     };
 }
