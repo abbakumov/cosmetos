@@ -10,7 +10,7 @@ export interface UnProduct {
     brandText?: string
     productId?: ProductId
     productText?: string
-    colorText?: string
+    productColorText?: string
 }
 
 export interface UnProductMap {

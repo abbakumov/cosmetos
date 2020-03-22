@@ -14,6 +14,7 @@ import {productsExtraDataFetchedAction} from '../../../entities/ProductExtra/act
 import {productColorsDataFetchedAction} from '../../../entities/ProductColor/actions';
 import {postProductsDataFetchedAction} from '../../../entities/PostProduct/actions';
 import {brandsDataFetchedAction} from '../../../entities/Brand/actions';
+import {unProductsDataFetchedAction} from '../../../entities/UnProduct/actions';
 
 const PostEditPageWrapper: NextPage<{}> = (props) => (<PostEditPage {...props} />);
 
@@ -35,16 +36,12 @@ PostEditPageWrapper.getInitialProps = async function(context: ICosPageContext): 
     store.dispatch(postPartsDataFetchedAction(data.postPart));
     store.dispatch(productsBaseDataFetchedAction(data.productBase));
     store.dispatch(productsExtraDataFetchedAction(data.productExtra));
+    store.dispatch(unProductsDataFetchedAction(data.unProduct));
     store.dispatch(productColorsDataFetchedAction(data.productColor));
     store.dispatch(postProductsDataFetchedAction(data.postProduct));
     store.dispatch(brandsDataFetchedAction(data.brand));
 
     let title = 'Редактирование поста – Cosmetos';
-
-    // const postTitle = data.postBase && data.postBase.title;
-    // if (typeof postTitle !== 'undefined') {
-    //     title = `${postTitle} – Cosmetos`;
-    // }
 
     return {title};
 };

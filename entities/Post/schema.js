@@ -12,9 +12,15 @@ const productSchema = new schema.Entity('products', {
     UserProducts: [userProductSchema],
 });
 
+const unassignedProductSchema = new schema.Entity('unassignedProducts', {
+    Brand: brandSchema,
+    Product: productSchema,
+});
+
 const postPartProductsSchema = new schema.Entity('postPartProducts', {
     Product: productSchema,
     ProductColor: productColorSchema,
+    UnassignedProduct: unassignedProductSchema,
 });
 
 const postPartsSchema = new schema.Entity('postParts', {
