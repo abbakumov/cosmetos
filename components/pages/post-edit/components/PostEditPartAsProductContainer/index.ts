@@ -32,6 +32,7 @@ function mapStateToProps(state: AppState, ownProps: PublicProps): PostEditPartPr
         brand,
         product: title,
         color: color ? color.title : null,
+        isUnassigned: false,
     };
 }
 

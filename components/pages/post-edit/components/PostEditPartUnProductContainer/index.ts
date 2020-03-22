@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import {AppState} from '../../../../../store';
-import {ProductId} from '../../../../../entities/ProductBase/types';
+import {UnProductId} from '../../../../../entities/UnProduct/types';
 
 import PostEditPartProduct, {
     DataProps as PostEditPartProductDataProps,
@@ -9,15 +9,33 @@ import PostEditPartProduct, {
 } from '../PostEditPartProduct';
 
 export interface PublicProps {
-    id: ProductId
+    id: UnProductId
 }
 
 function mapStateToProps(state: AppState, ownProps: PublicProps): PostEditPartProductDataProps {
+    const {id} = ownProps;
+    const {
+        brandId,
+        brandText,
+        productId,
+        productText,
+        productColorText,
+    } = state.unProduct.items[id];
+
+    const brand = brandId
+        ? state.brand.items[brandId].titleShort
+        : brandText;
+
+    const product = productId
+        ? state.productBase.items[productId].title
+        : productText;
+
     return {
-        id: ownProps.id,
-        brand: 'brand placeholder',
-        product: 'product placeholder',
-        color: 'color placeholder',
+        id,
+        brand,
+        product,
+        color: productColorText,
+        isUnassigned: true,
     };
 }
 
