@@ -11,6 +11,7 @@ import {
 
 import {
     UN_PRODUCTS_DATA_FETCHED,
+    UN_PRODUCT_REMOVE_SUCCESS,
 } from './actions';
 
 const initialState: UnProductState = {
@@ -45,6 +46,15 @@ export function unProductReducer(state: UnProductState = initialState, action: U
                         ),
                     }
                 },
+            };
+
+        case UN_PRODUCT_REMOVE_SUCCESS:
+            const newItems = JSON.parse(JSON.stringify(state.items));
+            delete newItems[action.payload.id];
+
+            return {
+                ...state,
+                items: newItems,
             };
     }
 

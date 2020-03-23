@@ -1,6 +1,10 @@
 import {PostEditProductSaveSuccessUnAction} from '../../components/pages/post-edit/store/types';
 
-import {UN_PRODUCTS_DATA_FETCHED} from './actions';
+import {
+    UN_PRODUCTS_DATA_FETCHED,
+    UN_PRODUCT_REMOVE_SUCCESS,
+    UN_PRODUCT_REMOVE_FAIL,
+} from './actions';
 import {BrandId} from '../Brand/types';
 import {ProductId} from '../ProductBase/types';
 
@@ -30,7 +34,23 @@ export interface UnProductsDataFetchedAction {
     };
 }
 
+export interface UnProductRemoveSuccessAction {
+    type: typeof UN_PRODUCT_REMOVE_SUCCESS
+    payload: {
+        id: UnProductId
+    }
+}
+
+export interface UnProductRemoveFailAction {
+    type: typeof UN_PRODUCT_REMOVE_FAIL
+    payload: {
+        id: UnProductId
+    }
+}
+
 export type UnProductAction =
     | UnProductsDataFetchedAction
+    | UnProductRemoveSuccessAction
+    | UnProductRemoveFailAction
     | PostEditProductSaveSuccessUnAction
     ;
