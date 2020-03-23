@@ -31,7 +31,6 @@ import {AppState} from '../../../../store';
 import {
     PostEditPageDataFetchedAction,
 
-    PostEditFileChange,
     PostEditFieldChange,
     PostEditIsPublicChange,
 
@@ -41,7 +40,6 @@ import {
     PostEditProductCancelAction,
 
     PostEditPartNewAction,
-    PostEditPartEditAction,
     PostEditPartChangeFieldAction,
     PostEditPartChangePositionAction,
     PostEditPartCancelAction,

@@ -9,6 +9,7 @@ const getProduct = require('./controllers/getProduct');
 const getProductColors = require('./controllers/getProductColors');
 const postProductComment = require('./controllers/postProductComment');
 const getBrandProducts = require('./controllers/getBrandProducts');
+const deleteUnProduct = require('./controllers/deleteUnProduct');
 
 const postLogin = require('./controllers/postLogin');
 
@@ -96,6 +97,11 @@ const routes = [
         route: '/brand/:id/products',
         method: 'get',
         controllers: [getBrandProducts],
+    },
+    {
+        route: '/un-product/:id',
+        method: 'delete',
+        controllers: [deleteUnProduct],
     },
     {
         route: '/login',

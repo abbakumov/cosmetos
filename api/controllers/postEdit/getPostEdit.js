@@ -61,11 +61,11 @@ module.exports = async function getPostEdit(ctx) {
                                     include: [
                                         {
                                             model: Brand,
-                                            attributes: ['id', 'titleShort'],
+                                            attributes: ['id', 'titleShort', 'titleFull'],
                                         },
                                         {
                                             model: Product,
-                                            attributes: ['id', 'title'],
+                                            attributes: ['id', 'title', 'description', 'kind', 'brandId'],
                                         }
                                     ],
                                 }
