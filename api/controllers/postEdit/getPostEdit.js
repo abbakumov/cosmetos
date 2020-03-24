@@ -15,15 +15,7 @@ const {
     Brand,
 } = require('../../database/models');
 
-function getPartProductIds(part, postPartProducts) {
-    return part.PostPartProducts.map(id => {
-        if (postPartProducts[id].Product) {
-            return 'a' + postPartProducts[id].Product;
-        } else {
-            return 'u' + postPartProducts[id].UnassignedProduct;
-        }
-    });
-}
+const {getPartProductIds} = require('../../helpers/postPart');
 
 module.exports = async function getPostEdit(ctx) {
     const {id} = ctx.params;

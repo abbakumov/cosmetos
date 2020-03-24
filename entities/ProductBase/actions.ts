@@ -1,5 +1,6 @@
 import {
     ProductBase,
+    ProductBaseMap,
     ProductBaseDataFetchedAction,
     ProductsBaseDataFetchedAction,
 } from './types';
@@ -11,10 +12,6 @@ export const productBaseDataFetchedAction = (data: ProductBase): ProductBaseData
     type: PRODUCT_BASE_DATA_FETCHED,
     payload: {data},
 });
-
-export interface ProductBaseMap {
-    [id: number]: ProductBase;
-}
 
 export const productsBaseDataFetchedAction = (data: ProductBaseMap): ProductsBaseDataFetchedAction => ({
     type: PRODUCTS_BASE_DATA_FETCHED,

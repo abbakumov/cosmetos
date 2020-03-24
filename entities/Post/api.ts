@@ -11,8 +11,9 @@ import {BlogProduct} from '../BlogProduct/types';
 import {PostPart} from '../PostPart/types';
 import {PostPartProductMap} from '../PostPartProduct/types';
 import {ProductColorMap} from '../ProductColor/types';
-import {ProductBase} from '../ProductBase/types';
+import {ProductBaseMap} from '../ProductBase/types';
 import {PostEdit} from '../PostEdit/types';
+import {UnProductMap} from '../UnProduct/types';
 
 export interface GetPostByIdResponse {
     blog: {
@@ -26,9 +27,8 @@ export interface GetPostByIdResponse {
     },
     postPartProduct: PostPartProductMap
     productColor: ProductColorMap
-    productBase: {
-        [id: number]: ProductBase
-    },
+    productBase: ProductBaseMap
+    unProduct: UnProductMap
     blogProduct: {
         [id: number]: BlogProduct
     }
