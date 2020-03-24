@@ -65,7 +65,7 @@ module.exports = async function getPost(ctx) {
                                     },
                                     {
                                         model: Brand,
-                                        attributes: ['id', 'titleShort'],
+                                        attributes: ['id', 'titleShort', 'titleFull'],
                                     },
                                     {
                                         model: UserProduct,
@@ -209,6 +209,8 @@ module.exports = async function getPost(ctx) {
         unProduct => _.pick(unProduct, ['id', 'brandId', 'brandText', 'productId', 'productText', 'productColorText']));
     const unProduct = _.keyBy(unProductArr, 'id');
 
+    const brand = _.keyBy(brands, 'id');
+
     const result = {
         postBase,
         postExtra,
@@ -219,6 +221,7 @@ module.exports = async function getPost(ctx) {
         productBase,
         blogProduct,
         unProduct,
+        brand,
     };
 
     ctx.body = result;
