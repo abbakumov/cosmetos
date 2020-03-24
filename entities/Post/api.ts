@@ -7,13 +7,14 @@ import {ICosPageContext} from '../../types/context';
 import {PostBase, PostId} from './types';
 import {PostExtra} from '../PostExtra/types';
 import {BlogMap, BlogLogin} from '../Blog/types';
-import {BlogProduct} from '../BlogProduct/types';
-import {PostPart} from '../PostPart/types';
+import {BlogProductMap} from '../BlogProduct/types';
+import {PostPartMap} from '../PostPart/types';
 import {PostPartProductMap} from '../PostPartProduct/types';
 import {ProductColorMap} from '../ProductColor/types';
 import {ProductBaseMap} from '../ProductBase/types';
 import {PostEdit} from '../PostEdit/types';
 import {UnProductMap} from '../UnProduct/types';
+import {BrandMap} from '../Brand/types';
 
 export interface GetPostByIdResponse {
     blog: {
@@ -22,16 +23,13 @@ export interface GetPostByIdResponse {
     }
     postBase: PostBase
     postExtra: PostExtra
-    postPart: {
-        [id: number]: PostPart
-    },
+    postPart: PostPartMap
     postPartProduct: PostPartProductMap
     productColor: ProductColorMap
     productBase: ProductBaseMap
     unProduct: UnProductMap
-    blogProduct: {
-        [id: number]: BlogProduct
-    }
+    blogProduct: BlogProductMap
+    brand: BrandMap
 }
 export function getPostById(id: PostId, context?: ICosPageContext): Promise<GetPostByIdResponse> {
     return fetchData<GetPostByIdResponse>(

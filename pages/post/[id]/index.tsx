@@ -15,6 +15,7 @@ import {productColorsDataFetchedAction} from '../../../entities/ProductColor/act
 import {productsBaseDataFetchedAction} from '../../../entities/ProductBase/actions';
 import {blogProductsDataFetchedAction} from '../../../entities/BlogProduct/actions';
 import {unProductsDataFetchedAction} from '../../../entities/UnProduct/actions';
+import {brandsDataFetchedAction} from '../../../entities/Brand/actions';
 
 import {getPostById} from '../../../entities/Post/api';
 
@@ -42,6 +43,7 @@ PostPageWrapper.getInitialProps = async function(context: ICosPageContext): Prom
         productsBaseDataFetchedAction(data.productBase),
         store.dispatch(unProductsDataFetchedAction(data.unProduct)),
         blogProductsDataFetchedAction(data.blogProduct),
+        brandsDataFetchedAction(data.brand),
     ]));
 
     let title = 'Cosmetos';

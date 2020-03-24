@@ -21,6 +21,10 @@ export interface PostPart {
     productIds: AbstractProductId[];
 }
 
+export interface PostPartMap {
+    [id: number]: PostPart;
+}
+
 // ACTIONS ->
 export interface PostPartsDataFetchedAction {
     type: typeof POST_PARTS_DATA_FETCHED;

@@ -14,6 +14,10 @@ export interface BlogProduct {
     review: string;
 };
 
+export interface BlogProductMap {
+    [id: number]: BlogProduct;
+}
+
 export interface BlogProductState {
     items: {
         [s: number]: BlogProduct;
