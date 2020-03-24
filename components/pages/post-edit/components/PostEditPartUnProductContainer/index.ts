@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 
 import {AppState} from '../../../../../store';
 import {UnProductId} from '../../../../../entities/UnProduct/types';
+import {unProductRemoveAction} from '../../../../../entities/UnProduct/actions';
 
 import PostEditPartProduct, {
     DataProps as PostEditPartProductDataProps,
@@ -40,7 +41,7 @@ function mapStateToProps(state: AppState, ownProps: PublicProps): PostEditPartPr
 }
 
 const actionProps = {
-    productRemoveAction: () => {console.log('remove unassigned!')},
+    productRemoveAction: unProductRemoveAction,
 };
 
 const PostEditPartUnProductContainer = connect<

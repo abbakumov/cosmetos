@@ -28,6 +28,6 @@ export interface DeleteUnProductResponse {
 
 export const deleteUnProduct = (id: UnProductId): Promise<DeleteUnProductResponse> =>
     fetchData<DeleteUnProductResponse>(
-        `${getOrigin}/api/un-product/${id}`,
+        `${getOrigin()}/api/un-product/${id}`,
         {method: 'DELETE'}
     );

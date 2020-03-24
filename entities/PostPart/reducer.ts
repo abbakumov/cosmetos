@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import {PostPartState, PostPartActionType} from './types';
 import {
     POST_PARTS_DATA_FETCHED,
@@ -8,6 +10,7 @@ import {
     POST_EDIT_PART_SAVE_SUCCESS,
     POST_EDIT_PRODUCT_REMOVE_SUCCESS,
 } from '../../components/pages/post-edit/store/actions';
+import {UN_PRODUCT_REMOVE_SUCCESS} from '../UnProduct/actions';
 
 const initialState: PostPartState = {
     items: {},
@@ -70,6 +73,16 @@ export function postPartReducer(state = initialState, action: PostPartActionType
                         productIds: item.productIds.filter(_id => _id !== abstractId),
                     },
                 },
+            };
+
+        case UN_PRODUCT_REMOVE_SUCCESS:
+            const newItemsArr = Object.values(state.items).map(item => ({
+                ...item,
+                productIds: item.productIds.filter(id => id !== 'u' + action.payload.id),
+            }));
+            return {
+                ...state,
+                items: _.keyBy(newItemsArr, 'id'),
             };
     }
 
