@@ -58,6 +58,7 @@ function mapStateToProps(state: AppState, ownProps: AsPostProductPublicProps): P
         postId,
         colorPicUrl,
         colorTitle,
+        isUnassigned: false,
     };
 }
 

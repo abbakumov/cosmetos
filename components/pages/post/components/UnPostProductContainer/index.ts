@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 
-import {UnProductId} from '../../../../../entities/UnProduct/types';
+import {UnProductId, UnProduct} from '../../../../../entities/UnProduct/types';
 import {PostPartId} from '../../../../../entities/PostPart/types';
 import {AppState} from '../../../../../store';
 
@@ -14,14 +14,32 @@ export interface UnPostProductProps {
 }
 
 function mapStateToProps(state: AppState, props: UnPostProductProps): PostProductProps {
-    const {backIndex, isShown} = props;
+    const {id, partId, backIndex, isShown} = props;
+
+    const {color} = state.postPart.items[partId];
+    const brandItems = state.brand.items;
+    const productItems = state.productBase.items;
+    const unProduct = state.unProduct.items[id] as UnProduct;
+    const {
+        brandId,
+        brandText,
+        productId,
+        productText,
+        productColorText,
+    } = unProduct;
+
+    const brand = brandId ? brandItems[brandId].titleShort : brandText;
+    const title = productId ? productItems[productId].title : productText;
 
     return {
-        brand: '',
-        title: '',
-        color: '',
+        id,
+        brand,
+        title,
+        color,
+        colorTitle: productColorText,
         backIndex,
         isShown,
+        isUnassigned: true,
     };
 }
 
