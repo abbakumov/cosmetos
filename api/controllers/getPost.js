@@ -12,12 +12,14 @@ const {
     User,
     PostPart,
     Product,
+    UnassignedProduct,
     UserProduct,
     PostPartProduct,
     ProductColor,
     ProductPicture,
     Brand,
 } = require('../database/models');
+const {getPartProductIds} = require('../helpers/postPart');
 
 module.exports = async function getPost(ctx) {
     const {id: _id} = ctx.params;
@@ -73,6 +75,24 @@ module.exports = async function getPost(ctx) {
                                     },
                                 ],
                             },
+                            {
+                                model: UnassignedProduct,
+                                attributes: ['id', 'brandId', 'brandText', 'productId', 'productText', 'productColorText'],
+                                include: [
+                                    {
+                                        model: Brand,
+                                        attributes: ['id', 'titleShort', 'titleFull'],
+                                    },
+                                    {
+                                        model: Product,
+                                        attributes: ['id', 'title', 'description', 'kind', 'brandId'],
+                                        include: [{
+                                            model: ProductPicture,
+                                            attributes: ['id', 'picture'],
+                                        }],
+                                    }
+                                ],
+                            }
                         ],
                     },
                 ],
@@ -102,6 +122,7 @@ module.exports = async function getPost(ctx) {
     const {
         brands,
         products = {},
+        unassignedProducts = {},
         postPartProducts,
         productColors,
         postParts,
@@ -142,40 +163,38 @@ module.exports = async function getPost(ctx) {
         blog.data[currentUserItem.login] = currentUserItem;
     }
 
-    const postPartMap = Object.keys(postParts)
-        .map(id => postParts[id])
-        .map(pp => ({
-            ..._.pick(pp, ['id', 'title']),
+    const postPartArr = Object.values(postParts)
+        .map(part => ({
+            ..._.pick(part, ['id', 'title']),
             position: {
-                x: pp.positionX * 100, // TODO: refact
-                y: pp.positionY * 100, // TODO: refact
+                x: part.positionX * 100, // TODO: refact
+                y: part.positionY * 100, // TODO: refact
             },
-            color: pp.colorHex, // TODO: refact
-            productIds: pp.PostPartProducts.map(id => 'a' + postPartProducts[id].productId),
+            color: part.colorHex, // TODO: refact
+            productIds: getPartProductIds(part, postPartProducts),
         }));
-    const postPart = _.keyBy(postPartMap, 'id');
+    const postPart = _.keyBy(postPartArr, 'id');
 
-    const postPartProductMap = Object.keys(postPartProducts)
-        .map(id => postPartProducts[id])
+    const postPartProductArr = Object.values(postPartProducts)
         .map(postPartProduct => ({
             ..._.pick(postPartProduct, ['id', 'postPartId', 'productId', 'productColorId']),
         }));
-    const postPartProduct = _.keyBy(postPartProductMap, 'id');
+    const postPartProduct = _.keyBy(postPartProductArr, 'id');
 
-    const productColorMap = Object.keys(productColors)
-        .map(id => productColors[id])
+    const productColorArr = Object.values(productColors)
         .map(productColor => ({
             ..._.pick(productColor, ['id', 'title']),
             picUrl: makeProductColorSmallPicUrl(productColor.picture),
         }));
-    const productColor = _.keyBy(productColorMap, 'id');
+    const productColor = _.keyBy(productColorArr, 'id');
 
-    const productBaseArr = Object.keys(products)
-        .map(id => products[id])
+    const productBaseArr = Object.values(products)
         .map(product => ({
             ..._.pick(product, ['id', 'title', 'kind']),
-            brand: brands[product.Brand].titleShort,
-            smallPicUrl: makeProductSmallPicUrl(product.ProductPictures[0].picture),
+            brand: brands[product.brandId].titleShort,
+            smallPicUrl: product.ProductPictures
+                ? makeProductSmallPicUrl(product.ProductPictures[0].picture)
+                : '',
         }));
     const productBase = _.keyBy(productBaseArr, 'id');
 
@@ -186,6 +205,10 @@ module.exports = async function getPost(ctx) {
         }))
     const blogProduct = _.keyBy(blogProductArr, 'id');
 
+    const unProductArr = Object.values(unassignedProducts).map(
+        unProduct => _.pick(unProduct, ['id', 'brandId', 'brandText', 'productId', 'productText', 'productColorText']));
+    const unProduct = _.keyBy(unProductArr, 'id');
+
     const result = {
         postBase,
         postExtra,
@@ -195,6 +218,7 @@ module.exports = async function getPost(ctx) {
         productColor,
         productBase,
         blogProduct,
+        unProduct,
     };
 
     ctx.body = result;
