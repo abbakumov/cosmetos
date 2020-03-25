@@ -23,7 +23,7 @@ const deletePostPart = require('./controllers/postEdit/deletePostPart');
 const postPostPart = require('./controllers/postEdit/postPostPart');
 
 // /admin
-// const getUnProducts = require('./controllers/admin/getUnProducts');
+const getAdminUnProducts = require('./controllers/admin/getAdminUnProducts');
 const getAdminBrands = require('./controllers/admin/getAdminBrands');
 const postAdminBrand = require('./controllers/admin/postAdminBrand');
 const getAdminProducts = require('./controllers/admin/getAdminProducts');
@@ -110,14 +110,14 @@ const routes = [
     },
 
     //admin
-    // {
-    //     route: '/admin/un-products',
-    //     method: 'get',
-    //     controllers: [
-    //         passport.authenticate(),
-    //         getUnProducts
-    //     ],
-    // },
+    {
+        route: '/admin/un-product',
+        method: 'get',
+        controllers: [
+            adminOnly,
+            getAdminUnProducts
+        ],
+    },
     {
         route: '/admin/brands',
         method: 'get',
