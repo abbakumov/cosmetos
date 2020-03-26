@@ -16,17 +16,25 @@ interface UnProductsTableRowProps {
 }
 
 interface Props {
-    id: UnProductId;
-    brand: string;
-    title: string;
-    postTitle: string;
+    id: UnProductId
+    isBrandAssigned: boolean
+    isProductAssigned: boolean
+    brand: string
+    title: string
+    color: string
+    postTitle: string
 }
 
 const UnProductsTableRow: FunctionComponent<Props> = (props: Props) => (
     <TableRow>
         <TableCell>{props.id}</TableCell>
-        <TableCell>{props.brand}</TableCell>
-        <TableCell>{props.title}</TableCell>
+        <TableCell className={props.isBrandAssigned ? '' : styles.tableRowUnassigned}>
+            {props.brand}
+        </TableCell>
+        <TableCell className={props.isProductAssigned ? '' : styles.tableRowUnassigned}>
+            {props.title}
+        </TableCell>
+        <TableCell className={styles.tableRowUnassigned}>{props.color}</TableCell>
         <TableCell>
             Elizabeth Ioda / Что-то там например
             <Button
@@ -60,29 +68,24 @@ const UnProductsTableRow: FunctionComponent<Props> = (props: Props) => (
 );
 
 function mapStateToProps(state: AppState, ownProps: UnProductsTableRowProps): Props {
-    const unProduct = state.unProduct.items[ownProps.id];
-    const {brandId, brandText, productId, productText} = unProduct;
+    const unProduct = state.unProduct.items[ownProps.id] as UnProduct;
+    const {brandId, brandText, productId, productText, productColorText} = unProduct;
 
-    let brand = '';
-    if (brandId) {
-        brand = state.brand.items[brandId].titleShort;
-    } else {
-        brand = brandText;
-    }
+    const isBrandAssigned = Boolean(brandId);
+    const isProductAssigned = Boolean(productId);
 
-    let title = '';
-    if (productId) {
-        title = state.productBase.items[productId].title;
-    } else {
-        title = productText;
-    }
+    const brand = isBrandAssigned ? state.brand.items[brandId].titleShort : brandText;
+    const title = isProductAssigned ? state.productBase.items[productId].title : productText;
 
     let postTitle = '';
 
     return {
         id: ownProps.id,
+        isBrandAssigned,
+        isProductAssigned,
         brand,
         title,
+        color: productColorText,
         postTitle,
     };
 }

@@ -23,6 +23,7 @@ const UnProductsTable: FunctionComponent<Props> = (props: Props) => (
                 <TableCell>ID</TableCell>
                 <TableCell>Бренд</TableCell>
                 <TableCell>Название</TableCell>
+                <TableCell>Цвет</TableCell>
                 <TableCell>Пост</TableCell>
                 <TableCell>Действия</TableCell>
             </TableRow>
