@@ -23,7 +23,7 @@ interface InitialProps {
 AdminProductsUnassignedPageWrapper.getInitialProps = async function(context: ICosPageContext): Promise<InitialProps> {
     const {store} = context;
 
-    const data = await getAdminUnProducts();
+    const data = await getAdminUnProducts(context);
 
     const unProductIds: UnProductId[] = Object.keys(data.unProduct).map(id => parseInt(id));
 

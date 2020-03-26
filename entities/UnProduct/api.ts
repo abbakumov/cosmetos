@@ -1,31 +1,29 @@
 import fetchData from '../../src/helpers/fetchData';
 
 import {getOrigin} from '../../configs/location';
+import {ICosPageContext} from '../../types/context';
 
-import {Brand} from '../Brand/types';
-import {ProductBase} from '../ProductBase/types';
+import {BrandMap} from '../Brand/types';
+import {ProductBaseMap} from '../ProductBase/types';
 
-import {UnProduct, UnProductId} from './types';
+import {UnProductMap, UnProductId} from './types';
 
 export interface GetAdminUnProductsResponse {
-    unProduct: {
-        [id: number]: UnProduct;
-    };
-    brand: {
-        [id: number]: Brand;
-    };
-    productBase: {
-        [id: number]: ProductBase;
-    };
+    unProduct: UnProductMap
+    brand: BrandMap
+    productBase: ProductBaseMap
 }
-export const getAdminUnProducts = (): Promise<GetAdminUnProductsResponse> =>
-    fetchData<GetAdminUnProductsResponse>(`${getOrigin}/api/admin/un-products`);
+export const getAdminUnProducts = (context: ICosPageContext): Promise<GetAdminUnProductsResponse> =>
+    fetchData<GetAdminUnProductsResponse>(
+        `${getOrigin()}/api/admin/un-product`,
+        {},
+        context
+    );
 
 
 export interface DeleteUnProductResponse {
     status: 'success' | 'fail'
 }
-
 export const deleteUnProduct = (id: UnProductId): Promise<DeleteUnProductResponse> =>
     fetchData<DeleteUnProductResponse>(
         `${getOrigin()}/api/un-product/${id}`,
