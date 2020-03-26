@@ -20,6 +20,10 @@ const TopBar: FunctionComponent = () => {
         title = 'Продукты';
     }
 
+    if (route === '/admin/un-product') {
+        title = 'Вольные продукты';
+    }
+
     if (route === '/admin/product/[id]') {
         if (asPath === '/admin/product/new') {
             title = 'Добавление нового продукта';
