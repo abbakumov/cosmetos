@@ -9,6 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import BusinessCenter from '@material-ui/icons/BusinessCenter';
+import NewReleases from '@material-ui/icons/NewReleases';
 import Motorcycle from '@material-ui/icons/Motorcycle';
 
 const styles = require('../styles.styl');
@@ -48,12 +49,17 @@ const SideMenu: FunctionComponent = () => {
                             <ListItemText primary="Продукты" />
                         </ListItem>
                     </Link>
-                    {/* <ListItem button>
-                        <ListItemIcon>
-                            <NewReleases />
-                        </ListItemIcon>
-                        <ListItemText primary="Вольные продукты" />
-                    </ListItem> */}
+                    <Link href="/admin/un-product">
+                        <ListItem
+                            button
+                            selected={route === '/admin/un-product'}
+                        >
+                            <ListItemIcon>
+                                <NewReleases />
+                            </ListItemIcon>
+                            <ListItemText primary="Вольные продукты" />
+                        </ListItem>
+                    </Link>
                 </div>
             </List>
         </Drawer>
