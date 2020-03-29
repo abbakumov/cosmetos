@@ -27,6 +27,7 @@ import {productBaseReducer} from '../entities/ProductBase/reducer';
 import {productExtraReducer} from '../entities/ProductExtra/reducer';
 import {productColorReducer} from '../entities/ProductColor/reducer';
 import {unProductReducer} from '../entities/UnProduct/reducer';
+import {unProductExtraReducer} from '../entities/UnProductExtra/reducer';
 import {brandReducer} from '../entities/Brand/reducer';
 import {brandProductsReducer} from '../entities/BrandProducts/reducer';
 import {notificationReducer} from '../entities/Notification/reducer';
@@ -63,6 +64,7 @@ const rootReducer = combineReducers({
     productColor: productColorReducer,
 
     unProduct: unProductReducer,
+    unProductExtra: unProductExtraReducer,
 
     brand: brandReducer,
 
