@@ -37,7 +37,7 @@ const UnProductsTable: FunctionComponent<Props> = (props: Props) => (
 );
 
 const mapStateToProps = (state: AppState): Props => ({
-    unProductIds: state.pageAdminProductsUnassigned.unProductIds,
+    unProductIds: state.pageAdminUnProducts.unProductIds,
 });
 
 const ConnectedUnProductsTable = connect(mapStateToProps)(UnProductsTable);

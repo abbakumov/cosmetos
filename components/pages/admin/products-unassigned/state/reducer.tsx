@@ -1,23 +1,24 @@
 import {
-    PageAdminProductsUnassignedState,
+    PageAdminUnProductsState,
     PageAdminUnProductsActionType,
 } from './types';
 
 import {
     PAGE_ADM_PROD_UN_DATA_FETCHED,
     PAGE_ADM_PROD_UN_OPEN_PRODUCT,
+    PAGE_ADM_PROD_UN_CLOSE_PRODUCT,
     PAGE_ADM_PROD_UN_SAVE_PRODUCT,
-    PAGE_ADM_PROD_UN_SEARCH_PRODUCT,
 } from './actions';
 
-const initialState: PageAdminProductsUnassignedState = {
+const initialState: PageAdminUnProductsState = {
     unProductIds: [],
     activeUnProductId: null,
-    activeSearchId: null,
+    activeBrandId: null,
+    activeProductId: null,
     activeProductColorId: null,
 }
 
-export function pageAdminProductsUnassignedReducer(state = initialState, action: PageAdminUnProductsActionType) {
+export function pageAdminUnProductsReducer(state = initialState, action: PageAdminUnProductsActionType) {
     switch (action.type) {
         case PAGE_ADM_PROD_UN_DATA_FETCHED:
             return {
@@ -28,10 +29,10 @@ export function pageAdminProductsUnassignedReducer(state = initialState, action:
         case PAGE_ADM_PROD_UN_OPEN_PRODUCT:
             return state;
 
-        case PAGE_ADM_PROD_UN_SAVE_PRODUCT:
+        case PAGE_ADM_PROD_UN_CLOSE_PRODUCT:
             return state;
 
-        case PAGE_ADM_PROD_UN_SEARCH_PRODUCT:
+        case PAGE_ADM_PROD_UN_SAVE_PRODUCT:
             return state;
     }
 
