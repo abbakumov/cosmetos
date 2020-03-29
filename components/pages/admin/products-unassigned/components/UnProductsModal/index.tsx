@@ -1,4 +1,5 @@
-import {FunctionComponent} from 'react';
+import {FunctionComponent, useCallback} from 'react';
+import {connect} from 'react-redux';
 
 import Button from '@material-ui/core/Button';
 
@@ -8,70 +9,121 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 
 import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import CircularProgress from '@material-ui/core/CircularProgress';
+
+import {AppState} from '../../../../../../store';
+import {UnProduct} from '../../../../../../entities/UnProduct/types';
+import {pageAdminUnProductsCloseProductAction} from '../../state/actions';
 
 const styles = require('../../styles.styl');
 
-const UnProductsModal: FunctionComponent = () => (
-    <Dialog open={false} onClose={() => console.log('on close')}>
-        <DialogTitle>Выбор соответствующего продукта</DialogTitle>
-        <DialogContent dividers>
-            <div className={styles.unassignedProductInfo}>
-                <div className={styles.line}>
-                    <span className={styles.lineLabel}>Блог: </span>
-                    <span>Лиза Иода</span>
-                </div>
-                <div className={styles.line}>
-                    <span className={styles.lineLabel}>Бренд: </span>
-                    <span>Nyx Shmiks</span>
-                </div>
-                <div className={styles.line}>
-                    <span className={styles.lineLabel}>Название: </span>
-                    <span>Какой-то там праймер или хз че</span>
-                </div>
-                <div className={styles.line}>
-                    <span className={styles.lineLabel}>Цвет: </span>
-                    <span>Красненький такой</span>
-                </div>
-            </div>
-            <TextField
-                className={styles.productIdField}
-                label="ID продукта"
-                variant="outlined"
-            />
-            <div>
-                <div className={styles.circular}>
-                    <CircularProgress className={styles.circular} />
-                </div>
-                <div className={styles.productInfo}>
+interface DataProps {
+    isActive: boolean
+    postAuthorName?: string
+    postTitle?: string
+    initialBrandText?: string
+    initialProductText?: string
+    initialProductColorText?: string
+}
+
+interface ActionProps {
+    closeProductAction(): void
+}
+
+interface Props extends DataProps, ActionProps {}
+
+const UnProductsModal: FunctionComponent<Props> = (props: Props) => {
+    if (!props.isActive) {
+        return null;
+    }
+
+    const closeProductAction = useCallback(() => props.closeProductAction(), []);
+
+    return (
+        <Dialog open={true} onClose={closeProductAction}>
+            <DialogTitle>Выбор соответствующего продукта</DialogTitle>
+            <DialogContent dividers>
+                <div className={styles.unassignedProductInfo}>
                     <div className={styles.line}>
-                        <span className={styles.lineLabel}>Бренд: </span>
+                        <span className={styles.lineLabel}>Блог: </span>
+                        <span>Лиза Иода</span>
+                    </div>
+                    <div className={styles.line}>
+                        <span className={styles.lineLabel}>Пост: </span>
                         <span>Nyx Shmiks</span>
                     </div>
                     <div className={styles.line}>
-                        <span className={styles.lineLabel}>Название: </span>
-                        <span>Какой-то там праймер или хз че</span>
+                        <span className={styles.lineLabel}>Указанный бренд: </span>
+                        <span>{props.initialBrandText}</span>
+                    </div>
+                    <div className={styles.line}>
+                        <span className={styles.lineLabel}>Указанный продукт: </span>
+                        <span>{props.initialProductText}</span>
+                    </div>
+                    <div className={styles.line}>
+                        <span className={styles.lineLabel}>Указанный цвет продукта: </span>
+                        <span>{props.initialProductColorText}</span>
                     </div>
                 </div>
-                <Select
-                    className={styles.colorSelect}
-                    value="blue"
-                    inputProps={{
-                        name: 'brand',
-                    }}
+                <TextField
+                    className={styles.popupField}
+                    label="Бренд"
                     variant="outlined"
-                >
-                    <MenuItem value="blue">Голубой</MenuItem>
-                    <MenuItem value="red">Красный</MenuItem>
-                </Select>                        
-            </div>
-        </DialogContent>
-        <DialogActions>
-            <Button color="primary">Выбрать</Button>
-        </DialogActions>
-    </Dialog>
-);
+                />
+                <TextField
+                    className={styles.popupField}
+                    label="Продукт"
+                    variant="outlined"
+                />
+                <TextField
+                    className={styles.popupField}
+                    label="Цвет продукта"
+                    variant="outlined"
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={closeProductAction}>Отмена</Button>
+                <Button color="primary">Сохранить</Button>
+            </DialogActions>
+        </Dialog>
+    );
+}
 
-export default UnProductsModal;
+function mapStateToProps(state: AppState): DataProps {
+    const {
+        activeUnProductId,
+        activeBrandId,
+        activeProductId,
+        activeProductColorId,
+    } = state.pageAdminUnProducts;
+
+    if (!activeUnProductId) {
+        return {isActive: false};
+    }
+
+    const unProduct = state.unProduct.items[activeUnProductId] as UnProduct;
+
+    const {
+        brandId,
+        brandText,
+        productId,
+        productText,
+        productColorText,
+    } = unProduct;
+
+    const initialBrandText = brandId ? state.brand.items[brandId].titleFull : brandText;
+    const initialProductText = productId ? state.productBase.items[productId].title : productText;
+    const initialProductColorText = productColorText;
+
+    return {
+        isActive: Boolean(activeUnProductId),
+        initialBrandText,
+        initialProductText,
+        initialProductColorText,
+    };
+}
+
+const actionProps = {
+    closeProductAction: pageAdminUnProductsCloseProductAction,
+};
+
+export default connect(mapStateToProps, actionProps)(UnProductsModal);

@@ -27,10 +27,16 @@ export function pageAdminUnProductsReducer(state = initialState, action: PageAdm
             };
 
         case PAGE_ADM_PROD_UN_OPEN_PRODUCT:
-            return state;
+            return {
+                ...state,
+                activeUnProductId: action.payload.id,
+            };
 
         case PAGE_ADM_PROD_UN_CLOSE_PRODUCT:
-            return state;
+            return {
+                ...state,
+                activeUnProductId: null,
+            };
 
         case PAGE_ADM_PROD_UN_SAVE_PRODUCT:
             return state;

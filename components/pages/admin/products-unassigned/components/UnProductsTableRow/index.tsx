@@ -12,6 +12,7 @@ import {AppState} from '../../../../../../store';
 import {UnProductId, UnProduct} from '../../../../../../entities/UnProduct/types';
 import {UnProductExtra} from '../../../../../../entities/UnProductExtra/types';
 import {PostId} from '../../../../../../entities/Post/types';
+import {pageAdminUnProductsOpenProductAction} from '../../state/actions';
 
 const styles = require('../../styles.styl');
 
@@ -19,7 +20,7 @@ interface UnProductsTableRowProps {
     id: UnProductId;
 }
 
-interface Props {
+interface MappedProps {
     id: UnProductId
     isBrandAssigned: boolean
     isProductAssigned: boolean
@@ -30,6 +31,12 @@ interface Props {
     postId: PostId
     userName: string
 }
+
+interface ActionProps {
+    openProductAction(id: UnProductId): void,
+}
+
+interface Props extends MappedProps, ActionProps {}
 
 const UnProductsTableRow: FunctionComponent<Props> = (props: Props) => (
     <TableRow>
@@ -67,6 +74,8 @@ const UnProductsTableRow: FunctionComponent<Props> = (props: Props) => (
             <Button
                 variant="contained"
                 size="small"
+                // Yes, that's not React way, but here that doesn't make a problem
+                onClick={() => props.openProductAction(props.id)}
             >
                 <Icon
                     fontSize="small"
@@ -80,7 +89,7 @@ const UnProductsTableRow: FunctionComponent<Props> = (props: Props) => (
     </TableRow>
 );
 
-function mapStateToProps(state: AppState, ownProps: UnProductsTableRowProps): Props {
+function mapStateToProps(state: AppState, ownProps: UnProductsTableRowProps): MappedProps {
     const unProduct = state.unProduct.items[ownProps.id] as UnProduct;
     const unProductExtra = state.unProductExtra.items[ownProps.id] as UnProductExtra;
     const {brandId, brandText, productId, productText, productColorText} = unProduct;
@@ -106,6 +115,10 @@ function mapStateToProps(state: AppState, ownProps: UnProductsTableRowProps): Pr
     };
 }
 
-const ConnectedUnProductsTableRow = connect(mapStateToProps)(UnProductsTableRow);
+const actionProps = {
+    openProductAction: pageAdminUnProductsOpenProductAction,
+};
+
+const ConnectedUnProductsTableRow = connect(mapStateToProps, actionProps)(UnProductsTableRow);
 
 export default ConnectedUnProductsTableRow;
