@@ -1,9 +1,4 @@
-import {Component} from 'react';
 import {connect} from 'react-redux';
-
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
 
 import {BrandMap} from '../../../../../entities/Brand/types';
 import {AppState} from '../../../../../store';
@@ -17,96 +12,17 @@ import {
 import {ProductBase, ProductId} from '../../../../../entities/ProductBase/types';
 import {ProductColor} from '../../../../../entities/ProductColor/types';
 
-const styles = require('./styles.styl');
+import MaterialDropDown, {
+    SuggestItem,
+    DataProps as MaterialDropDownDataProps,
+    ActionProps as MaterialDropDownActionProps,
+} from '../../../../widgets/MaterialDropDown';
 
-interface SuggestItem {
-    id?: number;
-    value: string;
-}
 
 export interface PostEditPartProductDropDownProps {
-    id: 'brand' | 'product' | 'color';
+    id: 'brand' | 'product' | 'color'
 }
 
-interface MappedProps {
-    inputValue: string;
-    selectedItem: SuggestItem;
-    items: SuggestItem[];
-    label: string;
-    isActive: boolean;
-}
-
-interface ActionProps {
-    fieldChange(value: string | number): void;
-    fieldTextChange(value: string): void;
-}
-
-interface Props extends MappedProps, ActionProps {}
-
-interface State {
-    isOpen: boolean
-}
-
-class PostEditPartProductDropDown extends Component<Props, State> {
-    state = {
-        isOpen: false,
-    };
-
-    onChange = (item) => {
-        this.props.fieldChange(item.id);
-    }
-
-    onInputValueChange = (event) => {
-        const {value} = event.target;
-
-        if (this.props.inputValue !== value) {
-            this.props.fieldTextChange(value);
-        }
-    }
-
-    onFocus = () => {
-        this.setState({isOpen: true});
-    };
-
-    onBlur = () => {
-        this.setState({isOpen: false});
-    };
-
-    render() {
-        if (!this.props.isActive) {
-            return null;
-        }
-
-        return (
-            <div className={styles.root}>
-                <div className={styles.container}>
-                    <TextField
-                        label={this.props.label}
-                        fullWidth
-                        onChange={this.onInputValueChange}
-                        onFocus={this.onFocus}
-                        onBlur={this.onBlur}
-                    />
-                    {this.state.isOpen &&
-                        <Paper className={styles.suggest}>
-                            {this.props.items
-                                .map((item, index) => (
-                                    <MenuItem
-                                        key={item.value}
-                                        selected={false}
-                                        onMouseDown={() => this.onChange(item)}
-                                    >
-                                        {item.value}
-                                    </MenuItem>
-                                ))
-                            }
-                        </Paper>
-                    }
-                </div>
-            </div>
-        );
-    }
-}
 
 function getFilteredBrandItems(items: BrandMap, value: string): SuggestItem[] {
     return Object.keys(items)
@@ -133,7 +49,7 @@ function getFilteredColorItems(items: ProductColor[], value: string): SuggestIte
         .map(({id, title}) => ({id, value: title}));
 }
 
-function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownProps): MappedProps {
+function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownProps): MaterialDropDownDataProps {
     const {id} = ownProps;
     const {postEdit, editPostPartProduct} = state.pagePostEdit;
 
@@ -142,12 +58,10 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
         brandText,
         productId,
         productText,
-        productColorId,
         productColorText,
     } = editPostPartProduct;
 
     let inputValue = '';
-    let selectedItem = null;
     let items = [];
     let label = '';
 
@@ -160,8 +74,6 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
     
             inputValue = brandText;
             items = getFilteredBrandItems(state.brand.items, inputValue);
-            selectedItem = items.find(item => item.id === brandId) || null;
-            if (selectedItem) { inputValue = selectedItem.value; }
             break;
 
         case 'product':
@@ -191,8 +103,6 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
                     productText,
                     usedIds
                 );
-                selectedItem = items.find(item => item.id === productId) || null;
-                if (selectedItem) { inputValue = selectedItem.value; }
             }
             break;
 
@@ -209,17 +119,15 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
                     colorIds.map(id => state.productColor.items[id]),
                     productColorText
                 );
-                selectedItem = items.find(item => item.id === productColorId) || null;
-                if (selectedItem) { inputValue = selectedItem.value; }
             }
             break;
     }
 
-    return {inputValue, selectedItem, items, label, isActive};
+    return {inputValue, items, label, isActive};
 }
 
 
-function mapDispatchToProps(dispatch, ownProps: PostEditPartProductDropDownProps): ActionProps {
+function mapDispatchToProps(dispatch, ownProps: PostEditPartProductDropDownProps): MaterialDropDownActionProps {
     let textChangeFieldName = '';
 
     switch (ownProps.id) {
@@ -259,6 +167,6 @@ function mapDispatchToProps(dispatch, ownProps: PostEditPartProductDropDownProps
 };
 
 const ConnectedPostEditPartProductDropDown =
-    connect(mapStateToProps, mapDispatchToProps)(PostEditPartProductDropDown);
+    connect(mapStateToProps, mapDispatchToProps)(MaterialDropDown);
 
 export default ConnectedPostEditPartProductDropDown;
