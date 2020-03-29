@@ -1,12 +1,8 @@
 import _ from 'lodash';
 
 import {PostPartId} from '../../../../entities/PostPart/types';
-import {GetBrandProductsResponse} from '../../../../entities/BrandProducts/api';
-import {GetProductColorsResponse} from '../../../../entities/ProductBase/api';
-import {brandProductsDataFetchedAction} from '../../../../entities/BrandProducts/actions';
-import {productsBaseDataFetchedAction} from '../../../../entities/ProductBase/actions';
-import {productColorsDataFetchedAction} from '../../../../entities/ProductColor/actions';
-import {productExtraDataFetchedAction} from '../../../../entities/ProductExtra/actions';
+import {brandProductsFetch} from '../../../../entities/BrandProducts/actions';
+import {productExtraFetchColors} from '../../../../entities/ProductExtra/actions';
 import {ProductColorId} from '../../../../entities/ProductColor/types';
 import {BrandId} from '../../../../entities/Brand/types';
 import {ProductId} from '../../../../entities/ProductBase/types';
@@ -169,13 +165,9 @@ export function postEditProductBrandChangeAction(id: BrandId | null): any {
             payload: {id},
         })
 
-        // TODO: move to api
-        fetch(`/api/brand/${id}/products`)
-            .then(response => response.json() as Promise<GetBrandProductsResponse>)
-            .then(data => {
-                dispatch(productsBaseDataFetchedAction(data.productBase));
-                dispatch(brandProductsDataFetchedAction(data.brandProducts));
-            });
+        if (id) {
+            dispatch(brandProductsFetch(id));
+        }
     }
 }
 
@@ -187,13 +179,9 @@ export function postEditProductProductChangeAction(id: ProductId | null): any {
             payload: {id},
         });
 
-        // TODO: move to api
-        fetch(`/api/product/${id}/colors`)
-            .then(response => response.json() as Promise<GetProductColorsResponse>)
-            .then(data => {
-                dispatch(productColorsDataFetchedAction(data.productColor));
-                dispatch(productExtraDataFetchedAction(data.productExtra));
-            });
+        if (id) {
+            dispatch(productExtraFetchColors(id));
+        }
     }
 }
 

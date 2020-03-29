@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-fetch';
 import querystring from 'query-string';
 import _ from 'lodash';
 
@@ -43,23 +42,6 @@ export const getProductById = (id: ProductId, context?: ICosPageContext): Promis
         {},
         context
     );
-
-
-export interface GetProductColorsResponse {
-    productExtra: ProductExtra;
-    productColor: ProductColor[];
-}
-
-export function getProductColors(id: ProductId): Promise<GetProductColorsResponse> {
-    return fetch(`${getOrigin()}/api/product/${id}/colors`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json() as Promise<GetProductColorsResponse>
-        });
-}
-
 
 interface GetAdminProductsResponse {
     total: number;
