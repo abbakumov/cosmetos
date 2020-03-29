@@ -6,10 +6,12 @@ import {ICosPageContext} from '../../types/context';
 import {BrandMap} from '../Brand/types';
 import {ProductBaseMap} from '../ProductBase/types';
 
+import {UnProductExtraMap} from '../UnProductExtra/types';
 import {UnProductMap, UnProductId} from './types';
 
 export interface GetAdminUnProductsResponse {
     unProduct: UnProductMap
+    unProductExtra: UnProductExtraMap
     brand: BrandMap
     productBase: ProductBaseMap
 }

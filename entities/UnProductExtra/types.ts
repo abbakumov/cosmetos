@@ -1,11 +1,12 @@
 import {UnProductId} from '../UnProduct/types';
+import {PostId} from '../Post/types';
 
 import {UN_PRODUCTS_EXTRA_DATA_FETCHED} from './actions';
 
 export interface UnProductExtra {
     id: UnProductId
     userName: string
-    postId: string
+    postId: PostId
     postTitle: string
 }
 

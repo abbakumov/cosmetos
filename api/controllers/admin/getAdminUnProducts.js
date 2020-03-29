@@ -81,7 +81,7 @@ module.exports = async function getUnProducts(ctx) {
     const brandsArr = Object.values(brands).map(brand => _.pick(brand, ['id', 'titleShort', 'titleFull']));
     const brand = _.keyBy(brandsArr, 'id');
 
-    const unProductsExtraArr = Object.values(unProducts).map(unProduct => {
+    const unProductExtraArr = Object.values(unProducts).map(unProduct => {
         const post = unProduct.PostPartProduct.PostPart.Post;
         const user = post.User;
         return {
@@ -91,13 +91,13 @@ module.exports = async function getUnProducts(ctx) {
             postTitle: post.title,
         };
     });
-    const unProductsExtra = _.keyBy(unProductsExtraArr, 'id');
+    const unProductExtra = _.keyBy(unProductExtraArr, 'id');
 
     ctx.body = {
         unProductIds,
         productBase,
         unProduct,
         brand,
-        unProductsExtra,
+        unProductExtra,
     };
 }

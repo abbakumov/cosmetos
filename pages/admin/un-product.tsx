@@ -12,6 +12,7 @@ import {pageAdminUnProductsDataFetchedAction} from '../../components/pages/admin
 import {unProductsDataFetchedAction} from '../../entities/UnProduct/actions';
 import {brandsDataFetchedAction} from '../../entities/Brand/actions';
 import {productsBaseDataFetchedAction} from '../../entities/ProductBase/actions';
+import {unProductsExtraDataFetchedAction} from '../../entities/UnProductExtra/actions';
 
 const AdminProductsUnassignedPageWrapper: NextPage<{}>
     = (props) => (<AdminProductsUnassignedPage {...props} />);
@@ -32,6 +33,7 @@ AdminProductsUnassignedPageWrapper.getInitialProps = async function(context: ICo
     store.dispatch(unProductsDataFetchedAction(data.unProduct));
     store.dispatch(brandsDataFetchedAction(data.brand));
     store.dispatch(productsBaseDataFetchedAction(data.productBase));
+    store.dispatch(unProductsExtraDataFetchedAction(data.unProductExtra));
 
     const title = 'Вольные продукты – Cosmetos Admin';
 
