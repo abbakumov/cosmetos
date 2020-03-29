@@ -1,7 +1,15 @@
 const {normalize} = require('normalizr');
 const _ = require('lodash');
 
-const {UnassignedProduct, Brand, Product} = require('../../database/models');
+const {
+    UnassignedProduct,
+    Brand,
+    Product,
+    PostPartProduct,
+    PostPart,
+    Post,
+    User,
+} = require('../../database/models');
 
 const {unProductSchema} = require('../../../entities/UnProduct/schema');
 const {brandSchema} = require('../../../entities/Brand/schema');
@@ -9,10 +17,28 @@ const {brandSchema} = require('../../../entities/Brand/schema');
 module.exports = async function getUnProducts(ctx) {
     const unProductsDataPromise = UnassignedProduct.findAll({
         attributes: ['id', 'brandId', 'brandText', 'productId', 'productText', 'productColorText'],
-        include: [{
-            model: Product,
-            attributes: ['id', 'title', 'kind', 'description', 'brandId'],
-        }],
+        include: [
+            {
+                model: Product,
+                attributes: ['id', 'title', 'kind', 'description', 'brandId'],
+            },
+            {
+                model: PostPartProduct,
+                attributes: ['id', 'postPartId'],
+                include: [{
+                    model: PostPart,
+                    attributes: ['id', 'postId'],
+                    include: [{
+                        model: Post,
+                        attributes: ['id', 'title', 'userId'],
+                        include: [{
+                            model: User,
+                            attributes: ['id', 'name'],
+                        }],
+                    }],
+                }],
+            },
+        ],
     });
 
     const brandsDataPromise = Brand.findAll({
@@ -55,10 +81,23 @@ module.exports = async function getUnProducts(ctx) {
     const brandsArr = Object.values(brands).map(brand => _.pick(brand, ['id', 'titleShort', 'titleFull']));
     const brand = _.keyBy(brandsArr, 'id');
 
+    const unProductsExtraArr = Object.values(unProducts).map(unProduct => {
+        const post = unProduct.PostPartProduct.PostPart.Post;
+        const user = post.User;
+        return {
+            id: unProduct.id,
+            userName: user.name,
+            postId: post.id,
+            postTitle: post.title,
+        };
+    });
+    const unProductsExtra = _.keyBy(unProductsExtraArr, 'id');
+
     ctx.body = {
         unProductIds,
         productBase,
         unProduct,
         brand,
+        unProductsExtra,
     };
 }
