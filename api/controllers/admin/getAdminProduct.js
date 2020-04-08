@@ -27,7 +27,6 @@ module.exports = async function getAdminProduct(ctx) {
         },
     );
     const brandsDataPromise = Brand.findAll({
-        limit: 100,
         attributes: ['id', 'titleShort', 'titleFull'],
     });
 
