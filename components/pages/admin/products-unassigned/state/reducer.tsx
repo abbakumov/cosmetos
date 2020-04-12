@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
     PageAdminUnProductsState,
     PageAdminUnProductsActionType,
@@ -8,14 +9,19 @@ import {
     PAGE_ADM_PROD_UN_OPEN_PRODUCT,
     PAGE_ADM_PROD_UN_CLOSE_PRODUCT,
     PAGE_ADM_PROD_UN_SAVE_PRODUCT,
+    PAGE_ADM_PROD_UN_CHANGE_TEXT,
+    PAGE_ADM_PROD_UN_CHANGE_VALUE,
 } from './actions';
 
 const initialState: PageAdminUnProductsState = {
     unProductIds: [],
     activeUnProductId: null,
     activeBrandId: null,
+    activeBrandText: '',
     activeProductId: null,
+    activeProductText: '',
     activeProductColorId: null,
+    activeProductColorText: '',
 }
 
 export function pageAdminUnProductsReducer(state = initialState, action: PageAdminUnProductsActionType) {
@@ -30,6 +36,8 @@ export function pageAdminUnProductsReducer(state = initialState, action: PageAdm
             return {
                 ...state,
                 activeUnProductId: action.payload.id,
+                ..._.pick(action.payload, ['activeBrandId', 'activeProductId']),
+                activeProductColorId: null,
             };
 
         case PAGE_ADM_PROD_UN_CLOSE_PRODUCT:
@@ -40,6 +48,21 @@ export function pageAdminUnProductsReducer(state = initialState, action: PageAdm
 
         case PAGE_ADM_PROD_UN_SAVE_PRODUCT:
             return state;
+
+        case PAGE_ADM_PROD_UN_CHANGE_TEXT:
+            return {
+                ...state,
+                [action.payload.field]: action.payload.text,
+            };
+
+        case PAGE_ADM_PROD_UN_CHANGE_VALUE:
+            return {
+                ...state,
+                [action.payload.field]: action.payload.value,
+                activeBrandText: '',
+                activeProductText: '',
+                activeProductColorText: '',
+            };
     }
 
     return state;

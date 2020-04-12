@@ -33,3 +33,25 @@
 .tableRowUnassigned
     font-style italic
     color #555 !important
+
+.modalContent
+    height 50vh
+
+.modalRow
+    display flex
+
+.modalRowItem
+    flex 0 0 33%
+    display flex
+    align-items center
+    & + &
+        margin-left 8px
+
+.modalRowItemFulfilledContent
+    width 100%
+    display flex
+    align-items center
+    justify-content space-between
+
+.modalRowItemClear
+    cursor pointer
