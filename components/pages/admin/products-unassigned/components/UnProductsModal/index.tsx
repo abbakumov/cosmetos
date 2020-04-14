@@ -11,6 +11,7 @@ import Clear from '@material-ui/icons/Clear';
 
 import {AppState} from '../../../../../../store';
 import {UnProduct} from '../../../../../../entities/UnProduct/types';
+import {UnProductExtra} from '../../../../../../entities/UnProductExtra/types';
 import {
     pageAdminUnProductsCloseProductAction,
     pageAdminUnProductChangeValueAction,
@@ -64,11 +65,11 @@ const UnProductsModal: FunctionComponent<Props> = (props: Props) => {
                 <div className={styles.unassignedProductInfo}>
                     <div className={styles.line}>
                         <span className={styles.lineLabel}>Блог: </span>
-                        <span>Лиза Иода</span>
+                        <span>{props.postAuthorName}</span>
                     </div>
                     <div className={styles.line}>
                         <span className={styles.lineLabel}>Пост: </span>
-                        <span>Nyx Shmiks</span>
+                        <span>{props.postTitle}</span>
                     </div>
                     <div className={styles.line}>
                         <span className={styles.lineLabel}>Указанный бренд: </span>
@@ -156,6 +157,7 @@ function mapStateToProps(state: AppState): DataProps {
     }
 
     const unProduct = state.unProduct.items[activeUnProductId] as UnProduct;
+    const unProductExtra = state.unProductExtra.items[activeUnProductId] as UnProductExtra;
 
     const {
         brandId,
@@ -177,6 +179,8 @@ function mapStateToProps(state: AppState): DataProps {
 
     return {
         isActive: Boolean(activeUnProductId),
+        postAuthorName: unProductExtra.userName,
+        postTitle: unProductExtra.postTitle,
         isSaveActive,
         initialBrandText,
         initialProductText,
