@@ -8,6 +8,8 @@ import {
     PAGE_ADM_PROD_UN_OPEN_PRODUCT,
     PAGE_ADM_PROD_UN_CLOSE_PRODUCT,
     PAGE_ADM_PROD_UN_SAVE_PRODUCT,
+    PAGE_ADM_PROD_UN_SAVE_PRODUCT_SUCCESS,
+    PAGE_ADM_PROD_UN_SAVE_PRODUCT_FAIL,
     PAGE_ADM_PROD_UN_CHANGE_TEXT,
     PAGE_ADM_PROD_UN_CHANGE_VALUE,
 } from './actions';
@@ -55,6 +57,17 @@ export interface PageAdminUnProductSaveProductActionType {
     type: typeof PAGE_ADM_PROD_UN_SAVE_PRODUCT;
 }
 
+export interface PageAdminUnProductSaveProductSuccessActionType {
+    type: typeof PAGE_ADM_PROD_UN_SAVE_PRODUCT_SUCCESS;
+    payload: {
+        id: UnProductId
+    }
+}
+
+export interface PageAdminUnProductSaveProductFailActionType {
+    type: typeof PAGE_ADM_PROD_UN_SAVE_PRODUCT_FAIL;
+}
+
 export interface PageAdminUnProductChangeTextAction {
     type: typeof PAGE_ADM_PROD_UN_CHANGE_TEXT
     payload: {
@@ -76,6 +89,8 @@ export type PageAdminUnProductsActionType =
     | PageAdminUnProductsOpenProductActionType
     | PageAdminUnProductsCloseProductActionType
     | PageAdminUnProductSaveProductActionType
+    | PageAdminUnProductSaveProductSuccessActionType
+    | PageAdminUnProductSaveProductFailActionType
     | PageAdminUnProductChangeTextAction
     | PageAdminUnProductChangeValueAction
     ;

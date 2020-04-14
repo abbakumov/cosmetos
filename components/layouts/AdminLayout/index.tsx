@@ -1,5 +1,7 @@
-import React, {Component, FunctionComponent} from 'react';
+import React, {FunctionComponent} from 'react';
 import Head from 'next/head';
+
+import NotificationMaterial from '../../widgets/NotificationMaterial';
 
 import TopBar from './components/TobBar';
 import SideMenu from './components/SideMenu';
@@ -27,6 +29,7 @@ const AdminLayout: FunctionComponent<AdminLayoutPublicProps> = (props) => {
                     {props.children}
                 </main>
             </div>
+            <NotificationMaterial />
         </div>
     );
 }

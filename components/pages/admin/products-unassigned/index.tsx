@@ -7,8 +7,6 @@ import AdminLayout from '../../../layouts/AdminLayout';
 import UnProductsTable from './components/UnProductsTable';
 import UnProductsModal from './components/UnProductsModal';
 
-const styles = require('./styles.styl');
-
 const AdminProductsUnassignedPage: FunctionComponent = () =>{
     return (
         <AdminLayout>

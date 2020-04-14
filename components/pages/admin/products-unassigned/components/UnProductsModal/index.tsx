@@ -14,6 +14,7 @@ import {UnProduct} from '../../../../../../entities/UnProduct/types';
 import {
     pageAdminUnProductsCloseProductAction,
     pageAdminUnProductChangeValueAction,
+    pageAdminUnProductSaveProductAction,
 } from '../../state/actions';
 
 import UnProductModalInputBrand from '../UnProductModalInputBrand';
@@ -40,6 +41,7 @@ interface ActionProps {
     removeBrand(): void
     removeProduct(): void
     removeProductColor(): void
+    saveProduct(): void
 }
 
 interface Props extends DataProps, ActionProps {}
@@ -53,6 +55,7 @@ const UnProductsModal: FunctionComponent<Props> = (props: Props) => {
     const removeBrand = useCallback(() => props.removeBrand(), []);
     const removeProduct = useCallback(() => props.removeProduct(), []);
     const removeProductColor = useCallback(() => props.removeProductColor(), []);
+    const saveProduct = useCallback(() => props.saveProduct(), []);
 
     return (
         <Dialog open={true} onClose={closeProductAction}>
@@ -132,7 +135,9 @@ const UnProductsModal: FunctionComponent<Props> = (props: Props) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={closeProductAction}>Отмена</Button>
-                {props.isSaveActive && <Button color="primary">Сохранить</Button>}
+                {props.isSaveActive && (
+                    <Button onClick={saveProduct} color="primary">Сохранить</Button>
+                )}
             </DialogActions>
         </Dialog>
     );
@@ -187,6 +192,7 @@ const actionProps = {
     removeBrand: () => pageAdminUnProductChangeValueAction('activeBrandId', null),
     removeProduct: () => pageAdminUnProductChangeValueAction('activeProductId', null),
     removeProductColor: () => pageAdminUnProductChangeValueAction('activeProductColorId', null),
+    saveProduct: pageAdminUnProductSaveProductAction,
 };
 
 export default connect(mapStateToProps, actionProps)(UnProductsModal);

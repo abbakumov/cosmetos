@@ -8,13 +8,12 @@ import {
     PAGE_ADM_PROD_UN_DATA_FETCHED,
     PAGE_ADM_PROD_UN_OPEN_PRODUCT,
     PAGE_ADM_PROD_UN_CLOSE_PRODUCT,
-    PAGE_ADM_PROD_UN_SAVE_PRODUCT,
+    PAGE_ADM_PROD_UN_SAVE_PRODUCT_SUCCESS,
     PAGE_ADM_PROD_UN_CHANGE_TEXT,
     PAGE_ADM_PROD_UN_CHANGE_VALUE,
 } from './actions';
 
-const initialState: PageAdminUnProductsState = {
-    unProductIds: [],
+const emptyModal = {
     activeUnProductId: null,
     activeBrandId: null,
     activeBrandText: '',
@@ -22,7 +21,12 @@ const initialState: PageAdminUnProductsState = {
     activeProductText: '',
     activeProductColorId: null,
     activeProductColorText: '',
-}
+};
+
+const initialState: PageAdminUnProductsState = {
+    unProductIds: [],
+    ...emptyModal,
+};
 
 export function pageAdminUnProductsReducer(state = initialState, action: PageAdminUnProductsActionType) {
     switch (action.type) {
@@ -46,8 +50,12 @@ export function pageAdminUnProductsReducer(state = initialState, action: PageAdm
                 activeUnProductId: null,
             };
 
-        case PAGE_ADM_PROD_UN_SAVE_PRODUCT:
-            return state;
+        case PAGE_ADM_PROD_UN_SAVE_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                ...emptyModal,
+                unProductIds: state.unProductIds.filter(unId => unId !== action.payload.id),
+            };
 
         case PAGE_ADM_PROD_UN_CHANGE_TEXT:
             return {
