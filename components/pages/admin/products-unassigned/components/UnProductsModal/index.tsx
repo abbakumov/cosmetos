@@ -168,7 +168,7 @@ function mapStateToProps(state: AppState): DataProps {
     const fulfilledProductText = activeProductId ? state.productBase.items[activeProductId].title : null;
     const fulfilledProductColorText = activeProductColorId ? state.productColor.items[activeProductColorId].title : null;
 
-    const isSaveActive = Boolean(activeBrandId && activeProductId && activeProductColorId);
+    const isSaveActive = Boolean(activeBrandId && activeProductId);
 
     return {
         isActive: Boolean(activeUnProductId),

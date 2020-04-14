@@ -24,6 +24,7 @@ const postPostPart = require('./controllers/postEdit/postPostPart');
 
 // /admin
 const getAdminUnProducts = require('./controllers/admin/getAdminUnProducts');
+const postAdminUnProductRepace = require('./controllers/admin/postAdminUnProductRepace');
 const getAdminBrands = require('./controllers/admin/getAdminBrands');
 const postAdminBrand = require('./controllers/admin/postAdminBrand');
 const getAdminProducts = require('./controllers/admin/getAdminProducts');
@@ -116,6 +117,14 @@ const routes = [
         controllers: [
             adminOnly,
             getAdminUnProducts
+        ],
+    },
+    {
+        route: '/admin/un-product/:id/replace',
+        method: 'post',
+        controllers: [
+            adminOnly,
+            postAdminUnProductRepace,
         ],
     },
     {
