@@ -2,7 +2,7 @@ const Router = require('koa-router');
 
 const {upload} = require('./helpers/multerSetup');
 
-const adminOnly = require('./middlewares/adminOnly');
+const adminOnly = require('./middlewares/access/adminOnly');
 
 const getBlog = require('./controllers/getBlog');
 const getPost = require('./controllers/getPost');
