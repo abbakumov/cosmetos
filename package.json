@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node --inspect server.js",
     "dev-api": "COS_SERVER_ONLY=1 nodemon --inspect server.js",
+    "test": "jest --config=configs/jest.js",
     "build": "next build",
     "start": "NODE_ENV=production pm2-runtime start --node-args=\"--inspect\" server.js"
   },
@@ -72,6 +73,7 @@
     "@types/node": "12.7.4",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
+    "jest": "^25.3.0",
     "nodemon": "1.19.4",
     "typescript": "3.6.2"
   }
