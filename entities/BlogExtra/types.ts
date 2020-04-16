@@ -12,6 +12,7 @@ export interface BlogExtra {
     instagramLogin: string
     postIds: PostId[]
     postsTotal: number
+    bio: string
 };
 
 // ACTIONS ->

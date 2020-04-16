@@ -16,12 +16,13 @@ interface BlogHeadProps {
     login: string
     instagramLogin: string
     imageUrl: string
+    bio: string
     isPostOwner: boolean
 }
 
 class BlogHead extends Component<BlogHeadProps> {
     render() {
-        const {name, login, instagramLogin, imageUrl, isPostOwner} = this.props;
+        const {name, login, instagramLogin, imageUrl, bio, isPostOwner} = this.props;
 
         return (
             <div className={styles.root}>
@@ -51,10 +52,23 @@ class BlogHead extends Component<BlogHeadProps> {
                 </div>
                 {isPostOwner &&
                     <div className={styles.subContainer}>
-                        <ActionButton
-                            href="/post/new"
-                            text="Создать новый пост"
-                        />
+                        <div className={styles.subContainerItem}>
+                            <p className={styles.blogBio}>
+                                {bio}
+                            </p>
+                        </div>
+                        <div className={styles.subContainerItem}>
+                            <ActionButton
+                                // href="/post/new"
+                                text="Редактировать профиль"
+                            />
+                        </div>
+                        <div className={styles.subContainerItem}>
+                            <ActionButton
+                                href="/post/new"
+                                text="Создать новый пост"
+                            />
+                        </div>
                     </div>
                 }
             </div>
@@ -76,6 +90,7 @@ function mapStateToProps(state: AppState, ownProps: BlogHeadPublicProps): BlogHe
         login: blogData.login,
         instagramLogin: blogExtraData.instagramLogin,
         imageUrl: blogData.imageUrl,
+        bio: blogExtraData.bio,
         isPostOwner,
     };
 }

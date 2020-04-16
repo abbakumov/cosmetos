@@ -23,7 +23,7 @@ module.exports = async function getBlog(ctx) {
     // data fetching
     const data = await User.findOne({
         where: {login},
-        attributes: ['id', 'login', 'name', 'avatarPicture'],
+        attributes: ['id', 'login', 'name', 'avatarPicture', 'bio'],
         include: [
             {
                 model: UserSocial,
@@ -83,7 +83,7 @@ module.exports = async function getBlog(ctx) {
     }
 
     const blogExtra = {
-        ..._.pick(userEntity, ['login']),
+        ..._.pick(userEntity, ['login', 'bio']),
         postIds: userEntity.Posts,
         instagramLogin: userEntity.UserSocial.instaLogin,
         postsTotal,
