@@ -9,12 +9,27 @@ import {
     PageBlogFetchSuccessAction,
     PageBlogFetchMoreSuccessAction,
     PageBlogFetchMoreFailAction,
+    PageBlogEditAction,
+    PageBlogEditCancelAction,
+    PageBlogChangeFieldAction,
+    PageBlogChangeImageFileAction,
+    PageBlogSaveAction,
+    PageBlogSaveSuccessActionPayload,
+    PageBlogSaveSuccessAction,
+    PageBlogSaveFailAction,
 } from './types';
 
 export const PAGE_BLOG_FETCH_SUCCESS = 'PAGE_BLOG_FETCH_SUCCESS';
 export const PAGE_BLOG_FETCH_MORE = 'PAGE_BLOG_FETCH_MORE';
 export const PAGE_BLOG_FETCH_MORE_SUCCESS = 'PAGE_BLOG_FETCH_MORE_SUCCESS';
 export const PAGE_BLOG_FETCH_MORE_FAIL = 'PAGE_BLOG_FETCH_MORE_FAIL';
+export const PAGE_BLOG_EDIT = 'PAGE_BLOG_EDIT';
+export const PAGE_BLOG_EDIT_CANCEL = 'PAGE_BLOG_EDIT_CANCEL';
+export const PAGE_BLOG_CHANGE_FIELD = 'PAGE_BLOG_CHANGE_FIELD';
+export const PAGE_BLOG_CHANGE_IMAGE_FILE = 'PAGE_BLOG_CHANGE_IMAGE_FILE';
+export const PAGE_BLOG_SAVE = 'PAGE_BLOG_SAVE';
+export const PAGE_BLOG_SAVE_SUCCESS = 'PAGE_BLOG_SAVE_SUCCESS';
+export const PAGE_BLOG_SAVE_FAIL = 'PAGE_BLOG_SAVE_FAIL';
 
 export const pageBlogFetchSuccessAction = (blogLogin: BlogLogin): PageBlogFetchSuccessAction => ({
     type: PAGE_BLOG_FETCH_SUCCESS,
@@ -45,4 +60,36 @@ const pageBlogFetchMoreSuccessAction = (): PageBlogFetchMoreSuccessAction => ({
 
 const pageBlogFetchMoreFailAction = (): PageBlogFetchMoreFailAction => ({
     type: PAGE_BLOG_FETCH_MORE_FAIL,
+});
+
+export const pageBlogEditAction = (): PageBlogEditAction => ({
+    type: PAGE_BLOG_EDIT,
+});
+
+export const pageBlogEditCancelAction = (): PageBlogEditCancelAction => ({
+    type: PAGE_BLOG_EDIT_CANCEL,
+});
+
+type PageBlogEditField = 'newName' | 'newInstagramLogin' | 'newBio';
+export const pageBlogChangeFieldAction = (field: PageBlogEditField, value: string): PageBlogChangeFieldAction => ({
+    type: PAGE_BLOG_CHANGE_FIELD,
+    payload: {field, value},
+});
+
+export const pageBlogChangeImageFileAction = (file: File, url: string): PageBlogChangeImageFileAction => ({
+    type: PAGE_BLOG_CHANGE_IMAGE_FILE,
+    payload: {file, url},
+});
+
+export const pageBlogSaveAction = (): PageBlogSaveAction => ({
+    type: PAGE_BLOG_SAVE,
+});
+
+const pageBlogSaveSuccessAction = (payload: PageBlogSaveSuccessActionPayload): PageBlogSaveSuccessAction => ({
+    type: PAGE_BLOG_SAVE_SUCCESS,
+    payload,
+});
+
+const pageBlogSaveFailAction = (): PageBlogSaveFailAction => ({
+    type: PAGE_BLOG_SAVE_FAIL,
 });

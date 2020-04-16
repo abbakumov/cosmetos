@@ -50,27 +50,27 @@ class BlogHead extends Component<BlogHeadProps> {
                         </a>
                     </div>
                 </div>
-                {isPostOwner &&
-                    <div className={styles.subContainer}>
-                        <div className={styles.subContainerItem}>
-                            <p className={styles.blogBio}>
-                                {bio}
-                            </p>
-                        </div>
+                <div className={styles.subContainer}>
+                    <div className={styles.subContainerItem}>
+                        <p className={styles.blogBio}>{bio}</p>
+                    </div>
+                    {isPostOwner && (
                         <div className={styles.subContainerItem}>
                             <ActionButton
                                 // href="/post/new"
                                 text="Редактировать профиль"
                             />
                         </div>
+                    )}
+                    {isPostOwner && (
                         <div className={styles.subContainerItem}>
                             <ActionButton
                                 href="/post/new"
                                 text="Создать новый пост"
                             />
                         </div>
-                    </div>
-                }
+                    )}
+                </div>
             </div>
         )
     }

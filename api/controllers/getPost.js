@@ -120,12 +120,12 @@ module.exports = async function getPost(ctx) {
 
     // fields mapping
     const {
-        brands,
+        brands = {},
         products = {},
         unassignedProducts = {},
-        postPartProducts,
-        productColors,
-        postParts,
+        postPartProducts = {},
+        productColors = {},
+        postParts = {},
         users,
         posts,
         userProducts = {},
