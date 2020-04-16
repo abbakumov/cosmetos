@@ -48,6 +48,12 @@ export interface PageBlogFetchMoreFailAction {
 
 export interface PageBlogEditAction {
     type: typeof PAGE_BLOG_EDIT
+    payload: {
+        newImageUrl: string
+        newName: string
+        newInstagramLogin: string
+        newBio: string
+    }
 }
 
 export interface PageBlogEditCancelAction {

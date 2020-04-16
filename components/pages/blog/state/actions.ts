@@ -1,4 +1,4 @@
-import {BlogLogin} from '../../../../entities/Blog/types';
+import {BlogLogin, Blog} from '../../../../entities/Blog/types';
 import {getBlogByName} from '../../../../entities/Blog/api';
 import {BlogExtra} from '../../../../entities/BlogExtra/types';
 import {postsBaseDataFetchedAction} from '../../../../entities/Post/actions';
@@ -62,15 +62,28 @@ const pageBlogFetchMoreFailAction = (): PageBlogFetchMoreFailAction => ({
     type: PAGE_BLOG_FETCH_MORE_FAIL,
 });
 
-export const pageBlogEditAction = (): PageBlogEditAction => ({
-    type: PAGE_BLOG_EDIT,
-});
+export const pageBlogEditAction = () => (dispatch, getState) => {
+    const state: AppState = getState();
+    const currentBlogLogin = state.pageBlog.blogLogin;
+    const blogData: Blog = state.blog.items[currentBlogLogin];
+    const blogExtraData: BlogExtra = state.blogExtra.items[currentBlogLogin];
+
+    dispatch({
+        type: PAGE_BLOG_EDIT,
+        payload: {
+            newImageUrl: blogData.imageUrl,
+            newName: blogData.name,
+            newInstagramLogin: blogExtraData.instagramLogin,
+            newBio: blogExtraData.bio,
+        },
+    });
+}
 
 export const pageBlogEditCancelAction = (): PageBlogEditCancelAction => ({
     type: PAGE_BLOG_EDIT_CANCEL,
 });
 
-type PageBlogEditField = 'newName' | 'newInstagramLogin' | 'newBio';
+export type PageBlogEditField = 'newName' | 'newInstagramLogin' | 'newBio';
 export const pageBlogChangeFieldAction = (field: PageBlogEditField, value: string): PageBlogChangeFieldAction => ({
     type: PAGE_BLOG_CHANGE_FIELD,
     payload: {field, value},

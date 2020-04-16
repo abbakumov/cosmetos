@@ -11,6 +11,7 @@ import {AppState} from '../../../store';
 import {PostId} from '../../../entities/Post/types';
 
 import BlogHead from './components/BlogHead';
+import BlogHeadEdit from './components/BlogHeadEdit';
 import {pageBlogFetchMoreAction} from './state/actions';
 
 export interface BlogPageProps {
@@ -21,6 +22,7 @@ interface MappedProps {
     postIds: PostId[]
     isViewSensorActive: boolean
     isFetchingMore: boolean
+    isEdit: boolean
 }
 
 interface ActionProps {
@@ -31,11 +33,15 @@ interface Props extends MappedProps, ActionProps {}
 
 class BlogPage extends Component<Props> {
     render() {
-        const {login, postIds, isViewSensorActive, isFetchingMore, fetchMoreAction} = this.props;
+        const {login, postIds, isViewSensorActive, isFetchingMore, isEdit, fetchMoreAction} = this.props;
 
         return (
             <MobileLayout>
-                <BlogHead login={login} />
+                {isEdit ? (
+                    <BlogHeadEdit />
+                ) : (
+                    <BlogHead login={login} />
+                )}
                 <PostsList
                     title="Последние посты"
                     postIds={postIds}
@@ -53,7 +59,7 @@ class BlogPage extends Component<Props> {
 }
 
 function mapStateToProps(state: AppState): MappedProps {
-    const {blogLogin, isFetchingMore} = state.pageBlog;
+    const {blogLogin, isFetchingMore, edit} = state.pageBlog;
     const blogExtraData: BlogExtra = state.blogExtra.items[blogLogin];
 
     const {postIds, postsTotal} = blogExtraData;
@@ -64,6 +70,7 @@ function mapStateToProps(state: AppState): MappedProps {
         postIds,
         isViewSensorActive,
         isFetchingMore,
+        isEdit: edit.isActive,
     };
 }
 

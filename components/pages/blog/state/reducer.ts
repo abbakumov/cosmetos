@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import {
     PAGE_BLOG_FETCH_SUCCESS,
     PAGE_BLOG_FETCH_MORE,
@@ -63,6 +65,7 @@ export function pageBlogReducer(state: PageBlogState = initialState, action: Pag
                 ...state,
                 edit: {
                     ...state.edit,
+                    ..._.pick(action.payload, ['newImageUrl', 'newName', 'newInstagramLogin', 'newBio']),
                     isActive: true,
                 }
             };

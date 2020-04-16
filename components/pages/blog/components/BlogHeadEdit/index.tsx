@@ -1,51 +1,57 @@
-import React, {FC} from 'react';
+import React, {FC, useCallback} from 'react';
 import {connect} from 'react-redux';
-import {BlogLogin, Blog} from '../../../../../entities/Blog/types';
-import {BlogExtra} from '../../../../../entities/BlogExtra/types';
 import {AppState} from '../../../../../store';
-import ActionButton from '../../../../widgets/ActionButton';
 import DoubleActionButton from '../../../../widgets/DoubleActionButton';
+import MobileInput from '../../../../widgets/MobileInput';
+import {pageBlogChangeFieldAction, PageBlogEditField} from '../../state/actions';
 
 const styles = require('./styles.styl');
 
-export interface BlogHeadEditProps {
-    login: BlogLogin
-}
-
 interface MappedProps {
     name: string
-    login: string
     instagramLogin: string
     imageUrl: string
     bio: string
-    isPostOwner: boolean
 }
 
 interface ActionProps {
-
+    changeField(field: PageBlogEditField, value: string): void
 }
 
 interface Props extends MappedProps, ActionProps {}
 
 const BlogHead: FC<Props> = (props: Props) => {
-    const {name, login, instagramLogin, imageUrl, bio, isPostOwner} = this.props;
+    const {name, instagramLogin, imageUrl, bio, changeField} = props;
+
+    const changeNameField = useCallback(value => changeField('newName', value), []);
+    const changeInstagramField = useCallback(value => changeField('newInstagramLogin', value), []);
+    const changeBioField = useCallback(e => changeField('newBio', e.target.value), []);
 
     return (
         <div className={styles.root}>
             <div className={styles.mainContainer}>
                 <div className={styles.left}>
-                    <img
-                        className={styles.image}
-                        src={imageUrl}
-                        alt={`фото ${name}`}
-                    />
+                    <img className={styles.image} src={imageUrl} />
                 </div>
                 <div className={styles.center}>
+                    <div className={styles.input}>
+                        <MobileInput label="Имя" value={name} onChange={changeNameField} />
+                    </div>
+                    <div className={styles.input}>
+                        <MobileInput label="Instagram" value={instagramLogin} onChange={changeInstagramField} />
+                    </div>
                 </div>
             </div>
             <div className={styles.subContainer}>
                 <div className={styles.subContainerItem}>
-                    {/* edit description */}
+                    <div className={styles.bioLabel}>О себе:</div>
+                    <textarea
+                        className={styles.bioInput}
+                        value={bio}
+                        maxLength={300}
+                        placeholder="Напиши о себе (максимум 300 символов)"
+                        onChange={changeBioField}
+                    />
                 </div>
                 <div className={styles.subContainerItem}>
                     <DoubleActionButton
@@ -58,25 +64,21 @@ const BlogHead: FC<Props> = (props: Props) => {
     );
 }
 
-function mapStateToProps(state: AppState, ownProps: BlogHeadEditProps): MappedProps {
-    const blogData: Blog = state.blog.items[ownProps.login];
-    const blogExtraData: BlogExtra = state.blogExtra.items[ownProps.login];
-
-    const {blogLogin} = state.pageBlog;
-    const {currentLogin} = state.blog;
-
-    const isPostOwner = blogLogin === currentLogin;
+function mapStateToProps(state: AppState): MappedProps {
+    const {newImageUrl, newName, newInstagramLogin, newBio} = state.pageBlog.edit;
 
     return {
-        name: blogData.name,
-        login: blogData.login,
-        instagramLogin: blogExtraData.instagramLogin,
-        imageUrl: blogData.imageUrl,
-        bio: blogExtraData.bio,
-        isPostOwner,
+        name: newName,
+        instagramLogin: newInstagramLogin,
+        imageUrl: newImageUrl,
+        bio: newBio,
     };
 }
 
-const ConnectedBlogHead = connect(mapStateToProps)(BlogHead);
+const actionProps = {
+    changeField: pageBlogChangeFieldAction,
+};
+
+const ConnectedBlogHead = connect(mapStateToProps, actionProps)(BlogHead);
 
 export default ConnectedBlogHead;
