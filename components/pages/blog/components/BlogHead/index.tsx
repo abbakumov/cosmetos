@@ -39,7 +39,7 @@ const BlogHead: FC<Props> = (props: Props) => {
                 <div className={styles.left}>
                     <img
                         className={styles.image}
-                        src={imageUrl}
+                        src={imageUrl ? imageUrl : '/static/icons/empty-avatar.svg'}
                         alt={`фото ${name}`}
                     />
                 </div>

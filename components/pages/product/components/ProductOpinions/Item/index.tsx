@@ -51,7 +51,10 @@ class ProductOpinionsItem extends Component<Props> {
                     <div className={styles.aside}>
                         <Link href="/blog/[name]" as={`/blog/${blogLogin}`}>
                             <a className={styles.imageLink}>
-                                <img className={styles.image} src={imageUrl} />
+                                <img
+                                    className={styles.image}
+                                    src={imageUrl ? imageUrl : '/static/icons/empty-avatar.svg'}
+                                />
                             </a>
                         </Link>
                     </div>

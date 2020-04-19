@@ -37,7 +37,7 @@ class MobileLayout extends Component<Props> {
                             <a className={styles.profileLink}>
                                 <img
                                     className={styles.profileLinkPic}
-                                    src={currentUserImageUrl}
+                                    src={currentUserImageUrl ? currentUserImageUrl : '/static/icons/empty-header-avatar.svg'}
                                 />
                             </a>
                         </Link>

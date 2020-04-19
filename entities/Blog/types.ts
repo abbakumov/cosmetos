@@ -8,8 +8,8 @@ export type BlogLogin = string;
 
 export interface Blog {
     login: BlogLogin;
-    name: string;
-    imageUrl: string,
+    name?: string;
+    imageUrl?: string,
 };
 
 export interface BlogMap {
