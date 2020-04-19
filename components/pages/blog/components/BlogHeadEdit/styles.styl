@@ -8,6 +8,7 @@
     float left
     width 100px
     margin-left 10px
+    position relative
 
 .center
     margin-left 130px
@@ -33,10 +34,32 @@
     font-size 14px
     resize none
 
-.image
+.imageContainer
+.imagePlaceholder
     border-radius 50px
     width 100px
     height 100px
+
+.imageContainer
+    overflow hidden
+    display flex
+
+.image
+    opacity .5
+    object-fit cover
+
+.imagePlaceholder
+    border 1px solid #c4c4c4
+
+.imageIcon
+    position absolute
+    left calc(50% - 15px)
+    top calc(50% - 14px)
+    width 30px
+
+.imageInput
+    visibility hidden
+    position absolute
 
 .subContainer
     margin-top 12px

@@ -9,7 +9,6 @@ import {
     PageBlogFetchSuccessAction,
     PageBlogFetchMoreSuccessAction,
     PageBlogFetchMoreFailAction,
-    PageBlogEditAction,
     PageBlogEditCancelAction,
     PageBlogChangeFieldAction,
     PageBlogChangeImageFileAction,
