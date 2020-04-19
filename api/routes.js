@@ -64,7 +64,7 @@ const routes = [
     {
         route: '/post',
         method: 'post',
-        controllers: [upload.single('imageFile'), postPostEdit],
+        controllers: [upload.single('pictureFile'), postPostEdit],
     },
     {
         route: '/post/:postId/part',
