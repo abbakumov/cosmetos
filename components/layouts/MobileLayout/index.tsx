@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import {AppState} from '../../../store';
 import {BlogLogin} from '../../../entities/Blog/types';
+import NotificationMaterial from '../../widgets/NotificationMaterial';
 
 const styles = require('./styles.styl');
 
@@ -45,6 +46,7 @@ class MobileLayout extends Component<Props> {
                 <div className={styles.content}>
                     {this.props.children}
                 </div>
+                <NotificationMaterial />
             </div>
         );
     }

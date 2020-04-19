@@ -95,17 +95,11 @@ export function pageBlogReducer(state: PageBlogState = initialState, action: Pag
                 },
             };
 
-        case PAGE_BLOG_SAVE:
-            return state;
-
         case PAGE_BLOG_SAVE_SUCCESS:
             return {
                 ...state,
                 edit: emptyEdit,
             };
-
-        case PAGE_BLOG_SAVE_FAIL:
-            return state;
     }
 
     return state;

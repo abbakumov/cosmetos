@@ -1,3 +1,4 @@
+import {PageBlogSaveSuccessAction} from '../../components/pages/blog/state/types';
 import {
     BLOG_DATA_FETCHED,
     BLOGS_DATA_FETCHED,
@@ -35,7 +36,9 @@ export interface BlogsDataFetchedAction {
 
 export type BlogActionType =
     | BlogDataFetchedAction
-    | BlogsDataFetchedAction;
+    | BlogsDataFetchedAction
+    | PageBlogSaveSuccessAction
+    ;
 
 export interface BlogState {
     currentLogin?: BlogLogin;

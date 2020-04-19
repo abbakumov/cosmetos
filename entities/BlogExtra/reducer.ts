@@ -1,3 +1,5 @@
+import {PAGE_BLOG_SAVE_SUCCESS} from '../../components/pages/blog/state/actions';
+
 import {BlogExtraState, BlogExtraActionType, BlogExtra} from './types';
 import {
     BLOG_EXTRA_DATA_FETCHED,
@@ -30,6 +32,22 @@ export function blogExtraReducer(state = initialState, action: BlogExtraActionTy
                 items: {
                     ...state.items,
                     [newBlogItem.login]: newBlogItem,
+                },
+            };
+        
+        case PAGE_BLOG_SAVE_SUCCESS:
+            const item = state.items[action.payload.blogLogin];
+            const newItem = {
+                ...item,
+                instagramLogin: action.payload.newInstagramLogin,
+                bio: action.payload.newBio,
+            };
+
+            return {
+                ...state,
+                items: {
+                    ...state.items,
+                    [action.payload.blogLogin]: newItem,
                 },
             };
     }

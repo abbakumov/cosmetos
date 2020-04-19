@@ -1,5 +1,6 @@
 import {BlogLogin, Blog} from '../../../../entities/Blog/types';
-import {getBlogByName} from '../../../../entities/Blog/api';
+import {getBlogByName, postBlog} from '../../../../entities/Blog/api';
+import {notificationShowSuccessAction, notificationShowErrorAction} from '../../../../entities/Notification/actions';
 import {BlogExtra} from '../../../../entities/BlogExtra/types';
 import {postsBaseDataFetchedAction} from '../../../../entities/Post/actions';
 import {blogExtraMorePostsFetchedAction} from '../../../../entities/BlogExtra/actions';
@@ -93,9 +94,44 @@ export const pageBlogChangeImageFileAction = (file: File, url: string): PageBlog
     payload: {file, url},
 });
 
-export const pageBlogSaveAction = (): PageBlogSaveAction => ({
-    type: PAGE_BLOG_SAVE,
-});
+export const pageBlogSaveAction = () => async (dispatch, getState) => {
+    dispatch({type: PAGE_BLOG_SAVE});
+
+    const state: AppState = getState();
+
+    const {
+        newImageUrl,
+        newImageFile,
+        newName,
+        newInstagramLogin,
+        newBio,
+    } = state.pageBlog.edit;
+
+    try {
+        const {status} = await postBlog({
+            imageFile: newImageFile,
+            name: newName,
+            instagramLogin: newInstagramLogin,
+            bio: newBio,
+        });
+        if (status !== 'success') {
+            throw new Error();
+        }
+
+        dispatch(pageBlogSaveSuccessAction({
+            blogLogin: state.pageBlog.blogLogin,
+            newImageUrl,
+            newName,
+            newInstagramLogin,
+            newBio,
+        }));
+        dispatch(notificationShowSuccessAction('Информация обновлена!'));
+    } catch (e) {
+        dispatch(pageBlogSaveFailAction());
+        dispatch(notificationShowErrorAction('Не удалось сохранить :('));
+        return;
+    }
+};
 
 const pageBlogSaveSuccessAction = (payload: PageBlogSaveSuccessActionPayload): PageBlogSaveSuccessAction => ({
     type: PAGE_BLOG_SAVE_SUCCESS,

@@ -5,6 +5,7 @@ const {upload} = require('./helpers/multerSetup');
 const adminOnly = require('./middlewares/access/adminOnly');
 
 const getBlog = require('./controllers/getBlog');
+const postBlog = require('./controllers/postBlog');
 const getPost = require('./controllers/getPost');
 const getProduct = require('./controllers/getProduct');
 const getProductColors = require('./controllers/getProductColors');
@@ -41,6 +42,11 @@ const routes = [
         controllers: [getBlog],
     },
     {
+        route: '/blog',
+        method: 'post',
+        controllers: [upload.single('imageFile'), postBlog],
+    },
+    {
         route: '/post/:id',
         method: 'get',
         controllers: [getPost],
@@ -58,7 +64,7 @@ const routes = [
     {
         route: '/post',
         method: 'post',
-        controllers: [upload.single('pictureFile'), postPostEdit],
+        controllers: [upload.single('imageFile'), postPostEdit],
     },
     {
         route: '/post/:postId/part',

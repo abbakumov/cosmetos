@@ -1,4 +1,5 @@
 
+import {PageBlogSaveSuccessAction} from '../../components/pages/blog/state/types';
 import {BlogLogin} from '../Blog/types';
 import {PostId} from '../Post/types';
 
@@ -35,6 +36,7 @@ export interface BlogExtraMorePostsFetchedAction {
 export type BlogExtraActionType =
     | BlogExtraDataFetchedAction
     | BlogExtraMorePostsFetchedAction
+    | PageBlogSaveSuccessAction
     ;
 
 export interface BlogExtraState {

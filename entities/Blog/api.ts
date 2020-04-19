@@ -25,3 +25,35 @@ export function getBlogByName(name: string, offset: number = 0, context?: ICosPa
         context
     );
 }
+
+export interface PostBlogData {
+    name?: string,
+    instagramLogin?: string
+    bio?: string
+    imageFile?: File
+}
+export interface PostBlogResponse {
+    status: 'success' | 'fail'
+}
+export const postBlog = (data: PostBlogData): Promise<PostBlogResponse> => {
+    const body = new FormData();
+    if (data.name) {
+        body.append('name', data.name);
+    }
+    if (data.instagramLogin) {
+        body.append('instagramLogin', data.instagramLogin);
+    }
+    if (data.bio) {
+        body.append('bio', data.bio);
+    }
+    if (data.imageFile) {
+        body.append('imageFile', data.imageFile);
+    }
+    return fetchData(
+        `${getOrigin()}/api/blog`,
+        {
+            body,
+            method: 'POST',
+        }
+    );
+};
