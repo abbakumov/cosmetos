@@ -16,7 +16,7 @@ export interface BlogHeadProps {
 interface MappedProps {
     name: string
     login: string
-    instagramLogin: string
+    instagramLogin?: string
     imageUrl: string
     bio: string
     isPostOwner: boolean
@@ -46,17 +46,19 @@ const BlogHead: FC<Props> = (props: Props) => {
                 <div className={styles.center}>
                     <h1 className={styles.name}>{name}</h1>
                     <div className={styles.login}>@{login}</div>
-                    <a
-                        className={styles.instaButton}
-                        target="_blank"
-                        href={`https://www.instagram.com/${instagramLogin}/`}
-                    >
-                        <img
-                            src="/static/icons/blog-page/insta.svg"
-                            alt="иконка Istagram"
-                        />
-                        <span className={styles.instaLogin}>{instagramLogin}</span>
-                    </a>
+                    {instagramLogin && (
+                        <a
+                            className={styles.instaButton}
+                            target="_blank"
+                            href={`https://www.instagram.com/${instagramLogin}/`}
+                        >
+                            <img
+                                src="/static/icons/blog-page/insta.svg"
+                                alt="иконка Istagram"
+                            />
+                            <span className={styles.instaLogin}>{instagramLogin}</span>
+                        </a>
+                    )}
                 </div>
             </div>
             <div className={styles.subContainer}>

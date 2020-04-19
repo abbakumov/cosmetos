@@ -10,7 +10,7 @@ import {
 
 export interface BlogExtra {
     login: BlogLogin
-    instagramLogin: string
+    instagramLogin?: string
     postIds: PostId[]
     postsTotal: number
     bio: string

@@ -85,7 +85,7 @@ module.exports = async function getBlog(ctx) {
     const blogExtra = {
         ..._.pick(userEntity, ['login', 'bio']),
         postIds: userEntity.Posts,
-        instagramLogin: userEntity.UserSocial.instaLogin,
+        instagramLogin: userEntity.UserSocial ? userEntity.UserSocial.instaLogin : null,
         postsTotal,
     };
 
