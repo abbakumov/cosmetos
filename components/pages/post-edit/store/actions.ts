@@ -228,6 +228,7 @@ export function postEditProductSaveAction(): any {
             'productText',
             'productId',
             'productColorText',
+            'productColorId',
         ])
 
         savePostPartProduct(pickedEditPostPartProductData)
