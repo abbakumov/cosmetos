@@ -7,30 +7,30 @@ import {
 export type BlogLogin = string;
 
 export interface Blog {
-    login: BlogLogin;
-    name?: string;
-    imageUrl?: string,
+    login: BlogLogin
+    name?: string
+    imageUrl?: string
 };
 
 export interface BlogMap {
-    [id: number]: Blog;
+    [id: number]: Blog
+}
+
+export interface BlogsData {
+    data: BlogMap
+    currentLogin?: BlogLogin
 }
 
 // ACTIONS ->
 export interface BlogDataFetchedAction {
-    type: typeof BLOG_DATA_FETCHED;
+    type: typeof BLOG_DATA_FETCHED
     payload: {
-        data: Blog;
+        data: Blog
     }
 };
 export interface BlogsDataFetchedAction {
-    type: typeof BLOGS_DATA_FETCHED;
-    payload: {
-        data: {
-            [id: number]: Blog;
-        }
-        currentLogin?: BlogLogin
-    }
+    type: typeof BLOGS_DATA_FETCHED
+    payload: BlogsData
 }
 // <- ACTIONS
 
@@ -41,8 +41,8 @@ export type BlogActionType =
     ;
 
 export interface BlogState {
-    currentLogin?: BlogLogin;
+    currentLogin?: BlogLogin
     items: {
-        [s: string]: Blog;
+        [s: string]: Blog
     }
 };

@@ -14,6 +14,10 @@ export interface PostBase {
     isPublic: boolean;
 }
 
+export interface PostMap {
+    [id: number]: PostBase
+}
+
 // ACTIONS ->
 export interface PostBaseDataFetchedAction {
     type: typeof POST_BASE_DATA_FETCHED;
