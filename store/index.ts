@@ -4,6 +4,7 @@ import {createScrollMiddleware} from 'react-redux-scroll';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {batchDispatchMiddleware} from 'redux-batched-actions';
 
+import {pageMainReducer} from '../components/pages/main/state/reducer';
 import {pageBlogReducer} from '../components/pages/blog/state/reducer';
 import {pagePostReducer} from '../components/pages/post/state/reducer';
 import {pagePostEditReducer} from '../components/pages/post-edit/store/reducer';
@@ -33,6 +34,7 @@ import {notificationReducer} from '../entities/Notification/reducer';
 
 const rootReducer = combineReducers({
     // pages
+    pageMain: pageMainReducer,
     pageBlog: pageBlogReducer,
     pagePost: pagePostReducer,
     pagePostEdit: pagePostEditReducer,
