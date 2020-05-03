@@ -15,6 +15,9 @@ const deleteUnProduct = require('./controllers/deleteUnProduct');
 
 const postLogin = require('./controllers/postLogin');
 
+// /main
+const getMain = require('./controllers/main/getMain');
+
 // /postEdit
 const getPostEdit = require('./controllers/postEdit/getPostEdit');
 const postPostPublish = require('./controllers/postEdit/postPostPublish');
@@ -36,6 +39,11 @@ const postAdminProductColor = require('./controllers/admin/postAdminProductColor
 const deleteAdminProductColor = require('./controllers/admin/deleteAdminProductColor');
 
 const routes = [
+    {
+        route: '/main',
+        method: 'get',
+        controllers: [getMain],
+    },
     {
         route: '/blog/:login',
         method: 'get',
@@ -196,8 +204,12 @@ const routes = [
 
 function makeRouter() {
     const router = new Router();
-    routes.forEach(({route, method, controllers}) =>
-        router[method](`/api${route}`, ...controllers));
+    routes.forEach(({route, method, controllers}) => {
+        if (!Array.isArray(controllers) || controllers.length < 1) {
+            throw new Error(`Wrong controllers for ${route}`);
+        }
+        router[method](`/api${route}`, ...controllers);
+    });
 
     return router;
 }
