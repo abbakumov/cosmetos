@@ -12,6 +12,11 @@ const {makeProductSmallPicUrl} = require('../../../entities/ProductBase/helpers'
 const {User, Post, UserProduct, Product, ProductPicture, Brand} = require('../../database/models');
 
 module.exports = async function getMain(ctx) {
+    const {user} = ctx.req;
+    const currentUserMap = user
+        ? {users: {[user.id]: JSON.parse(JSON.stringify(user))}}
+        : {};
+
     const userDataPromise = User.findAll({
         limit: 10,
         order: [['id', 'DESC']],
@@ -93,8 +98,11 @@ module.exports = async function getMain(ctx) {
         entities: postEntities,
     } = normalize(postDataPure, [fullPostSchema]);
 
+    console.log('userEntities: ', userEntities);
+
     const entities = _.defaultsDeep(
         {},
+        currentUserMap,
         userEntities,
         blogProductEntities,
         postEntities,
@@ -111,8 +119,12 @@ module.exports = async function getMain(ctx) {
         ..._.pick(user, ['login', 'name']),
         imageUrl: makeUserAvatarUrl (user.avatarPicture),
     }));
-    const blog = _.keyBy(blogArr, 'login');
+    const blogMap = _.keyBy(blogArr, 'login');
     const blogLogins = blogIds.map(id => users[id].login);
+    const blog = {
+        data: blogMap,
+        currentLogin: user ? user.login : null,
+    };
 
     const productBaseArr = Object.values(products).map(product => ({
         ..._.pick(product, ['id', 'kind', 'title']),
