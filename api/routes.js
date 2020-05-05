@@ -17,6 +17,7 @@ const postLogin = require('./controllers/postLogin');
 
 // /main
 const getMain = require('./controllers/main/getMain');
+const getMainPosts = require('./controllers/main/getMainPosts');
 
 // /postEdit
 const getPostEdit = require('./controllers/postEdit/getPostEdit');
@@ -43,6 +44,11 @@ const routes = [
         route: '/main',
         method: 'get',
         controllers: [getMain],
+    },
+    {
+        route: '/main/posts',
+        method: 'get',
+        controllers: [getMainPosts],
     },
     {
         route: '/blog/:login',

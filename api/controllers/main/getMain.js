@@ -98,8 +98,6 @@ module.exports = async function getMain(ctx) {
         entities: postEntities,
     } = normalize(postDataPure, [fullPostSchema]);
 
-    console.log('userEntities: ', userEntities);
-
     const entities = _.defaultsDeep(
         {},
         currentUserMap,
@@ -117,7 +115,7 @@ module.exports = async function getMain(ctx) {
 
     const blogArr = Object.values(users).map(user => ({
         ..._.pick(user, ['login', 'name']),
-        imageUrl: makeUserAvatarUrl (user.avatarPicture),
+        imageUrl: makeUserAvatarUrl(user.avatarPicture),
     }));
     const blogMap = _.keyBy(blogArr, 'login');
     const blogLogins = blogIds.map(id => users[id].login);
