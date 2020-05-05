@@ -14,7 +14,7 @@ const MainPagePosts = (props: Props) => (
         <PostsList
             title="Последние посты"
             postIds={props.postIds}
-            namesVisible={false}
+            namesVisible={true}
             colorsVisible={false}
         />
     </div>
