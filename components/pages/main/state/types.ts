@@ -30,6 +30,7 @@ export interface PageMainFetchMoreBlogProductsSuccessAction {
     type: typeof PAGE_MAIN_FETCH_MORE_BLOG_PRODUCTS_SUCCESS
     payload: {
         blogProductIds: BlogProductId[]
+        isMoreAvailable: boolean
     }
 }
 
@@ -45,6 +46,7 @@ export interface PageMainFetchMorePostsSuccessAction {
     type: typeof PAGE_MAIN_FETCH_MORE_POSTS_SUCCESS
     payload: {
         postIds: PostId[]
+        isMoreAvailable: boolean
     }
 }
 
@@ -67,5 +69,7 @@ export interface PageMainState {
     blogProductIds: BlogProductId[]
     postIds: PostId[]
     isFetchingMoreBlogProducts: boolean
+    isFetchingMoreBlogProductsAvailable: boolean
     isFetchingMorePosts: boolean
+    isFetchingMorePostsAvailable: boolean
 }

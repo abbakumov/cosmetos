@@ -56,5 +56,6 @@ module.exports = async function getMainPosts(ctx) {
         postIds,
         blog,
         post,
+        isMoreAvailable: !postIds.includes(1),
     };
 };

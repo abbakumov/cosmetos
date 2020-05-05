@@ -4,9 +4,9 @@ import {getOrigin} from '../../configs/location';
 
 import {ICosPageContext} from '../../types/context';
 
-import {PostBase, PostId} from './types';
+import {PostBase, PostId, PostMap} from './types';
 import {PostExtra} from '../PostExtra/types';
-import {BlogMap, BlogLogin} from '../Blog/types';
+import {BlogMap, BlogLogin, BlogsData} from '../Blog/types';
 import {BlogProductMap} from '../BlogProduct/types';
 import {PostPartMap} from '../PostPart/types';
 import {PostPartProductMap} from '../PostPartProduct/types';
@@ -77,3 +77,12 @@ export function publishPost(id: PostId): Promise<PublishPostResponse> {
         }
     );
 }
+
+export interface GetMainPostsResponse {
+    postIds: PostId[]
+    blog: BlogsData
+    post: PostMap
+    isMoreAvailable: boolean
+}
+export const getMainPosts = (offset?: number): Promise<GetMainPostsResponse> =>
+    fetchData(`${getOrigin()}/api/main/posts?offset=${offset ? offset : 0}`);

@@ -16,7 +16,7 @@ const MainPageBlogs = (props: Props) => (
         <SectionTitle>Новые блогеры</SectionTitle>
         <div className={styles.blogs}>
             {props.blogs.map(({login, name, imageUrl}) => (
-                <Link href="/blog/[name]" as={`/blog/${login}`}>
+                <Link key={login} href="/blog/[name]" as={`/blog/${login}`}>
                     <a key={login} className={styles.blog}>
                         <img src={imageUrl} className={styles.image} />
                         <div className={styles.name}>{name}</div>

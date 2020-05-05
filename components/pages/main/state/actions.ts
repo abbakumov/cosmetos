@@ -1,5 +1,9 @@
+import {AppState} from '../../../../store';
 import {BlogProductId} from '../../../../entities/BlogProduct/types';
 import {PostId} from '../../../../entities/Post/types';
+import {getMainPosts} from '../../../../entities/Post/api';
+import {blogsDataFetchedAction} from '../../../../entities/Blog/actions';
+import {postsBaseDataFetchedAction} from '../../../../entities/Post/actions';
 
 import {
     PageMainFetchSuccessAction,
@@ -7,7 +11,6 @@ import {
     PageMainFetchMoreBlogProductsAction,
     PageMainFetchMoreBlogProductsSuccessAction,
     PageMainFetchMoreBlogProductsFailAction,
-    PageMainFetchMorePostsAction,
     PageMainFetchMorePostsSuccessAction,
     PageMainFetchMorePostsFailAction,
 } from './types';
@@ -30,23 +33,35 @@ export const pageMainFetchMoreBlogProductsAction = (): PageMainFetchMoreBlogProd
 });
 
 export const pageMainFetchMoreBlogProductsSuccessAction =
-    (blogProductIds: BlogProductId[]): PageMainFetchMoreBlogProductsSuccessAction => ({
+    (blogProductIds: BlogProductId[], isMoreAvailable: boolean): PageMainFetchMoreBlogProductsSuccessAction => ({
         type: PAGE_MAIN_FETCH_MORE_BLOG_PRODUCTS_SUCCESS,
-        payload: {blogProductIds},
+        payload: {blogProductIds, isMoreAvailable},
     });
 
 export const pageMainFetchMoreBlogProductsFailAction = (): PageMainFetchMoreBlogProductsFailAction => ({
     type: PAGE_MAIN_FETCH_MORE_BLOG_PRODUCTS_FAIL,
 });
 
-export const pageMainFetchMorePostsAction = (): PageMainFetchMorePostsAction => ({
-    type: PAGE_MAIN_FETCH_MORE_POSTS,
-});
+export const pageMainFetchMorePostsAction = () => async (dispatch, getState) => {
+    const state: AppState = getState();
+    const offset = state.pageMain.postIds.length;
+
+    dispatch({type: PAGE_MAIN_FETCH_MORE_POSTS});
+
+    try {
+        const data = await getMainPosts(offset);
+        dispatch(blogsDataFetchedAction(data.blog.data, data.blog.currentLogin));
+        dispatch(postsBaseDataFetchedAction(data.post));
+        dispatch(pageMainFetchMorePostsSuccessAction(data.postIds, data.isMoreAvailable));
+    } catch (e) {
+        dispatch(pageMainFetchMorePostsFailAction());
+    }
+};
 
 export const pageMainFetchMorePostsSuccessAction =
-    (postIds: PostId[]): PageMainFetchMorePostsSuccessAction => ({
+    (postIds: PostId[], isMoreAvailable: boolean): PageMainFetchMorePostsSuccessAction => ({
         type: PAGE_MAIN_FETCH_MORE_POSTS_SUCCESS,
-        payload: {postIds},
+        payload: {postIds, isMoreAvailable},
     });
 
 export const pageMainFetchMorePostsFailAction = (): PageMainFetchMorePostsFailAction => ({

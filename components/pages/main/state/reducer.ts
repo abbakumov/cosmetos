@@ -20,10 +20,12 @@ const initialState: PageMainState = {
     blogProductIds: [],
     postIds: [],
     isFetchingMoreBlogProducts: false,
+    isFetchingMoreBlogProductsAvailable: true,
     isFetchingMorePosts: false,
+    isFetchingMorePostsAvailable: true,
 };
 
-export const pageMainReducer = (state: PageMainState = initialState, action: PageMainAction) => {
+export const pageMainReducer = (state: PageMainState = initialState, action: PageMainAction): PageMainState => {
     switch (action.type) {
         case PAGE_MAIN_FETCH_SUCCESS:
             return {
@@ -42,6 +44,7 @@ export const pageMainReducer = (state: PageMainState = initialState, action: Pag
                 ...state,
                 isFetchingMoreBlogProducts: false,
                 blogProductIds: [...state.blogProductIds, ...action.payload.blogProductIds],
+                isFetchingMoreBlogProductsAvailable: action.payload.isMoreAvailable,
             };
 
         case PAGE_MAIN_FETCH_MORE_BLOG_PRODUCTS_FAIL:
@@ -60,7 +63,8 @@ export const pageMainReducer = (state: PageMainState = initialState, action: Pag
             return {
                 ...state,
                 isFetchingMorePosts: false,
-                postIds: [...state.postIds, action.payload.postIds],
+                postIds: [...state.postIds, ...action.payload.postIds],
+                isFetchingMorePostsAvailable: action.payload.isMoreAvailable,
             };
 
         case PAGE_MAIN_FETCH_MORE_POSTS_FAIL:
