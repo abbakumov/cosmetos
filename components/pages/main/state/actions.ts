@@ -4,16 +4,18 @@ import {PostId} from '../../../../entities/Post/types';
 import {getMainPosts} from '../../../../entities/Post/api';
 import {blogsDataFetchedAction} from '../../../../entities/Blog/actions';
 import {postsBaseDataFetchedAction} from '../../../../entities/Post/actions';
+import {getMainReviews} from '../../../../entities/BlogProduct/api';
 
 import {
     PageMainFetchSuccessAction,
     PageMainFetchSuccessActionPayload,
-    PageMainFetchMoreBlogProductsAction,
     PageMainFetchMoreBlogProductsSuccessAction,
     PageMainFetchMoreBlogProductsFailAction,
     PageMainFetchMorePostsSuccessAction,
     PageMainFetchMorePostsFailAction,
 } from './types';
+import { productsBaseDataFetchedAction } from '../../../../entities/ProductBase/actions';
+import { blogProductsDataFetchedAction } from '../../../../entities/BlogProduct/actions';
 
 export const PAGE_MAIN_FETCH_SUCCESS = 'PAGE_MAIN_FETCH_SUCCESS';
 export const PAGE_MAIN_FETCH_MORE_BLOG_PRODUCTS = 'PAGE_MAIN_FETCH_MORE_BLOG_PRODUCTS';
@@ -28,9 +30,22 @@ export const pageMainFetchSuccessAction = (payload: PageMainFetchSuccessActionPa
     payload,
 });
 
-export const pageMainFetchMoreBlogProductsAction = (): PageMainFetchMoreBlogProductsAction => ({
-    type: PAGE_MAIN_FETCH_MORE_BLOG_PRODUCTS,
-});
+export const pageMainFetchMoreBlogProductsAction = () => async (dispatch, getState) => {
+    const state: AppState = getState();
+    const offset = state.pageMain.blogProductIds.length;
+
+    dispatch({type: PAGE_MAIN_FETCH_MORE_BLOG_PRODUCTS});
+
+    try {
+        const data = await getMainReviews(offset);
+        dispatch(blogProductsDataFetchedAction(data.blogProduct));
+        dispatch(blogsDataFetchedAction(data.blog.data, data.blog.currentLogin));
+        dispatch(productsBaseDataFetchedAction(data.productBase));
+        dispatch(pageMainFetchMoreBlogProductsSuccessAction(data.blogProductIds, data.isMoreAvailable));
+    } catch(e) {
+        dispatch(pageMainFetchMoreBlogProductsFailAction());
+    }
+};
 
 export const pageMainFetchMoreBlogProductsSuccessAction =
     (blogProductIds: BlogProductId[], isMoreAvailable: boolean): PageMainFetchMoreBlogProductsSuccessAction => ({

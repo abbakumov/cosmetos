@@ -1,5 +1,7 @@
 import React, {Component, createRef} from 'react';
 
+import Spinner from '../Spinner';
+
 const styles = require('./styles.styl');
 
 interface Props {
@@ -41,11 +43,8 @@ class ViewSensor extends Component<Props> {
 
         if (isFetching) {
             return (
-                <div className={styles.root} ref={this.rootRef}>
-                    <img
-                        className={styles.animation}
-                        src="/static/icons/fetching-anim.svg"
-                    />
+                <div ref={this.rootRef}>
+                    <Spinner />
                 </div>
             );
         }

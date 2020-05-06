@@ -1,6 +1,8 @@
 import {getOrigin} from '../../configs/location';
 import fetchData from '../../src/helpers/fetchData';
-import {ProductId} from '../ProductBase/types';
+import {ProductId, ProductBaseMap} from '../ProductBase/types';
+import {BlogProductId, BlogProductMap} from './types';
+import {BlogsData} from '../Blog/types';
 
 export interface PostProductCommentResponse {
     status: 'success' | 'fail'
@@ -20,3 +22,13 @@ export const postProductComment = (productId: ProductId, text: string): Promise<
             },
         }
     );
+
+export interface GetMainReviewsResponse {
+    blogProductIds: BlogProductId[]
+    blog: BlogsData
+    productBase: ProductBaseMap
+    blogProduct: BlogProductMap
+    isMoreAvailable: boolean
+}
+export const getMainReviews = (offset?: number): Promise<GetMainReviewsResponse> =>
+    fetchData<GetMainReviewsResponse>(`${getOrigin()}/api/main/reviews?offset=${offset || 0}`);

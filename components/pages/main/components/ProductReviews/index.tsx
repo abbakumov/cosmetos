@@ -3,9 +3,12 @@ import {connect} from 'react-redux';
 import Link from 'next/link';
 
 import {AppState} from '../../../../../store';
+import {pageMainFetchMoreBlogProductsAction} from '../../state/actions';
 import SectionTitle from '../../../../widgets/SectionTitle';
 import {BlogProductId} from '../../../../../entities/BlogProduct/types';
 import {ProductId} from '../../../../../entities/ProductBase/types';
+import ActionButton from '../../../../widgets/ActionButton';
+import Spinner from '../../../../widgets/Spinner';
 
 const styles = require('./styles.styl');
 
@@ -21,9 +24,17 @@ interface ReviewItem {
     review: string
 }
 
-interface Props {
+interface MappedProps {
     reviewItems: ReviewItem[]
+    isFetching: boolean
+    isMoreAvailable: boolean
 }
+
+interface ActionProps {
+    fetchMoreReviewsAction(): void
+}
+
+interface Props extends MappedProps, ActionProps {}
 
 const ProductReviews: FC<Props> = (props: Props) => (
     <div className={styles.root}>
@@ -55,10 +66,16 @@ const ProductReviews: FC<Props> = (props: Props) => (
                 </div>
             </div>
         ))}
+        <div className={styles.more}>
+            {!props.isFetching && props.isMoreAvailable && (
+                <ActionButton onClick={props.fetchMoreReviewsAction} text="Еще отзывы" />
+            )}
+            {props.isFetching && (<Spinner />)}
+        </div>
     </div>
 );
 
-const mapStateToProps = (state: AppState) => {
+const mapStateToProps = (state: AppState): MappedProps => {
     const {pageMain, blogProduct, blog, productBase} = state;
     const {blogProductIds} = pageMain;
 
@@ -81,11 +98,19 @@ const mapStateToProps = (state: AppState) => {
         };
     });
 
-    return {reviewItems};
+    const isFetching = pageMain.isFetchingMoreBlogProducts;
+    const isMoreAvailable = pageMain.isFetchingMoreBlogProductsAvailable;
+
+    return {reviewItems, isFetching, isMoreAvailable};
+};
+
+const actionProps = {
+    fetchMoreReviewsAction: () => pageMainFetchMoreBlogProductsAction(),
 };
 
 const ConnectedProductReviews = connect(
     mapStateToProps,
+    actionProps,
 )(ProductReviews);
 
 export default ConnectedProductReviews;
