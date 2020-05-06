@@ -29,6 +29,14 @@ class MobileLayout extends Component<Props> {
                 </Head>
                 <div className={styles.header}>
                     <Link href="/">
+                        <a className={styles.homeLink}>
+                            <img
+                                className={styles.homeLinkPic}
+                                src="/static/icons/home.svg"
+                            />
+                        </a>
+                    </Link>
+                    <Link href="/">
                         <a className={styles.logoLink}>
                             <img className={styles.logo} src="/static/icons/header-logo.png"/>
                         </a>
