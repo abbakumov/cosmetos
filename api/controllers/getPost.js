@@ -19,7 +19,6 @@ const {
     ProductPicture,
     Brand,
 } = require('../database/models');
-const {getPartProductIds} = require('../helpers/postPart');
 
 module.exports = async function getPost(ctx) {
     const {id: _id} = ctx.params;
@@ -49,7 +48,7 @@ module.exports = async function getPost(ctx) {
                 include: [
                     {
                         model: PostPartProduct,
-                        attributes: ['id', 'postPartId','productId', 'productColorId'],
+                        attributes: ['id', 'postPartId', 'productId', 'productColorId', 'unassignedProductId'],
                         include: [
                             {
                                 model: ProductColor,
@@ -170,14 +169,15 @@ module.exports = async function getPost(ctx) {
                 x: part.positionX * 100, // TODO: refact
                 y: part.positionY * 100, // TODO: refact
             },
-            color: part.colorHex, // TODO: refact
-            productIds: getPartProductIds(part, postPartProducts),
+            color: part.colorHex,
+            postPartProductIds: part.PostPartProducts,
         }));
     const postPart = _.keyBy(postPartArr, 'id');
 
     const postPartProductArr = Object.values(postPartProducts)
         .map(postPartProduct => ({
             ..._.pick(postPartProduct, ['id', 'postPartId', 'productId', 'productColorId']),
+            unProductId: postPartProduct.unassignedProductId,
         }));
     const postPartProduct = _.keyBy(postPartProductArr, 'id');
 
