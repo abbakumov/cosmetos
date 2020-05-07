@@ -16,7 +16,7 @@ import {
 import {
     savePost,
 } from '../../../../entities/Post/api';
-import {PostProductId} from '../../../../entities/PostProduct/types';
+import {PostPartProductId} from '../../../../entities/PostPartProduct/types';
 import {
     notificationShowSuccessAction,
     notificationShowErrorAction,
@@ -264,17 +264,17 @@ export function postEditProductSaveAction(): any {
     };
 }
 
-export const postEditProductRemoveAction = (postProductId: PostProductId): any => (dispatch, getState) => {
+export const postEditProductRemoveAction = (postPartProductId: PostPartProductId): any => (dispatch, getState) => {
     const state: AppState = getState();
-    const productId = state.postProduct.items[postProductId].productId;
+    const productId = state.postPartProduct.items[postPartProductId].productId;
 
-    deletePostPartProduct(postProductId)
+    deletePostPartProduct(postPartProductId)
         .then(data => {
             if (data.status === 'success') {
                 dispatch({
                     type: POST_EDIT_PRODUCT_REMOVE_SUCCESS,
                     payload: {
-                        postProductId,
+                        postPartProductId,
                         productId,
                     },
                 });

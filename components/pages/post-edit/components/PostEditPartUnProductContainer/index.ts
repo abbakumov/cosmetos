@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {AppState} from '../../../../../store';
 import {UnProductId} from '../../../../../entities/UnProduct/types';
 import {unProductRemoveAction} from '../../../../../entities/UnProduct/actions';
+import {PostPartProductId} from '../../../../../entities/PostPartProduct/types';
 
 import PostEditPartProduct, {
     DataProps as PostEditPartProductDataProps,
@@ -10,11 +11,12 @@ import PostEditPartProduct, {
 } from '../PostEditPartProduct';
 
 export interface PublicProps {
-    id: UnProductId
+    postPartProductId: PostPartProductId
+    unProductId: UnProductId
 }
 
 function mapStateToProps(state: AppState, ownProps: PublicProps): PostEditPartProductDataProps {
-    const {id} = ownProps;
+    const id = ownProps.unProductId;
     const {
         brandId,
         brandText,

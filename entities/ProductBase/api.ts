@@ -6,34 +6,24 @@ import fetchData from '../../src/helpers/fetchData';
 
 import {getOrigin} from '../../configs/location';
 
-import {ProductBase, ProductId} from './types';
-import {BlogMap, BlogLogin} from '../Blog/types';
-import {BlogProduct} from '../BlogProduct/types';
-import {PostBase} from '../Post/types';
+import {ProductBase, ProductId, ProductBaseMap} from './types';
+import {BlogsData} from '../Blog/types';
+import {BlogProductMap} from '../BlogProduct/types';
 import {ProductExtra} from '../ProductExtra/types';
-import {ProductColor} from '../ProductColor/types';
 import {BrandId, BrandMap} from '../Brand/types';
 import {ProductColorMap} from '../ProductColor/types';
-import {PostProductMap} from '../PostProduct/types';
 import {ProductEdit} from '../../components/pages/admin/product/store/types';
+import {PostPartProductMap} from '../PostPartProduct/types';
+import { PostMap } from '../Post/types';
 
 export interface GetProductByIdResponse {
     productBase: ProductBase
     productExtra: ProductExtra
-    postProduct: PostProductMap
-    productColor: {
-        [id: number]: ProductColor
-    }
-    postBase: {
-        [id: number]: PostBase
-    }
-    blog: {
-        data: BlogMap
-        currentLogin: BlogLogin
-    }
-    blogProduct: {
-        [id: number]: BlogProduct
-    }
+    postPartProduct: PostPartProductMap
+    productColor: ProductColorMap
+    postBase: PostMap
+    blog: BlogsData
+    blogProduct: BlogProductMap
 }
 
 export const getProductById = (id: ProductId, context?: ICosPageContext): Promise<GetProductByIdResponse> =>

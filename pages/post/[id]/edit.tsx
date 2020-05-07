@@ -12,9 +12,9 @@ import {postPartsDataFetchedAction} from '../../../entities/PostPart/actions';
 import {productsBaseDataFetchedAction} from '../../../entities/ProductBase/actions';
 import {productsExtraDataFetchedAction} from '../../../entities/ProductExtra/actions';
 import {productColorsDataFetchedAction} from '../../../entities/ProductColor/actions';
-import {postProductsDataFetchedAction} from '../../../entities/PostProduct/actions';
 import {brandsDataFetchedAction} from '../../../entities/Brand/actions';
 import {unProductsDataFetchedAction} from '../../../entities/UnProduct/actions';
+import {postPartProductsDataFetchedAction} from '../../../entities/PostPartProduct/actions';
 
 const PostEditPageWrapper: NextPage<{}> = (props) => (<PostEditPage {...props} />);
 
@@ -38,7 +38,7 @@ PostEditPageWrapper.getInitialProps = async function(context: ICosPageContext): 
     store.dispatch(productsExtraDataFetchedAction(data.productExtra));
     store.dispatch(unProductsDataFetchedAction(data.unProduct));
     store.dispatch(productColorsDataFetchedAction(data.productColor));
-    store.dispatch(postProductsDataFetchedAction(data.postProduct));
+    store.dispatch(postPartProductsDataFetchedAction(data.postPartProduct));
     store.dispatch(brandsDataFetchedAction(data.brand));
 
     let title = 'Редактирование поста – Cosmetos';

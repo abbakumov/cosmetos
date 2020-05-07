@@ -9,7 +9,7 @@ import {
     postEditProductProductChangeAction,
     postEditProductColorChangeAction,
 } from '../../store/actions';
-import {ProductBase, ProductId} from '../../../../../entities/ProductBase/types';
+import {ProductBase} from '../../../../../entities/ProductBase/types';
 import {ProductColor} from '../../../../../entities/ProductColor/types';
 
 import MaterialDropDown, {
@@ -33,9 +33,8 @@ function getFilteredBrandItems(items: BrandMap, value: string): SuggestItem[] {
         }))
 }
 
-function getFilteredProductItems(items: ProductBase[], value: string, usedIds: ProductId[]): SuggestItem[] {
+function getFilteredProductItems(items: ProductBase[], value: string): SuggestItem[] {
     return items
-        .filter(product => usedIds.indexOf(product.id) === -1) // not used in this post
         .filter(product => product.title.toLowerCase().includes(value.toLowerCase())) // matches search string
         .map(({id, title}) => ({
             id,
@@ -51,7 +50,7 @@ function getFilteredColorItems(items: ProductColor[], value: string): SuggestIte
 
 function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownProps): MaterialDropDownDataProps {
     const {id} = ownProps;
-    const {postEdit, editPostPartProduct} = state.pagePostEdit;
+    const {editPostPartProduct} = state.pagePostEdit;
 
     const {
         brandId,
@@ -80,19 +79,6 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
             const brandProductsItem = state.brandProducts.items[brandId];
             const productIds = brandProductsItem ? brandProductsItem.productIds : [];
 
-            const postId = postEdit.id;
-
-            // collect all ids which already in use in this post
-            // we need to filter them and make them unable to chose
-            const usedIds = Object.values(state.postProduct.items)
-                .reduce(
-                    (acc, postProductItem) => {
-                        if (postId !== postProductItem.postId) {return acc;}
-                        return [...acc, postProductItem.productId];
-                    },
-                    []
-                );
-
             if (brandId || brandText) {
                 label = 'Продукт';
                 isActive = true;
@@ -100,8 +86,7 @@ function mapStateToProps(state: AppState, ownProps: PostEditPartProductDropDownP
                 inputValue = productText;
                 items = getFilteredProductItems(
                     productIds.map(id => state.productBase.items[id]),
-                    productText,
-                    usedIds
+                    productText
                 );
             }
             break;

@@ -6,13 +6,13 @@ import Icon from '@material-ui/core/Icon';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-import {PostProductId} from '../../../../../entities/PostProduct/types';
+import {PostPartProductId} from '../../../../../entities/PostPartProduct/types';
 import {UnProductId} from '../../../../../entities/UnProduct/types';
 
 const styles = require('./styles.styl');
 
 export interface DataProps {
-    id: PostProductId | UnProductId
+    id: PostPartProductId | UnProductId
     brand: string
     product: string
     color: string
@@ -20,7 +20,7 @@ export interface DataProps {
 }
 
 export interface ActionProps {
-    productRemoveAction(id: PostProductId | UnProductId): void
+    productRemoveAction(id: PostPartProductId | UnProductId): void
 }
 
 interface Props extends DataProps, ActionProps {}

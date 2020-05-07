@@ -5,7 +5,7 @@ import {
     PostEditProductRemoveSuccess,
 } from '../../components/pages/post-edit/store/types';
 
-import {AbstractProductId} from '../AbstractProduct/types';
+import {PostPartProductId} from '../PostPartProduct/types';
 import {UnProductRemoveSuccessAction} from '../UnProduct/types';
 import {Position} from '../Position';
 
@@ -14,11 +14,11 @@ import {POST_PARTS_DATA_FETCHED} from './actions';
 export type PostPartId = number;
 
 export interface PostPart {
-    id: PostPartId;
-    title: string;
-    position: Position;
-    color: string;
-    productIds: AbstractProductId[];
+    id: PostPartId
+    title: string
+    position: Position
+    color: string
+    postPartProductIds: PostPartProductId[]
 }
 
 export interface PostPartMap {

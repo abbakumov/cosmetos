@@ -81,7 +81,7 @@ const PostEditPart: FunctionComponent<Props> = (props: Props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {props.productIds.map(id => <PostEditPartAbstractProduct key={id} id={id} />)}
+                        {props.postPartProductIds.map(id => <PostEditPartAbstractProduct key={id} id={id} />)}
                     </TableBody>
                 </Table>
             </div>

@@ -4,7 +4,7 @@ import {BrandId} from '../../../../entities/Brand/types';
 import {ProductId} from '../../../../entities/ProductBase/types';
 import {ProductColorId} from '../../../../entities/ProductColor/types';
 import {PostId} from '../../../../entities/Post/types';
-import {PostProductId} from '../../../../entities/PostProduct/types';
+import {PostPartProductId} from '../../../../entities/PostPartProduct/types';
 import {Position} from '../../../../entities/Position';
 import {UnProductId} from '../../../../entities/UnProduct/types';
 
@@ -175,7 +175,7 @@ export interface PostEditProductSaveSuccessAsAction {
         postPartId: PostPartId
         productId: ProductId
         productColorId?: ProductColorId
-        postPartProductId: PostProductId
+        postPartProductId: PostPartProductId
     };
 }
 
@@ -200,7 +200,7 @@ export interface PostEditProductSaveFailAction {
 export interface PostEditProductRemoveSuccess {
     type: typeof POST_EDIT_PRODUCT_REMOVE_SUCCESS;
     payload: {
-        postProductId: PostProductId
+        postPartProductId: PostPartProductId
         productId: ProductId
     };
 }

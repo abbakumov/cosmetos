@@ -1,28 +1,42 @@
 import React, {FC} from 'react';
+import {connect} from 'react-redux';
 
-import {getProductType, getProductId} from '../../../../../entities/AbstractProduct/helpers';
-import {AbstractProductId} from '../../../../../entities/AbstractProduct/types';
+import {PostPartProductId, PostPartProduct} from '../../../../../entities/PostPartProduct/types';
+import {AppState} from '../../../../../store';
 
 import PostEditPartAsProductContainer from '../PostEditPartAsProductContainer';
 import PostEditPartUnProductContainer from '../PostEditPartUnProductContainer';
 
 export interface PostEditPartAbstractProductProps {
-    id: AbstractProductId
+    id: PostPartProductId
 }
 
-const PostEditPartAbstractProduct: FC<PostEditPartAbstractProductProps> = (props: PostEditPartAbstractProductProps) => {
-    const productType = getProductType(props.id);
-    const numberId = getProductId(props.id);
+type Props = PostPartProduct;
 
-    switch (productType) {
-        case 'ASSIGNED':
-            return <PostEditPartAsProductContainer id={numberId} />;
-
-        case 'UNASSIGNED':
-            return <PostEditPartUnProductContainer id={numberId} />;
+const PostEditPartAbstractProduct: FC<PostEditPartAbstractProductProps> = (props: Props) => {
+    if (props.unProduct) {
+        return (
+            <PostEditPartUnProductContainer
+                postPartProductId={props.id}
+                unProductId={props.unProduct}
+            />
+        );
     }
 
-    return null;
+    return (
+        <PostEditPartAsProductContainer
+            postPartProductId={props.id}
+            productId={props.productId}
+            productColorId={props.productColorId}
+        />
+    );
 }
 
-export default PostEditPartAbstractProduct;
+const mapStateToProps = (state: AppState, {id}: PostEditPartAbstractProductProps): Props =>
+    state.postPartProduct.items[id];
+
+const ConnectedPostEditPartAbstractProduct = connect(
+    mapStateToProps,
+)(PostEditPartAbstractProduct);
+
+export default ConnectedPostEditPartAbstractProduct;

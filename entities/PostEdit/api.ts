@@ -1,12 +1,12 @@
 import fetchData from '../../src/helpers/fetchData';
 
 import {PostId} from '../Post/types';
-import {PostPart, PostPartId} from '../PostPart/types';
+import {PostPartId, PostPartMap} from '../PostPart/types';
 import {ProductBaseMap} from '../ProductBase/types';
-import {PostProduct} from '../PostProduct/types';
+import {PostPartProductMap} from '../PostPartProduct/types';
 import {UnProductMap} from '../UnProduct/types';
 import {ProductExtraMap} from '../ProductExtra/types';
-import {ProductColor} from '../ProductColor/types';
+import {ProductColorMap} from '../ProductColor/types';
 import {BrandMap} from '../Brand/types';
 
 import {PostEdit} from './types';
@@ -16,18 +16,12 @@ import {ICosPageContext} from '../../types/context';
 export interface GetPostEditByIdResponse {
     postEdit: PostEdit
     postPartIds: PostPartId[]
-    postProduct: {
-        [id: number]: PostProduct
-    }
-    postPart: {
-        [id: number]: PostPart
-    }
+    postPartProduct: PostPartProductMap
+    postPart: PostPartMap
     productBase: ProductBaseMap
     productExtra: ProductExtraMap
     unProduct: UnProductMap
-    productColor: {
-        [id: number]: ProductColor
-    }
+    productColor: ProductColorMap
     brand: BrandMap
 }
 

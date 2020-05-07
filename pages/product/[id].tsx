@@ -14,6 +14,7 @@ import {postsBaseDataFetchedAction} from '../../entities/Post/actions';
 import {productBaseDataFetchedAction} from '../../entities/ProductBase/actions';
 import {productColorsDataFetchedAction} from '../../entities/ProductColor/actions';
 import {productExtraDataFetchedAction} from '../../entities/ProductExtra/actions';
+import {postPartProductsDataFetchedAction} from '../../entities/PostPartProduct/actions';
 
 const ProductPageWrapper: NextPage<ProductPagePublicProps> = (props) => (<ProductPage {...props} />);
 
@@ -35,7 +36,7 @@ ProductPageWrapper.getInitialProps = async function(context: ICosPageContext): P
     store.dispatch(pageProductDataFetchedAction(id, refPost));
     store.dispatch(blogsDataFetchedAction(data.blog.data, data.blog.currentLogin));
     store.dispatch(blogProductsDataFetchedAction(data.blogProduct));
-    store.dispatch(postProductsDataFetchedAction(data.postProduct));
+    store.dispatch(postPartProductsDataFetchedAction(data.postPartProduct));
     store.dispatch(postsBaseDataFetchedAction(data.postBase));
     store.dispatch(productBaseDataFetchedAction(data.productBase));
     store.dispatch(productColorsDataFetchedAction(data.productColor));
