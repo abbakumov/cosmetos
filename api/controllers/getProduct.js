@@ -145,7 +145,7 @@ module.exports = async function getProduct(ctx) {
         smallPicUrl: makeProductSmallPicUrl(productEntity.ProductPictures[0].picture),
     };
 
-    const postIds = productEntity
+    const postIdsWithDuplicates = productEntity
         .PostPartProducts.map(_id => postPartProducts[_id].PostPart)
         .map(_id => {
             // because Posts might not exist there if they aren't public
@@ -156,8 +156,9 @@ module.exports = async function getProduct(ctx) {
             return postParts[_id].Post;
         })
         .filter(id => !!id);
+    const postIds = _.uniq(postIdsWithDuplicates);
 
-    const postProductArr = productEntity
+    const postPartProductArr = productEntity
         .PostPartProducts.map(_id => {
             const item = postPartProducts[_id];
 
@@ -172,10 +173,11 @@ module.exports = async function getProduct(ctx) {
                 postId: postPart.postId,
                 productId: id,
                 productColorId: item.productColorId,
+                unProductId: null,
             };
         })
         .filter(item => !!item);
-    const postProduct = _.keyBy(postProductArr, 'id');
+    const postPartProduct = _.keyBy(postPartProductArr, 'id');
 
     const productExtra = {
         ..._.pick(productEntity, ['id', 'description']),
@@ -227,7 +229,7 @@ module.exports = async function getProduct(ctx) {
         productBase,
         productExtra,
         productColor,
-        postProduct,
+        postPartProduct,
         postBase,
         blog,
         blogProduct: userProduct,

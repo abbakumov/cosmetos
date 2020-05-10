@@ -16,7 +16,7 @@ export interface PostPartProduct {
     id: PostPartProductId
     postId: PostId
     productId: ProductId
-    productColorId: ProductColorId
+    productColorId?: ProductColorId
     unProductId: UnProductId
 };
 

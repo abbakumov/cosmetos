@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
+import _ from 'lodash';
 import {connect} from 'react-redux';
 import Link from 'next/link';
 import {PostId, PostBase} from '../../../../entities/Post/types';
 import {AppState} from '../../../../store';
+import { PostPartProduct } from '../../../../entities/PostPartProduct/types';
 
 const styles = require('./styles.styl');
 
@@ -12,23 +14,27 @@ interface PostsListPostPublicProps {
     colorVisible: boolean
 }
 
+interface Color {
+    picUrl: string
+    title: string
+}
+
 interface PostsListPostProps extends PostBase {
     name: string
     nameVisible: boolean
     colorVisible: boolean
-    colorPicUrl: string
-    colorTitle: string
+    colors: Color[]
 }
 
 class PostsListPost extends Component<PostsListPostProps> {
     render() {
-        const {id, title, imageUrl, isPublic, nameVisible, name, colorVisible, colorPicUrl, colorTitle} = this.props;
+        const {id, title, imageUrl, isPublic, nameVisible, name, colorVisible, colors} = this.props;
 
         return (
             <Link href="/post/[id]" as={`/post/${id}`}>
                 <a className={styles.root}>
                     <div className={styles.imageContainer}>
-                        <img className={styles.image} src={imageUrl}/>
+                        <img className={styles.image} src={imageUrl} />
                         {!isPublic &&
                             <div className={styles.imageFade}>
                                 <img
@@ -41,9 +47,13 @@ class PostsListPost extends Component<PostsListPostProps> {
                     {nameVisible && <span className={styles.name}>{name}</span>}
                     <h2 className={styles.title}>{title}</h2>
                     {colorVisible && (
-                        <div className={styles.color}>
-                            <img className={styles.colorPic} src={colorPicUrl} />
-                            <span className={styles.colorTitle}>{colorTitle}</span>
+                        <div className={styles.colors}>
+                            {colors.map(color => (
+                                <div key={color.title} className={styles.color}>
+                                    <img className={styles.colorPic} src={color.picUrl} />
+                                    <span className={styles.colorTitle}>{color.title}</span>
+                                </div>
+                            ))}
                         </div>
                     )}
                 </a>
@@ -59,27 +69,27 @@ function mapStateToProps(state: AppState, ownProps: PostsListPostPublicProps): P
 
     const {name} = state.blog.items[postData.authorLogin];
 
-    let colorPicUrl, colorTitle;
-    if (colorVisible) {
-        const productId = state.pageProduct.id;
-        const postProduct = Object.values(state.postProduct.items)
-            .find(item => item.productId === productId && item.postId === id);
-        if (postProduct) {
-            const productColor = state.productColor.items[postProduct.productColorId];
-            if (productColor) {
-                colorPicUrl = productColor.picUrl;
-                colorTitle = productColor.title;
-            }
-        }
-    }
+    const productId = state.pageProduct.id;
+    const allColors: Color[] = colorVisible
+        ? Object.values(state.postPartProduct.items)
+            .filter((item: PostPartProduct) =>
+                item.productId === productId && item.postId === id && Boolean(item.productColorId))
+            .map((item: PostPartProduct): Color => {
+                const productColor = state.productColor.items[item.productColorId];
+                return {
+                    picUrl: productColor.picUrl,
+                    title: productColor.title,
+                };
+            })
+        : [];
+    const colors: Color[] = _.uniqBy(allColors, 'title');
 
     return {
         ...postData,
         name,
         nameVisible,
-        colorVisible: colorVisible && !!colorTitle,
-        colorPicUrl,
-        colorTitle,
+        colorVisible: colorVisible && Boolean(colors.length),
+        colors,
     };
 }
 

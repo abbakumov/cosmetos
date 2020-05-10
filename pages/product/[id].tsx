@@ -9,7 +9,6 @@ import {pageProductDataFetchedAction} from '../../components/pages/product/state
 import {getProductById} from '../../entities/ProductBase/api';
 import {blogsDataFetchedAction} from '../../entities/Blog/actions';
 import {blogProductsDataFetchedAction} from '../../entities/BlogProduct/actions';
-import {postProductsDataFetchedAction} from '../../entities/PostProduct/actions';
 import {postsBaseDataFetchedAction} from '../../entities/Post/actions';
 import {productBaseDataFetchedAction} from '../../entities/ProductBase/actions';
 import {productColorsDataFetchedAction} from '../../entities/ProductColor/actions';
