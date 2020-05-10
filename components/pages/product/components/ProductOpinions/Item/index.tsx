@@ -59,7 +59,9 @@ class ProductOpinionsItem extends Component<Props> {
                         </Link>
                     </div>
                     <div className={styles.content}>
-                        <span className={styles.name}>{name}</span>
+                        <Link href="/blog/[name]" as={`/blog/${blogLogin}`}>
+                            <a className={styles.name}>{name}</a>
+                        </Link>
                         <span className={styles.review}>"{review}"</span>
                     </div>
                 </div>
