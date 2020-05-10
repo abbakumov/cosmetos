@@ -26,11 +26,12 @@ const styles = require('./styles.styl');
 
 interface MappedProps {
     id?: PostId
-    title: string;
-    instaPostId: string;
-    description: string;
-    isPublic: boolean;
-    isSaving: boolean;
+    title: string
+    instaPostId: string
+    description: string
+    isPublic: boolean
+    canBePublic: boolean
+    isSaving: boolean
 }
 
 interface ActionProps {
@@ -70,6 +71,7 @@ const PostEditInfo: FunctionComponent<Props> = (props: Props) => {
                 onChange={e => {props.postEditFieldChange('description', e.target.value)}}
             />
             <FormControlLabel
+                disabled={!props.canBePublic}
                 control={
                     <Switch
                         checked={props.isPublic}
@@ -78,6 +80,9 @@ const PostEditInfo: FunctionComponent<Props> = (props: Props) => {
                 }
                 label="Опубликован"
             />
+            {!props.canBePublic && (
+                <div className={styles.warning}>Пост не может быть опубликован без продуктов</div>
+            )}
             <Button
                 className={styles.button}
                 variant="contained"
@@ -105,9 +110,14 @@ const PostEditInfo: FunctionComponent<Props> = (props: Props) => {
 };
 
 function mapStateToProps(state: AppState): MappedProps {
-    const {isSaving, postEdit} = state.pagePostEdit;
+    const {isSaving, postEdit, postPartIds} = state.pagePostEdit;
     const {id, title, instaPostId, description, isPublic} = postEdit;
-    return {id, title, instaPostId, description, isPublic, isSaving};
+
+    const postPartItems = state.postPart.items;
+    const canBePublic = postPartIds
+        .some(postPartId => postPartItems[postPartId].postPartProductIds.length > 0);
+
+    return {id, title, instaPostId, description, isPublic, canBePublic, isSaving};
 }
 
 const mapDispatchToProps = {
