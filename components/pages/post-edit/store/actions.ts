@@ -368,6 +368,13 @@ export function postEditPartCancelAction(): PostEditPartCancelAction {
 }
 
 export const postEditPartRemoveAction = (postPartId: PostPartId) => (dispatch, getState) => {
+    const state: AppState = getState();
+
+    if (state.postPart.items[postPartId].postPartProductIds.length > 0) {
+        dispatch(notificationShowErrorAction('Удалите все продукты с части тела перед её удалением'));
+        return;
+    }
+
     deletePostPart(postPartId)
         .then(data => {
             if (data.status === 'success') {

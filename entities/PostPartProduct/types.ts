@@ -1,7 +1,12 @@
+import {
+    PostEditProductSaveSuccessAsAction,
+    PostEditProductSaveSuccessUnAction,
+} from '../../components/pages/post-edit/store/types';
+
 import {PostId} from '../Post/types';
 import {ProductId} from '../ProductBase/types';
 import {ProductColorId} from '../ProductColor/types';
-import {UnProductId} from '../UnProduct/types';
+import {UnProductId, UnProductRemoveSuccessAction} from '../UnProduct/types';
 
 import {POST_PART_PRODUCTS_DATA_FETCHED} from './actions';
 
@@ -32,4 +37,7 @@ export interface PostPartProductsDataFetchedAction {
 
 export type PostPartProductAction =
     | PostPartProductsDataFetchedAction
+    | UnProductRemoveSuccessAction
+    | PostEditProductSaveSuccessAsAction
+    | PostEditProductSaveSuccessUnAction
     ;

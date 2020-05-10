@@ -1,7 +1,4 @@
-import {
-    POST_EDIT_PRODUCT_SAVE_SUCCESS_AS,
-    POST_EDIT_PRODUCT_REMOVE_SUCCESS,
-} from '../../components/pages/post-edit/store/actions';
+import _ from 'lodash';
 
 import {PostProductState, PostProductActionType} from './types';
 import {
@@ -21,23 +18,6 @@ export function postProductReducer(state = initialState, action: PostProductActi
                     ...action.payload.data,
                 },
             };
-
-        case POST_EDIT_PRODUCT_SAVE_SUCCESS_AS:
-            return {
-                items: {
-                    ...state.items,
-                    [action.payload.postPartProductId]: {
-                        id: action.payload.postPartProductId,
-                        postId: action.payload.postId,
-                        productId: action.payload.productId,
-                        productColorId: action.payload.productColorId,
-                    },
-                },
-            };
-
-        case POST_EDIT_PRODUCT_REMOVE_SUCCESS:
-            const newItems = Object.values(state.items).filter(item => item.productId !== action.payload.productId);
-            return {items: newItems};
     }
 
     return state;
