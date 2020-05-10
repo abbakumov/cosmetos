@@ -11,11 +11,6 @@ export const postEditSchema = new Schema({
         required: true,
         message: 'Заголовок не может быть пустым',
     },
-    instaPostId: {
-        type: String,
-        required: true,
-        message: 'ID поста в инстаграме не может быть пустым',
-    },
 });
 
 export const postPartEditSchema = new Schema({
