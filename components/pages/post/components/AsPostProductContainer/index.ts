@@ -2,27 +2,30 @@
 import {connect} from 'react-redux';
 
 import {AppState} from '../../../../../store';
-import {PostPartProduct} from '../../../../../entities/PostPartProduct/types';
 import {PostPartId} from '../../../../../entities/PostPart/types';
 import {ProductId} from '../../../../../entities/ProductBase/types';
+import {ProductColorId} from '../../../../../entities/ProductColor/types';
 
 import PostProduct, {PostProductProps} from '../PostProduct';
 
 export interface AsPostProductPublicProps {
     id: ProductId
+    productColorId: ProductColorId
     partId: PostPartId
     backIndex: number
     isShown: boolean
 }
 
 function mapStateToProps(state: AppState, ownProps: AsPostProductPublicProps): PostProductProps {
-    const {id, partId, backIndex, isShown} = ownProps;
+    const {id, productColorId, partId, backIndex, isShown} = ownProps;
 
     const product = state.productBase.items[id];
     const {brand, title, smallPicUrl} = product;
 
+    const postAuthorLogin = state.postBase.items[state.pagePost.postId].authorLogin;
     const blogProductItems = state.blogProduct.items;
-    const blogProductItem = Object.values(blogProductItems).find(item => item.productId === id);
+    const blogProductItem = Object.values(blogProductItems)
+        .find(item => (item.productId === id && item.blogLogin === postAuthorLogin));
     let review, reviewAuthorImageUrl;
     if (blogProductItem) {
         review = blogProductItem.review;
@@ -33,13 +36,7 @@ function mapStateToProps(state: AppState, ownProps: AsPostProductPublicProps): P
     const {color} = postPart;
     const {postId} = state.pagePost;
 
-    const {items} = state.postPartProduct;
-    const postPartProductItem: PostPartProduct = Object.values(items)
-        .find((item: PostPartProduct) => item.postPartId === partId && item.productId === id);
-
-    if (!postPartProductItem) {throw new Error('PostProduct: postPartProductItem must not be empty!')}
-
-    const productColor = state.productColor.items[postPartProductItem.productColorId];
+    const productColor = state.productColor.items[productColorId];
     const {
         title: colorTitle,
         picUrl: colorPicUrl,

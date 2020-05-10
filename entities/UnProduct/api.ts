@@ -8,6 +8,7 @@ import {ICosPageContext} from '../../types/context';
 import {BrandMap} from '../Brand/types';
 import {ProductBaseMap, ProductId} from '../ProductBase/types';
 import {ProductColorId} from '../ProductColor/types';
+import {PostPartProductId} from '../PostPartProduct/types';
 
 import {UnProductExtraMap} from '../UnProductExtra/types';
 import {UnProductMap, UnProductId} from './types';
@@ -28,6 +29,7 @@ export const getAdminUnProducts = (context: ICosPageContext): Promise<GetAdminUn
 
 export interface DeleteUnProductResponse {
     status: 'success' | 'fail'
+    postPartProductId: PostPartProductId
 }
 export const deleteUnProduct = (id: UnProductId): Promise<DeleteUnProductResponse> =>
     fetchData<DeleteUnProductResponse>(

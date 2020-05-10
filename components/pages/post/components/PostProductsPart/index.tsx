@@ -5,7 +5,7 @@ import {scrollToWhen} from 'react-redux-scroll';
 import {AppState} from '../../../../../store';
 import {PostId} from '../../../../../entities/Post/types';
 import {PostPartId} from '../../../../../entities/PostPart/types';
-import {AbstractProductId} from '../../../../../entities/AbstractProduct/types';
+import {PostPartProductId} from '../../../../../entities/PostPartProduct/types';
 
 import {postPageTogglePartAction, POST_PAGE_SCROLL_TO_PART} from '../../state/actions';
 import AbstractPostProduct from '../AbstractPostProduct';
@@ -20,7 +20,7 @@ interface MappedProps {
     id: PostPartId
     title: string
     color: string
-    productIds: AbstractProductId[]
+    postPartProductIds: PostPartProductId[]
     isOpen: boolean
 }
 
@@ -87,7 +87,7 @@ class PostProductsPart extends Component<Props, State> {
     }
 
     render() {
-        const {id, title, color, productIds, isOpen} = this.props;
+        const {id, title, color, postPartProductIds, isOpen} = this.props;
         const {isNodesActive, isNodesShown} = this.state;
 
         return (
@@ -113,7 +113,7 @@ class PostProductsPart extends Component<Props, State> {
                 </div>
                 {isNodesActive &&
                     <div className={styles.productsContainer}>
-                        {productIds.map((_id, index, arr) => (
+                        {postPartProductIds.map((_id, index, arr) => (
                             <AbstractPostProduct
                                 key={_id}
                                 id={_id}
@@ -133,7 +133,7 @@ function mapStateToProps(state: AppState, ownProps: PostProductsPartPublicProps)
     const {id} = ownProps;
 
     const postPart = state.postPart.items[id];
-    const {title, color, productIds} = postPart;
+    const {title, color, postPartProductIds} = postPart;
 
     const isOpen = Boolean(state.pagePost.openParts[id]);
 
@@ -141,7 +141,7 @@ function mapStateToProps(state: AppState, ownProps: PostProductsPartPublicProps)
         id,
         title,
         color,
-        productIds,
+        postPartProductIds,
         isOpen,
     };
 }

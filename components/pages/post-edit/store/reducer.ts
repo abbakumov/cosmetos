@@ -229,7 +229,7 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
                         y: 50,
                     },
                     color: 'ccd4bf',
-                    productIds: [],
+                    postPartProductIds: [],
                 },
             };
 

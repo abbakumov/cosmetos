@@ -14,11 +14,11 @@ export interface PostEditPartAbstractProductProps {
 type Props = PostPartProduct;
 
 const PostEditPartAbstractProduct: FC<PostEditPartAbstractProductProps> = (props: Props) => {
-    if (props.unProduct) {
+    if (props.unProductId) {
         return (
             <PostEditPartUnProductContainer
                 postPartProductId={props.id}
-                unProductId={props.unProduct}
+                unProductId={props.unProductId}
             />
         );
     }

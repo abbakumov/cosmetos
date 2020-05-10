@@ -12,7 +12,7 @@ export interface PostPartProduct {
     postId: PostId
     productId: ProductId
     productColorId: ProductColorId
-    unProduct: UnProductId
+    unProductId: UnProductId
 };
 
 export interface PostPartProductMap {

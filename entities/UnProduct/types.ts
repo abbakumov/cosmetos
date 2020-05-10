@@ -7,6 +7,7 @@ import {
 } from './actions';
 import {BrandId} from '../Brand/types';
 import {ProductId} from '../ProductBase/types';
+import {PostPartProductId} from '../PostPartProduct/types';
 
 export type UnProductId = number;
 
@@ -38,6 +39,7 @@ export interface UnProductRemoveSuccessAction {
     type: typeof UN_PRODUCT_REMOVE_SUCCESS
     payload: {
         id: UnProductId
+        postPartProductId: PostPartProductId
     }
 }
 

@@ -14,7 +14,7 @@ import {BrandId, BrandMap} from '../Brand/types';
 import {ProductColorMap} from '../ProductColor/types';
 import {ProductEdit} from '../../components/pages/admin/product/store/types';
 import {PostPartProductMap} from '../PostPartProduct/types';
-import { PostMap } from '../Post/types';
+import {PostMap} from '../Post/types';
 
 export interface GetProductByIdResponse {
     productBase: ProductBase

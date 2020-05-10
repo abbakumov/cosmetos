@@ -184,6 +184,7 @@ export interface PostEditProductSaveSuccessUnAction {
     payload: {
         postId: PostId
         postPartId: PostPartId
+        postPartProductId: PostPartProductId
         unProductId: UnProductId
         brandId?: BrandId
         brandText?: string

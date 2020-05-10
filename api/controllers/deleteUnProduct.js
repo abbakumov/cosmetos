@@ -28,19 +28,26 @@ module.exports = async function deleteUnProduct(ctx) {
     const {userId} = unProduct.PostPartProduct.PostPart.Post;
 
     if (!ctx.req.user || userId !== ctx.req.user.id) {
+        ctx.res.statusCode = 401;
         ctx.body = {status: 'fail'};
         return;
     }
 
+    const postPartProductId = unProduct.PostPartProduct.id;
     await sequelize.transaction(async transaction => {
         await PostPartProduct.destroy({
-            where: {id: unProduct.PostPartProduct.id},
-        }, {transaction});
+            where: {id: postPartProductId},
+            transaction,
+        });
 
         await UnassignedProduct.destroy({
             where: {id},
-        }, {transaction});
+            transaction,
+        });
     });
 
-    ctx.body = {status: 'success'};
+    ctx.body = {
+        status: 'success',
+        postPartProductId,
+    };
 }

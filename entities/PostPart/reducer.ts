@@ -35,11 +35,9 @@ export function postPartReducer(state = initialState, action: PostPartActionType
                     ...state.items,
                     [action.payload.postPartId]: {
                         ...state.items[action.payload.postPartId],
-                        productIds: [
-                            ...state.items[action.payload.postPartId].productIds,
-                            action.type === POST_EDIT_PRODUCT_SAVE_SUCCESS_AS
-                                ? 'a' + action.payload.productId
-                                : 'u' + action.payload.unProductId,
+                        postPartProductIds: [
+                            ...state.items[action.payload.postPartId].postPartProductIds,
+                            action.payload.postPartProductId,
                         ],
                     },
                 },
@@ -55,9 +53,8 @@ export function postPartReducer(state = initialState, action: PostPartActionType
             };
 
         case POST_EDIT_PRODUCT_REMOVE_SUCCESS:
-            const abstractId = 'a' + action.payload.productId;
             const item = Object.values(state.items)
-                .find(item => item.productIds.indexOf(abstractId) !== -1);
+                .find(item => item.postPartProductIds.indexOf(action.payload.postPartProductId) !== -1);
 
             if (!item) {
                 console.warn('No item found in POST_EDIT_PRODUCT_REMOVE_SUCCESS');
@@ -70,7 +67,8 @@ export function postPartReducer(state = initialState, action: PostPartActionType
                     ...state.items,
                     [item.id]: {
                         ...item,
-                        productIds: item.productIds.filter(_id => _id !== abstractId),
+                        postPartProductIds: item.postPartProductIds
+                            .filter(_id => _id !== action.payload.postPartProductId),
                     },
                 },
             };
@@ -78,7 +76,7 @@ export function postPartReducer(state = initialState, action: PostPartActionType
         case UN_PRODUCT_REMOVE_SUCCESS:
             const newItemsArr = Object.values(state.items).map(item => ({
                 ...item,
-                productIds: item.productIds.filter(id => id !== 'u' + action.payload.id),
+                postPartProductIds: item.postPartProductIds.filter(id => id !== action.payload.postPartProductId),
             }));
             return {
                 ...state,

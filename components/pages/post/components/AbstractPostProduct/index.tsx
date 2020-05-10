@@ -1,32 +1,52 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
+import {connect} from 'react-redux';
 
 import {PostPartId} from '../../../../../entities/PostPart/types';
-import {AbstractProductId} from '../../../../../entities/AbstractProduct/types';
-import {getProductType, getProductId} from '../../../../../entities/AbstractProduct/helpers';
+import {PostPartProductId, PostPartProduct} from '../../../../../entities/PostPartProduct/types';
+import {AppState} from '../../../../../store';
 
 import AsPostProductContainer from '../AsPostProductContainer';
 import UnPostProductContainer from '../UnPostProductContainer';
 
-interface AbstractPostProductProps {
-    id: AbstractProductId
+export interface AbstractPostProductProps {
+    id: PostPartProductId
     partId: PostPartId
     backIndex: number
     isShown: boolean
 }
 
-const AbstractPostProduct: FC<AbstractPostProductProps> = (props: AbstractPostProductProps) => {
-    const productType = getProductType(props.id);
-    const numberId = getProductId(props.id);
+interface Props extends AbstractPostProductProps, PostPartProduct {}
 
-    switch (productType) {
-        case 'ASSIGNED':
-            return <AsPostProductContainer {...props} id={numberId} />;
-
-        case 'UNASSIGNED':
-            return <UnPostProductContainer {...props} id={numberId} />;
+const AbstractPostProduct: FC<AbstractPostProductProps> = (props: Props) => {
+    if (props.unProductId) {
+        return (
+            <UnPostProductContainer
+                id={props.unProductId}
+                partId={props.partId}
+                backIndex={props.backIndex}
+                isShown={props.isShown}
+            />
+        );
     }
 
-    return null;
+    return (
+        <AsPostProductContainer
+            id={props.productId}
+            productColorId={props.productColorId}
+            partId={props.partId}
+            backIndex={props.backIndex}
+            isShown={props.isShown}
+        />
+    );
 };
 
-export default AbstractPostProduct;
+const mapStateToProps = (state: AppState, ownProps: AbstractPostProductProps) => {
+    return {
+        ...ownProps,
+        ...state.postPartProduct.items[ownProps.id],
+    };
+};
+
+const ConnectedAbstractPostProduct = connect(mapStateToProps)(AbstractPostProduct);
+
+export default ConnectedAbstractPostProduct;

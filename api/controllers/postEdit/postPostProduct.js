@@ -49,11 +49,15 @@ module.exports = async function postPostProduct(ctx) {
             productText,
             productColorText,
         });
-        await PostPartProduct.create({
+        const {id: postPartProductId} = await PostPartProduct.create({
             postPartId,
             unassignedProductId,
         });
-        ctx.body = {status: 'success', unassignedProductId};
+        ctx.body = {
+            status: 'success',
+            unassignedProductId,
+            postPartProductId,
+        };
         return;
     }
 

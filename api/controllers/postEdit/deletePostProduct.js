@@ -19,7 +19,6 @@ module.exports = async function deletePostProduct(ctx) {
             }],
         }
     );
-
     const postOwnerId = postPartProduct.PostPart.Post.userId;
     if (!user || (!user.isAdmin && user.id !== postOwnerId)) {
         ctx.res.statusCode = 401;

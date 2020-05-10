@@ -235,9 +235,21 @@ export function postEditProductSaveAction(): any {
             .then(data => {
                 if (data.status !== 'success') {
                     dispatch({type: POST_EDIT_PRODUCT_SAVE_FAIL});
+                    dispatch(notificationShowErrorAction('Не удалось сохранить продукт!'));
                 }
 
-                if ('postPartProductId' in data) {
+                if ('unassignedProductId' in data) {
+                    const payload = {
+                        unProductId: data.unassignedProductId,
+                        postId,
+                        postPartProductId: data.postPartProductId,
+                        ...pickedEditPostPartProductData
+                    };
+                    dispatch({
+                        type: POST_EDIT_PRODUCT_SAVE_SUCCESS_UN,
+                        payload,
+                    });
+                } else {
                     const payload = {
                         postId,
                         postPartId: editPostPartProduct.postPartId,
@@ -249,16 +261,6 @@ export function postEditProductSaveAction(): any {
                         type: POST_EDIT_PRODUCT_SAVE_SUCCESS_AS,
                         payload,
                     });
-                } else {
-                    const payload = {
-                        unProductId: data.unassignedProductId,
-                        postId,
-                        ...pickedEditPostPartProductData
-                    };
-                    dispatch({
-                        type: POST_EDIT_PRODUCT_SAVE_SUCCESS_UN,
-                        payload,
-                    });
                 }
             });
     };
@@ -266,7 +268,7 @@ export function postEditProductSaveAction(): any {
 
 export const postEditProductRemoveAction = (postPartProductId: PostPartProductId): any => (dispatch, getState) => {
     const state: AppState = getState();
-    const productId = state.postPartProduct.items[postPartProductId].productId;
+    const {productId} = state.postPartProduct.items[postPartProductId];
 
     deletePostPartProduct(postPartProductId)
         .then(data => {

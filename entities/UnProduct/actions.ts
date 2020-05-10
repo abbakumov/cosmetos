@@ -1,4 +1,5 @@
 import {notificationShowErrorAction} from '../Notification/actions';
+import {PostPartProductId} from '../PostPartProduct/types';
 
 import {
     UnProductMap,
@@ -21,9 +22,9 @@ export const unProductsDataFetchedAction = (data: UnProductMap): UnProductsDataF
 
 export const unProductRemoveAction = (id: UnProductId) => async (dispatch) => {
     try {
-        const {status} = await deleteUnProduct(id);
+        const {status, postPartProductId} = await deleteUnProduct(id);
         if (status === 'success') {
-            dispatch(unProductRemoveSuccessAction(id));
+            dispatch(unProductRemoveSuccessAction(id, postPartProductId));
         } else {
             throw new Error();
         }
@@ -33,10 +34,11 @@ export const unProductRemoveAction = (id: UnProductId) => async (dispatch) => {
     }
 }
 
-const unProductRemoveSuccessAction = (id: UnProductId): UnProductRemoveSuccessAction => ({
-    type: UN_PRODUCT_REMOVE_SUCCESS,
-    payload: {id},
-});
+const unProductRemoveSuccessAction
+    = (id: UnProductId, postPartProductId: PostPartProductId): UnProductRemoveSuccessAction => ({
+        type: UN_PRODUCT_REMOVE_SUCCESS,
+        payload: {id, postPartProductId},
+    });
 
 const unProductRemoveFailAction = (id: UnProductId): UnProductRemoveFailAction => ({
     type: UN_PRODUCT_REMOVE_FAIL,
