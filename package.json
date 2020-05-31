@@ -8,7 +8,9 @@
     "dev-api": "COS_SERVER_ONLY=1 nodemon --inspect server.js",
     "test": "jest --config=configs/jest.js",
     "build": "next build",
-    "start": "NODE_ENV=production pm2-runtime start --node-args=\"--inspect\" server.js"
+    "start": "NODE_ENV=production pm2-runtime start --node-args=\"--inspect\" server.js",
+    "migrate": "sequelize-cli db:migrate",
+    "migrate-undo": "sequelize-cli db:migrate:undo"
   },
   "repository": {
     "type": "git",
