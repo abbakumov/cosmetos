@@ -1,3 +1,5 @@
+import {LOCATION_CHANGE} from 'connected-next-router';
+
 import {
     PagePostEditState,
     PagePostEditActionType,
@@ -303,6 +305,11 @@ export function pagePostEditReducer(state: PagePostEditState = initialState, act
 
         case POST_EDIT_PART_REMOVE_FAIL:
             return state;
+
+        case LOCATION_CHANGE:
+            if (action.payload.location.href === '/post/new') {
+                return initialState;
+            }
     }
 
     return state;

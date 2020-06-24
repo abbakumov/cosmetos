@@ -1,3 +1,5 @@
+import {LocationChangeAction} from 'connected-next-router';
+
 import {PostPartId, PostPart} from '../../../../entities/PostPart/types';
 import {PostEdit} from '../../../../entities/PostEdit/types';
 import {BrandId} from '../../../../entities/Brand/types';
@@ -300,4 +302,5 @@ export type PagePostEditActionType =
     | PostEditPartRemoveAction
     | PostEditPartRemoveSuccessAction
     | PostEditPartRemoveFailAction
+    | LocationChangeAction
     ;
