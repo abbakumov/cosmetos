@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import {createScrollMiddleware} from 'react-redux-scroll';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {batchDispatchMiddleware} from 'redux-batched-actions';
+import {routerReducer, createRouterMiddleware} from 'connected-next-router';
 
 import {pageMainReducer} from '../components/pages/main/state/reducer';
 import {pageBlogReducer} from '../components/pages/blog/state/reducer';
@@ -32,6 +33,8 @@ import {brandProductsReducer} from '../entities/BrandProducts/reducer';
 import {notificationReducer} from '../entities/Notification/reducer';
 
 const rootReducer = combineReducers({
+    router: routerReducer,
+
     // pages
     pageMain: pageMainReducer,
     pageBlog: pageBlogReducer,
@@ -77,7 +80,8 @@ export type AppState = ReturnType<typeof rootReducer>;
 const getMiddlewares = () => applyMiddleware(
     thunk,
     batchDispatchMiddleware,
-    createScrollMiddleware()
+    createScrollMiddleware(),
+    // createRouterMiddleware(),
 );
 
 export const makeStore = (initialState) => {
