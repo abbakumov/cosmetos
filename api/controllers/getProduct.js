@@ -39,7 +39,10 @@ module.exports = async function getProduct(ctx) {
     const data = await Product.findOne({
         where: {id},
         attributes: ['id', 'kind', 'title', 'description'],
-        order: [[PostPartProduct, 'createdAt', 'DESC']],
+        order: [
+            [PostPartProduct, 'createdAt', 'DESC'],
+            [ProductColor, 'id', 'ASC'],
+        ],
         include: [
             {
                 model: ProductPicture,
