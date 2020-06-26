@@ -6,6 +6,8 @@ module.exports = (sequelize, DataTypes) => {
         instaPostId: DataTypes.STRING(255),
         description: DataTypes.STRING(1023),
         isPublic: DataTypes.BOOLEAN,
+        firstPublishedAt: DataTypes.DATE,
+        wasPublished: DataTypes.BOOLEAN,
     }, {});
 
     Post.associate = function(models) {

@@ -14,7 +14,7 @@ module.exports = async function getMainPosts(ctx) {
     const postData = await Post.findAll({
         limit: 10,
         offset: parsedOffset,
-        order: [['createdAt', 'DESC']],
+        order: [['firstPublishedAt', 'DESC']],
         where: {isPublic: true},
         attributes: ['id', 'title', 'picture', 'userId', 'isPublic'],
         include: [{

@@ -3,15 +3,15 @@ const {Post} = require('../../database/models');
 module.exports = async function postPostEdit(ctx) {
     const {user} = ctx.req;
 
-    const {id, title, instaPostId, description, isPublic} = ctx.request.body;
+    const {id, title, instaPostId, description, isPublic: _isPublic} = ctx.request.body;
     const {file} = ctx.request;
 
     // ACCESS CHECK
-    // this checks if post owned by current user if it's already exist (post)
+    // this checks if post owned by current user if post already exists
     let isExistingPostOwner = !id; // no id = no existing post
     if (id) {
-        const post = await Post.findByPk(id, {attributes: ['userId']});
-        const postOwnerUserId = post.userId;
+        const {userId} = await Post.findByPk(id, {attributes: ['userId']});
+        const postOwnerUserId = userId;
         isExistingPostOwner = postOwnerUserId === user.id;
     }
 
@@ -21,19 +21,30 @@ module.exports = async function postPostEdit(ctx) {
         return;
     }
 
+    const post = await Post.findByPk(id, {
+        attributes: ['userId', 'isPublic', 'firstPublishedAt', 'wasPublished'],
+    });
+
+    const isPublic = _isPublic === 'true';
     const postFields = {
         title,
         instaPostId,
         description,
         userId: user.id,
-        isPublic: isPublic === 'true',
+        isPublic,
     };
+
+    const isFirstTimePublication = isPublic && (!!post && !post.wasPublished);
+    if (isFirstTimePublication) {
+        postFields.firstPublishedAt = new Date();
+        postFields.wasPublished = true;
+    }
 
     if (file) {
         postFields.picture = file.filename;
     }
 
-    let post = null;
+    let newPost = null;
     if (id) {
         // update
         await Post.update(
@@ -44,11 +55,11 @@ module.exports = async function postPostEdit(ctx) {
         );
     } else {
         // new
-        post = await Post.create(postFields);
+        newPost = await Post.create(postFields);
     }
 
     ctx.body = {
         status: 'success',
-        postId: post ? post.id : parseInt(id),
+        postId: newPost ? newPost.id : parseInt(id),
     };
 }

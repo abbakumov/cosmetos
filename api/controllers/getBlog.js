@@ -33,7 +33,7 @@ module.exports = async function getBlog(ctx) {
                 model: Post,
                 limit: 10,
                 offset: parsedOffset,
-                order: [['createdAt', 'DESC']],
+                order: [['firstPublishedAt', 'DESC']],
                 attributes: ['id', 'title', 'picture', 'isPublic'],
                 where: postWhere,
             },

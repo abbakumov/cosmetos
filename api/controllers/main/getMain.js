@@ -60,7 +60,7 @@ module.exports = async function getMain(ctx) {
 
     const postDataPromise = Post.findAll({
         limit: 10,
-        order: [['createdAt', 'DESC']],
+        order: [['firstPublishedAt', 'DESC']],
         where: {isPublic: true},
         attributes: ['id', 'title', 'picture', 'userId', 'isPublic'],
         include: [{
