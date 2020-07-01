@@ -29,6 +29,7 @@ class CosmetosApp extends App {
                         <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png" />
                         <link rel="manifest" href="/static/site.webmanifest" />
                         <link rel="mask-icon" href="/static/favicon/safari-pinned-tab.svg" color="#f5b8a9" />
+                        <script async src="https://aflt.market.yandex.ru/widget/script/api" type="text/javascript"></script>
                         <meta name="msapplication-TileColor" content="#f5b8a9" />
                         <meta name="theme-color" content="#f5b8a9" />
                     </Head>

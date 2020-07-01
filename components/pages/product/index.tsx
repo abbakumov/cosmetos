@@ -15,6 +15,8 @@ import PostsList from '../../widgets/PostsList';
 import {AppState} from '../../../store';
 import {PostId} from '../../../entities/Post/types';
 
+const styles = require('./styles.styl');
+
 export interface ProductPagePublicProps {
     id: ProductId;
 };
@@ -22,9 +24,45 @@ export interface ProductPagePublicProps {
 interface ProductPageProps {
     id: ProductId;
     postIds: PostId[],
+    fullTitle: string,
+}
+
+declare global {
+    interface Window {
+        YaMarketAffiliate?: any;
+    }
 }
 
 class ProductPage extends Component<ProductPageProps> {
+    setupYaMarketAffiliate = () => {
+        window.removeEventListener('YaMarketAffiliateLoad', this.setupYaMarketAffiliate);
+        this.installYaMarketAffiliateWidget();
+    }
+
+    installYaMarketAffiliateWidget() {
+        window.YaMarketAffiliate.createWidget({
+            containerId: 'yaMarketOffers',
+            type: 'offers',
+            params: {
+                clid: 2409813,
+                searchText: this.props.fullTitle,
+                themeId: 4,
+            }
+        });
+    }
+
+    componentDidMount() {
+        if ('YaMarketAffiliate' in window) {
+            this.setupYaMarketAffiliate();
+        } else {
+            window.addEventListener('YaMarketAffiliateLoad', this.setupYaMarketAffiliate);
+        }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('YaMarketAffiliateLoad', this.setupYaMarketAffiliate);
+    }
+
     render() {
         const {id, postIds} = this.props;
 
@@ -36,6 +74,7 @@ class ProductPage extends Component<ProductPageProps> {
                 <ProductColors id={id} />
                 <ProductDescription id={id} />
                 <ProductOpinions id={id} />
+                <div className={styles.offersContainer} id="yaMarketOffers" />
                 <PostsList
                     title="Все посты с продуктом"
                     postIds={postIds}
@@ -50,11 +89,15 @@ class ProductPage extends Component<ProductPageProps> {
 function mapStateToProps(state: AppState, ownProps: ProductPagePublicProps) {
     const {id} = ownProps;
 
+    const {brand, title} = state.productBase.items[id];
     const {postIds} = state.productExtra.items[id];
+
+    const fullTitle = `${brand} ${title}`;
 
     return {
         id,
         postIds,
+        fullTitle,
     };
 }
 

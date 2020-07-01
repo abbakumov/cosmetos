@@ -1,4 +1,4 @@
-import {LocationChangeAction} from 'connected-next-router';
+import {LocationChangeAction} from 'connected-next-router/actions';
 
 import {PostPartId, PostPart} from '../../../../entities/PostPart/types';
 import {PostEdit} from '../../../../entities/PostEdit/types';
